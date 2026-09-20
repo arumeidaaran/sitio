@@ -44,7 +44,9 @@ La cabecera combina en una única composición:
 
 La navegación utiliza iconografía como apoyo visual.
 
-El tema claro y el tema oscuro mantienen la misma identidad, estructura y jerarquía visual.
+El tema claro y el tema oscuro mantienen la misma identidad, estructura, contenido, jerarquía y disposición.
+
+El cambio de tema solamente modifica la representación visual correspondiente a cada paleta.
 
 ---
 
@@ -168,19 +170,19 @@ Regla general:
 
 # 4. Pesos tipográficos
 
-| Elemento                       | Peso  |
-| ------------------------------ | ----: |
-| Nombre principal               | `700` |
-| H1                             | `700` |
-| H2                             | `700` |
-| H3                             | `600` |
-| Lead                           | `500` |
-| Texto base                     | `400` |
-| Texto secundario               | `400` |
-| Etiquetas pequeñas             | `600` |
-| Navegación principal           | `500` |
-| Elemento activo de navegación  | `600` |
-| Botones                        | `600` |
+| Elemento                      | Peso  |
+| ----------------------------- | ----: |
+| Nombre principal              | `700` |
+| H1                            | `700` |
+| H2                            | `700` |
+| H3                            | `600` |
+| Lead                          | `500` |
+| Texto base                    | `400` |
+| Texto secundario              | `400` |
+| Etiquetas pequeñas            | `600` |
+| Navegación principal          | `500` |
+| Elemento activo de navegación | `600` |
+| Botones                       | `600` |
 
 ---
 
@@ -342,21 +344,21 @@ texto           => #F2F1EE
 
 ### Tema claro
 
-| Estado       | Color     |
-| ------------ | --------- |
-| Éxito        | `#2F6D59` |
-| Advertencia  | `#9A6A16` |
-| Error        | `#B51E23` |
-| Información  | `#365E96` |
+| Estado      | Color     |
+| ----------- | --------- |
+| Éxito       | `#2F6D59` |
+| Advertencia | `#9A6A16` |
+| Error       | `#B51E23` |
+| Información | `#365E96` |
 
 ### Tema oscuro
 
-| Estado       | Color     |
-| ------------ | --------- |
-| Éxito        | `#58B28D` |
-| Advertencia  | `#D6A34A` |
-| Error        | `#E2484D` |
-| Información  | `#6FA8FF` |
+| Estado      | Color     |
+| ----------- | --------- |
+| Éxito       | `#58B28D` |
+| Advertencia | `#D6A34A` |
+| Error       | `#E2484D` |
+| Información | `#6FA8FF` |
 
 ---
 
@@ -518,21 +520,21 @@ La escala base de espaciado es:
 
 ## 10.1. Aplicación
 
-| Uso                                      | Espacio|
-| ---------------------------------------- | -----: |
-| Padding general de la aplicación         | `24px` |
-| Separación navegación / contenido        | `24px` |
-| Padding interno de navegación            | `16px` |
-| Separación entre bloques de navegación   | `24px` |
-| Separación entre elementos de menú       | `12px` |
-| Separación idioma / tema                 | `16px` |
-| Padding de paneles                       | `16px` |
-| Gap entre columnas principales           | `24px` |
-| Gap entre tarjetas pequeñas              | `16px` |
-| Título / párrafo                         | `12px` |
-| Párrafo / párrafo                        | `16px` |
-| Secciones mayores                        | `32px` |
-| Grupos grandes                           | `48px` |
+| Uso                                    | Espacio |
+| -------------------------------------- | ------: |
+| Padding general de la aplicación       |  `24px` |
+| Separación navegación / contenido      |  `24px` |
+| Padding interno de navegación          |  `16px` |
+| Separación entre bloques de navegación |  `24px` |
+| Separación entre elementos de menú     |  `12px` |
+| Separación idioma / tema               |  `16px` |
+| Padding de paneles                     |  `16px` |
+| Gap entre columnas principales         |  `24px` |
+| Gap entre tarjetas pequeñas            |  `16px` |
+| Título / párrafo                       |  `12px` |
+| Párrafo / párrafo                      |  `16px` |
+| Secciones mayores                      |  `32px` |
+| Grupos grandes                         |  `48px` |
 
 ---
 
@@ -624,6 +626,10 @@ Incluye:
 
 No debe dividirse visualmente en una imagen de fondo y una fotografía completamente independientes.
 
+Las representaciones conceptuales utilizadas durante el diseño pueden contener elementos gráficos o textos integrados en la imagen utilizada como referencia.
+
+Estos elementos no constituyen contenido de interfaz ni requisitos de implementación.
+
 ---
 
 ## 12.1. Estado expandido
@@ -707,16 +713,39 @@ La navegación comienza con los controles globales:
 Idioma | Tema
 ```
 
-Después aparecen las secciones:
+Después aparece un primer bloque de accesos directos:
 
 ```text
 Inicio
 Sobre mí
+Contactos
+```
+
+Los tres elementos forman un mismo grupo.
+
+Después aparecen las secciones que contienen recursos y pueden desplegar contenido subordinado:
+
+```text
 Certificaciones
 Proyectos
-Contactos
 Blog
 ```
+
+Conceptualmente:
+
+```text
+Idioma | Tema
+
+Inicio
+Sobre mí
+Contactos
+
+Certificaciones
+Proyectos
+Blog
+```
+
+La separación visual entre los accesos directos y las secciones de contenido puede utilizar el tratamiento estructural definido para los bloques de navegación.
 
 ---
 
@@ -895,6 +924,26 @@ tema claro
 tema oscuro
 ```
 
+El cambio de tema no modifica la página representada.
+
+Debe conservar:
+
+```text
+Contenido
+Selección editorial
+Cantidad de elementos
+Orden
+Jerarquía
+Navegación
+Dimensiones
+Espaciado
+Disposición
+Formato de las tarjetas
+Actualizaciones
+```
+
+Solamente cambia la representación visual correspondiente al tema seleccionado.
+
 ---
 
 ## 15.4. Botón principal
@@ -1032,6 +1081,8 @@ El acceso al proyecto se realiza mediante un enlace explícito.
 
 La tarjeta completa no constituye implícitamente un enlace.
 
+La representación de Inicio no muestra tecnologías ni otros datos que pertenecen al detalle completo del proyecto.
+
 ---
 
 ## 16.4. Artículo destacado
@@ -1101,6 +1152,10 @@ Separación entre elementos
 
 La uniformidad visual no debe forzar contratos idénticos entre tipos de contenido diferentes.
 
+Dentro de un mismo tipo de recurso, las tarjetas deben mantener una estructura visual consistente.
+
+El cambio de tema no modifica la estructura interna, el orden, el contenido ni la disposición de estas tarjetas.
+
 ---
 
 ## 16.7. Área de exposición
@@ -1134,6 +1189,8 @@ Actualizaciones
 La composición no depende de una cantidad fija de elementos.
 
 Debe admitir variaciones en la cantidad disponible sin modificar la estructura general del área.
+
+No deben añadirse dentro de esta región citas, frases de efecto ni otros bloques que no representen una actualización.
 
 ---
 
@@ -1241,33 +1298,82 @@ Hasta entonces, las proporciones documentadas para el layout corresponden princi
 
 # Relación entre tema claro y tema oscuro
 
-Los dos temas deben compartir exactamente:
+Los dos temas representan exactamente el mismo sitio.
+
+Deben compartir exactamente:
 
 - estructura;
-- tamaños;
+- contenido;
+- selección editorial;
+- cantidad de elementos;
+- orden de los contenidos;
 - tipografía;
 - jerarquía;
 - espaciado;
-- bordes;
+- bordes estructurales;
 - dimensiones;
 - iconografía;
 - navegación;
-- composición de cabecera.
+- composición de cabecera;
+- estructura de las tarjetas;
+- disposición de los metadatos;
+- posición de los enlaces;
+- contenido destacado;
+- actualizaciones.
+
+Conceptualmente:
+
+```text
+Tema claro
+|
++-- misma página
++-- mismo contenido
++-- mismo orden
++-- misma cantidad
++-- misma estructura
++-- misma disposición
+
+Tema oscuro
+|
++-- misma página
++-- mismo contenido
++-- mismo orden
++-- misma cantidad
++-- misma estructura
++-- misma disposición
+```
 
 Solamente deben variar los valores visuales necesarios para adaptar:
 
 - fondos;
 - superficies;
-- textos;
-- bordes;
+- colores de texto;
+- colores de bordes;
 - sombras;
 - rojo;
 - verde;
 - estados interactivos.
 
+El cambio de tema no debe:
+
+```text
+Cambiar contenido
+Cambiar elementos destacados
+Cambiar actualizaciones
+Cambiar el orden
+Cambiar la cantidad de elementos
+Cambiar la navegación
+Cambiar el formato de las tarjetas
+Cambiar la disposición
+Cambiar los espacios estructurales
+Cambiar los textos
+```
+
 El tema oscuro no debe ser considerado un diseño independiente.
 
-Es una representación oscura de la misma identidad visual.
+El tema claro tampoco debe ser considerado una composición alternativa.
+
+Ambos son representaciones visuales de la misma interfaz.
 
 ---
 
@@ -1383,7 +1489,8 @@ Los siguientes elementos de identidad visual quedan definidos:
 15. iconos y controles;
 16. estructura visual de Inicio;
 17. representación de contenido destacado;
-18. área de exposición y actualizaciones.
+18. área de exposición y actualizaciones;
+19. equivalencia estructural y de contenido entre los temas claro y oscuro.
 
 La adaptación estructural completa para diferentes tamaños de pantalla permanece pendiente de la etapa correspondiente de diseño responsive.
 

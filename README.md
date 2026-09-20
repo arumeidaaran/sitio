@@ -85,8 +85,8 @@ Navegador
 
 Las partes principales relacionadas con el frontend tienen la siguiente disponibilidad:
 
-| Artefactos               | Permiso              |
-| ------------------------ | -------------------- |
+| Artefactos               | Permiso             |
+| ------------------------ | ------------------- |
 | Repositorio del proyecto | Público en GitHub   |
 | Sitio publicado          | Público en Internet |
 | Servicio de sitio-api    | Público en Internet |
@@ -134,6 +134,8 @@ sitio
     |
     +-- Sobre mí
     |
+    +-- Contactos
+    |
     +-- Certificaciones
     |   |
     |   +-- Certificación
@@ -141,8 +143,6 @@ sitio
     +-- Proyectos
     |   |
     |   +-- Proyecto
-    |
-    +-- Contactos
     |
     +-- Blog
         |
@@ -236,20 +236,52 @@ Los controles de idioma y tema aparecen directamente al comienzo de la navegaci�
 
 No se encuentran ocultos dentro de una sección adicional de configuración.
 
-Las secciones que contienen recursos pueden representar parte de su jerarquía dentro de la navegación.
+La navegación organiza primero los accesos directos:
+
+```text
+Inicio
+Sobre mí
+Contactos
+```
+
+Después presenta las secciones que contienen recursos y representan parte de su jerarquía:
+
+```text
+Certificaciones
+Proyectos
+Blog
+```
 
 Conceptualmente:
 
 ```text
-Proyectos
+Navegación
 |
-+-- Proyecto
-+-- Proyecto
-+-- Proyecto
-+-- Ver todos los proyectos
++-- Inicio
++-- Sobre mí
++-- Contactos
+|
++-- Certificaciones
+|   |
+|   +-- Certificación
+|   +-- Certificación
+|   +-- ...
+|   +-- Ver todas las certificaciones
+|
++-- Proyectos
+|   |
+|   +-- Proyecto
+|   +-- Proyecto
+|   +-- ...
+|   +-- Ver todos los proyectos
+|
++-- Blog
+    |
+    +-- Artículo
+    +-- Artículo
+    +-- ...
+    +-- Ver todos los artículos
 ```
-
-La misma regla se aplica a las demás secciones que contienen listados de recursos.
 
 La navegación no reproduce necesariamente todos los elementos existentes.
 
@@ -513,6 +545,9 @@ Sobre mí
 => información personal
 => presentación
 
+Contactos
+=> medios de contacto
+
 Certificaciones
 => listado
 => información individual
@@ -520,9 +555,6 @@ Certificaciones
 Proyectos
 => listado
 => información individual
-
-Contactos
-=> medios de contacto
 
 Blog
 => listado de artículos
@@ -814,16 +846,39 @@ La aplicación no modifica el idioma de forma automática durante la navegación
 
 El usuario puede cambiar explícitamente entre los temas disponibles mediante un control visible al comienzo de la navegación.
 
-El cambio de tema modifica la representación visual de la aplicación sin modificar:
+El cambio de tema modifica exclusivamente la representación visual de la aplicación sin modificar:
 
 ```text
 Idioma activo
 Dirección
-Contenido seleccionado
+Página activa
+Contenido
+Selección editorial
+Orden de los contenidos
+Jerarquía
 Navegación
+Disposición de las regiones
 ```
 
 Los diferentes temas constituyen representaciones visuales de la misma estructura y contenido.
+
+Conceptualmente:
+
+```text
+Misma página
+Mismos contenidos
+Mismo orden
+Misma jerarquía
+Misma disposición
+        |
+        V
+Cambio de tema
+        |
+        V
+Diferente representación visual
+```
+
+Cambiar el tema no provoca una nueva selección, reorganización ni sustitución de los contenidos mostrados.
 
 ## Disponibilidad de contenido
 
@@ -1703,6 +1758,8 @@ Selección manual
 Navegación localizada
 Slug localizado
 Cambio de tema
+Conservación del contenido durante el cambio de tema
+Conservación del orden y la estructura durante el cambio de tema
 Comunicación con sitio-api
 Carga de Inicio
 Contenido destacado
