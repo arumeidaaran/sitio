@@ -32,9 +32,9 @@ Contenido, servicios y fuentes de datos
 
 `Sitio` constituye una aplicación independiente de `sitio-api`.
 
-El frontend es responsable de la presentación, navegación, internacionalización de la interfaz, selección del idioma y estado necesario para la experiencia del usuario.
+El frontend es responsable de la presentación, navegación, internacionalización de la interfaz, selección del idioma, selección del tema y estado necesario para la experiencia del usuario.
 
-`Sitio-api` es responsable de obtener, validar, normalizar y exponer el contenido utilizado por el frontend, además de informar los metadatos lingüísticos correspondientes a cada contenido.
+`Sitio-api` es responsable de obtener, validar, normalizar, seleccionar y exponer el contenido utilizado por el frontend, además de informar los metadatos lingüísticos correspondientes a cada contenido.
 
 Esta separación evita que el frontend dependa directamente de las fuentes originales de datos.
 
@@ -47,7 +47,13 @@ Presentación y navegación
 Selección del idioma a mostrar
 => sitio
 
+Selección del tema
+=> sitio
+
 Contenido y metadatos
+=> sitio-api
+
+Selección y composición de los datos solicitados
 => sitio-api
 
 Fuentes de datos
@@ -79,8 +85,8 @@ Navegador
 
 Las partes principales relacionadas con el frontend tienen la siguiente disponibilidad:
 
-| Artefactos               | Permiso             |
-| ------------------------ | ------------------- |
+| Artefactos               | Permiso              |
+| ------------------------ | -------------------- |
 | Repositorio del proyecto | Público en GitHub   |
 | Sitio publicado          | Público en Internet |
 | Servicio de sitio-api    | Público en Internet |
@@ -126,7 +132,7 @@ sitio
     |
     +-- Inicio
     |
-    +-- Perfil
+    +-- Sobre mí
     |
     +-- Certificaciones
     |   |
@@ -149,20 +155,44 @@ No existe una versión de contenido independiente de la internacionalización.
 
 La raíz del sitio constituye un punto de entrada encargado de determinar el idioma con el que debe iniciarse la aplicación.
 
-La forma conceptual de las rutas es:
+La forma conceptual de las rutas visibles es:
 
 ```text
 /{idioma}/
 => página inicial localizada
 
-/{idioma}/{seccion}/
+/{idioma}/{seccion-localizada}/
 => sección localizada
 
-/{idioma}/{seccion}/{recurso}/
+/{idioma}/{seccion-localizada}/{slug-localizado}/
 => recurso localizado
 ```
 
-Los nombres definitivos utilizados por cada sección en las rutas forman parte de la definición de navegación y no modifican esta jerarquía funcional.
+Los segmentos visibles de la dirección forman parte de la internacionalización de la interfaz.
+
+El `slug` identifica públicamente una versión localizada de un recurso.
+
+Conceptualmente:
+
+```text
+Recurso
+|
++-- identificador interno
+|
++-- versiones localizadas
+    |
+    +-- idioma
+    |   +-- slug
+    |
+    +-- idioma
+        +-- slug
+```
+
+El identificador interno representa el mismo recurso independientemente del idioma.
+
+El `slug` pertenece a la variante lingüística y debe ser legible para el público correspondiente a ese idioma.
+
+No es necesario que diferentes idiomas compartan el mismo `slug`.
 
 ## Estructura de las páginas
 
@@ -173,20 +203,304 @@ Aplicación
 |
 +-- Cabecera
 |   |
-|   +-- Identidad del sitio
-|   +-- Navegación
-|   +-- Selección de idioma
+|   +-- Fondo visual
+|   +-- Foto
+|   +-- Nombre
+|   +-- Descripción breve
 |
-+-- Contenido
-|
-+-- Pie
++-- Cuerpo
+    |
+    +-- Navegación
+    |   |
+    |   +-- Selección de idioma
+    |   +-- Selección de tema
+    |   +-- Secciones
+    |
+    +-- Contenido principal
+    |
+    +-- Área de exposición
+        => solamente en Inicio
 ```
 
-La cabecera, la navegación y el pie forman parte de la estructura general del sitio.
+No existe un pie global.
+
+La cabecera constituye una única composición visual formada por el fondo, la fotografía, el nombre y la descripción breve.
+
+Durante el desplazamiento, la cabecera reduce su presencia manteniendo visibles la fotografía y el nombre.
+
+La descripción breve pertenece al estado expandido y no necesita permanecer visible cuando la cabecera se encuentra compactada.
+
+La navegación es vertical y permanece disponible durante el desplazamiento.
+
+Los controles de idioma y tema aparecen directamente al comienzo de la navegación.
+
+No se encuentran ocultos dentro de una sección adicional de configuración.
+
+Las secciones que contienen recursos pueden representar parte de su jerarquía dentro de la navegación.
+
+Conceptualmente:
+
+```text
+Proyectos
+|
++-- Proyecto
++-- Proyecto
++-- Proyecto
++-- Ver todos los proyectos
+```
+
+La misma regla se aplica a las demás secciones que contienen listados de recursos.
+
+La navegación no reproduce necesariamente todos los elementos existentes.
+
+Cuando una sección puede crecer indefinidamente, presenta una cantidad limitada de elementos y un acceso explícito a la sección completa.
+
+El acceso al listado completo debe indicar el destino correspondiente.
+
+Conceptualmente:
+
+```text
+Ver todos los proyectos
+
+Ver todos los artículos
+
+Ver todas las certificaciones
+```
+
+Si la navegación supera el espacio vertical disponible, dispone de desplazamiento interno.
 
 La región principal presenta el contenido correspondiente a la página activa.
 
 La navegación interna conserva el contexto lingüístico previamente establecido y utiliza ese mismo idioma para construir el acceso hacia las demás secciones.
+
+## Inicio
+
+La página inicial presenta la identidad del sitio, una selección editorial de contenido y la actividad reciente.
+
+Conceptualmente:
+
+```text
+Inicio
+|
++-- Cabecera
+|
++-- Contenido principal
+|   |
+|   +-- Proyectos destacados
+|   |
+|   +-- Artículos destacados
+|   |
+|   +-- Certificaciones destacadas
+|
++-- Actualizaciones
+```
+
+No existe una segunda sección introductoria después de la cabecera.
+
+La cabecera ya presenta:
+
+```text
+Nombre
+Descripción breve
+Identidad visual
+```
+
+Por ese motivo, Inicio no repite esta información mediante una presentación adicional ni mediante accesos redundantes hacia secciones ya disponibles en la navegación y en el propio contenido de la página.
+
+### Proyectos destacados
+
+La sección presenta proyectos seleccionados editorialmente para recibir mayor visibilidad.
+
+Cada elemento presenta:
+
+```text
+Imagen
+Nombre
+Descripción
+Enlace explícito
+```
+
+El enlace conduce a la página del proyecto.
+
+La tarjeta completa no constituye implícitamente un enlace.
+
+La cantidad no constituye una limitación estructural del componente.
+
+Al final de la sección se presenta:
+
+```text
+Ver todos los proyectos
+```
+
+### Artículos destacados
+
+La sección presenta artículos seleccionados editorialmente.
+
+Cada elemento presenta:
+
+```text
+Imagen
+Título
+Descripción
+Fecha
+Enlace explícito
+```
+
+No se requiere una categoría para representar el artículo.
+
+El enlace conduce a la página del artículo.
+
+La cantidad no constituye una limitación estructural del componente.
+
+Al final de la sección se presenta:
+
+```text
+Ver todos los artículos
+```
+
+### Certificaciones destacadas
+
+La sección presenta certificaciones seleccionadas editorialmente.
+
+Cada elemento presenta:
+
+```text
+Imagen o credencial
+Nombre
+Entidad
+Fecha
+Enlace explícito
+```
+
+La cantidad no constituye una limitación estructural del componente.
+
+Al final de la sección se presenta:
+
+```text
+Ver todas las certificaciones
+```
+
+### Destacados
+
+La condición de destacado constituye una decisión editorial sobre un recurso.
+
+Conceptualmente:
+
+```text
+Recurso
+|
++-- destacado
+|   |
+|   +-- sí
+|   |   => puede aparecer en Inicio
+|   |
+|   +-- no
+|       => no forma parte de la selección destacada
+|
++-- orden editorial
+    => determina su posición entre los destacados
+```
+
+La selección editorial y la recuperación de los datos constituyen responsabilidades diferentes.
+
+```text
+Selección del contenido destacado
+=> decisión editorial
+
+Filtrado y orden
+=> sitio-api
+
+Representación
+=> sitio
+```
+
+La selección destacada no depende necesariamente de la fecha de publicación, importancia automática ni otro criterio implícito.
+
+Los recursos pueden ser seleccionados y ordenados deliberadamente.
+
+### Actualizaciones
+
+El área de exposición de Inicio presenta novedades y contenido reciente.
+
+Conceptualmente:
+
+```text
+Actualizaciones
+
+Novedades y contenido reciente
+
+[actualización]
+[actualización]
+...
+```
+
+Esta región puede contener actividad relacionada con:
+
+```text
+Proyecto
+Artículo
+Certificación
+```
+
+Los acontecimientos representados corresponden a:
+
+```text
+Contenido nuevo
+
+Contenido actualizado
+```
+
+Cada actualización presenta:
+
+```text
+Ícono
+Tipo de acontecimiento
+Nombre
+Descripción
+Fecha
+Enlace explícito
+```
+
+El tipo de acción del enlace depende del recurso.
+
+Conceptualmente:
+
+```text
+Proyecto
+=> Ver proyecto
+
+Artículo
+=> Leer artículo
+
+Certificación
+=> Ver certificación
+```
+
+Las actualizaciones se ordenan de acuerdo con la fecha de actividad, desde la más reciente hacia la menos reciente.
+
+No existe un período temporal fijo para determinar qué contenido puede aparecer.
+
+Conceptualmente:
+
+```text
+Reciente
+=> forma parte de la actividad más reciente disponible
+
+No significa
+=> ocurrió necesariamente dentro de un período predeterminado
+```
+
+Los destacados y las actualizaciones constituyen dimensiones diferentes del contenido.
+
+```text
+Destacados
+=> qué contenido se desea poner en evidencia
+
+Actualizaciones
+=> qué contenido tuvo actividad más recientemente
+```
+
+Un mismo recurso puede pertenecer simultáneamente a ambas regiones.
 
 ## Contenido
 
@@ -195,10 +509,9 @@ El frontend presenta diferentes tipos de contenido obtenidos mediante `sitio-api
 La distribución conceptual es:
 
 ```text
-Perfil
+Sobre mí
 => información personal
 => presentación
-=> datos de contacto
 
 Certificaciones
 => listado
@@ -208,8 +521,11 @@ Proyectos
 => listado
 => información individual
 
+Contactos
+=> medios de contacto
+
 Blog
-=> listado de publicaciones
+=> listado de artículos
 => artículos
 ```
 
@@ -217,7 +533,24 @@ Blog
 
 Las fuentes utilizadas para generar cada recurso pertenecen a la responsabilidad de `sitio-api`.
 
-Esto permite que la presentación mantenga una estructura estable independientemente de si el backend obtiene determinada información desde archivos locales, Markdown, GitHub u otras fuentes.
+Esto permite que la presentación mantenga una estructura estable independientemente de si el backend obtiene determinada información desde archivos locales, Markdown, una base de datos, GitHub u otras fuentes.
+
+La cantidad de información retornada depende del contexto en el que el recurso será utilizado.
+
+Conceptualmente:
+
+```text
+Inicio
+=> datos necesarios para representar la página inicial
+
+Listado
+=> datos necesarios para representar el listado
+
+Detalle
+=> contenido completo del recurso
+```
+
+El frontend no necesita recibir en Inicio información que solamente será utilizada dentro de la página individual de un recurso.
 
 ## Internacionalización
 
@@ -243,6 +576,7 @@ Interfaz
 Navegación
 Preferencia del usuario
 Dirección localizada
+Segmentos visibles de las rutas
 ```
 
 `Sitio` conoce directamente los idiomas para los que dispone de una interfaz completa y utiliza esta información para validar las direcciones, preferencias y selecciones realizadas por el usuario.
@@ -283,6 +617,20 @@ sitio
 El backend no decide cuál idioma debe exhibir el frontend.
 
 Las etiquetas utilizadas siguen el formato BCP 47.
+
+Los textos que forman parte de la interfaz son administrados por `sitio`.
+
+Los mensajes técnicos retornados por `sitio-api` no se utilizan directamente como textos visibles de la interfaz.
+
+Conceptualmente:
+
+```text
+Mensaje técnico de sitio-api
+=> diagnóstico y contrato
+
+Texto presentado al usuario
+=> recurso localizado de sitio
+```
 
 ## Idioma por defecto
 
@@ -432,6 +780,8 @@ Cambio manual de idioma
 
 Los enlaces internos son construidos de acuerdo con el idioma activo.
 
+Los segmentos visibles de las direcciones y los `slug` correspondientes a recursos forman parte de la variante localizada.
+
 Un nuevo acceso directo mediante una dirección diferente vuelve a ejecutar la resolución inicial.
 
 ## Selección de idioma
@@ -460,6 +810,21 @@ Cargar página equivalente
 
 La aplicación no modifica el idioma de forma automática durante la navegación normal.
 
+## Selección de tema
+
+El usuario puede cambiar explícitamente entre los temas disponibles mediante un control visible al comienzo de la navegación.
+
+El cambio de tema modifica la representación visual de la aplicación sin modificar:
+
+```text
+Idioma activo
+Dirección
+Contenido seleccionado
+Navegación
+```
+
+Los diferentes temas constituyen representaciones visuales de la misma estructura y contenido.
+
 ## Disponibilidad de contenido
 
 La disponibilidad de un idioma en la interfaz y la disponibilidad de un contenido concreto en ese mismo idioma son conceptos distintos.
@@ -487,7 +852,20 @@ Conceptualmente:
 /api/v1/{idioma}/{recurso}/
 ```
 
-No existe una variante neutral del contenido sin contexto lingüístico.
+La página inicial constituye el contenido raíz localizado de `sitio-api`.
+
+Conceptualmente:
+
+```text
+/api/v1/{idioma}/
+=> contenido necesario para Inicio
+```
+
+La raíz técnica de la API y la página inicial localizada cumplen funciones diferentes.
+
+La resolución del idioma continúa perteneciendo al frontend.
+
+No existe una variante neutral del contenido, visible o no visible, sin contexto lingüístico.
 
 Cada solicitud de contenido retorna conjuntamente:
 
@@ -615,6 +993,24 @@ Cada contenido identifica cuál es su idioma original.
 
 Este idioma debe encontrarse siempre entre sus idiomas soportados.
 
+Cada variante puede disponer de su propio `slug`.
+
+Conceptualmente:
+
+```text
+Contenido
+|
++-- variante
+|   +-- idioma
+|   +-- slug
+|
++-- variante
+    +-- idioma
+    +-- slug
+```
+
+El `slug` no será generado mediante traducción automática, sino que será definido editorialmente de forma adecuada para cada idioma.
+
 No es obligatorio que cada contenido disponga inmediatamente de versiones en todos los idiomas utilizados por la interfaz.
 
 La versión correspondiente al idioma por defecto del frontend debe existir para todo contenido publicado según las reglas de mantenimiento del sitio.
@@ -650,6 +1046,24 @@ La comunicación HTTP queda separada de la presentación de las páginas.
 
 El frontend consume los contratos proporcionados por `sitio-api` y no accede directamente a sus fuentes de datos.
 
+`Sitio-api` compone las respuestas de acuerdo con el contexto solicitado.
+
+Conceptualmente:
+
+```text
+Inicio
+=> sitio-api selecciona y compone los datos necesarios
+=> sitio representa el resultado
+
+Listado
+=> sitio-api retorna los datos necesarios para listar
+=> sitio representa el resultado
+
+Detalle
+=> sitio-api retorna el contenido completo
+=> sitio representa el resultado
+```
+
 La división de responsabilidades es:
 
 ```text
@@ -660,6 +1074,11 @@ sitio-api
 => informar idiomas soportados por cada contenido
 => retornar content para el idioma solicitado
 => retornar valor nulo en el contenido cuando el idioma del contenido solicitado no existe
+=> seleccionar los contenidos destacados
+=> ordenar los contenidos destacados
+=> seleccionar las actualizaciones
+=> ordenar las actualizaciones por fecha de actividad
+=> retornar solamente la información necesaria para cada contexto
 
 sitio
 => conocer sus idiomas de interfaz
@@ -671,14 +1090,43 @@ sitio
 => seleccionar el idioma del contenido
 => aplicar los respaldos
 => realizar una nueva solicitud cuando sea necesario
+=> construir las rutas visibles localizadas
+=> representar la información recibida
 => informar al usuario cuando el contenido se presenta en otro idioma
 ```
 
-`Sitio-api` no selecciona automáticamente una variante alternativa cuando el idioma solicitado no existe.
+`Sitio-api` no selecciona automáticamente una variante lingüística alternativa cuando el idioma solicitado no existe.
 
 `Sitio` no necesita conocer cómo el backend obtiene o almacena las distintas variantes del contenido.
 
-Ambas capas se comunican únicamente mediante el contrato de cada contenido.
+Ambas capas se comunican únicamente mediante los contratos correspondientes.
+
+### Convenciones internas
+
+La implementación técnica utiliza nombres en inglés para:
+
+```text
+Variables
+Funciones
+Clases
+Schemas
+Propiedades de modelos
+Contratos
+Nombres internos de recursos
+```
+
+Los textos humanos propios del proyecto deben permanecer en español cuando corresponden a:
+
+```text
+Mensajes
+Errores técnicos
+Documentación
+Descripciones
+```
+
+Los textos visibles de la interfaz pertenecen a los recursos localizados de `sitio`.
+
+Esta separación evita mezclar el idioma de la implementación con el idioma presentado al usuario.
 
 ### Contrato de contenido
 
@@ -723,7 +1171,7 @@ Conceptualmente, el contrato tiene una única estructura:
 
 `content` representa la variante correspondiente al idioma incluido en la solicitud.
 
-Su estructura interna depende del tipo de recurso y será definida por el contrato específico correspondiente.
+Su estructura interna depende del tipo de recurso y es definida por el contrato específico correspondiente.
 
 Cuando existe la variante solicitada:
 
@@ -844,7 +1292,296 @@ sitio-api
 +-- content
 ```
 
-La forma concreta del objeto contenido en `content` será incorporada conforme los respectivos recursos sean definidos e implementados.
+### Contratos de recursos
+
+El objeto `content` utiliza nombres técnicos en inglés.
+
+El `slug` forma parte del contenido localizado.
+
+### Proyecto
+
+La representación completa de un proyecto contiene conceptualmente:
+
+```json
+{
+    "slug": "recurso-localizado",
+    "name": "...",
+    "description": "...",
+    "content": "...",
+    "image": {
+        "src": "...",
+        "alt": "..."
+    },
+    "technologies": [
+        "..."
+    ],
+    "links": [
+        {
+            "type": "...",
+            "url": "..."
+        }
+    ]
+}
+```
+
+`description` representa una descripción breve.
+
+`content` representa el contenido completo del proyecto.
+
+`image` contiene la imagen principal y su descripción alternativa.
+
+`technologies` contiene las tecnologías asociadas al proyecto.
+
+`links` contiene los enlaces externos disponibles.
+
+No todos los proyectos necesitan disponer de los mismos tipos de enlace.
+
+### Artículo
+
+La representación completa de un artículo contiene conceptualmente:
+
+```json
+{
+    "slug": "recurso-localizado",
+    "title": "...",
+    "description": "...",
+    "content": "...",
+    "image": {
+        "src": "...",
+        "alt": "..."
+    },
+    "publication_date": "...",
+    "update_date": null
+}
+```
+
+`description` representa un resumen breve.
+
+`content` representa el contenido completo del artículo.
+
+`publication_date` identifica la fecha de publicación.
+
+`update_date` identifica una actualización posterior cuando exista.
+
+No se requiere una categoría para representar el artículo.
+
+### Certificación
+
+La representación completa de una certificación contiene conceptualmente:
+
+```json
+{
+    "slug": "recurso-localizado",
+    "name": "...",
+    "issuer": "...",
+    "description": "...",
+    "content": "...",
+    "image": {
+        "src": "...",
+        "alt": "..."
+    },
+    "issue_date": "...",
+    "expiration_date": null,
+    "credential": {
+        "code": null,
+        "url": null
+    }
+}
+```
+
+`issuer` identifica la entidad emisora.
+
+`issue_date` identifica la fecha de emisión.
+
+`expiration_date` puede ser nulo cuando la certificación no dispone de expiración.
+
+`credential` contiene la información de verificación cuando exista.
+
+## Contrato de Inicio
+
+Inicio es solicitado mediante la raíz localizada de la API.
+
+Conceptualmente:
+
+```text
+GET /api/v1/{idioma}/
+```
+
+`Sitio-api` compone en una sola respuesta los datos necesarios para representar la página inicial.
+
+Conceptualmente:
+
+```json
+{
+    "status": "ok",
+    "status_code": 200,
+    "message": "Contenido disponible.",
+    "data": {
+        "featured_projects": [],
+        "featured_articles": [],
+        "featured_certifications": [],
+        "updates": []
+    }
+}
+```
+
+Cada elemento destacado mantiene los metadatos lingüísticos correspondientes al recurso.
+
+Conceptualmente:
+
+```json
+{
+    "original": "idioma-a",
+    "supported": [
+        "idioma-a",
+        "idioma-b"
+    ],
+    "content": {}
+}
+```
+
+Inicio recibe solamente los datos necesarios para representar sus elementos.
+
+No recibe automáticamente el contenido completo de cada recurso.
+
+### Proyecto destacado
+
+Conceptualmente:
+
+```json
+{
+    "original": "idioma-a",
+    "supported": [
+        "idioma-a",
+        "idioma-b"
+    ],
+    "content": {
+        "slug": "recurso-localizado",
+        "name": "...",
+        "description": "...",
+        "image": {
+            "src": "...",
+            "alt": "..."
+        }
+    }
+}
+```
+
+La representación de Inicio no necesita recibir:
+
+```text
+Contenido completo
+Tecnologías
+Enlaces externos
+```
+
+Estos datos pertenecen al detalle del proyecto.
+
+### Artículo destacado
+
+Conceptualmente:
+
+```json
+{
+    "original": "idioma-a",
+    "supported": [
+        "idioma-a",
+        "idioma-b"
+    ],
+    "content": {
+        "slug": "recurso-localizado",
+        "title": "...",
+        "description": "...",
+        "image": {
+            "src": "...",
+            "alt": "..."
+        },
+        "publication_date": "..."
+    }
+}
+```
+
+### Certificación destacada
+
+Conceptualmente:
+
+```json
+{
+    "original": "idioma-a",
+    "supported": [
+        "idioma-a",
+        "idioma-b"
+    ],
+    "content": {
+        "slug": "recurso-localizado",
+        "name": "...",
+        "issuer": "...",
+        "image": {
+            "src": "...",
+            "alt": "..."
+        },
+        "issue_date": "..."
+    }
+}
+```
+
+### Actualización
+
+Las actualizaciones forman una lista compuesta por proyectos, artículos y certificaciones.
+
+Cada elemento informa el tipo de recurso y el acontecimiento representado.
+
+Conceptualmente:
+
+```json
+{
+    "type": "tipo-de-recurso",
+    "update_type": "tipo-de-actualizacion",
+    "activity_date": "...",
+    "original": "idioma-a",
+    "supported": [
+        "idioma-a",
+        "idioma-b"
+    ],
+    "content": {
+        "slug": "recurso-localizado",
+        "name": "...",
+        "description": "..."
+    }
+}
+```
+
+El nombre concreto dentro de `content` puede variar según el tipo de recurso cuando su contrato utiliza una propiedad diferente, como ocurre con el título de un artículo.
+
+`update_type` distingue conceptualmente entre:
+
+```text
+Contenido nuevo
+Contenido actualizado
+```
+
+`activity_date` determina el orden cronológico de la sección.
+
+La inclusión de un contenido entre los destacados y su inclusión entre las actualizaciones constituyen decisiones independientes.
+
+Conceptualmente:
+
+```text
+Destacado
+=> selección editorial
+=> orden editorial
+
+Actualización
+=> inclusión independiente
+=> tipo de actualización
+=> fecha de actividad
+```
+
+La selección y orden de los destacados pertenecen a `sitio-api`.
+
+La selección de las actualizaciones también pertenece a `sitio-api`.
+
+Las actualizaciones son ordenadas mediante la fecha de actividad. No se aplica un período fijo para excluir contenido antiguo.
 
 ## Despliegue
 
@@ -929,6 +1666,8 @@ idioma por defecto pertenece a supported
 
 Esta segunda condición constituye una regla de publicación y mantenimiento, pero la aplicación permanece preparada para continuar funcionando si se incumple.
 
+Los `slug` deben pertenecer a la variante lingüística correspondiente y ser válidos dentro del contexto en el que identifican el recurso.
+
 La validación debe permitir detectar inconsistencias entre:
 
 ```text
@@ -936,7 +1675,12 @@ Metadatos lingüísticos
 Contenido disponible
 Idioma original
 Idiomas soportados por el contenido
+Slug localizado
 Recursos de interfaz
+Selección de destacados
+Orden de destacados
+Actualizaciones
+Fecha de actividad
 ```
 
 ## Pruebas
@@ -957,7 +1701,12 @@ Validación mediante los idiomas de interfaz
 Persistencia de la preferencia
 Selección manual
 Navegación localizada
+Slug localizado
+Cambio de tema
 Comunicación con sitio-api
+Carga de Inicio
+Contenido destacado
+Actualizaciones
 Selección del idioma del contenido
 Variante disponible
 content = null

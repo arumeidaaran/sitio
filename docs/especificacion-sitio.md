@@ -117,8 +117,8 @@ La tipografía sans-serif se utiliza principalmente en:
 
 ## 2.1. Escritorio
 
-| Elemento                     |  Tamaño |
-| ---------------------------- | -------: |
+| Elemento                     | Tamaño |
+| ---------------------------- | -----: |
 | Nombre principal en cabecera | `64px` |
 | H1                           | `48px` |
 | H2                           | `36px` |
@@ -133,8 +133,8 @@ La tipografía sans-serif se utiliza principalmente en:
 
 ## 2.2. Pantallas pequeñas
 
-| Elemento         |  Tamaño |
-| ---------------- | -------: |
+| Elemento         | Tamaño |
+| ---------------- | -----: |
 | Nombre principal | `40px` |
 | H1               | `32px` |
 | H2               | `28px` |
@@ -148,7 +148,7 @@ La tipografía sans-serif se utiliza principalmente en:
 # 3. Alturas de línea
 
 | Elemento         | `line-height` |
-| ---------------- | --------------: |
+| ---------------- | ------------: |
 | Nombre principal |           `1` |
 | H1               |        `1.05` |
 | H2               |         `1.1` |
@@ -168,8 +168,8 @@ Regla general:
 
 # 4. Pesos tipográficos
 
-| Elemento                       |    Peso |
-| ------------------------------ | ------: |
+| Elemento                       | Peso  |
+| ------------------------------ | ----: |
 | Nombre principal               | `700` |
 | H1                             | `700` |
 | H2                             | `700` |
@@ -177,9 +177,9 @@ Regla general:
 | Lead                           | `500` |
 | Texto base                     | `400` |
 | Texto secundario               | `400` |
-| Etiquetas pequeñas            | `600` |
-| Navegación principal          | `500` |
-| Elemento activo de navegación | `600` |
+| Etiquetas pequeñas             | `600` |
+| Navegación principal           | `500` |
+| Elemento activo de navegación  | `600` |
 | Botones                        | `600` |
 
 ---
@@ -188,8 +188,8 @@ Regla general:
 
 ## 5.1. Colores neutrales
 
-| Uso                   | Color       |
-| --------------------- | ----------- |
+| Uso                   | Color     |
+| --------------------- | --------- |
 | Fondo principal       | `#F6F3EE` |
 | Superficie primaria   | `#FFFFFF` |
 | Superficie secundaria | `#F1ECE5` |
@@ -203,21 +203,21 @@ Regla general:
 
 ## 5.2. Colores de identidad
 
-| Uso                     | Color       |
-| ----------------------- | ----------- |
-| Rojo principal          | `#B51E23` |
-| Rojo hover              | `#99181C` |
+| Uso                    | Color     |
+| ---------------------- | --------- |
+| Rojo principal         | `#B51E23` |
+| Rojo hover             | `#99181C` |
 | Rojo suave / selección | `#F7E9E8` |
-| Verde principal         | `#2F6D59` |
-| Verde hover             | `#255847` |
-| Verde suave             | `#E8F2EE` |
+| Verde principal        | `#2F6D59` |
+| Verde hover            | `#255847` |
+| Verde suave            | `#E8F2EE` |
 
 ---
 
 ## 5.3. Colores de apoyo
 
-| Uso            | Color       |
-| -------------- | ----------- |
+| Uso            | Color     |
+| -------------- | --------- |
 | Negro de apoyo | `#0E0E0E` |
 | Blanco puro    | `#FFFFFF` |
 
@@ -227,8 +227,8 @@ Regla general:
 
 ## 6.1. Colores neutrales
 
-| Uso                   | Color       |
-| --------------------- | ----------- |
+| Uso                   | Color     |
+| --------------------- | --------- |
 | Fondo principal       | `#0F141B` |
 | Superficie primaria   | `#141B24` |
 | Superficie secundaria | `#18212C` |
@@ -242,22 +242,22 @@ Regla general:
 
 ## 6.2. Colores de identidad
 
-| Uso                     | Color       |
-| ----------------------- | ----------- |
-| Rojo principal          | `#D6363B` |
-| Rojo hover              | `#E2484D` |
+| Uso                    | Color     |
+| ---------------------- | --------- |
+| Rojo principal         | `#D6363B` |
+| Rojo hover             | `#E2484D` |
 | Rojo suave / selección | `#3A1618` |
-| Verde principal         | `#58B28D` |
-| Verde hover             | `#449977` |
-| Verde suave             | `#173328` |
+| Verde principal        | `#58B28D` |
+| Verde hover            | `#449977` |
+| Verde suave            | `#173328` |
 
 ---
 
 ## 6.3. Colores de apoyo
 
-| Uso            | Color       |
-| -------------- | ----------- |
-| Casi negro     | `#0A0E13` |
+| Uso           | Color     |
+| ------------- | --------- |
+| Casi negro    | `#0A0E13` |
 | Blanco cálido | `#F7F5F1` |
 
 ---
@@ -286,17 +286,17 @@ texto        => #FFFFFF
 ### Botón secundario
 
 ```text
-fondo  => #FFFFFF
-borde  => #D9D3CA
-texto  => #141414
+fondo => #FFFFFF
+borde => #D9D3CA
+texto => #141414
 ```
 
 ### Navegación activa
 
 ```text
-fondo            => #F7E9E8
-barra izquierda  => #B51E23
-texto             => #B51E23
+fondo           => #F7E9E8
+barra izquierda => #B51E23
+texto           => #B51E23
 ```
 
 ---
@@ -323,17 +323,17 @@ texto        => #FFFFFF
 ### Botón secundario
 
 ```text
-fondo  => transparent
-borde  => #2A3340
-texto  => #F2F1EE
+fondo => transparent
+borde => #2A3340
+texto => #F2F1EE
 ```
 
 ### Navegación activa
 
 ```text
-fondo            => #3A1618
-barra izquierda  => #D6363B
-texto             => #F2F1EE
+fondo           => #3A1618
+barra izquierda => #D6363B
+texto           => #F2F1EE
 ```
 
 ---
@@ -342,21 +342,21 @@ texto             => #F2F1EE
 
 ### Tema claro
 
-| Estado       | Color       |
-| ------------ | ----------- |
-| Éxito       | `#2F6D59` |
+| Estado       | Color     |
+| ------------ | --------- |
+| Éxito        | `#2F6D59` |
 | Advertencia  | `#9A6A16` |
 | Error        | `#B51E23` |
-| Información | `#365E96` |
+| Información  | `#365E96` |
 
 ### Tema oscuro
 
-| Estado       | Color       |
-| ------------ | ----------- |
-| Éxito       | `#58B28D` |
+| Estado       | Color     |
+| ------------ | --------- |
+| Éxito        | `#58B28D` |
 | Advertencia  | `#D6A34A` |
 | Error        | `#E2484D` |
-| Información | `#6FA8FF` |
+| Información  | `#6FA8FF` |
 
 ---
 
@@ -518,19 +518,19 @@ La escala base de espaciado es:
 
 ## 10.1. Aplicación
 
-| Uso                                      |  Espacio |
-| ---------------------------------------- | -------: |
-| Padding general de la aplicación        | `24px` |
-| Separación navegación / contenido      | `24px` |
-| Padding interno de navegación           | `16px` |
-| Separación entre bloques de navegación | `24px` |
-| Separación entre elementos de menú     | `12px` |
-| Separación idioma / tema                | `16px` |
+| Uso                                      | Espacio|
+| ---------------------------------------- | -----: |
+| Padding general de la aplicación         | `24px` |
+| Separación navegación / contenido        | `24px` |
+| Padding interno de navegación            | `16px` |
+| Separación entre bloques de navegación   | `24px` |
+| Separación entre elementos de menú       | `12px` |
+| Separación idioma / tema                 | `16px` |
 | Padding de paneles                       | `16px` |
 | Gap entre columnas principales           | `24px` |
-| Gap entre tarjetas pequeñas             | `16px` |
-| Título / párrafo                       | `12px` |
-| Párrafo / párrafo                      | `16px` |
+| Gap entre tarjetas pequeñas              | `16px` |
+| Título / párrafo                         | `12px` |
+| Párrafo / párrafo                        | `16px` |
 | Secciones mayores                        | `32px` |
 | Grupos grandes                           | `48px` |
 
@@ -555,7 +555,7 @@ mínimo => 720px
 óptimo => 1fr
 ```
 
-### Área de exposición de la landing
+### Área de exposición de Inicio
 
 ```text
 320px
@@ -577,14 +577,18 @@ Ancho fijo.
 
 ---
 
-## 11.2. Landing
+## 11.2. Inicio
 
-La landing utiliza tres regiones horizontales:
+Inicio utiliza tres regiones horizontales:
 
 ```text
 | navegación | contenido principal | área de exposición |
 |   224px     |        1fr          |       320px        |
 ```
+
+El contenido principal reúne las secciones de contenido destacado.
+
+El área de exposición reúne la actividad reciente.
 
 ---
 
@@ -679,18 +683,18 @@ La identidad personal nunca desaparece completamente.
 ## 13.1. Dimensiones
 
 ```text
-ancho                         => 224px
-padding superior              => 16px
-padding lateral               => 16px
-gap controles / menú          => 20px
-altura de ítem principal      => 48px
-padding horizontal de ítem    => 16px
-gap icono / texto             => 12px
-sangría de subítems           => 32px
-altura de subítem             => 36px
-gap entre subítems            => 8px
-altura máxima visible         => 100vh
-overflow vertical             => auto
+ancho                      => 224px
+padding superior           => 16px
+padding lateral            => 16px
+gap controles / menú       => 20px
+altura de ítem principal   => 48px
+padding horizontal de ítem => 16px
+gap icono / texto          => 12px
+sangría de subítems        => 32px
+altura de subítem          => 36px
+gap entre subítems         => 8px
+altura máxima visible      => 100vh
+overflow vertical          => auto
 ```
 
 ---
@@ -707,7 +711,7 @@ Después aparecen las secciones:
 
 ```text
 Inicio
-Perfil
+Sobre mí
 Certificaciones
 Proyectos
 Contactos
@@ -724,15 +728,27 @@ Ejemplo:
 
 ```text
 Proyectos
-    Proyecto 1
-    Proyecto 2
-    Proyecto 3
-    Ver todos
+    Proyecto
+    Proyecto
+    ...
+    Ver todos los proyectos
 ```
 
-`Ver todos` siempre aparece al final.
+El acceso al listado completo siempre aparece al final de los elementos mostrados.
 
-No debe aparecer antes de los elementos mostrados.
+No debe aparecer antes de los recursos representados.
+
+El texto del acceso debe indicar explícitamente cuál es su destino.
+
+Conceptualmente:
+
+```text
+Ver todos los proyectos
+
+Ver todos los artículos
+
+Ver todas las certificaciones
+```
 
 ---
 
@@ -742,13 +758,11 @@ La navegación no debe contener listas completas potencialmente ilimitadas.
 
 Debe mostrar solamente una cantidad limitada de elementos representativos.
 
-La opción:
+La cantidad mostrada no constituye una restricción estructural fija.
 
-```text
-Ver todos
-```
+El componente debe admitir variaciones en la cantidad de elementos sin alterar la estructura general de la navegación.
 
-debe llevar a la página completa de la sección.
+El acceso al listado completo permite continuar hacia la página correspondiente.
 
 ---
 
@@ -834,9 +848,9 @@ El fondo y el retrato pueden mezclarse visualmente dentro de una única imagen o
 
 ## 15.1. Iconos
 
-| Uso                   |  Tamaño |
-| --------------------- | -------: |
-| Navegación principal | `22px` |
+| Uso                   | Tamaño |
+| --------------------- | -----: |
+| Navegación principal  | `22px` |
 | Idioma                | `20px` |
 | Tema                  | `20px` |
 | Tarjetas / destacados | `18px` |
@@ -906,6 +920,325 @@ border-radius      => 0
 
 ---
 
+# 16. Inicio
+
+Inicio utiliza la estructura general definida para la aplicación y añade una organización específica para el contenido principal y el área de exposición.
+
+No incorpora una segunda región de presentación inmediatamente después de la cabecera.
+
+La identidad principal ya se encuentra representada mediante:
+
+```text
+Retrato
+Nombre
+Descripción breve
+Fondo visual
+```
+
+No debe duplicarse esta función mediante una segunda cabecera visual o una sección introductoria equivalente.
+
+---
+
+## 16.1. Estructura general
+
+Conceptualmente:
+
+```text
+Inicio
+|
++-- Cabecera
+|
++-- Cuerpo
+    |
+    +-- Navegación
+    |
+    +-- Contenido principal
+    |   |
+    |   +-- Proyectos destacados
+    |   |
+    |   +-- Artículos destacados
+    |   |
+    |   +-- Certificaciones destacadas
+    |
+    +-- Área de exposición
+        |
+        +-- Actualizaciones
+```
+
+Las secciones del contenido principal se disponen verticalmente.
+
+Conceptualmente:
+
+```text
+Proyectos destacados
+        |
+        V
+Artículos destacados
+        |
+        V
+Certificaciones destacadas
+```
+
+Cada sección utiliza el ancho disponible de la columna principal.
+
+No deben organizarse como columnas paralelas que compitan entre sí por el espacio principal.
+
+---
+
+## 16.2. Secciones destacadas
+
+Las secciones destacadas presentan contenido seleccionado editorialmente.
+
+La composición no depende de una cantidad fija de elementos.
+
+Los componentes deben admitir variaciones en la cantidad recibida sin modificar la estructura general de Inicio.
+
+Cada sección termina con un acceso explícito hacia su listado completo.
+
+Conceptualmente:
+
+```text
+Sección destacada
+|
++-- título
+|
++-- elementos
+|
++-- acceso al listado completo
+```
+
+El acceso debe indicar explícitamente su destino.
+
+---
+
+## 16.3. Proyecto destacado
+
+Cada proyecto destacado presenta:
+
+```text
+Imagen
+Nombre
+Descripción
+Enlace explícito
+```
+
+La imagen funciona como apoyo visual del proyecto.
+
+El nombre constituye el identificador principal visible.
+
+La descripción debe ser breve y adecuada para una representación resumida.
+
+El acceso al proyecto se realiza mediante un enlace explícito.
+
+La tarjeta completa no constituye implícitamente un enlace.
+
+---
+
+## 16.4. Artículo destacado
+
+Cada artículo destacado presenta:
+
+```text
+Imagen
+Título
+Descripción
+Fecha
+Enlace explícito
+```
+
+El título constituye el identificador principal visible.
+
+La descripción resume el contenido del artículo.
+
+La fecha se presenta como metadato.
+
+No se requiere una categoría para representar visualmente el artículo.
+
+El acceso se realiza mediante un enlace explícito.
+
+La tarjeta completa no constituye implícitamente un enlace.
+
+---
+
+## 16.5. Certificación destacada
+
+Cada certificación destacada presenta:
+
+```text
+Imagen o credencial
+Nombre
+Entidad
+Fecha
+Enlace explícito
+```
+
+El nombre constituye el identificador principal visible.
+
+La entidad se presenta como información secundaria directamente asociada a la certificación.
+
+La fecha se presenta como metadato.
+
+El acceso se realiza mediante un enlace explícito.
+
+La tarjeta completa no constituye implícitamente un enlace.
+
+---
+
+## 16.6. Coherencia entre destacados
+
+Los diferentes tipos de recurso no necesitan contener exactamente los mismos campos internos.
+
+La coherencia visual debe mantenerse mediante:
+
+```text
+Jerarquía tipográfica
+Espaciado
+Tratamiento de imagen
+Metadatos
+Posición del enlace
+Separación entre elementos
+```
+
+La uniformidad visual no debe forzar contratos idénticos entre tipos de contenido diferentes.
+
+---
+
+## 16.7. Área de exposición
+
+El área de exposición solamente existe en Inicio.
+
+Su función es presentar actividad reciente del sitio sin competir visualmente con las secciones principales.
+
+La región utiliza:
+
+```text
+Actualizaciones
+
+Novedades y contenido reciente
+```
+
+como título y descripción de contexto.
+
+Conceptualmente:
+
+```text
+Actualizaciones
+|
++-- actualización
+|
++-- actualización
+|
++-- ...
+```
+
+La composición no depende de una cantidad fija de elementos.
+
+Debe admitir variaciones en la cantidad disponible sin modificar la estructura general del área.
+
+---
+
+## 16.8. Actualización
+
+Cada actualización puede representar actividad relacionada con:
+
+```text
+Proyecto
+Artículo
+Certificación
+```
+
+El acontecimiento puede representar:
+
+```text
+Contenido nuevo
+Contenido actualizado
+```
+
+Cada elemento presenta:
+
+```text
+Icono
+Tipo de acontecimiento
+Nombre o título
+Descripción
+Fecha
+Enlace explícito
+```
+
+El icono funciona como apoyo visual para identificar el tipo de contenido o actividad.
+
+No debe sustituir el texto necesario para comprender el acontecimiento.
+
+El tipo de acontecimiento debe encontrarse visualmente diferenciado del nombre o título del recurso.
+
+La descripción debe permanecer breve.
+
+La fecha se presenta como metadato.
+
+El enlace debe indicar explícitamente el destino correspondiente.
+
+Conceptualmente:
+
+```text
+Proyecto
+=> Ver proyecto
+
+Artículo
+=> Leer artículo
+
+Certificación
+=> Ver certificación
+```
+
+La tarjeta completa de actualización no constituye implícitamente un enlace.
+
+---
+
+## 16.9. Relación entre contenido principal y exposición
+
+El contenido principal y el área de exposición tienen funciones visuales distintas.
+
+```text
+Contenido principal
+=> selección editorial
+=> mayor jerarquía
+=> mayor espacio disponible
+
+Área de exposición
+=> actividad reciente
+=> representación más compacta
+=> jerarquía secundaria
+```
+
+El área de exposición no debe dominar visualmente la página.
+
+La atención principal permanece en el contenido destacado.
+
+---
+
+# 17. Adaptación a diferentes pantallas
+
+La escala tipográfica para pantallas pequeñas se encuentra definida.
+
+La adaptación estructural completa del layout todavía debe responder a la etapa específica de diseño responsive.
+
+Los valores tipográficos establecidos no determinan por sí solos:
+
+```text
+Disposición de la navegación
+Distribución de columnas
+Comportamiento de la cabecera
+Posición del área de exposición
+Orden de las regiones
+Tratamiento de controles
+```
+
+Estas decisiones deben definirse expresamente antes de considerarse parte cerrada de la especificación.
+
+Hasta entonces, las proporciones documentadas para el layout corresponden principalmente a la representación de escritorio.
+
+---
+
 # Relación entre tema claro y tema oscuro
 
 Los dos temas deben compartir exactamente:
@@ -952,15 +1285,15 @@ Cuerpo => Inter / Noto Sans / Arial / sans-serif
 ## Tema claro
 
 ```text
-Fondo principal      => #F6F3EE
-Superficie primaria  => #FFFFFF
-Superficie secundaria=> #F1ECE5
-Texto principal      => #141414
-Texto secundario     => #5E6167
-Rojo principal       => #B51E23
-Verde principal      => #2F6D59
-Borde                => #D9D3CA
-Separador            => #E6E0D8
+Fondo principal       => #F6F3EE
+Superficie primaria   => #FFFFFF
+Superficie secundaria => #F1ECE5
+Texto principal       => #141414
+Texto secundario      => #5E6167
+Rojo principal        => #B51E23
+Verde principal       => #2F6D59
+Borde                 => #D9D3CA
+Separador             => #E6E0D8
 ```
 
 ---
@@ -968,15 +1301,15 @@ Separador            => #E6E0D8
 ## Tema oscuro
 
 ```text
-Fondo principal      => #0F141B
-Superficie primaria  => #141B24
-Superficie secundaria=> #18212C
-Texto principal      => #F2F1EE
-Texto secundario     => #B8BDC6
-Rojo principal       => #D6363B
-Verde principal      => #58B28D
-Borde                => #2A3340
-Separador            => #202936
+Fondo principal       => #0F141B
+Superficie primaria   => #141B24
+Superficie secundaria => #18212C
+Texto principal       => #F2F1EE
+Texto secundario      => #B8BDC6
+Rojo principal        => #D6363B
+Verde principal       => #58B28D
+Borde                 => #2A3340
+Separador             => #202936
 ```
 
 ---
@@ -998,11 +1331,11 @@ Separador            => #202936
 ## Layout de escritorio
 
 ```text
-Navegación       => 224px
-Contenido        => 1fr
-Exposición       => 320px
-Gap principal    => 24px
-Máximo total     => 1504px
+Navegación    => 224px
+Contenido     => 1fr
+Exposición    => 320px
+Gap principal => 24px
+Máximo total  => 1504px
 ```
 
 ---
@@ -1010,10 +1343,10 @@ Máximo total     => 1504px
 ## Cabecera
 
 ```text
-Expandida => 320px
-Compacta  => 112px
-Retrato expandido => 280px x 280px
-Retrato compacto  => 72px x 72px
+Expandida          => 320px
+Compacta           => 112px
+Retrato expandido  => 280px x 280px
+Retrato compacto   => 72px x 72px
 ```
 
 ---
@@ -1021,7 +1354,7 @@ Retrato compacto  => 72px x 72px
 ## Controles
 
 ```text
-Altura estándar => 48px
+Altura estándar  => 48px
 Icono navegación => 22px
 Icono controles  => 20px
 Border radius    => 0
@@ -1043,10 +1376,15 @@ Los siguientes elementos de identidad visual quedan definidos:
 8. sombras;
 9. bordes;
 10. espaciado;
-11. proporciones del layout;
+11. proporciones del layout de escritorio;
 12. cabecera expandida y compacta;
 13. navegación;
 14. retrato y composición de cabecera;
-15. iconos y controles.
+15. iconos y controles;
+16. estructura visual de Inicio;
+17. representación de contenido destacado;
+18. área de exposición y actualizaciones.
+
+La adaptación estructural completa para diferentes tamaños de pantalla permanece pendiente de la etapa correspondiente de diseño responsive.
 
 Esta especificación constituye la referencia base de identidad visual para las siguientes etapas de diseño e implementación de `sitio`.
