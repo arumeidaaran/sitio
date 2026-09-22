@@ -109,6 +109,10 @@ JavaScript puede formar parte del proyecto cuando corresponda a herramientas o c
 
 El diseño del sitio es propio y no depende de una biblioteca de componentes visuales prediseñados.
 
+La iconografía utiliza `@tabler/icons-angular`.
+
+Los iconos forman parte de la presentación administrada por el frontend. Los contratos de `sitio-api` no dependen de los nombres internos ni de la implementación de la biblioteca de iconos.
+
 La comunicación HTTP con `sitio-api` utiliza `HttpClient` de Angular.
 
 El estado propio de la aplicación utiliza los recursos proporcionados por Angular, principalmente `Signals` y servicios, sin incorporar una biblioteca externa de administración de estado mientras no exista una necesidad concreta.
@@ -137,6 +141,8 @@ sitio
     +-- Contactos
     |
     +-- Certificaciones
+    |   |
+    |   +-- Certificado
     |   |
     |   +-- Certificación
     |
@@ -203,8 +209,7 @@ Aplicación
 |
 +-- Cabecera
 |   |
-|   +-- Fondo visual
-|   +-- Foto
+|   +-- Fondo visual y foto juntos
 |   +-- Nombre
 |   +-- Descripción breve
 |
@@ -216,7 +221,7 @@ Aplicación
     |   +-- Selección de tema
     |   +-- Secciones
     |
-    +-- Contenido principal
+    +-- Contenido
     |
     +-- Área de exposición
         => solamente en Inicio
@@ -224,7 +229,13 @@ Aplicación
 
 No existe un pie global.
 
-La cabecera constituye una única composición visual formada por el fondo, la fotografía, el nombre y la descripción breve.
+La cabecera constituye una única composición visual formada por:
+
+```text
+Fondo visual y foto juntos
+Nombre
+Descripción breve
+```
 
 Durante el desplazamiento, la cabecera reduce su presencia manteniendo visibles la fotografía y el nombre.
 
@@ -263,8 +274,8 @@ Navegación
 |
 +-- Certificaciones
 |   |
-|   +-- Certificación
-|   +-- Certificación
+|   +-- certificado o certificación
+|   +-- certificado o certificación
 |   +-- ...
 |   +-- Ver todas las certificaciones
 |
@@ -301,7 +312,24 @@ Ver todas las certificaciones
 
 Si la navegación supera el espacio vertical disponible, dispone de desplazamiento interno.
 
-La región principal presenta el contenido correspondiente a la página activa.
+La región `Contenido` presenta la información correspondiente a la página activa.
+
+En las páginas internas, esta región constituye la parte variable de la estructura general.
+
+Conceptualmente:
+
+```text
+Cabecera
+=> permanece
+
+Navegación
+=> permanece
+
+Contenido
+=> cambia según la página
+```
+
+La composición interna de `Contenido` depende de la naturaleza de cada página.
 
 La navegación interna conserva el contexto lingüístico previamente establecido y utiliza ese mismo idioma para construir el acceso hacia las demás secciones.
 
@@ -356,6 +384,8 @@ El enlace conduce a la página del proyecto.
 
 La tarjeta completa no constituye implícitamente un enlace.
 
+Los lenguajes y sus porcentajes no forman parte de la tarjeta de Inicio.
+
 La cantidad no constituye una limitación estructural del componente.
 
 Al final de la sección se presenta:
@@ -392,17 +422,16 @@ Ver todos los artículos
 
 ### Certificaciones destacadas
 
-La sección presenta certificaciones seleccionadas editorialmente.
+La sección presenta recursos seleccionados editorialmente dentro de Certificaciones.
 
-Cada elemento presenta:
+Estos recursos pueden corresponder a:
 
 ```text
-Imagen o credencial
-Nombre
-Entidad
-Fecha
-Enlace explícito
+Certificado
+Certificación
 ```
+
+Cada elemento presenta la información resumida necesaria para identificar el recurso y acceder a su detalle.
 
 La cantidad no constituye una limitación estructural del componente.
 
@@ -471,6 +500,7 @@ Esta región puede contener actividad relacionada con:
 ```text
 Proyecto
 Artículo
+Certificado
 Certificación
 ```
 
@@ -504,6 +534,9 @@ Proyecto
 Artículo
 => Leer artículo
 
+Certificado
+=> Ver certificado
+
 Certificación
 => Ver certificación
 ```
@@ -534,6 +567,578 @@ Actualizaciones
 
 Un mismo recurso puede pertenecer simultáneamente a ambas regiones.
 
+## Páginas internas
+
+Las páginas internas utilizan el mismo armazón general.
+
+Conceptualmente:
+
+```text
+Página interna
+|
++-- Cabecera
+|   |
+|   +-- Fondo visual y foto juntos
+|   +-- Nombre
+|   +-- Descripción breve
+|
++-- Cuerpo
+    |
+    +-- Navegación
+    |
+    +-- Contenido
+```
+
+Las páginas internas no utilizan el área de exposición de Inicio.
+
+La región `Contenido` puede adoptar una composición propia según la naturaleza de la página sin modificar la estructura global del sitio.
+
+## Sobre mí
+
+`Sobre mí` presenta el contenido personal mediante bloques de texto acompañados por recursos visuales relacionados con aquello que se está comunicando.
+
+Conceptualmente:
+
+```text
+Sobre mí
+|
++-- bloque
+|   +-- texto
+|   +-- icono o imagen
+|
++-- bloque
+|   +-- texto
+|   +-- icono o imagen
+|
++-- ...
+```
+
+Los recursos visuales no se incorporan de forma arbitraria.
+
+Cada icono o imagen debe corresponder al contenido del bloque al que acompaña.
+
+La decisión editorial determina si un bloque utiliza:
+
+```text
+Icono
+Imagen
+```
+
+El contrato permite al frontend conocer cuál de los dos tipos fue seleccionado.
+
+La posición, tamaño, color y demás decisiones de presentación pertenecen exclusivamente a `sitio`.
+
+Cuando el recurso es un icono, `sitio-api` no especifica un icono propio de una biblioteca.
+
+El bloque dispone de un identificador estable y `sitio` relaciona ese identificador con un icono concreto de la biblioteca utilizada por el frontend.
+
+Conceptualmente:
+
+```text
+Identificador del bloque
+=> sitio
+
+sitio
+=> icono concreto de Tabler Icons
+```
+
+De esta manera, la elección del icono específico continúa perteneciendo a la capa de presentación.
+
+Cuando el recurso es una imagen, su contrato contiene la fuente de la imagen, el texto alternativo y el destino asociado.
+
+## Contactos
+
+La página de Contactos combina dos mecanismos:
+
+```text
+Contactos
+|
++-- Medios de contacto
+|
++-- Formulario de contacto
+```
+
+### Medios de contacto
+
+Los medios existentes se presentan mediante tarjetas que reutilizan el lenguaje visual general del sitio.
+
+Conceptualmente:
+
+```text
+--------------------------------
+| icono o imagen               |
+| ---------------------------- |
+| tipo de contacto             |
+| enlace                       |
+--------------------------------
+```
+
+El texto correspondiente al medio identifica la tarjeta.
+
+El propio valor representado funciona como enlace cuando corresponde.
+
+No se incorpora un segundo enlace redundante como:
+
+```text
+Ver perfil
+```
+
+cuando el propio medio ya permite realizar la navegación.
+
+Los diferentes tipos de contacto pueden incluir:
+
+```text
+LinkedIn
+GitHub
+Sitio web
+Correo electrónico
+WhatsApp
+```
+
+### Formulario de contacto
+
+El formulario permite enviar un mensaje directamente desde el sitio.
+
+Contiene:
+
+```text
+Nombre
+Apellido
+Dirección de correo electrónico
+Motivo del contacto
+Mensaje
+```
+
+`Nombre` y `Apellido` se mantienen como campos separados.
+
+El nombre proporcionado puede ser utilizado posteriormente para dirigirse a la persona durante una respuesta.
+
+Conceptualmente:
+
+```text
+Motivo del contacto
+=> asunto del correo
+
+Mensaje
+=> cuerpo principal del correo
+```
+
+La dirección de correo proporcionada permite responder posteriormente al remitente.
+
+El frontend no contiene credenciales de correo ni se comunica directamente con el servicio utilizado para realizar el envío.
+
+Conceptualmente:
+
+```text
+Usuario
+   |
+   V
+Formulario
+   |
+   V
+frontend
+   |
+   V
+backend
+   |
+   V
+Microsoft Graph
+   |
+   V
+Correo
+```
+
+La página visible continúa perteneciendo a la ruta localizada del sitio:
+
+```text
+/{idioma}/{contactos-localizado}/
+```
+
+La API utiliza una misma ruta para consultar los medios y enviar el formulario, diferenciando la operación mediante el método HTTP:
+
+```http
+GET /api/v1/{idioma}/contacts/
+```
+
+```text
+=> obtiene los medios de contacto
+```
+
+```http
+POST /api/v1/{idioma}/contacts/
+```
+
+```text
+=> recibe y procesa el formulario de contacto
+```
+
+Los contactos pertenecen al recurso `contacts`.
+
+No forman parte del contrato de `profile`.
+
+### Protección del formulario
+
+El formulario utiliza protección proporcional al contexto de un sitio personal.
+
+Se utilizan:
+
+```text
+Validación mediante Pydantic
+Límites de longitud
+Honeypot
+Límite de 5 envíos por IP por hora
+```
+
+No se incorpora CAPTCHA.
+
+La validación mediante Pydantic garantiza que los datos recibidos cumplen el contrato antes de ser procesados.
+
+Los límites de longitud evitan entradas descontroladas.
+
+El honeypot permite detectar envíos automatizados simples sin introducir una interacción adicional para el usuario.
+
+La limitación por IP reduce el abuso repetitivo del endpoint antes de que la solicitud llegue al servicio utilizado para enviar el correo.
+
+La aceptación del mensaje por el servicio de envío se representa mediante una respuesta HTTP `202 Accepted`.
+
+## Certificaciones
+
+La sección denominada `Certificaciones` reúne dos tipos de recursos:
+
+```text
+Certificado
+Certificación
+```
+
+Un certificado representa principalmente un comprobante de realización o finalización de una actividad, curso o formación.
+
+Una certificación representa una credencial obtenida mediante un proceso de certificación y puede incorporar datos adicionales relacionados con su vigencia y verificación.
+
+La sección utiliza una rejilla de tarjetas.
+
+Conceptualmente:
+
+```text
++-----------------+ +-----------------+ +-----------------+ 
+|   certificado   | |   certificado   | |  certificacion  | 
++-----------------+ +-----------------+ +-----------------+ 
+
++-----------------+ +-----------------+ +-----------------+ 
+|  certificacion  | |   certificado   | |  certificacion  | 
++-----------------+ +-----------------+ +-----------------+ 
+
+```
+
+Las tarjetas se distribuyen horizontalmente mientras exista espacio disponible, continúan en una nueva fila cuando sea necesario y no hay orden de precedencia entre un certificado y una certificación puramente. El orden para sus apariciones mediante es sus fechas.
+
+### Tarjeta de certificado
+
+Conceptualmente:
+
+```text
+--------------------------------
+| imagen                       |
+| ---------------------------- |
+| Certificado                  |
+| Nombre                       |
+| Entidad                      |
+| Fecha                        |
+| Ver certificado              |
+--------------------------------
+```
+
+### Tarjeta de certificación
+
+Conceptualmente:
+
+```text
+--------------------------------
+| imagen                       |
+| ---------------------------- |
+| Certificación                |
+| Nombre                       |
+| Entidad                      |
+| Fecha                        |
+| Expiración                   |
+| Ver certificación            |
+--------------------------------
+```
+
+El tipo constituye información visible.
+
+Los valores técnicos del contrato son localizados por el frontend.
+
+Conceptualmente:
+
+```text
+certificate
+=> Certificado
+
+certification
+=> Certificación
+```
+
+Cuando una certificación no dispone de fecha de expiración, la tarjeta conserva el espacio correspondiente y presenta una representación localizada equivalente a:
+
+```text
+Expiración: No expira
+```
+
+No se representa `null` directamente al usuario.
+
+Los campos propios de una certificación que no se aplican a un certificado no pertenecen al contrato de certificado.
+
+El listado completo se ordena por fecha de emisión desde la más reciente hacia la más antigua.
+
+### Detalle
+
+Al seleccionar un certificado o una certificación, toda la región `Contenido` pasa a representar el recurso seleccionado.
+
+Su contenido viene del backend.
+
+Los datos disponen de una estructura definida por su contrato.
+
+Cuando una certificación carece de código o enlace de verificación, el lugar correspondiente se representa mediante un texto localizado equivalente a:
+
+```text
+No disponible
+```
+
+El frontend no presenta valores técnicos `null`.
+
+## Proyectos
+
+La página de Proyectos utiliza una rejilla de tarjetas.
+
+Conceptualmente:
+
+```text
++-------------+ +-------------+ +-------------+
+| proyecto    | | proyecto    | | proyecto    |
++-------------+ +-------------+ +-------------+
+
++-------------+ +-------------+ +-------------+
+| proyecto    | | proyecto    | | proyecto    |
++-------------+ +-------------+ +-------------+
+```
+
+Cada tarjeta presenta:
+
+```text
+Imagen
+Nombre
+Descripción breve
+Ver proyecto
+```
+
+La tarjeta constituye una representación resumida y una invitación a acceder al detalle.
+
+No presenta los lenguajes ni sus porcentajes.
+
+Al seleccionar `Ver proyecto`, toda la región `Contenido` pasa a representar el proyecto seleccionado.
+
+El detalle presenta los datos completos necesarios para el proyecto, incluidos:
+
+```text
+Nombre
+Imagen
+Descripción
+Lenguajes
+Porcentajes de cada lenguaje
+Repositorio
+```
+
+Los datos obtenidos desde GitHub son procesados mediante `sitio-api`.
+
+El frontend no consulta GitHub directamente.
+
+Conceptualmente:
+
+```text
+sitio
+   |
+   V
+sitio-api
+   |
+   +-- contenido localizado
+   |
+   +-- GitHub REST API
+```
+
+Los datos localizables, como la descripción, son proporcionados por `sitio-api` de acuerdo con el idioma solicitado.
+
+Los datos que no dependen del idioma pueden proceder de GitHub mediante `sitio-api`.
+
+Los porcentajes de lenguajes se calculan a partir de los datos obtenidos desde GitHub.
+
+Su contenido viene del backend.
+
+El orden del listado de proyectos constituye una decisión editorial y no depende automáticamente de la última actualización técnica del repositorio.
+
+## Blog
+
+La página de Blog utiliza una rejilla de tarjetas.
+
+Cada tarjeta presenta:
+
+```text
+Imagen
+Título
+Descripción breve
+Fecha de publicación
+Fecha de actualización
+Leer artículo
+```
+
+Todas las tarjetas mantienen ambos espacios de fecha.
+
+`publication_date` representa la fecha original de publicación.
+
+`update_date` representa la fecha de la última versión publicada.
+
+Cuando un artículo todavía no ha recibido una modificación posterior:
+
+```text
+publication_date
+=> fecha de creación
+
+update_date
+=> misma fecha
+```
+
+Después de una actualización:
+
+```text
+publication_date
+=> permanece
+
+update_date
+=> fecha de la nueva versión
+```
+
+Por lo tanto:
+
+```text
+update_date >= publication_date
+```
+
+`update_date` no utiliza `null`.
+
+El listado completo de artículos se ordena mediante `publication_date` desde la fecha más reciente hacia la más antigua.
+
+### Artículo
+
+Al seleccionar `Leer artículo`, toda la región `Contenido` pasa a representar el artículo.
+
+El Blog constituye el contenido cuya fuente editorial utiliza Markdown, pero que se ubica mediante información que viene del backend.
+
+Conceptualmente:
+
+```text
+Archivo Markdown
+|
++-- Metadatos
+|
++-- Cuerpo del artículo
+```
+
+El cuerpo puede variar libremente de acuerdo con las necesidades del artículo.
+
+Puede contener, según el contenido:
+
+```text
+Texto
+Títulos
+Subtítulos
+Listas
+Enlaces
+Imágenes
+Tablas
+Código
+Citas
+Diagramas o grafos
+Videos
+Otros elementos necesarios para el artículo
+```
+
+Esta flexibilidad permite que los artículos tengan estructuras diferentes sin exigir una estructura rígida equivalente a la utilizada por proyectos o certificaciones.
+
+## Tarjetas
+
+Las diferentes páginas reutilizan un mismo lenguaje visual de tarjetas.
+
+Esto no significa que todos los tipos de tarjeta compartan los mismos datos, sino que compartan lo mismo estilo visual.
+
+Conceptualmente:
+
+```text
+--------------------------------
+| zona visual                  |
+| ---------------------------- |
+| contenido propio del recurso |
+|                              |
+| enlace, cuando corresponda   |
+--------------------------------
+```
+
+El lenguaje visual común comprende:
+
+```text
+Tratamiento de superficies
+Bordes
+Ausencia de redondeo por defecto
+Tipografía
+Espaciado
+Jerarquía
+Tratamiento de imágenes e iconos
+Tratamiento de enlaces
+Comportamiento entre temas
+```
+
+Cada recurso mantiene su propia información.
+
+Conceptualmente:
+
+```text
+Contacto
+=> icono o imagen
+=> tipo
+=> enlace
+
+Proyecto
+=> imagen
+=> nombre
+=> descripción
+=> Ver proyecto
+
+Artículo
+=> imagen
+=> título
+=> descripción
+=> publicación
+=> actualización
+=> Leer artículo
+
+Certificado
+=> imagen
+=> tipo
+=> nombre
+=> entidad
+=> fecha
+=> Ver certificado
+
+Certificación
+=> imagen
+=> tipo
+=> nombre
+=> entidad
+=> fecha
+=> expiración
+=> Ver certificación
+```
+
+Las tarjetas completas no constituyen implícitamente enlaces cuando existe una acción o un enlace explícito dentro de ellas.
+
 ## Contenido
 
 El frontend presenta diferentes tipos de contenido obtenidos mediante `sitio-api`.
@@ -542,14 +1147,15 @@ La distribución conceptual es:
 
 ```text
 Sobre mí
-=> información personal
-=> presentación
+=> bloques de contenido personal
+=> iconos o imágenes relacionados
 
 Contactos
 => medios de contacto
+=> formulario
 
 Certificaciones
-=> listado
+=> listado de certificados y certificaciones
 => información individual
 
 Proyectos
@@ -559,13 +1165,14 @@ Proyectos
 Blog
 => listado de artículos
 => artículos
+=> contenido Markdown
 ```
 
 `Sitio` no depende del origen físico de esta información.
 
 Las fuentes utilizadas para generar cada recurso pertenecen a la responsabilidad de `sitio-api`.
 
-Esto permite que la presentación mantenga una estructura estable independientemente de si el backend obtiene determinada información desde archivos locales, Markdown, una base de datos, GitHub u otras fuentes.
+Esto permite que la presentación mantenga una estructura estable independientemente de si el backend obtiene determinada información desde texto Markdown, una API externa, una base de datos u otras fuentes fuera del propio archivo ubicado por el backend.
 
 La cantidad de información retornada depende del contexto en el que el recurso será utilizado.
 
@@ -579,10 +1186,14 @@ Listado
 => datos necesarios para representar el listado
 
 Detalle
-=> contenido completo del recurso
+=> datos completos necesarios para representar el recurso
 ```
 
 El frontend no necesita recibir en Inicio información que solamente será utilizada dentro de la página individual de un recurso.
+
+Markdown se utiliza como fuente editorial del Blog.
+
+Constituye la fuente general para todos los contenidos de artículos del blog.
 
 ## Internacionalización
 
@@ -815,6 +1426,30 @@ Los enlaces internos son construidos de acuerdo con el idioma activo.
 Los segmentos visibles de las direcciones y los `slug` correspondientes a recursos forman parte de la variante localizada.
 
 Un nuevo acceso directo mediante una dirección diferente vuelve a ejecutar la resolución inicial.
+
+Las páginas de detalle mantienen activa la sección a la que pertenece el recurso.
+
+Conceptualmente:
+
+```text
+Listado de proyectos
+=> Proyectos activo
+
+Proyecto concreto
+=> Proyectos activo
+
+Listado de certificaciones
+=> Certificaciones activo
+
+Certificado o certificación concreta
+=> Certificaciones activo
+
+Listado de artículos
+=> Blog activo
+
+Artículo concreto
+=> Blog activo
+```
 
 ## Selección de idioma
 
@@ -1115,7 +1750,7 @@ Listado
 => sitio representa el resultado
 
 Detalle
-=> sitio-api retorna el contenido completo
+=> sitio-api retorna los datos completos necesarios
 => sitio representa el resultado
 ```
 
@@ -1133,6 +1768,8 @@ sitio-api
 => ordenar los contenidos destacados
 => seleccionar las actualizaciones
 => ordenar las actualizaciones por fecha de actividad
+=> obtener y normalizar datos de fuentes externas
+=> recibir y procesar el formulario de contacto
 => retornar solamente la información necesaria para cada contexto
 
 sitio
@@ -1147,10 +1784,15 @@ sitio
 => realizar una nueva solicitud cuando sea necesario
 => construir las rutas visibles localizadas
 => representar la información recibida
+=> seleccionar componentes visuales
+=> seleccionar los iconos concretos
+=> representar los tipos técnicos mediante textos localizados
 => informar al usuario cuando el contenido se presenta en otro idioma
 ```
 
 `Sitio-api` no selecciona automáticamente una variante lingüística alternativa cuando el idioma solicitado no existe.
+
+`Sitio-api` tampoco determina la posición, color, tamaño, icono concreto ni demás características propias de la presentación.
 
 `Sitio` no necesita conocer cómo el backend obtiene o almacena las distintas variantes del contenido.
 
@@ -1168,6 +1810,7 @@ Schemas
 Propiedades de modelos
 Contratos
 Nombres internos de recursos
+Valores discriminadores
 ```
 
 Los textos humanos propios del proyecto deben permanecer en español cuando corresponden a:
@@ -1347,11 +1990,144 @@ sitio-api
 +-- content
 ```
 
-### Contratos de recursos
+## Contratos de recursos
 
 El objeto `content` utiliza nombres técnicos en inglés.
 
-El `slug` forma parte del contenido localizado.
+El `slug` forma parte del contenido localizado cuando el recurso dispone de página individual localizada.
+
+### Sobre mí
+
+La representación de `Sobre mí` contiene bloques editoriales.
+
+Conceptualmente:
+
+```json
+{
+    "name": "...",
+    "description": "...",
+    "blocks": [
+        {
+            "id": "software",
+            "title": "...",
+            "text": "...",
+            "visual": {
+                "type": "icon"
+            }
+        },
+        {
+            "id": "music",
+            "title": "...",
+            "text": "...",
+            "visual": {
+                "type": "image",
+                "src": "...",
+                "alt": "...",
+                "href": "..."
+            }
+        }
+    ]
+}
+```
+
+`visual.type` constituye un discriminador.
+
+Los valores utilizados son:
+
+```text
+icon
+image
+```
+
+Cuando `type` es `icon`, el contrato no contiene información específica de una biblioteca gráfica.
+
+El identificador del bloque permite al frontend seleccionar el icono concreto que corresponde editorialmente a ese contenido.
+
+Conceptualmente:
+
+```text
+id del bloque
+=> mapeo interno de sitio
+=> icono concreto de @tabler/icons-angular
+```
+
+Cuando `type` es `image`, se incluyen obligatoriamente:
+
+```text
+src
+alt
+href
+```
+
+`src` identifica la fuente de la imagen.
+
+`alt` proporciona su alternativa textual.
+
+`href` proporciona el destino asociado a la imagen.
+
+Estos valores no utilizan `null`.
+
+Las decisiones de posición y estilo no forman parte del contrato de `sitio-api`.
+
+### Contactos
+
+Los contactos disponen de un recurso independiente del perfil.
+
+Conceptualmente:
+
+```http
+GET /api/v1/{idioma}/contacts/
+POST /api/v1/{idioma}/contacts/
+```
+
+`GET` obtiene los medios disponibles.
+
+El contrato base contiene conceptualmente:
+
+```json
+{
+    "linkedin": "...",
+    "github": "...",
+    "website": null,
+    "emails": [
+        {
+            "type": "tipo",
+            "address": "..."
+        }
+    ],
+    "phones": [
+        {
+            "type": "mobile",
+            "format": "nacionalidad",
+            "number": "...",
+            "whatsapp": true
+        }
+    ]
+}
+```
+`type` debe contener uno de los valores personal, comercial o empresarial.
+
+`website` puede ser nulo cuando no existe un sitio web adicional disponible.
+
+`whatsapp` indica expresamente si el número telefónico también puede utilizarse mediante WhatsApp.
+
+Los iconos correspondientes a los medios de contacto son seleccionados por el frontend.
+
+`POST` recibe conceptualmente:
+
+```json
+{
+    "first_name": "...",
+    "last_name": "...",
+    "email": "...",
+    "subject": "...",
+    "message": "...",
+}
+```
+
+La operación procesa el mensaje mediante `sitio-api` y el servicio configurado para el envío de correo.
+
+Los contactos dejan de formar parte del recurso `profile`.
 
 ### Proyecto
 
@@ -1362,34 +2138,41 @@ La representación completa de un proyecto contiene conceptualmente:
     "slug": "recurso-localizado",
     "name": "...",
     "description": "...",
-    "content": "...",
     "image": {
         "src": "...",
         "alt": "..."
     },
-    "technologies": [
-        "..."
-    ],
-    "links": [
+    "languages": [
         {
-            "type": "...",
-            "url": "..."
+            "name": "lenguaje1",
+            "percentage": 85.5
+        },
+        {
+            "name": "lenguaje2",
+            "percentage": 14.5
         }
-    ]
+    ],
+    "repository_url": "https://github.com/..."
 }
 ```
 
-`description` representa una descripción breve.
-
-`content` representa el contenido completo del proyecto.
+`description` representa una descripción breve localizada.
 
 `image` contiene la imagen principal y su descripción alternativa.
 
-`technologies` contiene las tecnologías asociadas al proyecto.
+`languages` contiene los lenguajes detectados para el proyecto y el porcentaje correspondiente a cada uno.
 
-`links` contiene los enlaces externos disponibles.
+El campo `name` de `languages` debe contener el nombre de un lenguaje de programación.
 
-No todos los proyectos necesitan disponer de los mismos tipos de enlace.
+Los porcentajes son calculados por `sitio-api` a partir de los datos obtenidos mediante GitHub.
+
+`repository_url` identifica el repositorio correspondiente.
+
+El frontend no accede directamente a GitHub.
+
+No se utiliza Markdown para representar el detalle de un proyecto.
+
+La representación resumida utilizada en las tarjetas no necesita recibir los lenguajes ni sus porcentajes.
 
 ### Artículo
 
@@ -1406,37 +2189,86 @@ La representación completa de un artículo contiene conceptualmente:
         "alt": "..."
     },
     "publication_date": "...",
-    "update_date": null
+    "update_date": "..."
 }
 ```
 
 `description` representa un resumen breve.
 
-`content` representa el contenido completo del artículo.
+`content` representa el contenido procesado a partir de la fuente Markdown.
 
-`publication_date` identifica la fecha de publicación.
+`publication_date` identifica la fecha original de publicación.
 
-`update_date` identifica una actualización posterior cuando exista.
+`update_date` identifica la fecha correspondiente a la última versión publicada.
+
+Ambas propiedades contienen siempre una fecha.
+
+En la primera publicación:
+
+```text
+publication_date = update_date
+```
+
+Posteriormente:
+
+```text
+update_date >= publication_date
+```
 
 No se requiere una categoría para representar el artículo.
 
-### Certificación
+### Certificado
 
-La representación completa de una certificación contiene conceptualmente:
+Un certificado utiliza el discriminador:
+
+```text
+type = certificate
+```
+
+Conceptualmente:
 
 ```json
 {
+    "type": "certificate",
     "slug": "recurso-localizado",
     "name": "...",
     "issuer": "...",
-    "description": "...",
-    "content": "...",
+    "issue_date": "...",
+    "image": {
+        "src": "...",
+        "alt": "..."
+    }
+}
+```
+
+`issuer` identifica la entidad emisora.
+
+`issue_date` identifica la fecha de emisión o finalización correspondiente.
+
+El contrato de certificado no contiene propiedades propias de una certificación profesional que no le correspondan.
+
+### Certificación
+
+Una certificación utiliza el discriminador:
+
+```text
+type = certification
+```
+
+Conceptualmente:
+
+```json
+{
+    "type": "certification",
+    "slug": "recurso-localizado",
+    "name": "...",
+    "issuer": "...",
+    "issue_date": "...",
+    "expiration_date": null,
     "image": {
         "src": "...",
         "alt": "..."
     },
-    "issue_date": "...",
-    "expiration_date": null,
     "credential": {
         "code": null,
         "url": null
@@ -1448,9 +2280,39 @@ La representación completa de una certificación contiene conceptualmente:
 
 `issue_date` identifica la fecha de emisión.
 
-`expiration_date` puede ser nulo cuando la certificación no dispone de expiración.
+`expiration_date` contiene la fecha de expiración cuando existe.
 
-`credential` contiene la información de verificación cuando exista.
+Cuando vale `null`, significa que la certificación no expira.
+
+El frontend representa este caso mediante un texto localizado equivalente a:
+
+```text
+No expira
+```
+
+`credential.code` y `credential.url` siempre forman parte del contrato de certificación.
+
+Cuando alguno no está disponible, su valor es `null`.
+
+El frontend representa esta ausencia mediante un texto localizado equivalente a:
+
+```text
+No disponible
+```
+
+El frontend no utiliza la presencia o ausencia de propiedades para determinar si un recurso es un certificado o una certificación.
+
+La identificación depende exclusivamente de `type`.
+
+Conceptualmente:
+
+```text
+type = certificate
+=> contrato Certificate
+
+type = certification
+=> contrato Certification
+```
 
 ## Contrato de Inicio
 
@@ -1525,9 +2387,9 @@ Conceptualmente:
 La representación de Inicio no necesita recibir:
 
 ```text
-Contenido completo
-Tecnologías
-Enlaces externos
+Lenguajes
+Porcentajes
+URL del repositorio
 ```
 
 Estos datos pertenecen al detalle del proyecto.
@@ -1556,7 +2418,9 @@ Conceptualmente:
 }
 ```
 
-### Certificación destacada
+La fecha de actualización forma parte del listado completo y del detalle del artículo, pero no es necesaria para la representación resumida establecida para Inicio.
+
+### Recurso destacado de Certificaciones
 
 Conceptualmente:
 
@@ -1568,6 +2432,7 @@ Conceptualmente:
         "idioma-b"
     ],
     "content": {
+        "type": "certificate",
         "slug": "recurso-localizado",
         "name": "...",
         "issuer": "...",
@@ -1580,9 +2445,34 @@ Conceptualmente:
 }
 ```
 
+o:
+
+```json
+{
+    "original": "idioma-a",
+    "supported": [
+        "idioma-a",
+        "idioma-b"
+    ],
+    "content": {
+        "type": "certification",
+        "slug": "recurso-localizado",
+        "name": "...",
+        "issuer": "...",
+        "image": {
+            "src": "...",
+            "alt": "..."
+        },
+        "issue_date": "..."
+    }
+}
+```
+
+`type` permite al frontend determinar qué recurso representa y construir la acción correspondiente.
+
 ### Actualización
 
-Las actualizaciones forman una lista compuesta por proyectos, artículos y certificaciones.
+Las actualizaciones forman una lista compuesta por proyectos, artículos, certificados y certificaciones.
 
 Cada elemento informa el tipo de recurso y el acontecimiento representado.
 
@@ -1723,6 +2613,32 @@ Esta segunda condición constituye una regla de publicación y mantenimiento, pe
 
 Los `slug` deben pertenecer a la variante lingüística correspondiente y ser válidos dentro del contexto en el que identifican el recurso.
 
+Los bloques visuales de `Sobre mí` deben respetar los contratos correspondientes a su discriminador:
+
+```text
+type = icon
+=> recurso de icono
+
+type = image
+=> src, alt y href obligatorios
+```
+
+Los recursos de Certificaciones deben respetar:
+
+```text
+type = certificate
+=> contrato de certificado
+
+type = certification
+=> contrato de certificación
+```
+
+Los artículos deben garantizar:
+
+```text
+update_date >= publication_date
+```
+
 La validación debe permitir detectar inconsistencias entre:
 
 ```text
@@ -1736,6 +2652,11 @@ Selección de destacados
 Orden de destacados
 Actualizaciones
 Fecha de actividad
+Tipos de certificaciones
+Fechas de artículos
+Datos de proyectos
+Medios de contacto
+Datos del formulario
 ```
 
 ## Pruebas
@@ -1771,6 +2692,25 @@ Respaldo mediante idioma por defecto
 Respaldo mediante idioma original
 Conservación del idioma activo del sistema
 Aviso cuando el contenido utiliza otro idioma
+Representación de Sobre mí
+Discriminación entre icono e imagen
+Mapeo de iconos de Tabler
+Representación de tarjetas
+Listado de proyectos
+Detalle de proyectos
+Representación de lenguajes y porcentajes
+Listado de artículos
+Fechas de publicación y actualización
+Representación del contenido Markdown
+Listado de certificados y certificaciones
+Discriminación entre certificado y certificación
+Representación de certificaciones sin expiración
+Representación de credenciales no disponibles
+Carga de medios de contacto
+Envío del formulario de contacto
+Validación del formulario
+Protección honeypot
+Tratamiento del límite de envíos
 ```
 
 También debe verificarse que una variante ausente conserve `original` y `supported`, permitiendo que el frontend determine correctamente la siguiente solicitud.

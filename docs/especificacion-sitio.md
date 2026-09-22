@@ -35,14 +35,19 @@ La fotografía personal forma parte de la identidad visual del sitio y cumple ta
 
 No existe un logotipo independiente.
 
-La cabecera combina en una única composición:
+La cabecera combina:
 
-- fondo visual;
-- retrato;
+- Fondo visual y foto juntos;
 - nombre;
 - descripción breve.
 
 La navegación utiliza iconografía como apoyo visual.
+
+Las páginas reutilizan una misma estructura global y un mismo lenguaje visual.
+
+Las diferencias entre páginas se concentran dentro de la región de contenido correspondiente.
+
+Las tarjetas forman parte del lenguaje visual común del sitio, aunque cada tipo de elemento conserva sus propios datos y estructura interna.
 
 El tema claro y el tema oscuro mantienen la misma identidad, estructura, contenido, jerarquía y disposición.
 
@@ -433,7 +438,7 @@ Las sombras pueden utilizarse en:
 - navegación sticky;
 - cabecera compacta;
 - elementos destacados;
-- tarjetas destacadas;
+- tarjetas;
 - controles importantes.
 
 No deben utilizarse de forma indiscriminada en cada bloque de contenido.
@@ -452,7 +457,7 @@ border-radius: 0;
 
 El redondeo no forma parte de la identidad visual principal.
 
-Si posteriormente algún elemento concreto requiere un radio por razones funcionales o visuales, deberá definirse expresamente.
+Si algún elemento concreto requiere un radio por razones funcionales o visuales, deberá definirse expresamente.
 
 ---
 
@@ -599,9 +604,13 @@ El área de exposición reúne la actividad reciente.
 Las páginas internas no utilizan el área de exposición.
 
 ```text
-| navegación | contenido principal |
-|   224px     |        1fr          |
+| navegación  | contenido |
+|   224px     |    1fr    |
 ```
+
+La región `Contenido` ocupa todo el espacio restante disponible después de la navegación y cabecera.
+
+La composición interna de esta región cambia de acuerdo con la página representada.
 
 ---
 
@@ -619,16 +628,13 @@ La cabecera es una única composición visual.
 
 Incluye:
 
-- fondo visual;
-- retrato;
+- Fondo visual y foto juntos;
 - nombre;
 - descripción breve.
 
-No debe dividirse visualmente en una imagen de fondo y una fotografía completamente independientes.
+`Fondo visual y foto juntos` no debe volver a dividirse visualmente en un fondo y una fotografía tratados como elementos independientes.
 
-Las representaciones conceptuales utilizadas durante el diseño pueden contener elementos gráficos o textos integrados en la imagen utilizada como referencia.
-
-Estos elementos no constituyen contenido de interfaz ni requisitos de implementación.
+Las representaciones de la cabecera no deben incorporar frases de efecto, lemas, citas ni otros textos adicionales que no formen parte del contenido definido.
 
 ---
 
@@ -642,8 +648,7 @@ padding vertical   => 24px
 
 Debe mostrar:
 
-- fondo visual completo;
-- retrato;
+- Fondo visual y foto juntos;
 - nombre;
 - descripción breve.
 
@@ -659,8 +664,7 @@ padding vertical   => 16px
 
 Debe mantener:
 
-- fondo visual reducido;
-- retrato;
+- Fondo visual y foto juntos;
 - nombre.
 
 Debe ocultar:
@@ -713,7 +717,7 @@ La navegación comienza con los controles globales:
 Idioma | Tema
 ```
 
-Después aparece un primer bloque de accesos directos:
+Después aparece el bloque de accesos directos:
 
 ```text
 Inicio
@@ -721,15 +725,19 @@ Sobre mí
 Contactos
 ```
 
-Los tres elementos forman un mismo grupo.
+No existen separadores entre estos tres elementos.
 
-Después aparecen las secciones que contienen recursos y pueden desplegar contenido subordinado:
+Después de `Contactos` existe una separación visual respecto de las secciones de contenido.
+
+Las secciones de contenido son:
 
 ```text
 Certificaciones
 Proyectos
 Blog
 ```
+
+Cada una puede representar contenido subordinado.
 
 Conceptualmente:
 
@@ -739,13 +747,19 @@ Idioma | Tema
 Inicio
 Sobre mí
 Contactos
+----------------
 
 Certificaciones
-Proyectos
-Blog
-```
+    ...
+----------------
 
-La separación visual entre los accesos directos y las secciones de contenido puede utilizar el tratamiento estructural definido para los bloques de navegación.
+Proyectos
+    ...
+----------------
+
+Blog
+    ...
+```
 
 ---
 
@@ -765,7 +779,7 @@ Proyectos
 
 El acceso al listado completo siempre aparece al final de los elementos mostrados.
 
-No debe aparecer antes de los recursos representados.
+No debe aparecer antes de los elementos representados.
 
 El texto del acceso debe indicar explícitamente cuál es su destino.
 
@@ -815,23 +829,53 @@ La navegación permanece visible mediante comportamiento sticky.
 
 ---
 
-# 14. Retrato y composición de cabecera
+## 13.7. Estado activo
+
+Los accesos directos se marcan como activos en su propia página.
+
+Las secciones que contienen elementos permanecen activas tanto en su listado como en sus páginas individuales.
+
+Conceptualmente:
+
+```text
+Listado de proyectos
+=> Proyectos activo
+
+Proyecto concreto
+=> Proyectos activo
+
+Listado de certificaciones
+=> Certificaciones activo
+
+Certificado o certificación concreta
+=> Certificaciones activo
+
+Listado de artículos
+=> Blog activo
+
+Artículo concreto
+=> Blog activo
+```
+
+---
+
+# 14. Foto y composición de cabecera
 
 La fotografía no utiliza formato circular.
 
-Forma parte de la composición visual de la cabecera.
+Forma parte de `Fondo visual y foto juntos`.
 
 ---
 
 ## 14.1. Estado expandido
 
-Área útil aproximada del retrato:
+Área visual aproximada correspondiente a la fotografía:
 
 ```text
 280px x 280px
 ```
 
-El retrato ocupa aproximadamente:
+La fotografía ocupa aproximadamente:
 
 ```text
 31%
@@ -839,19 +883,17 @@ El retrato ocupa aproximadamente:
 
 del ancho visual de la cabecera.
 
-La integración entre retrato y fondo debe hacer que ambos se perciban como una única composición.
-
 ---
 
 ## 14.2. Estado compacto
 
-Área útil aproximada:
+Área visual aproximada correspondiente a la fotografía:
 
 ```text
 72px x 72px
 ```
 
-El retrato permanece visible.
+La fotografía permanece visible.
 
 ---
 
@@ -863,19 +905,45 @@ No utilizar:
 avatar circular aislado
 ```
 
-Utilizar:
-
-```text
-retrato rectangular integrado en la cabecera
-```
-
-El fondo y el retrato pueden mezclarse visualmente dentro de una única imagen o composición.
+La fotografía debe permanecer integrada en `Fondo visual y foto juntos`.
 
 ---
 
 # 15. Iconos y controles
 
-## 15.1. Iconos
+## 15.1. Biblioteca de iconos
+
+La iconografía de la interfaz utiliza:
+
+```text
+@tabler/icons-angular
+```
+
+Los iconos utilizados en la implementación deben corresponder a iconos concretos de esta biblioteca.
+
+La selección del icono pertenece al frontend.
+
+Los datos proporcionados por `sitio-api` no deben contener nombres específicos de Tabler ni decisiones visuales propias de la biblioteca.
+
+Conceptualmente:
+
+```text
+dato o identificador del contenido
+        |
+        V
+sitio
+        |
+        V
+icono concreto de Tabler Icons
+```
+
+Los modelos visuales deben utilizar la misma iconografía definida para la implementación.
+
+Las representaciones anteriores que no garanticen el uso de los iconos concretos de Tabler deben actualizarse antes de ser consideradas referencias finales de iconografía.
+
+---
+
+## 15.2. Tamaños
 
 | Uso                   | Tamaño |
 | --------------------- | -----: |
@@ -890,7 +958,7 @@ No sustituyen el texto cuando el significado pueda resultar ambiguo.
 
 ---
 
-## 15.2. Selector de idioma
+## 15.3. Selector de idioma
 
 ```text
 altura             => 48px
@@ -906,7 +974,7 @@ No debe estar oculto dentro de una sección de configuración.
 
 ---
 
-## 15.3. Selector de tema
+## 15.4. Selector de tema
 
 ```text
 altura        => 48px
@@ -940,13 +1008,14 @@ Espaciado
 Disposición
 Formato de las tarjetas
 Actualizaciones
+Iconos
 ```
 
 Solamente cambia la representación visual correspondiente al tema seleccionado.
 
 ---
 
-## 15.4. Botón principal
+## 15.5. Botón principal
 
 ```text
 altura             => 48px
@@ -958,7 +1027,7 @@ border-radius      => 0
 
 ---
 
-## 15.5. Botón secundario
+## 15.6. Botón secundario
 
 ```text
 altura             => 48px
@@ -978,13 +1047,14 @@ No incorpora una segunda región de presentación inmediatamente después de la 
 La identidad principal ya se encuentra representada mediante:
 
 ```text
-Retrato
+Fondo visual y foto juntos
 Nombre
 Descripción breve
-Fondo visual
 ```
 
 No debe duplicarse esta función mediante una segunda cabecera visual o una sección introductoria equivalente.
+
+No deben añadirse frases de efecto, citas ni elementos editoriales adicionales que no formen parte del contenido definido para Inicio.
 
 ---
 
@@ -1068,7 +1138,7 @@ Cada proyecto destacado presenta:
 Imagen
 Nombre
 Descripción
-Enlace explícito
+Ver proyecto
 ```
 
 La imagen funciona como apoyo visual del proyecto.
@@ -1077,11 +1147,9 @@ El nombre constituye el identificador principal visible.
 
 La descripción debe ser breve y adecuada para una representación resumida.
 
-El acceso al proyecto se realiza mediante un enlace explícito.
+Los lenguajes y sus porcentajes no se presentan en la tarjeta de Inicio.
 
 La tarjeta completa no constituye implícitamente un enlace.
-
-La representación de Inicio no muestra tecnologías ni otros datos que pertenecen al detalle completo del proyecto.
 
 ---
 
@@ -1093,8 +1161,8 @@ Cada artículo destacado presenta:
 Imagen
 Título
 Descripción
-Fecha
-Enlace explícito
+Fecha de publicación
+Leer artículo
 ```
 
 El título constituye el identificador principal visible.
@@ -1105,31 +1173,20 @@ La fecha se presenta como metadato.
 
 No se requiere una categoría para representar visualmente el artículo.
 
-El acceso se realiza mediante un enlace explícito.
-
 La tarjeta completa no constituye implícitamente un enlace.
 
 ---
 
-## 16.5. Certificación destacada
+## 16.5. elemento destacado de Certificaciones
 
-Cada certificación destacada presenta:
+La sección debe representar:
 
 ```text
-Imagen o credencial
-Nombre
-Entidad
-Fecha
-Enlace explícito
+Certificado
+Certificación
 ```
 
-El nombre constituye el identificador principal visible.
-
-La entidad se presenta como información secundaria directamente asociada a la certificación.
-
-La fecha se presenta como metadato.
-
-El acceso se realiza mediante un enlace explícito.
+Cada elemento presenta la información resumida necesaria para reconocer el elemento y acceder a su página individual.
 
 La tarjeta completa no constituye implícitamente un enlace.
 
@@ -1137,7 +1194,7 @@ La tarjeta completa no constituye implícitamente un enlace.
 
 ## 16.6. Coherencia entre destacados
 
-Los diferentes tipos de recurso no necesitan contener exactamente los mismos campos internos.
+Los diferentes tipos de elemento no necesitan contener exactamente los mismos campos internos.
 
 La coherencia visual debe mantenerse mediante:
 
@@ -1152,7 +1209,7 @@ Separación entre elementos
 
 La uniformidad visual no debe forzar contratos idénticos entre tipos de contenido diferentes.
 
-Dentro de un mismo tipo de recurso, las tarjetas deben mantener una estructura visual consistente.
+Dentro de un mismo tipo de elemento, las tarjetas deben mantener una estructura visual consistente.
 
 El cambio de tema no modifica la estructura interna, el orden, el contenido ni la disposición de estas tarjetas.
 
@@ -1201,6 +1258,7 @@ Cada actualización puede representar actividad relacionada con:
 ```text
 Proyecto
 Artículo
+Certificado
 Certificación
 ```
 
@@ -1226,7 +1284,7 @@ El icono funciona como apoyo visual para identificar el tipo de contenido o acti
 
 No debe sustituir el texto necesario para comprender el acontecimiento.
 
-El tipo de acontecimiento debe encontrarse visualmente diferenciado del nombre o título del recurso.
+El tipo de acontecimiento debe encontrarse visualmente diferenciado del nombre o título del elemento.
 
 La descripción debe permanecer breve.
 
@@ -1242,6 +1300,9 @@ Proyecto
 
 Artículo
 => Leer artículo
+
+Certificado
+=> Ver certificado
 
 Certificación
 => Ver certificación
@@ -1273,7 +1334,853 @@ La atención principal permanece en el contenido destacado.
 
 ---
 
-# 17. Adaptación a diferentes pantallas
+# 17. Páginas internas
+
+Las páginas internas comparten un mismo armazón.
+
+Conceptualmente:
+
+```text
++-------------+----------------------------------------+
+|             |              CABECERA                  |
+|             |                                        |
+|             | Fondo visual y foto juntos +           |
+|             | nombre + descripción breve             |
+|             +----------------------------------------+
+|             |                                        |
+|             |                                        |
+| NAVEGACIÓN  |              CONTENIDO                 |
+|             |                                        |
+| Idioma      |                                        |
+| Tema        |                                        |
+|             |                                        |
+| Inicio      |                                        |
+| Sobre mí    |                                        |
+| Contactos   |                                        |
+| Certific.   |                                        |
+| Proyectos   |                                        |
+| Blog        |                                        |
+|             |                                        |
++-------------+----------------------------------------+
+```
+
+Este modelo se aplica a:
+
+```text
+Sobre mí
+Contactos
+Certificaciones
+Certificado
+Certificación
+Proyectos
+Proyecto
+Blog
+Artículo
+```
+
+Y sus derivaciones. 
+
+---
+
+## 17.1. Región Contenido
+
+La región `Contenido` constituye el espacio variable de las páginas internas.
+
+No implica una composición textual única.
+
+Puede contener:
+
+```text
+Texto
+Imágenes
+Iconos
+Tarjetas
+Rejillas
+Formularios
+Metadatos
+Contenido estructurado
+Contenido proveniente de Markdown
+```
+
+según la página correspondiente.
+
+La variación ocurre dentro de esta región sin modificar:
+
+```text
+Cabecera
+Navegación
+Estructura global
+Idioma activo
+Tema activo
+```
+
+---
+
+## 17.2. Listado y detalle
+
+Las secciones que agrupan múltiples elementos utilizan la misma región `Contenido` para su listado y para el elemento individual.
+
+Conceptualmente:
+
+```text
+Listado
+|
++-- región Contenido
+    +-- todos los elementos de la categoría
+```
+
+Al seleccionar un elemento:
+
+```text
+Detalle
+|
++-- región Contenido
+    +-- contenido del elemento seleccionado
+```
+
+No aparece una nueva región global ni una estructura paralela para el detalle.
+
+---
+
+# 18. Sobre mí
+
+`Sobre mí` combina contenido textual con elementos visuales relacionados directamente con aquello que se está comunicando.
+
+La página no debe convertirse en una sucesión extensa de texto sin pausas visuales.
+
+---
+
+## 18.1. Estructura
+
+Conceptualmente:
+
+```text
+Sobre mí
+|
++-- bloque
+|   |
+|   +-- icono o imagen
+|   +-- texto
+|
++-- bloque
+|   |
+|   +-- texto
+|   +-- icono o imagen
+|
++-- ...
+```
+
+La composición puede distribuir texto y elemento visual a uno u otro lado.
+
+La posición forma parte de la composición editorial del frontend.
+
+No debe producirse una alternancia automática solamente por la posición del bloque dentro de la lista. Lo que determina la alternancia de contenido es la regla interna de diseño del frontend.
+
+---
+
+## 18.2. Relación entre texto y elemento visual
+
+El icono o la imagen debe representar aquello de lo que habla el bloque.
+
+No debe utilizarse como relleno decorativo independiente del contenido.
+
+La elección entre:
+
+```text
+Icono
+Imagen
+```
+
+es una decisión editorial.
+
+No existe una regla general que obligue a utilizar una imagen para determinado tipo de concepto y un icono para otro.
+
+---
+
+## 18.3. Bloque con icono
+
+Cuando el contenido establece que el elemento visual es un icono:
+
+```text
+type = icon
+```
+
+`Sitio` selecciona el icono concreto correspondiente.
+
+La API no determina:
+
+```text
+Nombre de icono de Tabler
+Variante gráfica
+Posición
+Tamaño
+Color
+Estilo
+```
+
+El identificador del bloque permite que `sitio` establezca el mapeo correspondiente.
+
+Conceptualmente:
+
+```text
+software
+=> IconCode
+
+music
+=> icono concreto elegido para música
+
+languages
+=> icono concreto elegido para idiomas
+```
+
+El valor de la izquierda representa el contenido.
+
+El icono concreto de la derecha pertenece a la presentación.
+
+---
+
+## 18.4. Bloque con imagen
+
+Cuando el elemento visual es una imagen:
+
+```text
+type = image
+```
+
+la imagen dispone de:
+
+```text
+src
+alt
+href
+```
+
+Los tres valores existen para este tipo de elemento.
+
+`src` determina qué imagen se representa.
+
+`alt` proporciona su alternativa textual.
+
+`href` determina el destino asociado.
+
+---
+
+# 19. Contactos
+
+La página de Contactos combina:
+
+```text
+Medios de contacto
+Formulario de contacto
+```
+
+dentro de la misma región `Contenido`.
+
+---
+
+## 19.1. Medios de contacto
+
+Los medios de contacto utilizan tarjetas compatibles con el lenguaje visual general del sitio.
+
+Conceptualmente:
+
+```text
+--------------------------------
+| icono o imagen               |
+| ---------------------------- |
+| nombre del medio             |
+| enlace del medio             |
+--------------------------------
+```
+
+La tarjeta contiene:
+
+```text
+elemento visual
+Tipo de medio
+Enlace
+```
+
+El propio enlace del medio es un vínculo que lleva hacia el medio directamente.
+
+---
+
+## 19.2. Rejilla de contactos
+
+Las tarjetas se organizan horizontalmente mientras exista espacio disponible.
+
+Conceptualmente:
+
+```text
++-------------+ +-------------+ +-------------+
+| contacto    | | contacto    | | contacto    |
++-------------+ +-------------+ +-------------+
+
++-------------+ +-------------+
+| contacto    | | contacto    |
++-------------+ +-------------+
+```
+
+Los medios presentes dependen de los datos disponibles.
+
+---
+
+## 19.3. Formulario
+
+El formulario aparece después de los medios de contacto.
+
+Contiene:
+
+```text
+Nombre
+Apellido
+Dirección de correo electrónico
+Motivo del contacto
+Mensaje
+```
+
+Conceptualmente:
+
+```text
+--------------------------------------
+| Nombre                             |
+| ---------------------------------- |
+| |                                | |
+| ---------------------------------- |
+|                                    |
+| Apellido                           |
+| ---------------------------------- |
+| |                                | |
+| ---------------------------------- |
+|                                    |
+| Dirección de correo electrónico    |
+| ---------------------------------- |
+| |                                | |
+| ---------------------------------- |
+|                                    |
+| Motivo del contacto                |
+| ---------------------------------- |
+| |                                | |
+| ---------------------------------- |
+|                                    |
+| Mensaje                            |
+| ---------------------------------- |
+| |                                | |
+| |                                | |
+| |                                | |
+| |                                | |
+| ---------------------------------- |
+|                                    |
+| Enviar                             |
+--------------------------------------
+```
+
+Todos los campos son obligatorios.
+
+`Mensaje` utiliza un campo de varias líneas.
+
+`Motivo del contacto` utiliza un campo de una línea.
+
+El control de envío utiliza el tratamiento definido para los botones principales.
+
+Conceptualmente:
+
+```text
+first_name
+=> 1..100 caracteres
+
+last_name
+=> 1..100 caracteres
+
+email
+=> dirección válida
+=> máximo 254 caracteres
+
+subject
+=> 1..200 caracteres
+
+message
+=> 1..10000 caracteres
+```
+
+---
+
+## 19.4. Integración visual
+
+El formulario no debe parecer un elemento perteneciente a otro sistema.
+
+Debe utilizar:
+
+```text
+tipografía del sitio
+bordes del sitio
+superficies del tema activo
+colores interactivos
+espaciado base
+foco visible
+botón principal
+```
+
+Los mecanismos técnicos de validación, envío y protección no modifican la identidad visual general de la página.
+
+---
+
+# 20. Tarjetas
+
+Las tarjetas constituyen un patrón visual compartido por diferentes regiones del sitio.
+
+Compartir el patrón no implica compartir un único contrato de datos.
+
+---
+
+## 20.1. Estructura común
+
+Conceptualmente:
+
+```text
+------------------------------------
+| zona visual                      |
+| -------------------------------- |
+| contenido específico             |
+| del tipo de elemento             |
+|                                  |
+| acción o enlace, si corresponde  |
+------------------------------------
+```
+
+El lenguaje común comprende:
+
+```text
+tratamiento de superficie
+borde
+ausencia de redondeo por defecto
+tipografía
+espaciado
+jerarquía
+tratamiento de imagen o icono
+tratamiento de enlaces
+comportamiento entre temas
+```
+
+---
+
+## 20.2. Contenido específico
+
+Cada tipo de tarjeta conserva sus propios campos.
+
+No deben añadirse propiedades únicamente con el objetivo de hacer que dos tipos diferentes tengan el mismo contenido interno.
+
+Conceptualmente:
+
+```text
+Contacto
+=> icono o imagen
+=> tipo de medio
+=> enlace
+
+Proyecto
+=> imagen
+=> nombre
+=> descripción
+=> Ver proyecto
+
+Artículo
+=> imagen
+=> título
+=> descripción
+=> fecha de publicación
+=> fecha de actualización
+=> Leer artículo
+
+Certificado
+=> imagen
+=> tipo
+=> nombre
+=> entidad
+=> fecha
+=> Ver certificado
+
+Certificación
+=> imagen
+=> tipo
+=> nombre
+=> entidad
+=> fecha
+=> expiración
+=> Ver certificación
+```
+
+---
+
+## 20.3. Rejilla
+
+Las páginas de listado utilizan una rejilla de tarjetas.
+
+En la representación de escritorio:
+
+```text
+3 tarjetas por fila
+```
+
+cuando el ancho disponible permite mantener correctamente las dimensiones y el espaciado establecidos.
+
+Conceptualmente:
+
+```text
++-------------+ +-------------+ +-------------+
+| tarjeta     | | tarjeta     | | tarjeta     |
++-------------+ +-------------+ +-------------+
+
++-------------+ +-------------+ +-------------+
+| tarjeta     | | tarjeta     | | tarjeta     |
++-------------+ +-------------+ +-------------+
+
+...
+```
+
+La rejilla continúa en nuevas filas mientras existan elementos.
+
+La cantidad total de elementos no constituye una restricción estructural del componente.
+
+---
+
+## 20.4. Altura y alineación
+
+Las tarjetas pertenecientes a una misma rejilla deben mantener una composición visual coherente.
+
+La estructura interna debe permitir que diferencias razonables de longitud de texto no destruyan la alineación general.
+
+Cuando existe una acción explícita al final de la tarjeta, su posición debe permanecer visualmente consistente dentro de la rejilla.
+
+---
+
+## 20.5. Interacción
+
+La tarjeta completa nunca debe convertirse implícitamente en enlace, siempre habrá un enlace específico para la acción explícita.
+
+
+En Contactos, el propio valor del medio constituye el enlace y no se añade una segunda acción redundante.
+
+---
+
+# 21. Certificaciones
+
+La sección visible continúa denominándose:
+
+```text
+Certificaciones
+```
+
+y agrupa dos tipos de elementos:
+
+```text
+Certificado
+Certificación
+```
+
+Los dos tipos pertenecen a la misma sección pero se identifican explícitamente.
+
+---
+
+## 21.1. Listado
+
+El listado utiliza la rejilla general de tarjetas.
+
+Cada elemento incluye una indicación visible de su tipo.
+
+---
+
+## 21.2. Certificado
+
+Una tarjeta de certificado utiliza:
+
+```text
+------------------------------------
+| imagen                           |
+| -------------------------------- |
+| Certificado                      |
+| Nombre                           |
+| Entidad                          |
+| Fecha                            |
+| Ver certificado                  |
+------------------------------------
+```
+
+`Certificado` identifica visualmente el tipo de elemento.
+
+No dispone de una línea artificial de expiración.
+
+---
+
+## 21.3. Certificación
+
+Una tarjeta de certificación utiliza:
+
+```text
+------------------------------------
+| imagen                           |
+| -------------------------------- |
+| Certificación                    |
+| Nombre                           |
+| Entidad                          |
+| Fecha                            |
+| Expiración                       |
+| Ver certificación                |
+------------------------------------
+```
+
+`Certificación` identifica visualmente el tipo de elemento.
+
+La línea de expiración forma parte de la estructura de esta tarjeta.
+
+Cuando la certificación no expira, debe permanecer la línea y utilizar una representación localizada equivalente a:
+
+```text
+Expiración: No expira
+```
+
+No debe representarse:
+
+```text
+null
+```
+
+ni dejar un hueco sin contenido.
+
+---
+
+## 21.4. Diferencia gráfica entre tipos
+
+Certificado y Certificación pueden presentar diferencias internas porque representan elementos distintos.
+
+Esta diferencia no rompe la identidad visual general.
+
+Ambos conservan:
+
+```text
+misma familia de tarjeta
+misma geometría general
+mismo tratamiento de imagen
+mismos bordes
+misma tipografía
+mismo sistema de espaciado
+misma jerarquía general
+mismo comportamiento entre temas
+```
+
+El tipo visible permite reconocer la diferencia sin depender de la existencia o ausencia de determinados campos.
+
+---
+
+## 21.5. Detalle
+
+Al seleccionar un elemento, la región `Contenido` completa representa el elemento.
+
+El detalle de un certificado presenta los datos correspondientes a su propio tipo.
+
+El detalle de una certificación presenta además la información propia de la credencial.
+
+Cuando una certificación no dispone de código o enlace de verificación, el espacio correspondiente utiliza un texto localizado equivalente a:
+
+```text
+No disponible
+```
+
+No se muestra `null` como contenido visible.
+
+---
+
+# 22. Proyectos
+
+La página de Proyectos utiliza la rejilla general de tarjetas.
+
+---
+
+## 22.1. Tarjeta
+
+Cada tarjeta presenta:
+
+```text
+------------------------------------
+| imagen                           |
+| -------------------------------- |
+| Nombre                           |
+| Descripción breve                |
+| Ver proyecto                     |
+------------------------------------
+```
+
+La tarjeta funciona como representación resumida y como invitación a acceder al detalle.
+
+No muestra:
+
+```text
+Lenguajes
+Porcentajes de lenguajes
+Datos completos del repositorio
+```
+
+Estos datos pertenecen al detalle.
+
+---
+
+## 22.2. Detalle
+
+Al seleccionar `Ver proyecto`, la región `Contenido` completa representa el proyecto.
+
+El detalle debe presentar:
+
+```text
+Nombre
+Imagen
+Descripción
+Lenguajes
+Porcentaje de cada lenguaje
+Repositorio
+```
+
+Los lenguajes y sus porcentajes deben disponer de una representación clara como información técnica del proyecto.
+
+---
+
+## 22.3. Lenguajes
+
+La información representa lenguajes y sus porcentajes.
+
+Se debe denominarse genéricamente `Tecnologías` cuando el dato representado corresponde específicamente a lenguajes obtenidos para el repositorio.
+
+Conceptualmente:
+
+```text
+lenguaje1       85.5 %
+lenguaje2       14.5 %
+```
+
+La representación debe permitir comparar visualmente las proporciones sin sustituir los valores numéricos.
+
+---
+
+## 22.4. Orden del listado
+
+El orden visual del listado constituye una decisión editorial.
+
+No debe modificarse automáticamente solamente porque un repositorio haya recibido una actualización técnica reciente.
+
+---
+
+# 23. Blog
+
+La página de Blog utiliza la rejilla general de tarjetas.
+
+---
+
+## 23.1. Tarjeta
+
+Cada tarjeta presenta:
+
+```text
+------------------------------------
+| imagen                           |
+| -------------------------------- |
+| Título                           |
+| Descripción breve                |
+| Fecha de publicación             |
+| Fecha de actualización           |
+| Leer artículo                    |
+------------------------------------
+```
+
+Todas las tarjetas contienen las dos líneas de fechas, la fecha de publicación y la fecha de actualización.
+
+---
+
+## 23.2. Fecha de publicación y actualización
+
+La fecha de publicación corresponde a la publicación inicial.
+
+La fecha de actualización corresponde a la última versión publicada.
+
+Cuando todavía no existe una modificación posterior:
+
+```text
+Fecha de publicación
+=> fecha original
+
+Fecha de actualización
+=> misma fecha que la de publicación
+```
+
+Cuando existe una actualización posterior:
+
+```text
+Fecha de publicación
+=> fecha original
+
+Fecha de actualización
+=> nueva fecha actualizada
+```
+
+No se utiliza una representación visual de:
+
+```text
+null
+Sin actualizar
+```
+
+para este caso.
+
+---
+
+## 23.3. Artículo
+
+Al seleccionar `Leer artículo`, la región `Contenido` completa representa el artículo.
+
+El cuerpo del Blog utiliza contenido procedente de Markdown.
+
+El artículo no está obligado a mantener una estructura rígida equivalente a Proyecto o Certificaciones.
+
+Puede contener:
+
+```text
+Párrafos
+Títulos
+Subtítulos
+Listas
+Enlaces
+Imágenes
+Tablas
+Bloques de código
+Citas
+Diagramas
+Grafos
+Videos
+Otros elementos propios del contenido
+```
+
+---
+
+## 23.4. Lectura
+
+La representación del Markdown debe respetar la identidad tipográfica y cromática del sitio.
+
+El contenido proporcionado por Markdown no debe introducir un segundo sistema visual independiente.
+
+Elementos como:
+
+```text
+encabezados
+enlaces
+tablas
+código
+citas
+imágenes
+```
+
+deben recibir estilos compatibles con los tokens generales definidos en esta especificación.
+
+---
+
+# 24. Adaptación a diferentes pantallas
 
 La escala tipográfica para pantallas pequeñas se encuentra definida.
 
@@ -1288,11 +2195,12 @@ Comportamiento de la cabecera
 Posición del área de exposición
 Orden de las regiones
 Tratamiento de controles
+Cantidad de tarjetas por fila en pantallas menores
 ```
 
-Estas decisiones deben definirse expresamente antes de considerarse parte cerrada de la especificación.
+Estas decisiones deben definirse expresamente antes de considerarse parte cerrada de la especificación responsive.
 
-Hasta entonces, las proporciones documentadas para el layout corresponden principalmente a la representación de escritorio.
+Hasta entonces, las proporciones documentadas para el layout y las rejillas corresponden principalmente a la representación de escritorio.
 
 ---
 
@@ -1319,7 +2227,10 @@ Deben compartir exactamente:
 - disposición de los metadatos;
 - posición de los enlaces;
 - contenido destacado;
-- actualizaciones.
+- actualizaciones;
+- campos de formularios;
+- estructura de listados;
+- estructura de páginas de detalle.
 
 Conceptualmente:
 
@@ -1367,6 +2278,8 @@ Cambiar el formato de las tarjetas
 Cambiar la disposición
 Cambiar los espacios estructurales
 Cambiar los textos
+Cambiar los iconos
+Cambiar los campos mostrados
 ```
 
 El tema oscuro no debe ser considerado un diseño independiente.
@@ -1449,10 +2362,10 @@ Máximo total  => 1504px
 ## Cabecera
 
 ```text
-Expandida          => 320px
-Compacta           => 112px
-Retrato expandido  => 280px x 280px
-Retrato compacto   => 72px x 72px
+Expandida         => 320px
+Compacta          => 112px
+Foto expandida    => 280px x 280px
+Foto compacta     => 72px x 72px
 ```
 
 ---
@@ -1464,6 +2377,26 @@ Altura estándar  => 48px
 Icono navegación => 22px
 Icono controles  => 20px
 Border radius    => 0
+```
+
+---
+
+## Iconografía
+
+```text
+Biblioteca => @tabler/icons-angular
+```
+
+---
+
+## Rejilla de escritorio
+
+```text
+Listados
+=> 3 tarjetas por fila cuando el ancho disponible lo permite
+
+Continuación
+=> nuevas filas
 ```
 
 ---
@@ -1485,12 +2418,28 @@ Los siguientes elementos de identidad visual quedan definidos:
 11. proporciones del layout de escritorio;
 12. cabecera expandida y compacta;
 13. navegación;
-14. retrato y composición de cabecera;
-15. iconos y controles;
+14. foto y composición de cabecera;
+15. biblioteca, tamaños y uso de iconos;
 16. estructura visual de Inicio;
 17. representación de contenido destacado;
 18. área de exposición y actualizaciones;
-19. equivalencia estructural y de contenido entre los temas claro y oscuro.
+19. estructura general de las páginas internas;
+20. región variable de Contenido;
+21. composición visual de Sobre mí;
+22. composición visual de Contactos;
+23. formulario de contacto;
+24. lenguaje visual común de tarjetas;
+25. rejillas de listados;
+26. representación de certificados;
+27. representación de certificaciones;
+28. listado y detalle de Proyectos;
+29. representación de lenguajes y porcentajes;
+30. listado y detalle de Blog;
+31. representación de fechas de Blog;
+32. representación de contenido Markdown;
+33. equivalencia estructural y de contenido entre los temas claro y oscuro.
+
+Los modelos visuales existentes que no garanticen el uso de los iconos concretos de `@tabler/icons-angular` deben actualizarse antes de considerarse referencias finales de iconografía.
 
 La adaptación estructural completa para diferentes tamaños de pantalla permanece pendiente de la etapa correspondiente de diseño responsive.
 
