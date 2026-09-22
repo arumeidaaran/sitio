@@ -925,25 +925,177 @@ La selección del icono pertenece al frontend.
 
 Los datos proporcionados por `sitio-api` no deben contener nombres específicos de Tabler ni decisiones visuales propias de la biblioteca.
 
-Conceptualmente:
-
-```text
-dato o identificador del contenido
-        |
-        V
-sitio
-        |
-        V
-icono concreto de Tabler Icons
-```
-
 Los modelos visuales deben utilizar la misma iconografía definida para la implementación.
 
-Las representaciones anteriores que no garanticen el uso de los iconos concretos de Tabler deben actualizarse antes de ser consideradas referencias finales de iconografía.
+Las representaciones que no garanticen el uso de los iconos concretos definidos en esta especificación deben actualizarse antes de ser consideradas referencias finales de iconografía.
 
 ---
 
-## 15.2. Tamaños
+## 15.2. Mapeo de iconos
+
+La interfaz utiliza un conjunto definido de iconos de `@tabler/icons-angular`.
+
+Cada función visual se relaciona con un icono concreto.
+
+Los nombres definidos a continuación corresponden directamente a los iconos utilizados por la biblioteca.
+
+El mapeo pertenece exclusivamente al frontend.
+
+`Sitio-api` puede proporcionar identificadores o tipos de contenido necesarios para determinar qué debe representarse, pero no determina el nombre del icono de Tabler.
+
+Conceptualmente:
+
+```text
+Función, tipo o identificador
+        |
+        V
+Mapeo de sitio
+        |
+        V
+Icono concreto de @tabler/icons-angular
+```
+
+No debe seleccionarse un icono alternativo solamente por expresar un concepto parecido.
+
+El icono utilizado debe corresponder al mapeo establecido.
+
+---
+
+## 15.3. Controles globales
+
+| Función                     | Icono concreto       |
+| --------------------------- | -------------------- |
+| Selector de idioma          | `IconWorld`          |
+| Desplegar selector          | `IconChevronDown`    |
+| Expandir sección            | `IconChevronDown`    |
+| Contraer sección            | `IconChevronUp`      |
+| Activar tema claro          | `IconSun`            |
+| Activar tema oscuro         | `IconMoon`           |
+
+El selector de tema representa la acción disponible.
+
+Conceptualmente:
+
+```text
+Tema oscuro activo
+=> IconSun
+=> permite activar tema claro
+
+Tema claro activo
+=> IconMoon
+=> permite activar tema oscuro
+```
+
+---
+
+## 15.4. Navegación principal
+
+| Elemento          | Icono concreto |
+| ----------------- | -------------- |
+| Inicio            | `IconHome`     |
+| Sobre mí          | `IconUser`     |
+| Contactos         | `IconMail`     |
+| Certificaciones   | `IconAward`    |
+| Proyectos         | `IconFolder`   |
+| Blog              | `IconNotebook` |
+
+El mismo mapeo debe mantenerse en los temas claro y oscuro.
+
+El cambio de tema no sustituye un icono por otro para representar una misma sección.
+
+---
+
+## 15.5. Tipos de contenido y acciones
+
+| Elemento o acción        | Icono concreto    |
+| ------------------------ | ----------------- |
+| Proyecto                 | `IconFolder`      |
+| Artículo                 | `IconFileText`    |
+| Certificado              | `IconCertificate` |
+| Certificación            | `IconAward`       |
+| Acceso explícito         | `IconArrowRight`  |
+
+Estos iconos se utilizan cuando el tipo de contenido necesita representación iconográfica, como en el área de Actualizaciones.
+
+El icono de acceso explícito acompaña acciones de navegación hacia otro contenido cuando la composición utiliza una flecha.
+
+---
+
+## 15.6. Sobre mí
+
+Los bloques de `Sobre mí` que utilizan:
+
+```text
+type = icon
+```
+
+se identifican mediante un `id` estable.
+
+El `id` determina el icono concreto utilizado por el frontend.
+
+El mapeo es:
+
+| Identificador técnico       | Categoría representada                 | Icono concreto           |
+| --------------------------- | -------------------------------------- | ------------------------ |
+| `technology`                | Tecnología                             | `IconDeviceDesktopCode`  |
+| `development_automation`    | Desarrollo y automatización            | `IconCode`               |
+| `professional_experience`   | Experiencia profesional                | `IconBriefcase`          |
+| `education`                 | Formación                              | `IconSchool`             |
+| `languages`                 | Idiomas                                | `IconLanguage`           |
+
+Conceptualmente:
+
+```text
+technology
+=> IconDeviceDesktopCode
+
+development_automation
+=> IconCode
+
+professional_experience
+=> IconBriefcase
+
+education
+=> IconSchool
+
+languages
+=> IconLanguage
+```
+
+El `id` no contiene el nombre de la biblioteca ni del icono.
+
+El icono concreto permanece definido exclusivamente por este mapeo.
+
+Cuando un bloque utiliza:
+
+```text
+type = image
+```
+
+este mapeo no participa en la representación del elemento visual.
+
+---
+
+## 15.7. Contactos
+
+Cuando un medio de contacto utiliza iconografía, el frontend aplica el icono correspondiente al tipo de medio.
+
+El mapeo definido es:
+
+| Tipo de medio            | Icono concreto        |
+| ------------------------ | --------------------- |
+| Red profesional          | `IconBrandLinkedin`   |
+| Repositorio de código    | `IconBrandGithub`     |
+| Sitio web                | `IconWorldWww`        |
+| Correo electrónico       | `IconMail`            |
+| Teléfono                 | `IconPhone`           |
+| Mensajería               | `IconBrandWhatsapp`   |
+
+Cuando un medio utiliza una imagen en lugar de un icono, este mapeo no participa en la representación del elemento visual.
+
+---
+
+## 15.8. Tamaños
 
 | Uso                   | Tamaño |
 | --------------------- | -----: |
@@ -956,9 +1108,11 @@ Los iconos funcionan como apoyo visual.
 
 No sustituyen el texto cuando el significado pueda resultar ambiguo.
 
+Los tamaños definidos no modifican el icono seleccionado por el mapeo.
+
 ---
 
-## 15.3. Selector de idioma
+## 15.9. Selector de idioma
 
 ```text
 altura             => 48px
@@ -974,7 +1128,7 @@ No debe estar oculto dentro de una sección de configuración.
 
 ---
 
-## 15.4. Selector de tema
+## 15.10. Selector de tema
 
 ```text
 altura        => 48px
@@ -1015,7 +1169,7 @@ Solamente cambia la representación visual correspondiente al tema seleccionado.
 
 ---
 
-## 15.5. Botón principal
+## 15.11. Botón principal
 
 ```text
 altura             => 48px
@@ -1027,7 +1181,7 @@ border-radius      => 0
 
 ---
 
-## 15.6. Botón secundario
+## 15.12. Botón secundario
 
 ```text
 altura             => 48px
@@ -1282,6 +1436,8 @@ Enlace explícito
 
 El icono funciona como apoyo visual para identificar el tipo de contenido o actividad.
 
+El icono debe corresponder al mapeo definido en `15.5. Tipos de contenido y acciones`.
+
 No debe sustituir el texto necesario para comprender el acontecimiento.
 
 El tipo de acontecimiento debe encontrarse visualmente diferenciado del nombre o título del elemento.
@@ -1505,7 +1661,21 @@ Cuando el contenido establece que el elemento visual es un icono:
 type = icon
 ```
 
-`Sitio` selecciona el icono concreto correspondiente.
+`Sitio` selecciona el icono concreto correspondiente mediante el identificador del bloque.
+
+Los identificadores y sus iconos se encuentran definidos en `15.6. Sobre mí`.
+
+Conceptualmente:
+
+```text
+id del bloque
+        |
+        V
+mapeo de Sobre mí
+        |
+        V
+icono concreto de @tabler/icons-angular
+```
 
 La API no determina:
 
@@ -1518,24 +1688,9 @@ Color
 Estilo
 ```
 
-El identificador del bloque permite que `sitio` establezca el mapeo correspondiente.
+Cuando un identificador utiliza `type = icon`, debe existir una correspondencia definida en el mapeo técnico.
 
-Conceptualmente:
-
-```text
-software
-=> IconCode
-
-music
-=> icono concreto elegido para música
-
-languages
-=> icono concreto elegido para idiomas
-```
-
-El valor de la izquierda representa el contenido.
-
-El icono concreto de la derecha pertenece a la presentación.
+No se selecciona dinámicamente otro icono por similitud semántica.
 
 ---
 
@@ -1600,6 +1755,8 @@ elemento visual
 Tipo de medio
 Enlace
 ```
+
+Cuando el elemento visual es un icono, debe utilizarse el mapeo definido en `15.7. Contactos`.
 
 El propio enlace del medio es un vínculo que lleva hacia el medio directamente.
 
@@ -2385,6 +2542,25 @@ Border radius    => 0
 
 ```text
 Biblioteca => @tabler/icons-angular
+
+Idioma             => IconWorld
+Desplegar          => IconChevronDown
+Contraer           => IconChevronUp
+Tema claro         => IconSun
+Tema oscuro        => IconMoon
+
+Inicio             => IconHome
+Sobre mí           => IconUser
+Contactos          => IconMail
+Certificaciones    => IconAward
+Proyectos          => IconFolder
+Blog               => IconNotebook
+
+Proyecto           => IconFolder
+Artículo           => IconFileText
+Certificado        => IconCertificate
+Certificación      => IconAward
+Acceso             => IconArrowRight
 ```
 
 ---
@@ -2419,27 +2595,34 @@ Los siguientes elementos de identidad visual quedan definidos:
 12. cabecera expandida y compacta;
 13. navegación;
 14. foto y composición de cabecera;
-15. biblioteca, tamaños y uso de iconos;
-16. estructura visual de Inicio;
-17. representación de contenido destacado;
-18. área de exposición y actualizaciones;
-19. estructura general de las páginas internas;
-20. región variable de Contenido;
-21. composición visual de Sobre mí;
-22. composición visual de Contactos;
-23. formulario de contacto;
-24. lenguaje visual común de tarjetas;
-25. rejillas de listados;
-26. representación de certificados;
-27. representación de certificaciones;
-28. listado y detalle de Proyectos;
-29. representación de lenguajes y porcentajes;
-30. listado y detalle de Blog;
-31. representación de fechas de Blog;
-32. representación de contenido Markdown;
-33. equivalencia estructural y de contenido entre los temas claro y oscuro.
+15. biblioteca, mapeo, tamaños y uso de iconos;
+16. mapeo de controles globales;
+17. mapeo de navegación;
+18. mapeo de tipos de contenido y acciones;
+19. mapeo de iconos de Sobre mí;
+20. mapeo de iconos de Contactos;
+21. estructura visual de Inicio;
+22. representación de contenido destacado;
+23. área de exposición y actualizaciones;
+24. estructura general de las páginas internas;
+25. región variable de Contenido;
+26. composición visual de Sobre mí;
+27. composición visual de Contactos;
+28. formulario de contacto;
+29. lenguaje visual común de tarjetas;
+30. rejillas de listados;
+31. representación de certificados;
+32. representación de certificaciones;
+33. listado y detalle de Proyectos;
+34. representación de lenguajes y porcentajes;
+35. listado y detalle de Blog;
+36. representación de fechas de Blog;
+37. representación de contenido Markdown;
+38. equivalencia estructural y de contenido entre los temas claro y oscuro.
 
-Los modelos visuales existentes que no garanticen el uso de los iconos concretos de `@tabler/icons-angular` deben actualizarse antes de considerarse referencias finales de iconografía.
+Los modelos visuales deben utilizar los iconos concretos establecidos en el mapeo de esta especificación.
+
+Los modelos visuales existentes que no garanticen este mapeo deben actualizarse antes de considerarse referencias finales de iconografía.
 
 La adaptación estructural completa para diferentes tamaños de pantalla permanece pendiente de la etapa correspondiente de diseño responsive.
 
