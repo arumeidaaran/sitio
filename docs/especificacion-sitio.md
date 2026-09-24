@@ -6,7 +6,7 @@ Esta especificación define la identidad visual base del frontend de `sitio`.
 
 La especificación fue derivada de las decisiones de diseño tomadas durante la definición visual del proyecto y de las representaciones finales aprobadas para los temas claro y oscuro.
 
-Su objetivo es servir como referencia técnica durante el diseño de las páginas y la futura implementación con Angular y Tailwind CSS.
+Su objetivo es servir como referencia técnica durante la implementación con Angular y Tailwind CSS y durante las etapas posteriores de adaptación a diferentes tamaños de pantalla.
 
 Los valores contenidos aquí deben considerarse la base concreta de implementación.
 
@@ -734,15 +734,18 @@ Las secciones de contenido son:
 ```text
 Certificaciones
 Proyectos
-Blog
+Artículos
 ```
 
 Cada una puede representar contenido subordinado.
+
+Las secciones de contenido mantienen líneas divisorias que permiten distinguir visualmente un grupo del siguiente.
 
 Conceptualmente:
 
 ```text
 Idioma | Tema
+----------------
 
 Inicio
 Sobre mí
@@ -757,7 +760,7 @@ Proyectos
     ...
 ----------------
 
-Blog
+Artículos
     ...
 ```
 
@@ -765,7 +768,7 @@ Blog
 
 ## 13.3. Jerarquía expandible
 
-Las secciones con contenido subordinado pueden expandirse.
+Las secciones con contenido subordinado pueden expandirse y contraerse.
 
 Ejemplo:
 
@@ -835,6 +838,8 @@ Los accesos directos se marcan como activos en su propia página.
 
 Las secciones que contienen elementos permanecen activas tanto en su listado como en sus páginas individuales.
 
+Cuando se representa el detalle de un elemento, el elemento seleccionado también debe disponer de estado activo dentro de la sección expandida.
+
 Conceptualmente:
 
 ```text
@@ -843,18 +848,21 @@ Listado de proyectos
 
 Proyecto concreto
 => Proyectos activo
+=> Proyecto seleccionado activo
 
 Listado de certificaciones
 => Certificaciones activo
 
 Certificado o certificación concreta
 => Certificaciones activo
+=> Elemento seleccionado activo
 
 Listado de artículos
-=> Blog activo
+=> Artículos activo
 
 Artículo concreto
-=> Blog activo
+=> Artículos activo
+=> Artículo seleccionado activo
 ```
 
 ---
@@ -997,7 +1005,7 @@ Tema claro activo
 | Contactos         | `IconMail`     |
 | Certificaciones   | `IconAward`    |
 | Proyectos         | `IconFolder`   |
-| Blog              | `IconNotebook` |
+| Artículos         | `IconNotebook` |
 
 El mismo mapeo debe mantenerse en los temas claro y oscuro.
 
@@ -1515,7 +1523,7 @@ Conceptualmente:
 | Contactos   |                                        |
 | Certific.   |                                        |
 | Proyectos   |                                        |
-| Blog        |                                        |
+| Artículos   |                                        |
 |             |                                        |
 +-------------+----------------------------------------+
 ```
@@ -1530,11 +1538,11 @@ Certificado
 Certificación
 Proyectos
 Proyecto
-Blog
+Artículos
 Artículo
 ```
 
-Y sus derivaciones. 
+Y sus derivaciones.
 
 ---
 
@@ -2015,7 +2023,6 @@ Cuando existe una acción explícita al final de la tarjeta, su posición debe p
 
 La tarjeta completa nunca debe convertirse implícitamente en enlace, siempre habrá un enlace específico para la acción explícita.
 
-
 En Contactos, el propio valor del medio constituye el enlace y no se añade una segunda acción redundante.
 
 ---
@@ -2145,6 +2152,8 @@ No disponible
 
 No se muestra `null` como contenido visible.
 
+El detalle no incorpora una sección adicional de conocimientos relacionados.
+
 ---
 
 # 22. Proyectos
@@ -2173,7 +2182,6 @@ No muestra:
 
 ```text
 Lenguajes
-Porcentajes de lenguajes
 Datos completos del repositorio
 ```
 
@@ -2189,31 +2197,64 @@ El detalle debe presentar:
 
 ```text
 Nombre
+Tipo
+Descripción breve
 Imagen
+Lenguaje principal
+Última actualización
 Descripción
-Lenguajes
-Porcentaje de cada lenguaje
+Acceso al repositorio
+Volver a proyectos
+```
+
+La información principal se organiza mediante la imagen del proyecto y un panel de metadatos.
+
+El panel de metadatos presenta:
+
+```text
+Tipo
+Lenguaje principal
+Última actualización
+```
+
+No debe incorporar un campo denominado:
+
+```text
+Enfoque
+```
+
+El repositorio no se presenta como una línea de metadatos denominada:
+
+```text
 Repositorio
 ```
 
-Los lenguajes y sus porcentajes deben disponer de una representación clara como información técnica del proyecto.
+Cuando existe un repositorio accesible, se representa mediante una acción explícita equivalente a:
+
+```text
+Ver en GitHub
+```
+
+El regreso al listado utiliza una acción explícita equivalente a:
+
+```text
+Volver a proyectos
+```
 
 ---
 
-## 22.3. Lenguajes
+## 22.3. Lenguaje principal
 
-La información representa lenguajes y sus porcentajes.
-
-Se debe denominarse genéricamente `Tecnologías` cuando el dato representado corresponde específicamente a lenguajes obtenidos para el repositorio.
+El detalle representa el lenguaje principal del proyecto como información técnica.
 
 Conceptualmente:
 
 ```text
-lenguaje1       85.5 %
-lenguaje2       14.5 %
+Lenguaje principal
+=> lenguaje
 ```
 
-La representación debe permitir comparar visualmente las proporciones sin sustituir los valores numéricos.
+No se requiere representar en el detalle una distribución porcentual de todos los lenguajes del repositorio.
 
 ---
 
@@ -2225,9 +2266,9 @@ No debe modificarse automáticamente solamente porque un repositorio haya recibi
 
 ---
 
-# 23. Blog
+# 23. Artículos
 
-La página de Blog utiliza la rejilla general de tarjetas.
+La página de Artículos utiliza la rejilla general de tarjetas.
 
 ---
 
@@ -2292,7 +2333,7 @@ para este caso.
 
 Al seleccionar `Leer artículo`, la región `Contenido` completa representa el artículo.
 
-El cuerpo del Blog utiliza contenido procedente de Markdown.
+El cuerpo de los artículos utiliza contenido procedente de Markdown.
 
 El artículo no está obligado a mantener una estructura rígida equivalente a Proyecto o Certificaciones.
 
@@ -2554,7 +2595,7 @@ Sobre mí           => IconUser
 Contactos          => IconMail
 Certificaciones    => IconAward
 Proyectos          => IconFolder
-Blog               => IconNotebook
+Artículos          => IconNotebook
 
 Proyecto           => IconFolder
 Artículo           => IconFileText
@@ -2614,15 +2655,16 @@ Los siguientes elementos de identidad visual quedan definidos:
 31. representación de certificados;
 32. representación de certificaciones;
 33. listado y detalle de Proyectos;
-34. representación de lenguajes y porcentajes;
-35. listado y detalle de Blog;
-36. representación de fechas de Blog;
+34. representación del lenguaje principal de los proyectos;
+35. listado y detalle de Artículos;
+36. representación de fechas de Artículos;
 37. representación de contenido Markdown;
-38. equivalencia estructural y de contenido entre los temas claro y oscuro.
+38. equivalencia estructural y de contenido entre los temas claro y oscuro;
+39. representaciones de escritorio de las páginas definidas en los temas claro y oscuro.
 
 Los modelos visuales deben utilizar los iconos concretos establecidos en el mapeo de esta especificación.
 
-Los modelos visuales existentes que no garanticen este mapeo deben actualizarse antes de considerarse referencias finales de iconografía.
+Las representaciones visuales finales de escritorio constituyen la referencia de composición para las páginas definidas en esta especificación.
 
 La adaptación estructural completa para diferentes tamaños de pantalla permanece pendiente de la etapa correspondiente de diseño responsive.
 

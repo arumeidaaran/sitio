@@ -6,7 +6,7 @@ Frontend del sitio personal, desarrollado con Angular y orientado a contenido, i
 
 `Sitio` constituye la capa de frontend del sitio personal.
 
-Su función es presentar la información personal, proyectos, certificaciones, medios de contacto y publicaciones mediante una interfaz multilingüe, manteniendo separadas la presentación, la navegación, el estado de la aplicación y las fuentes de contenido.
+Su función es presentar la información personal, proyectos, certificaciones, medios de contacto y artículos mediante una interfaz multilingüe, manteniendo separadas la presentación, la navegación, el estado de la aplicación y las fuentes de contenido.
 
 El frontend será publicado mediante GitHub Pages y consumirá los servicios proporcionados por `sitio-api`.
 
@@ -150,7 +150,7 @@ sitio
     |   |
     |   +-- Proyecto
     |
-    +-- Blog
+    +-- Artículos
         |
         +-- Artículo
 ```
@@ -260,7 +260,7 @@ Después presenta las secciones que contienen recursos y representan parte de su
 ```text
 Certificaciones
 Proyectos
-Blog
+Artículos
 ```
 
 Conceptualmente:
@@ -286,7 +286,7 @@ Navegación
 |   +-- ...
 |   +-- Ver todos los proyectos
 |
-+-- Blog
++-- Artículos
     |
     +-- Artículo
     +-- Artículo
@@ -826,7 +826,6 @@ Conceptualmente:
 +-----------------+ +-----------------+ +-----------------+ 
 |  certificacion  | |   certificado   | |  certificacion  | 
 +-----------------+ +-----------------+ +-----------------+ 
-
 ```
 
 Las tarjetas se distribuyen horizontalmente mientras exista espacio disponible, continúan en una nueva fila cuando sea necesario y no hay orden de precedencia entre un certificado y una certificación puramente. El orden para sus apariciones mediante es sus fechas.
@@ -975,9 +974,9 @@ Su contenido viene del backend.
 
 El orden del listado de proyectos constituye una decisión editorial y no depende automáticamente de la última actualización técnica del repositorio.
 
-## Blog
+## Artículos
 
-La página de Blog utiliza una rejilla de tarjetas.
+La página de Artículos utiliza una rejilla de tarjetas.
 
 Cada tarjeta presenta:
 
@@ -1030,7 +1029,7 @@ El listado completo de artículos se ordena mediante `publication_date` desde la
 
 Al seleccionar `Leer artículo`, toda la región `Contenido` pasa a representar el artículo.
 
-El Blog constituye el contenido cuya fuente editorial utiliza Markdown, pero que se ubica mediante información que viene del backend.
+Los artículos constituyen el contenido cuya fuente editorial utiliza Markdown, pero se ubican mediante información que viene del backend.
 
 Conceptualmente:
 
@@ -1162,7 +1161,7 @@ Proyectos
 => listado
 => información individual
 
-Blog
+Artículos
 => listado de artículos
 => artículos
 => contenido Markdown
@@ -1191,9 +1190,9 @@ Detalle
 
 El frontend no necesita recibir en Inicio información que solamente será utilizada dentro de la página individual de un recurso.
 
-Markdown se utiliza como fuente editorial del Blog.
+Markdown se utiliza como fuente editorial de los artículos.
 
-Constituye la fuente general para todos los contenidos de artículos del blog.
+Constituye la fuente general para todos los contenidos de artículos.
 
 ## Internacionalización
 
@@ -1445,10 +1444,10 @@ Certificado o certificación concreta
 => Certificaciones activo
 
 Listado de artículos
-=> Blog activo
+=> Artículos activo
 
 Artículo concreto
-=> Blog activo
+=> Artículos activo
 ```
 
 ## Selección de idioma
@@ -2105,6 +2104,7 @@ El contrato base contiene conceptualmente:
     ]
 }
 ```
+
 `type` debe contener uno de los valores personal, comercial o empresarial.
 
 `website` puede ser nulo cuando no existe un sitio web adicional disponible.
@@ -2121,7 +2121,7 @@ Los iconos correspondientes a los medios de contacto son seleccionados por el fr
     "last_name": "...",
     "email": "...",
     "subject": "...",
-    "message": "...",
+    "message": "..."
 }
 ```
 
