@@ -2378,7 +2378,1037 @@ deben recibir estilos compatibles con los tokens generales definidos en esta esp
 
 ---
 
-# 24. Adaptación a diferentes pantallas
+# 24. Estados comunes
+
+Los estados de la aplicación forman parte de la misma composición visual utilizada por el contenido normal.
+
+No constituyen páginas, modales ni sistemas visuales independientes.
+
+La representación de un estado debe conservar, siempre que las regiones correspondientes continúen disponibles:
+
+```text
+Cabecera
+Navegación
+Idioma activo
+Tema activo
+Estructura de la página
+Identidad visual
+```
+
+Los mensajes visibles de estado pertenecen a los elementos localizados de la interfaz.
+
+Los errores técnicos internos no se presentan directamente.
+
+No deben mostrarse al usuario:
+
+```text
+Excepciones
+Trazas
+Detalles internos del backend
+Mensajes técnicos sin localizar
+Códigos HTTP como contenido principal
+```
+
+cuando esa información no modifica la acción que puede realizar.
+
+---
+
+## 24.1. Unidad de presentación
+
+Los estados se aplican a unidades de presentación.
+
+Una unidad de presentación constituye la menor entidad que puede comprenderse y utilizarse de forma independiente.
+
+Una unidad solamente se presenta como contenido normal cuando todos sus elementos necesarios se encuentran disponibles.
+
+Conceptualmente:
+
+```text
+Unidad completa
+=> presentar contenido
+
+Unidad incompleta
+=> no presentar parcialmente
+=> representar el estado correspondiente
+```
+
+La cantidad de solicitudes HTTP utilizadas para obtener una unidad no determina sus límites visuales.
+
+La unidad se define por la estructura y el significado de aquello que se representa.
+
+### Colecciones
+
+En una colección, cada elemento independiente constituye su propia unidad.
+
+Esto se aplica, entre otros, a:
+
+```text
+Tarjeta de proyecto
+Tarjeta de artículo
+Tarjeta de certificado
+Tarjeta de certificación
+Elemento destacado
+Actualización
+```
+
+Por lo tanto, una colección puede presentar simultáneamente unidades que ya se encuentran completas y posiciones que todavía se encuentran cargando o que terminaron con error.
+
+Conceptualmente:
+
+```text
+Rejilla
+|
++-- unidad completa
+|   => contenido
+|
++-- unidad completa
+|   => contenido
+|
++-- unidad fallida
+|   => aviso de error
+|
++-- unidad completa
+    => contenido
+```
+
+Una falla en una unidad no invalida las demás unidades completas de la misma colección.
+
+Cuando la posición de una unidad fallida es conocida, el aviso de error conserva esa posición dentro de la colección.
+
+El estado de error no debe adoptar la apariencia de una tarjeta válida ni presentar contenido incompleto como si fuera el elemento final.
+
+### Unidades únicas
+
+Cuando la región representada constituye un contenido indivisible, toda la región constituye una sola unidad.
+
+Se consideran unidades únicas:
+
+```text
+Cabecera
+Sobre mí
+Detalle de proyecto
+Detalle de artículo
+Detalle de certificado
+Detalle de certificación
+Contactos durante su carga
+```
+
+Si una parte necesaria de una unidad única no puede obtenerse o representarse correctamente, no se presenta el resto como un contenido completo.
+
+La unidad adopta el estado correspondiente.
+
+---
+
+## 24.2. Carga
+
+El estado de carga utiliza skeleton.
+
+No se utiliza:
+
+```text
+Cargando...
+```
+
+como sustitución general del contenido.
+
+Tampoco se utiliza un spinner global para sustituir la página.
+
+Las regiones estructurales disponibles permanecen visibles y utilizables durante la carga.
+
+Conceptualmente:
+
+```text
+Cabecera disponible
+=> permanece
+
+Navegación disponible
+=> permanece
+
+Contenido pendiente
+=> skeleton
+```
+
+El skeleton debe aproximarse a la geometría del contenido que sustituirá.
+
+No debe utilizar una forma única para todos los tipos de contenido.
+
+Ejemplos:
+
+```text
+Tarjeta pendiente
+=> zona visual
+=> líneas correspondientes al texto
+=> espacio correspondiente a la acción
+
+Detalle pendiente
+=> bloques equivalentes a título, imagen, metadatos y contenido
+
+Navegación subordinada pendiente
+=> líneas equivalentes a los accesos que aparecerán
+```
+
+El skeleton utiliza superficies neutrales derivadas del tema activo.
+
+No se utiliza colores principales para la animación. El estado incorpora una franja de luminosidad en gradiente que se desplaza horizontalmente desde la izquierda hacia la derecha.
+
+Conceptualmente:
+
+```text
+base neutral
+        |
+        V
+franja de luminosidad
+        |
+        V
+desplazamiento horizontal
+```
+
+El skeleton solamente existe mientras una operación se encuentra realmente pendiente.
+
+Cuando la operación termina:
+
+```text
+éxito
+=> contenido
+
+vacío
+=> estado vacío
+
+error
+=> estado de error
+```
+
+Un error definitivo no mantiene skeleton.
+
+### Colecciones durante la carga
+
+Las unidades completas pueden presentarse a medida que se encuentran disponibles.
+
+Una unidad individual todavía incompleta permanece representada mediante su skeleton.
+
+No se muestra parcialmente.
+
+Conceptualmente:
+
+```text
+Elemento 1 completo
+=> contenido
+
+Elemento 2 pendiente
+=> skeleton
+
+Elemento 3 completo
+=> contenido
+```
+
+---
+
+## 24.3. Contenido vacío
+
+El estado vacío solamente puede aparecer después de completar correctamente la carga.
+
+Conceptualmente:
+
+```text
+Solicitud pendiente
+=> skeleton
+
+Solicitud correcta con elementos
+=> contenido
+
+Solicitud correcta sin elementos
+=> estado vacío
+
+Solicitud fallida
+=> error
+```
+
+Un estado vacío no constituye un error.
+
+No utiliza:
+
+```text
+color semántico de error
+imagen genérica
+ilustración decorativa obligatoria
+skeleton detenido
+tarjeta ficticia
+```
+
+El texto utiliza la tipografía normal de interfaz y el tratamiento de texto secundario del tema activo.
+
+En una rejilla, el mensaje ocupa la región disponible del listado.
+
+No se representa como si fuera la primera tarjeta de una colección inexistente.
+
+### Proyectos
+
+Cuando el listado no contiene proyectos publicados:
+
+```text
+No hay proyectos publicados.
+```
+
+### Artículos
+
+Cuando el listado no contiene artículos publicados:
+
+```text
+No hay artículos publicados.
+```
+
+### Certificaciones
+
+Cuando el listado no contiene certificados ni certificaciones publicados:
+
+```text
+No hay certificaciones publicadas.
+```
+
+### Inicio
+
+Las secciones destacadas disponen de estados vacíos independientes.
+
+```text
+Proyectos destacados
+=> No hay proyectos destacados.
+
+Artículos destacados
+=> No hay artículos destacados.
+
+Certificaciones destacadas
+=> No hay certificaciones destacadas.
+```
+
+El acceso al listado completo permanece disponible.
+
+Ejemplo:
+
+```text
+Proyectos destacados
+
+No hay proyectos destacados.
+
+Ver todos los proyectos
+```
+
+La ausencia de contenido destacado no implica que el listado completo de esa categoría se encuentre vacío.
+
+### Actualizaciones
+
+Cuando no existen actualizaciones que representar:
+
+```text
+No hay actualizaciones recientes.
+```
+
+### Sobre mí
+
+Cuando la carga termina correctamente y no existe información publicada:
+
+```text
+No hay información publicada en esta sección.
+```
+
+Si el contenido debería existir pero se encuentra incompleto o inválido, se utiliza el estado de error y no el estado vacío.
+
+### Contactos
+
+Cuando la consulta de medios de contacto termina correctamente sin medios publicados:
+
+```text
+Medios de contacto
+
+No hay medios de contacto publicados.
+
+Formulario de contacto
+
+[ formulario ]
+```
+
+La ausencia de medios de contacto no elimina el formulario.
+
+### elementos individuales
+
+Un elemento individual no utiliza estado vacío para sustituir datos obligatorios.
+
+Conceptualmente:
+
+```text
+elemento existente y completo
+=> contenido
+
+elemento existente pero incompleto
+=> error
+
+elemento inexistente
+=> no encontrado
+```
+
+Los campos opcionales mantienen las reglas específicas de su contrato.
+
+Ejemplos:
+
+```text
+Certificación sin expiración
+=> No expira
+
+Credencial no disponible
+=> No disponible
+```
+
+No constituyen estados vacíos.
+
+---
+
+## 24.4. Error de carga
+
+Los errores de carga utilizan el color semántico de error correspondiente al tema activo.
+
+La representación continúa utilizando:
+
+```text
+tipografía del sitio
+espaciado del sitio
+superficies del tema activo
+bordes del sitio
+```
+
+No se introduce una pantalla de error visualmente independiente.
+
+La unidad que falla deja de representar skeleton.
+
+No se muestran fragmentos de una unidad incompleta como si el contenido hubiera cargado correctamente.
+
+### Colecciones
+
+Cuando una unidad independiente falla dentro de una colección, las demás unidades completas permanecen visibles.
+
+La posición correspondiente a la unidad fallida presenta el aviso.
+
+Ejemplo para un proyecto:
+
+```text
+No fue posible cargar este proyecto.
+
+Actualice la página para volver a intentarlo.
+```
+
+Ejemplo para un artículo:
+
+```text
+No fue posible cargar este artículo.
+
+Actualice la página para volver a intentarlo.
+```
+
+Para certificados y certificaciones se utiliza la misma estructura adaptada al tipo correspondiente.
+
+La región de error ocupa aproximadamente el espacio que corresponde a la unidad dentro de la rejilla, sin imitar una tarjeta válida.
+
+### Unidades únicas
+
+Cuando falla una unidad única de la región `Contenido`, esa región se sustituye por un aviso equivalente a:
+
+```text
+No fue posible cargar la información de esta página.
+
+Actualice la página para volver a intentarlo.
+```
+
+En Contactos se utiliza:
+
+```text
+No fue posible cargar la información de contacto.
+
+Actualice la página para volver a intentarlo.
+```
+
+El nuevo intento ocurre mediante una nueva carga realizada por el usuario.
+
+### elementos visuales obligatorios
+
+Una imagen u otro elemento visual necesario forma parte de la unidad a la que pertenece.
+
+Si el elemento visual obligatorio falla, la unidad se considera incompleta.
+
+Conceptualmente:
+
+```text
+Imagen obligatoria cargada
++ datos obligatorios cargados
+=> unidad completa
+
+Imagen obligatoria fallida
+=> unidad incompleta
+=> error
+```
+
+No se utiliza una imagen genérica de sustitución para transformar una unidad incompleta en una representación aparentemente válida.
+
+Un elemento visual puramente opcional o decorativo puede seguir sus propias reglas cuando su ausencia no invalida el contenido.
+
+---
+
+## 24.5. Estados de la navegación
+
+La estructura principal de navegación permanece disponible aunque falle la obtención de elementos subordinados.
+
+Continúan disponibles:
+
+```text
+Inicio
+Sobre mí
+Contactos
+Certificaciones
+Proyectos
+Artículos
+Controles globales
+```
+
+cuando esos elementos no dependen de la operación que falló.
+
+### Carga de elementos subordinados
+
+Cuando una sección se encuentra expandida y sus elementos subordinados todavía están pendientes, el área de subelementos utiliza skeleton.
+
+Ejemplo:
+
+```text
+Proyectos
+    [ skeleton ]
+    [ skeleton ]
+    [ skeleton ]
+```
+
+El skeleton mantiene la geometría aproximada de un acceso subordinado.
+
+No representa tarjetas dentro de la navegación.
+
+Cuando una sección se encuentra contraída, no es necesario representar visualmente la carga de elementos que no se encuentran visibles.
+
+Las secciones independientes pueden alcanzar estados diferentes.
+
+Conceptualmente:
+
+```text
+Certificaciones
+=> cargado
+
+Proyectos
+=> cargando
+
+Artículos
+=> cargado
+```
+
+### Error de elementos subordinados
+
+Si falla la obtención de los elementos subordinados, la sección principal continúa disponible.
+
+El acceso al listado completo también permanece disponible.
+
+Ejemplo:
+
+```text
+Proyectos
+
+No fue posible cargar los proyectos.
+
+Ver todos los proyectos
+```
+
+Para las demás secciones se utiliza el texto correspondiente:
+
+```text
+No fue posible cargar los artículos.
+
+No fue posible cargar las certificaciones.
+```
+
+No se incorpora dentro de la navegación:
+
+```text
+Actualice la página para volver a intentarlo.
+```
+
+La navegación debe mantener una representación compacta.
+
+### Sección sin elementos subordinados
+
+Cuando una sección se carga correctamente y no contiene elementos subordinados:
+
+```text
+Proyectos
+```
+
+permanece como acceso a su listado.
+
+No se incorpora dentro de la navegación:
+
+```text
+No hay proyectos publicados.
+```
+
+La información de estado vacío pertenece a la región de contenido de la página correspondiente.
+
+---
+
+## 24.6. Estados de la cabecera
+
+La cabecera constituye una unidad única.
+
+Durante su carga mantiene el espacio estructural correspondiente y utiliza skeleton adaptado a su composición.
+
+### Cabecera expandida pendiente
+
+El skeleton respeta aproximadamente:
+
+```text
+altura             => 320px
+Fondo visual y foto juntos
+Nombre
+Descripción breve
+```
+
+### Cabecera compacta pendiente
+
+Cuando corresponde la geometría compacta, respeta aproximadamente:
+
+```text
+altura             => 112px
+Fondo visual y foto juntos
+Nombre
+```
+
+La cabecera no se presenta parcialmente.
+
+Si una parte obligatoria todavía se encuentra pendiente, la unidad continúa en estado de carga.
+
+### Error
+
+Cuando la cabecera no puede constituirse completamente:
+
+```text
+No fue posible cargar la información de la cabecera.
+
+Actualice la página para volver a intentarlo.
+```
+
+La región de cabecera presenta el aviso dentro del espacio correspondiente.
+
+Una falla de la cabecera no elimina la navegación ni invalida las regiones de contenido que puedan continuar funcionando.
+
+---
+
+## 24.7. Contenido no encontrado
+
+El estado no encontrado se utiliza cuando la aplicación determina que la dirección o el elemento solicitado no existe.
+
+No se utiliza como sustitución de un error de comunicación o de carga.
+
+La estructura global del sitio permanece visible cuando se encuentra disponible.
+
+No es necesario presentar:
+
+```text
+404
+```
+
+como elemento visual principal.
+
+### Página desconocida
+
+Una dirección que no corresponde a una página conocida utiliza:
+
+```text
+Página no encontrada
+
+La página que buscas no existe o ya no está disponible.
+
+Volver al inicio
+```
+
+`Volver al inicio` constituye una acción normal de navegación.
+
+### Proyecto
+
+```text
+Proyecto no encontrado
+
+El proyecto que buscas no existe o ya no está disponible.
+
+Ver todos los proyectos
+```
+
+### Artículo
+
+```text
+Artículo no encontrado
+
+El artículo que buscas no existe o ya no está disponible.
+
+Ver todos los artículos
+```
+
+### Certificado
+
+```text
+Certificado no encontrado
+
+El certificado que buscas no existe o ya no está disponible.
+
+Ver todas las certificaciones
+```
+
+### Certificación
+
+```text
+Certificación no encontrada
+
+La certificación que buscas no existe o ya no está disponible.
+
+Ver todas las certificaciones
+```
+
+Los estados no encontrados no incorporan una indicación de actualizar la página.
+
+---
+
+## 24.8. Estados del formulario de contacto
+
+Los estados del formulario se representan dentro de la propia página de Contactos.
+
+No sustituyen la navegación ni las demás regiones del sitio.
+
+Los valores introducidos se conservan siempre que el resultado de la operación permita o requiera una nueva tentativa.
+
+---
+
+### 24.8.1. Estado normal
+
+El control presenta:
+
+```text
+Enviar
+```
+
+Los campos permanecen disponibles para edición.
+
+---
+
+### 24.8.2. Envío en curso
+
+Después de activar `Enviar`, el formulario permanece visible.
+
+Los valores introducidos permanecen presentes.
+
+Durante la operación:
+
+```text
+Campos
+=> conservan valores
+=> temporalmente no modificables
+
+Botón
+=> Enviando...
+=> no permite iniciar un segundo envío simultáneo
+```
+
+No se utiliza:
+
+```text
+skeleton
+overlay de página completa
+spinner global
+```
+
+para representar esta operación.
+
+La navegación permanece disponible.
+
+Cuando la operación termina, el control vuelve a:
+
+```text
+Enviar
+```
+
+independientemente del resultado recibido.
+
+El frontend no conserva una condición local que impida futuros intentos basándose en una respuesta anterior del backend.
+
+---
+
+### 24.8.3. Envío satisfactorio
+
+Cuando la interfaz recibe el resultado correspondiente a una solicitud aceptada:
+
+```text
+Mensaje enviado correctamente.
+```
+
+El mensaje utiliza el color semántico de éxito del tema activo.
+
+Después del resultado satisfactorio:
+
+```text
+Campos
+=> vacíos
+=> disponibles
+
+Botón
+=> Enviar
+```
+
+No se añade una segunda frase de confirmación.
+
+No se incorpora:
+
+```text
+Aceptar
+Cerrar
+Enviar otro
+```
+
+como acción adicional.
+
+El formulario permanece en la página y puede volver a utilizarse.
+
+---
+
+### 24.8.4. Validación
+
+Los errores de validación se representan junto al campo correspondiente.
+
+Los valores introducidos permanecen en el formulario.
+
+El campo afectado utiliza el tratamiento de error definido por la identidad visual.
+
+El mensaje debe indicar la condición concreta que necesita corrección.
+
+Ejemplos:
+
+```text
+Este campo es obligatorio.
+```
+
+```text
+Introduzca una dirección de correo electrónico válida.
+```
+
+```text
+El nombre no puede superar los 100 caracteres.
+```
+
+```text
+El apellido no puede superar los 100 caracteres.
+```
+
+```text
+El motivo no puede superar los 200 caracteres.
+```
+
+```text
+El mensaje no puede superar los 10000 caracteres.
+```
+
+La validación no depende únicamente de un mensaje general equivalente a:
+
+```text
+El formulario contiene errores.
+```
+
+El usuario debe poder identificar qué campo requiere modificación.
+
+Cuando la validación del frontend determina que los datos todavía no cumplen el contrato, no se realiza la solicitud.
+
+Una validación equivalente informada por el backend utiliza la misma representación visible cuando corresponde a un campo concreto.
+
+Después de corregir los valores:
+
+```text
+Enviar
+```
+
+permanece disponible para una nueva tentativa.
+
+---
+
+### 24.8.5. Honeypot
+
+El honeypot forma parte de la protección del formulario pero no introduce una interacción visible adicional.
+
+Su implementación concreta no forma parte de esta especificación visual.
+
+Cuando el mecanismo se activa, no se presenta un estado específico que permita distinguir visualmente ese caso de una solicitud aceptada.
+
+Conceptualmente:
+
+```text
+Solicitud aceptada para la interfaz
+=> Mensaje enviado correctamente.
+
+Honeypot activado
+=> misma representación visible
+```
+
+La activación del mecanismo no debe revelar visualmente qué condición interna fue detectada.
+
+---
+
+### 24.8.6. Límite de envíos
+
+El límite definido para el formulario es:
+
+```text
+5 envíos por IP por hora
+```
+
+Cuando el backend informa que el límite se encuentra activo, el formulario conserva los valores introducidos.
+
+El aviso utiliza el color semántico de advertencia del tema activo.
+
+Texto:
+
+```text
+Se alcanzó el límite de 5 envíos por hora.
+
+Inténtelo de nuevo más tarde.
+```
+
+Después de la respuesta:
+
+```text
+Botón
+=> Enviar
+```
+
+permanece disponible.
+
+El frontend no mantiene:
+
+```text
+contador de envíos
+temporizador
+cuenta regresiva
+bloqueo local permanente del botón
+estado local equivalente al límite del backend
+```
+
+Cada nueva activación de `Enviar` genera una nueva solicitud.
+
+Corresponde al backend determinar en ese momento si la solicitud puede continuar o si el límite sigue vigente.
+
+---
+
+### 24.8.7. Fallo de envío
+
+Cuando los datos son válidos pero la operación no puede completarse:
+
+```text
+No fue posible enviar el mensaje.
+
+Inténtelo de nuevo.
+```
+
+El aviso utiliza el color semántico de error del tema activo.
+
+Los valores introducidos permanecen en el formulario.
+
+Conceptualmente:
+
+```text
+Campos
+=> conservan valores
+=> disponibles nuevamente
+
+Botón
+=> Enviar
+```
+
+No se vacían los campos.
+
+No se actualiza automáticamente la página.
+
+No se sustituye la página completa por el error.
+
+La interfaz no necesita distinguir visualmente entre causas técnicas que producen el mismo resultado para el usuario.
+
+No se presentan directamente mensajes equivalentes a:
+
+```text
+500 Internal Server Error
+NetworkError
+Microsoft Graph no disponible
+Excepción interna
+```
+
+---
+
+## 24.9. Relación entre estados y colores semánticos
+
+Los estados definidos reutilizan los colores semánticos establecidos en `7.3. Estados semánticos`.
+
+Conceptualmente:
+
+```text
+Envío satisfactorio
+=> Éxito
+
+Límite de envíos
+=> Advertencia
+
+Error de carga
+=> Error
+
+Validación incorrecta
+=> Error
+
+Fallo de envío
+=> Error
+```
+
+Los estados vacíos no utilizan el color de éxito solamente porque la operación técnica haya terminado correctamente.
+
+Utilizan tratamiento neutral de contenido.
+
+Los skeletons tampoco utilizan colores semánticos.
+
+---
+
+## 24.10. Relación entre estados y estructura
+
+Un estado no debe eliminar regiones ajenas a la operación que lo produjo.
+
+Conceptualmente:
+
+```text
+Error en una tarjeta
+=> no elimina otras tarjetas
+
+Error en contenido
+=> no elimina navegación disponible
+
+Error en cabecera
+=> no elimina navegación disponible
+
+Error en elementos subordinados de navegación
+=> no elimina sección principal
+
+Fallo de envío
+=> no elimina formulario
+
+Estado vacío de medios de contacto
+=> no elimina formulario
+```
+
+La aplicación debe informar el estado allí donde afecta a la representación.
+
+No debe convertir un fallo localizado en una pantalla global de error cuando las demás regiones continúan utilizables.
+
+---
+
+# 25. Adaptación a diferentes pantallas
 
 La escala tipográfica para pantallas pequeñas se encuentra definida.
 
@@ -2428,7 +3458,11 @@ Deben compartir exactamente:
 - actualizaciones;
 - campos de formularios;
 - estructura de listados;
-- estructura de páginas de detalle.
+- estructura de páginas de detalle;
+- reglas de los estados comunes;
+- límites de las unidades de presentación;
+- comportamiento de carga, vacío, error y contenido no encontrado;
+- comportamiento de los estados del formulario.
 
 Conceptualmente:
 
@@ -2441,6 +3475,7 @@ Tema claro
 +-- misma cantidad
 +-- misma estructura
 +-- misma disposición
++-- mismos estados
 
 Tema oscuro
 |
@@ -2450,6 +3485,7 @@ Tema oscuro
 +-- misma cantidad
 +-- misma estructura
 +-- misma disposición
++-- mismos estados
 ```
 
 Solamente deben variar los valores visuales necesarios para adaptar:
@@ -2461,7 +3497,8 @@ Solamente deben variar los valores visuales necesarios para adaptar:
 - sombras;
 - rojo;
 - verde;
-- estados interactivos.
+- estados interactivos;
+- colores semánticos.
 
 El cambio de tema no debe:
 
@@ -2478,6 +3515,8 @@ Cambiar los espacios estructurales
 Cambiar los textos
 Cambiar los iconos
 Cambiar los campos mostrados
+Cambiar el significado de los estados
+Cambiar las reglas de una unidad de presentación
 ```
 
 El tema oscuro no debe ser considerado un diseño independiente.
@@ -2660,11 +3699,29 @@ Los siguientes elementos de identidad visual quedan definidos:
 36. representación de fechas de Artículos;
 37. representación de contenido Markdown;
 38. equivalencia estructural y de contenido entre los temas claro y oscuro;
-39. representaciones de escritorio de las páginas definidas en los temas claro y oscuro.
+39. representaciones de escritorio de las páginas definidas en los temas claro y oscuro;
+40. unidad de presentación y límites de contenido independiente;
+41. representación mediante skeleton durante la carga;
+42. comportamiento de estados vacíos;
+43. comportamiento de errores de carga;
+44. tratamiento de elementos visuales obligatorios fallidos;
+45. estados de carga y error de elementos subordinados de navegación;
+46. estados de carga y error de cabecera;
+47. representación de páginas y elementos no encontrados;
+48. estado de envío en curso del formulario;
+49. confirmación de envío satisfactorio;
+50. representación de errores de validación;
+51. comportamiento visible del honeypot;
+52. representación del límite de envíos;
+53. representación de fallos de envío;
+54. relación entre estados y colores semánticos;
+55. conservación de regiones independientes durante estados parciales.
 
 Los modelos visuales deben utilizar los iconos concretos establecidos en el mapeo de esta especificación.
 
 Las representaciones visuales finales de escritorio constituyen la referencia de composición para las páginas definidas en esta especificación.
+
+Los estados comunes definidos forman parte de la referencia de comportamiento visual para todas las páginas y regiones correspondientes.
 
 La adaptación estructural completa para diferentes tamaños de pantalla permanece pendiente de la etapa correspondiente de diseño responsive.
 

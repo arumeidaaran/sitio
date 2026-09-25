@@ -255,7 +255,7 @@ Sobre mí
 Contactos
 ```
 
-Después presenta las secciones que contienen recursos y representan parte de su jerarquía:
+Después presenta las secciones que contienen elementos y representan parte de su jerarquía:
 
 ```text
 Certificaciones
@@ -422,16 +422,16 @@ Ver todos los artículos
 
 ### Certificaciones destacadas
 
-La sección presenta recursos seleccionados editorialmente dentro de Certificaciones.
+La sección presenta elementos seleccionados editorialmente dentro de Certificaciones.
 
-Estos recursos pueden corresponder a:
+Estos elementos pueden corresponder a:
 
 ```text
 Certificado
 Certificación
 ```
 
-Cada elemento presenta la información resumida necesaria para identificar el recurso y acceder a su detalle.
+Cada elemento presenta la información resumida necesaria para identificar el elemento y acceder a su detalle.
 
 La cantidad no constituye una limitación estructural del componente.
 
@@ -443,7 +443,7 @@ Ver todas las certificaciones
 
 ### Destacados
 
-La condición de destacado constituye una decisión editorial sobre un recurso.
+La condición de destacado constituye una decisión editorial sobre un elemento.
 
 Conceptualmente:
 
@@ -477,7 +477,7 @@ Representación
 
 La selección destacada no depende necesariamente de la fecha de publicación, importancia automática ni otro criterio implícito.
 
-Los recursos pueden ser seleccionados y ordenados deliberadamente.
+Los elementos pueden ser seleccionados y ordenados deliberadamente.
 
 ### Actualizaciones
 
@@ -523,7 +523,7 @@ Fecha
 Enlace explícito
 ```
 
-El tipo de acción del enlace depende del recurso.
+El tipo de acción del enlace depende del elemento.
 
 Conceptualmente:
 
@@ -565,7 +565,7 @@ Actualizaciones
 => qué contenido tuvo actividad más recientemente
 ```
 
-Un mismo recurso puede pertenecer simultáneamente a ambas regiones.
+Un mismo elemento puede pertenecer simultáneamente a ambas regiones.
 
 ## Páginas internas
 
@@ -595,7 +595,7 @@ La región `Contenido` puede adoptar una composición propia según la naturalez
 
 ## Sobre mí
 
-`Sobre mí` presenta el contenido personal mediante bloques de texto acompañados por recursos visuales relacionados con aquello que se está comunicando.
+`Sobre mí` presenta el contenido personal mediante bloques de texto acompañados por elementos visuales relacionados con aquello que se está comunicando.
 
 Conceptualmente:
 
@@ -613,7 +613,7 @@ Sobre mí
 +-- ...
 ```
 
-Los recursos visuales no se incorporan de forma arbitraria.
+Los elementos visuales no se incorporan de forma arbitraria.
 
 Cada icono o imagen debe corresponder al contenido del bloque al que acompaña.
 
@@ -628,7 +628,7 @@ El contrato permite al frontend conocer cuál de los dos tipos fue seleccionado.
 
 La posición, tamaño, color y demás decisiones de presentación pertenecen exclusivamente a `sitio`.
 
-Cuando el recurso es un icono, `sitio-api` no especifica un icono propio de una biblioteca.
+Cuando el elemento es un icono, `sitio-api` no especifica un icono propio de una biblioteca.
 
 El bloque dispone de un identificador estable y `sitio` relaciona ese identificador con un icono concreto de la biblioteca utilizada por el frontend.
 
@@ -644,7 +644,7 @@ sitio
 
 De esta manera, la elección del icono específico continúa perteneciendo a la capa de presentación.
 
-Cuando el recurso es una imagen, su contrato contiene la fuente de la imagen, el texto alternativo y el destino asociado.
+Cuando el elemento es una imagen, su contrato contiene la fuente de la imagen, el texto alternativo y el destino asociado.
 
 ## Contactos
 
@@ -799,11 +799,11 @@ El honeypot permite detectar envíos automatizados simples sin introducir una in
 
 La limitación por IP reduce el abuso repetitivo del endpoint antes de que la solicitud llegue al servicio utilizado para enviar el correo.
 
-La aceptación del mensaje por el servicio de envío se representa mediante una respuesta HTTP `202 Accepted`.
+La aceptación de la solicitud por `sitio-api` se representa mediante una respuesta HTTP `202 Accepted`.
 
 ## Certificaciones
 
-La sección denominada `Certificaciones` reúne dos tipos de recursos:
+La sección denominada `Certificaciones` reúne dos tipos de elementos:
 
 ```text
 Certificado
@@ -891,7 +891,7 @@ El listado completo se ordena por fecha de emisión desde la más reciente hacia
 
 ### Detalle
 
-Al seleccionar un certificado o una certificación, toda la región `Contenido` pasa a representar el recurso seleccionado.
+Al seleccionar un certificado o una certificación, toda la región `Contenido` pasa a representar el elemento seleccionado.
 
 Su contenido viene del backend.
 
@@ -1071,13 +1071,13 @@ Esto no significa que todos los tipos de tarjeta compartan los mismos datos, sin
 Conceptualmente:
 
 ```text
---------------------------------
-| zona visual                  |
-| ---------------------------- |
-| contenido propio del recurso |
-|                              |
-| enlace, cuando corresponda   |
---------------------------------
+---------------------------------
+| zona visual                   |
+| ----------------------------- |
+| contenido propio del elemento |
+|                               |
+| enlace, cuando corresponda    |
+---------------------------------
 ```
 
 El lenguaje visual común comprende:
@@ -1169,11 +1169,11 @@ Artículos
 
 `Sitio` no depende del origen físico de esta información.
 
-Las fuentes utilizadas para generar cada recurso pertenecen a la responsabilidad de `sitio-api`.
+Las fuentes utilizadas para generar cada elemento pertenecen a la responsabilidad de `sitio-api`.
 
 Esto permite que la presentación mantenga una estructura estable independientemente de si el backend obtiene determinada información desde texto Markdown, una API externa, una base de datos u otras fuentes fuera del propio archivo ubicado por el backend.
 
-La cantidad de información retornada depende del contexto en el que el recurso será utilizado.
+La cantidad de información retornada depende del contexto en el que el elemento será utilizado.
 
 Conceptualmente:
 
@@ -1185,7 +1185,7 @@ Listado
 => datos necesarios para representar el listado
 
 Detalle
-=> datos completos necesarios para representar el recurso
+=> datos completos necesarios para representar el elemento
 ```
 
 El frontend no necesita recibir en Inicio información que solamente será utilizada dentro de la página individual de un recurso.
@@ -1193,6 +1193,375 @@ El frontend no necesita recibir en Inicio información que solamente será utili
 Markdown se utiliza como fuente editorial de los artículos.
 
 Constituye la fuente general para todos los contenidos de artículos.
+
+## Estados comunes
+
+La aplicación representa de forma explícita los estados que afectan a la disponibilidad y a la interacción con el contenido.
+
+Estos estados forman parte de la misma interfaz y conservan:
+
+```text
+Cabecera
+Navegación
+Idioma activo
+Tema activo
+Identidad visual
+```
+
+cuando las regiones correspondientes continúan disponibles.
+
+Un estado técnico interno que no modifica materialmente lo que el usuario puede ver o hacer no requiere una representación visible propia.
+
+### Unidad de contenido
+
+La presentación distingue entre regiones estructurales y unidades de contenido.
+
+Una unidad de contenido constituye la menor entidad que puede comprenderse y utilizarse de forma independiente.
+
+Una unidad solamente se presenta como cargada cuando todos los elementos necesarios para constituirla están disponibles.
+
+Conceptualmente:
+
+```text
+Unidad completa
+=> presentar contenido
+
+Unidad incompleta
+=> no presentar parcialmente
+=> em cambio, presentar el estado correspondiente
+```
+
+Cuando una colección contiene múltiples unidades independientes, cada unidad puede alcanzar su estado de forma independiente.
+
+Conceptualmente:
+
+```text
+Colección
+|
++-- unidad completa
+|   => presentar
+|
++-- unidad completa
+|   => presentar
+|
++-- unidad incompleta
+    => presentar estado de error
+```
+
+Una falla en una unidad no invalida las demás unidades completas de la misma colección.
+
+Cuando toda la región representada constituye una única unidad, una falla en cualquiera de sus elementos necesarios afecta a la unidad completa.
+
+Los elementos estructurales de la aplicación no dependen del estado de una unidad de contenido distinta.
+
+### Carga
+
+Las regiones estructurales disponibles permanecen visibles y utilizables mientras se obtiene el contenido.
+
+El contenido pendiente se representa mediante un skeleton que mantiene aproximadamente la geometría de la representación final.
+
+El skeleton utiliza superficies neutrales del tema activo y una franja de luminosidad en gradiente que se desplaza horizontalmente para indicar actividad.
+
+No se utiliza un texto general equivalente a:
+
+```text
+Cargando...
+```
+
+ni un indicador global que sustituya la página completa.
+
+Conceptualmente:
+
+```text
+Estructura disponible
+=> permanece visible
+
+Contenido pendiente
+=> skeleton
+
+Contenido completo
+=> representación final
+```
+
+El skeleton solamente representa una operación de carga en curso.
+
+No permanece como representación de un elemento cuya carga ya terminó con error.
+
+En las colecciones, las unidades completas pueden sustituir sus representaciones de carga de forma independiente.
+
+Una unidad todavía incompleta no se presenta parcialmente.
+
+### Contenido vacío
+
+Un estado vacío solamente se representa después de finalizar correctamente la carga y determinar que no existe contenido publicable para la región correspondiente.
+
+El estado vacío no utiliza skeleton, tratamiento de error ni una representación visual genérica de contenido.
+
+El mensaje ocupa la región en la que normalmente se representaría el contenido.
+
+En los listados, el texto localizado utiliza una representación equivalente a:
+
+```text
+No hay elementos publicados.
+```
+
+Las secciones editoriales de Inicio utilizan una representación equivalente a:
+
+```text
+No hay elementos destacados.
+```
+
+Los accesos hacia los listados completos permanecen disponibles aunque una sección destacada se encuentre vacía.
+
+El área de Actualizaciones utiliza una representación localizada equivalente a:
+
+```text
+No hay actualizaciones recientes.
+```
+
+Cuando una página de contenido general no dispone de información publicada, utiliza una representación localizada equivalente a:
+
+```text
+No hay información publicada en esta sección.
+```
+
+Cuando no existen medios de contacto publicados, el estado vacío afecta solamente a esa región.
+
+El formulario de contacto permanece disponible.
+
+Los elementos individuales no utilizan un estado vacío cuando su contrato exige contenido.
+
+Conceptualmente:
+
+```text
+Elemento existente y válido
+=> presentar
+
+Elemento con datos necesarios incompletos
+=> error
+
+Elemento inexistente
+=> no encontrado
+```
+
+La ausencia válida de un campo opcional no constituye un estado vacío de la unidad.
+
+La navegación no incorpora mensajes de contenido vacío dentro de las secciones que no disponen de elementos subordinados.
+
+### Error de carga
+
+Los errores de carga se representan en la unidad o región cuya información no pudo obtenerse completamente.
+
+Una unidad incompleta no presenta conjuntamente fragmentos válidos y fragmentos fallidos como si constituyeran contenido completo.
+
+En una colección, las unidades completas permanecen disponibles y la unidad fallida conserva su posición mediante el estado de error correspondiente.
+
+Conceptualmente:
+
+```text
+Unidad completa
+=> contenido
+
+Unidad fallida
+=> aviso de error
+```
+
+Los avisos de error utilizan textos localizados adecuados al elemento.
+
+Cuando corresponde volver a solicitar el contenido mediante un nuevo acceso, el mensaje utiliza una representación equivalente a:
+
+```text
+No fue posible cargar el contenido.
+
+Actualice la página para volver a intentarlo.
+```
+
+La aplicación no incorpora una acción automática de reintento para estos estados.
+
+Los elementos visuales necesarios forman parte de la unidad a la que pertenecen.
+
+Si un elemento visual obligatorio no puede cargarse, la unidad no se considera completa.
+
+No se utiliza una imagen genérica de sustitución para presentar una unidad incompleta como si hubiera cargado correctamente.
+
+### Navegación
+
+La estructura principal de navegación permanece disponible independientemente del estado de los elementos subordinados.
+
+Cuando una sección expandida todavía está obteniendo sus elementos subordinados, utiliza skeletons adaptados a la geometría de los accesos de navegación.
+
+Una sección contraída no necesita representar el estado de carga de elementos que no se encuentran visibles.
+
+Si la obtención de los elementos subordinados falla, la sección principal y el acceso al listado completo permanecen disponibles.
+
+El aviso dentro de la navegación utiliza una representación breve equivalente a:
+
+```text
+No fue posible cargar los elementos.
+```
+
+No se incorpora dentro de la navegación la instrucción de actualizar la página.
+
+Las demás secciones de navegación no son afectadas por la carga o el error de una sección independiente.
+
+### Cabecera
+
+La cabecera constituye una única unidad visual.
+
+Mientras se obtienen sus datos, conserva su espacio estructural y utiliza una representación skeleton adaptada a su composición.
+
+La cabecera solamente se presenta como contenido cuando los elementos necesarios para constituirla se encuentran disponibles.
+
+Si la unidad no puede cargarse completamente, la región de cabecera presenta un estado de error.
+
+El mensaje utiliza una representación localizada equivalente a:
+
+```text
+No fue posible cargar la información de la cabecera.
+
+Actualice la página para volver a intentarlo.
+```
+
+Una falla de la cabecera no elimina la navegación ni invalida otras regiones que puedan continuar funcionando.
+
+### Contenido no encontrado
+
+El estado de contenido no encontrado conserva la estructura general del sitio.
+
+Cuando la dirección no corresponde a una página o sección existente, la región de contenido utiliza una representación localizada equivalente a:
+
+```text
+Página no encontrada
+
+La página que buscas no existe o ya no está disponible.
+
+Volver al inicio
+```
+
+Cuando la estructura de la dirección identifica el tipo de elemento solicitado, el mensaje utiliza ese contexto.
+
+Conceptualmente:
+
+```text
+Elemento no encontrado
+
+El elemento que buscas no existe o ya no está disponible.
+
+Ver todos los elementos
+```
+
+La acción presentada constituye navegación normal hacia una región existente.
+
+No se utiliza una instrucción de actualización para un elemento que ya fue determinado como inexistente.
+
+### Formulario de contacto
+
+El formulario conserva sus valores mientras una operación de envío se encuentra en curso o termina con un resultado que permite una nueva tentativa.
+
+Durante el envío:
+
+```text
+Formulario
+=> permanece visible
+=> conserva los valores
+=> campos temporalmente no modificables
+
+Enviar
+=> Enviando...
+```
+
+La navegación y las demás regiones disponibles permanecen utilizables.
+
+Cuando la operación termina, el control vuelve a:
+
+```text
+Enviar
+```
+
+El frontend no mantiene un estado persistente que determine si una nueva solicitud será aceptada por los mecanismos de protección del backend.
+
+#### Envío satisfactorio
+
+Cuando la solicitud es aceptada como un envío satisfactorio para la interfaz:
+
+```text
+Mensaje enviado correctamente.
+```
+
+Los campos se vacían y vuelven a quedar disponibles.
+
+No se incorpora una segunda frase de confirmación ni una acción adicional.
+
+#### Validación
+
+Los errores de validación conservan los valores introducidos.
+
+Cada problema se representa junto al campo correspondiente mediante un mensaje localizado que indica la corrección necesaria.
+
+Conceptualmente:
+
+```text
+Campo
+[ valor ]
+
+Mensaje de validación
+```
+
+El formulario no se sustituye por un error general.
+
+El control de envío permanece disponible después de la validación para permitir una nueva solicitud una vez corregidos los campos.
+
+La validación realizada por el backend se representa mediante el mismo tratamiento cuando corresponde a un campo concreto.
+
+#### Honeypot
+
+La activación del honeypot no genera un estado visible específico.
+
+El frontend no informa qué condición de protección fue activada ni presenta un mensaje que permita distinguir este caso de una solicitud aceptada normalmente.
+
+La protección depende de que su implementación permanezca secreta.
+
+#### Límite de envíos
+
+Cuando el backend informa que se alcanzó el límite de envíos, el formulario conserva todos los valores introducidos.
+
+El aviso utiliza el estado semántico de advertencia y una representación localizada equivalente a:
+
+```text
+Se alcanzó el límite de 5 envíos por hora.
+
+Inténtelo de nuevo más tarde.
+```
+
+El control permanece disponible como:
+
+```text
+Enviar
+```
+
+Cada nueva tentativa constituye una nueva solicitud y corresponde al backend determinar si el límite continúa vigente.
+
+El frontend no mantiene contadores, temporizadores ni una condición local equivalente al límite aplicado por el servidor.
+
+#### Fallo de envío
+
+Cuando una solicitud válida no puede completar la operación de envío, el formulario conserva todos los valores introducidos.
+
+El aviso utiliza el estado semántico de error y una representación localizada equivalente a:
+
+```text
+No fue posible enviar el mensaje.
+
+Inténtelo de nuevo.
+```
+
+El control vuelve a:
+
+```text
+Enviar
+```
+
+No se actualiza automáticamente la página, no se vacían los campos y no se sustituye la página completa por el error.
 
 ## Internacionalización
 
@@ -1334,7 +1703,7 @@ Validación mediante sitio
         |       |
         |       +-- almacenar preferencia
         |       +-- establecer idioma activo
-        |       +-- cargar recursos
+        |       +-- cargar elementos
         |       +-- presentar
         |
         +-- idioma no admitido
@@ -1363,7 +1732,7 @@ La resolución del idioma del sistema no depende de la disponibilidad de `sitio-
 
 Una falla al obtener contenido desde el backend no modifica automáticamente el idioma activo ya determinado por el frontend.
 
-La presentación de la página ocurre después de determinar el idioma activo y preparar los recursos correspondientes, evitando mostrar temporalmente una variante diferente.
+La presentación de la página ocurre después de determinar el idioma activo y preparar los elementos correspondientes, evitando mostrar temporalmente una variante diferente.
 
 ## Preferencia de idioma
 
@@ -1422,11 +1791,11 @@ Cambio manual de idioma
 
 Los enlaces internos son construidos de acuerdo con el idioma activo.
 
-Los segmentos visibles de las direcciones y los `slug` correspondientes a recursos forman parte de la variante localizada.
+Los segmentos visibles de las direcciones y los `slug` correspondientes a elementos forman parte de la variante localizada.
 
 Un nuevo acceso directo mediante una dirección diferente vuelve a ejecutar la resolución inicial.
 
-Las páginas de detalle mantienen activa la sección a la que pertenece el recurso.
+Las páginas de detalle mantienen activa la sección a la que pertenece el elemento.
 
 Conceptualmente:
 
@@ -1808,7 +2177,7 @@ Clases
 Schemas
 Propiedades de modelos
 Contratos
-Nombres internos de recursos
+Nombres internos de elementos
 Valores discriminadores
 ```
 
@@ -1862,13 +2231,13 @@ Conceptualmente, el contrato tiene una única estructura:
 }
 ```
 
-`original` identifica el idioma en el que fue creado el recurso.
+`original` identifica el idioma en el que fue creado el elemento.
 
 `supported` identifica todas las variantes lingüísticas existentes de ese mismo contenido.
 
 `content` representa la variante correspondiente al idioma incluido en la solicitud.
 
-Su estructura interna depende del tipo de recurso y es definida por el contrato específico correspondiente.
+Su estructura interna depende del tipo de elemento y es definida por el contrato específico correspondiente.
 
 Cuando existe la variante solicitada:
 
@@ -2300,7 +2669,7 @@ El frontend representa esta ausencia mediante un texto localizado equivalente a:
 No disponible
 ```
 
-El frontend no utiliza la presencia o ausencia de propiedades para determinar si un recurso es un certificado o una certificación.
+El frontend no utiliza la presencia o ausencia de propiedades para determinar si un elemento es un certificado o una certificación.
 
 La identificación depende exclusivamente de `type`.
 
@@ -2359,7 +2728,7 @@ Conceptualmente:
 
 Inicio recibe solamente los datos necesarios para representar sus elementos.
 
-No recibe automáticamente el contenido completo de cada recurso.
+No recibe automáticamente el contenido completo de cada elemento.
 
 ### Proyecto destacado
 
@@ -2420,7 +2789,7 @@ Conceptualmente:
 
 La fecha de actualización forma parte del listado completo y del detalle del artículo, pero no es necesaria para la representación resumida establecida para Inicio.
 
-### Recurso destacado de Certificaciones
+### Elemento destacado de Certificaciones
 
 Conceptualmente:
 
@@ -2468,19 +2837,19 @@ o:
 }
 ```
 
-`type` permite al frontend determinar qué recurso representa y construir la acción correspondiente.
+`type` permite al frontend determinar qué elemento representa y construir la acción correspondiente.
 
 ### Actualización
 
 Las actualizaciones forman una lista compuesta por proyectos, artículos, certificados y certificaciones.
 
-Cada elemento informa el tipo de recurso y el acontecimiento representado.
+Cada elemento informa el tipo de elemento y el acontecimiento representado.
 
 Conceptualmente:
 
 ```json
 {
-    "type": "tipo-de-recurso",
+    "type": "tipo-de-elemento",
     "update_type": "tipo-de-actualizacion",
     "activity_date": "...",
     "original": "idioma-a",
@@ -2595,7 +2964,7 @@ La aplicación utiliza TypeScript en modo estricto para aumentar la validación 
 
 Las modificaciones integradas deben verificar el formato, la calidad del código, las pruebas automatizadas y la construcción de producción antes de ser promovidas.
 
-Los idiomas utilizados por la interfaz forman parte de la configuración y los recursos propios de `sitio`.
+Los idiomas utilizados por la interfaz forman parte de la configuración y los elementos propios de `sitio`.
 
 Los contratos de contenido proporcionados por `sitio-api` deben garantizar:
 
@@ -2617,13 +2986,13 @@ Los bloques visuales de `Sobre mí` deben respetar los contratos correspondiente
 
 ```text
 type = icon
-=> recurso de icono
+=> elemento de icono
 
 type = image
 => src, alt y href obligatorios
 ```
 
-Los recursos de Certificaciones deben respetar:
+Los elementos de Certificaciones deben respetar:
 
 ```text
 type = certificate
@@ -2647,7 +3016,7 @@ Contenido disponible
 Idioma original
 Idiomas soportados por el contenido
 Slug localizado
-Recursos de interfaz
+Elementos de interfaz
 Selección de destacados
 Orden de destacados
 Actualizaciones
@@ -2683,6 +3052,13 @@ Conservación del contenido durante el cambio de tema
 Conservación del orden y la estructura durante el cambio de tema
 Comunicación con sitio-api
 Carga de Inicio
+Estados de carga mediante skeleton
+Estados vacíos
+Errores de carga
+Unidades completas e incompletas
+Contenido no encontrado
+Carga y error de cabecera
+Carga y error de subelementos de navegación
 Contenido destacado
 Actualizaciones
 Selección del idioma del contenido
@@ -2708,9 +3084,13 @@ Representación de certificaciones sin expiración
 Representación de credenciales no disponibles
 Carga de medios de contacto
 Envío del formulario de contacto
+Envío en curso
+Confirmación de envío
 Validación del formulario
-Protección honeypot
+Conservación de valores tras validación o error
+Protección honeypot sin estado visible propio
 Tratamiento del límite de envíos
+Fallo de envío
 ```
 
 También debe verificarse que una variante ausente conserve `original` y `supported`, permitiendo que el frontend determine correctamente la siguiente solicitud.
