@@ -6,7 +6,7 @@ Esta especificación define la identidad visual base del frontend de `sitio`.
 
 La especificación fue derivada de las decisiones de diseño tomadas durante la definición visual del proyecto y de las representaciones finales aprobadas para los temas claro y oscuro.
 
-Su objetivo es servir como referencia técnica durante la implementación con Angular y Tailwind CSS y durante las etapas posteriores de adaptación a diferentes tamaños de pantalla.
+Su objetivo es servir como referencia técnica durante la implementación con Angular y Tailwind CSS y durante las etapas posteriores de accesibilidad e implementación.
 
 Los valores contenidos aquí deben considerarse la base concreta de implementación.
 
@@ -49,9 +49,13 @@ Las diferencias entre páginas se concentran dentro de la región de contenido c
 
 Las tarjetas forman parte del lenguaje visual común del sitio, aunque cada tipo de elemento conserva sus propios datos y estructura interna.
 
-El tema claro y el tema oscuro mantienen la misma identidad, estructura, contenido, jerarquía y disposición.
+El tema claro y el tema oscuro mantienen la misma identidad, estructura, contenido, jerarquía y disposición para una misma composición responsive.
 
 El cambio de tema solamente modifica la representación visual correspondiente a cada paleta.
+
+La estructura del sitio se adapta al espacio disponible sin convertir las composiciones estrechas en una reducción proporcional de la representación de escritorio.
+
+La adaptación responsive debe conservar el contenido, la jerarquía, la identidad visual, los estados y el orden editorial.
 
 ---
 
@@ -122,7 +126,21 @@ La tipografía sans-serif se utiliza principalmente en:
 
 # 2. Escala tipográfica
 
+La aplicación utiliza dos escalas tipográficas.
+
+No existe una tercera escala intermedia.
+
+Tampoco se utiliza escalado tipográfico continuo para transformar progresivamente una escala en la otra.
+
+---
+
 ## 2.1. Escritorio
+
+Se utiliza cuando:
+
+```text
+ancho >= 1024px
+```
 
 | Elemento                     | Tamaño |
 | ---------------------------- | -----: |
@@ -138,17 +156,29 @@ La tipografía sans-serif se utiliza principalmente en:
 
 ---
 
-## 2.2. Pantallas pequeñas
+## 2.2. Pantallas estrechas
 
-| Elemento         | Tamaño |
-| ---------------- | -----: |
-| Nombre principal | `40px` |
-| H1               | `32px` |
-| H2               | `28px` |
-| H3               | `24px` |
-| Texto base       | `16px` |
-| Texto secundario | `14px` |
-| Texto auxiliar   | `12px` |
+Se utiliza cuando:
+
+```text
+ancho < 1024px
+```
+
+| Elemento                     | Tamaño |
+| ---------------------------- | -----: |
+| Nombre principal en cabecera | `40px` |
+| H1                           | `32px` |
+| H2                           | `28px` |
+| H3                           | `24px` |
+| H4                           | `20px` |
+| Texto destacado / lead       | `18px` |
+| Texto base                   | `16px` |
+| Texto secundario             | `14px` |
+| Texto auxiliar / etiquetas   | `12px` |
+
+La escala cambia en el punto de ruptura correspondiente.
+
+No se utiliza `clamp()` para producir una transición continua entre ambas escalas.
 
 ---
 
@@ -527,7 +557,8 @@ La escala base de espaciado es:
 
 | Uso                                    | Espacio |
 | -------------------------------------- | ------: |
-| Padding general de la aplicación       |  `24px` |
+| Padding general de escritorio          |  `24px` |
+| Padding general en pantallas estrechas |  `16px` |
 | Separación navegación / contenido      |  `24px` |
 | Padding interno de navegación          |  `16px` |
 | Separación entre bloques de navegación |  `24px` |
@@ -541,11 +572,44 @@ La escala base de espaciado es:
 | Secciones mayores                      |  `32px` |
 | Grupos grandes                         |  `48px` |
 
+El padding general utiliza:
+
+```text
+ancho >= 1024px
+=> 24px
+
+ancho < 1024px
+=> 16px
+```
+
+No se reduce a `8px` como regla general para pantallas estrechas.
+
+El cambio de composición no implica reducir automáticamente el espaciado vertical.
+
+Los valores de separación definidos para paneles, tarjetas, párrafos, secciones y grupos se conservan mientras no exista una necesidad específica de reorganización.
+
 ---
 
 # 11. Proporciones del layout
 
+La estructura utiliza tres rangos principales:
+
+```text
+ancho >= 1360px
+=> escritorio amplio
+
+1024px <= ancho < 1360px
+=> escritorio intermedio
+
+ancho < 1024px
+=> composición estrecha
+```
+
+---
+
 ## 11.1. Escritorio
+
+Mientras la composición de escritorio permanece activa:
 
 ### Navegación
 
@@ -554,6 +618,8 @@ La escala base de espaciado es:
 ```
 
 Ancho fijo.
+
+No se reduce progresivamente dentro del escritorio.
 
 ### Columna principal
 
@@ -568,7 +634,7 @@ mínimo => 720px
 320px
 ```
 
-Ancho fijo.
+Ancho fijo cuando se utiliza como columna lateral.
 
 ### Ancho máximo del contenido interior principal
 
@@ -584,24 +650,87 @@ Ancho fijo.
 
 ---
 
-## 11.2. Inicio
+## 11.2. Inicio en escritorio amplio
+
+Cuando:
+
+```text
+ancho >= 1360px
+```
 
 Inicio utiliza tres regiones horizontales:
 
 ```text
 | navegación | contenido principal | área de exposición |
-|   224px     |        1fr          |       320px        |
+|   224px    |        1fr          |       320px        |
 ```
 
 El contenido principal reúne las secciones de contenido destacado.
 
 El área de exposición reúne la actividad reciente.
 
+El umbral corresponde a la suma mínima necesaria para mantener las regiones y espacios principales:
+
+```text
+24px
++ 224px
++ 24px
++ 720px
++ 24px
++ 320px
++ 24px
+= 1360px
+```
+
 ---
 
-## 11.3. Páginas internas
+## 11.3. Inicio en escritorio intermedio
 
-Las páginas internas no utilizan el área de exposición.
+Cuando:
+
+```text
+1024px <= ancho < 1360px
+```
+
+la navegación lateral continúa utilizando:
+
+```text
+224px
+```
+
+El contenido principal utiliza el espacio restante.
+
+El área de exposición deja de utilizar una columna lateral de `320px`.
+
+Actualizaciones pasa debajo del contenido destacado dentro de la región principal.
+
+Conceptualmente:
+
+```text
+| navegación | contenido principal |
+|   224px    |        1fr          |
+
+Contenido principal
+|
++-- Proyectos destacados
++-- Artículos destacados
++-- Certificaciones destacadas
++-- Actualizaciones
+```
+
+No se reduce la navegación, la cabecera ni la fotografía para conservar artificialmente un valor fijo de columnas del escritorio amplio.
+
+---
+
+## 11.4. Páginas internas en escritorio
+
+Cuando:
+
+```text
+ancho >= 1024px
+```
+
+las páginas internas no utilizan el área de exposición.
 
 ```text
 | navegación  | contenido |
@@ -614,7 +743,42 @@ La composición interna de esta región cambia de acuerdo con la página represe
 
 ---
 
-## 11.4. Pie
+## 11.5. Composición estrecha
+
+Cuando:
+
+```text
+ancho < 1024px
+```
+
+deja de utilizarse la estructura lateral de escritorio.
+
+La estructura general pasa a ser:
+
+En Início:
+
+```text
+Cabecera
+Navegación móvil
+Contenido  destacado
+Actualizaciones de contenido
+```
+
+En demás páginas fuera del Início:
+
+```text
+Cabecera
+Navegación móvil
+Contenido
+```
+
+No se mantiene una navegación lateral reducida.
+
+No se intenta conservar la estructura de escritorio mediante reducción proporcional de sus regiones.
+
+---
+
+## 11.6. Pie
 
 El sitio no dispone de pie global.
 
@@ -638,7 +802,15 @@ Las representaciones de la cabecera no deben incorporar frases de efecto, lemas,
 
 ---
 
-## 12.1. Estado expandido
+## 12.1. Estado expandido en escritorio
+
+Cuando:
+
+```text
+ancho >= 1024px
+```
+
+utiliza:
 
 ```text
 altura             => 320px
@@ -654,7 +826,15 @@ Debe mostrar:
 
 ---
 
-## 12.2. Estado compacto
+## 12.2. Estado compacto en escritorio
+
+Cuando:
+
+```text
+ancho >= 1024px
+```
+
+utiliza:
 
 ```text
 altura             => 112px
@@ -688,9 +868,62 @@ La identidad personal nunca desaparece completamente.
 
 ---
 
+## 12.4. Pantallas estrechas
+
+Cuando:
+
+```text
+ancho < 1024px
+```
+
+la cabecera mantiene la misma identidad y los mismos estados conceptuales.
+
+El estado expandido presenta:
+
+```text
+Fondo visual y foto juntos
+Nombre
+Descripción breve
+```
+
+El estado compacto presenta:
+
+```text
+Fondo visual y foto juntos
+Nombre
+```
+
+La descripción breve deja de mostrarse en el estado compacto.
+
+La cabecera no utiliza obligatoriamente las alturas rígidas de `320px` y `112px`.
+
+Su altura deriva de:
+
+```text
+Contenido
+Padding
+Ancho disponible
+```
+
+La fotografía permanece integrada en `Fondo visual y foto juntos`.
+
+No se convierte en un avatar circular.
+
+No desaparece completamente en el estado compacto.
+
+---
+
 # 13. Navegación
 
-## 13.1. Dimensiones
+## 13.1. Dimensiones de escritorio
+
+Cuando:
+
+```text
+ancho >= 1024px
+```
+
+la navegación utiliza:
 
 ```text
 ancho                      => 224px
@@ -707,9 +940,11 @@ altura máxima visible      => 100vh
 overflow vertical          => auto
 ```
 
+El ancho de `224px` permanece fijo mientras la navegación lateral continúa activa.
+
 ---
 
-## 13.2. Estructura
+## 13.2. Estructura de escritorio
 
 La navegación comienza con los controles globales:
 
@@ -812,9 +1047,9 @@ El acceso al listado completo permite continuar hacia la página correspondiente
 
 ---
 
-## 13.5. Overflow
+## 13.5. Overflow de escritorio
 
-Si la navegación supera la altura disponible de la pantalla:
+Si la navegación lateral supera la altura disponible de la pantalla:
 
 ```css
 overflow-y: auto;
@@ -828,7 +1063,11 @@ No debe utilizarse como justificación para insertar listas ilimitadas.
 
 ## 13.6. Posicionamiento
 
-La navegación permanece visible mediante comportamiento sticky.
+La navegación permanece disponible durante el desplazamiento mediante comportamiento sticky.
+
+En escritorio se aplica a la navegación lateral.
+
+En pantallas estrechas se aplica a la composición superior formada por la cabecera compacta y la barra de navegación móvil.
 
 ---
 
@@ -838,7 +1077,7 @@ Los accesos directos se marcan como activos en su propia página.
 
 Las secciones que contienen elementos permanecen activas tanto en su listado como en sus páginas individuales.
 
-Cuando se representa el detalle de un elemento, el elemento seleccionado también debe disponer de estado activo dentro de la sección expandida.
+Cuando se representa el detalle de un elemento y su sección se encuentra expandida, el elemento seleccionado también debe disponer de estado activo.
 
 Conceptualmente:
 
@@ -867,6 +1106,160 @@ Artículo concreto
 
 ---
 
+## 13.8. Navegación en pantallas estrechas
+
+Cuando:
+
+```text
+ancho < 1024px
+```
+
+la navegación lateral deja de utilizarse.
+
+Inmediatamente debajo de la cabecera aparece una barra formada por:
+
+```text
+Menú | Idioma | Tema
+```
+
+Idioma y Tema permanecen directamente accesibles.
+
+No se introducen dentro de una sección adicional de configuración o de menú.
+
+Al activar `Menú`, la navegación aparece debajo de esta barra.
+
+La navegación forma parte del flujo normal del documento.
+
+No se utiliza:
+
+```text
+drawer lateral
+overlay
+panel flotante sobre el contenido
+```
+
+Conceptualmente:
+
+Sin expansión del menú:
+
+```text
+Cabecera
+Menú | Idioma | Tema
+Contenido
+```
+
+
+Con expansión del menú:
+
+```text
+Cabecera
+Menú | Idioma | Tema
+Navegación expandida
+Contenido
+```
+
+La apertura de la navegación desplaza el contenido hacia abajo.
+
+Al cerrarla, el espacio correspondiente deja de formar parte del flujo, regresando al estado "Sin expansión del menú".
+
+---
+
+## 13.9. Estructura del menú en pantallas estrechas
+
+Los accesos directos permanecen como destinos normales:
+
+```text
+Inicio
+Sobre mí
+Contactos
+```
+
+Las secciones con elementos subordinados permanecen como grupos expandibles:
+
+```text
+Certificaciones
+Proyectos
+Artículos
+```
+
+Cuando un grupo está cerrado:
+
+```text
+IconChevronDown
+```
+
+Al activar el grupo:
+
+```text
+IconChevronDown
+=> IconChevronUp
+
+grupo
+=> abierto
+```
+
+Solamente el grupo activado permanece abierto.
+
+Si más de uno grupo fuera abierto, todos los grupos abiertos se mantienen hasta que el usuario decida cerrálos.
+
+Abrir un grupo no cierra otro automaticamente, eso depende de la decisión del usuario.
+
+Cuando el grupo ya está abierto y vuelve a activarse, el comportamiento es cerrarlo:
+
+```text
+IconChevronUp
+=> IconChevronDown
+
+grupo
+=> cerrado
+```
+
+Esta acción cierra solamente el grupo y no realiza navegación hacia un elemento concreto.
+
+La misma regla se aplica a cualquier sección de navegación que utilice estados abierto y cerrado.
+
+Los iconos `IconChevronDown` y `IconChevronUp` forman parte del control de la sección, no constituyen controles independientes.
+
+---
+
+## 13.10. Navegación desde el menú estrecho
+
+Cuando se selecciona un elemento concreto dentro de un grupo:
+
+```text
+elemento
+=> navegar
+
+Grupo
+=> estado cerrado
+=> IconChevronDown
+
+Menú
+=> cerrado
+```
+
+Cuando se selecciona un acceso directo:
+
+```text
+Destino
+=> navegar
+
+Menú
+=> cerrado
+```
+
+El menú no permanece abierto después de completar la selección del destino.
+
+La barra:
+
+```text
+Menú | Idioma | Tema
+```
+
+continúa disponible durante el desplazamiento junto con la cabecera compacta.
+
+---
+
 # 14. Foto y composición de cabecera
 
 La fotografía no utiliza formato circular.
@@ -875,7 +1268,7 @@ Forma parte de `Fondo visual y foto juntos`.
 
 ---
 
-## 14.1. Estado expandido
+## 14.1. Estado expandido de escritorio
 
 Área visual aproximada correspondiente a la fotografía:
 
@@ -893,7 +1286,7 @@ del ancho visual de la cabecera.
 
 ---
 
-## 14.2. Estado compacto
+## 14.2. Estado compacto de escritorio
 
 Área visual aproximada correspondiente a la fotografía:
 
@@ -905,7 +1298,23 @@ La fotografía permanece visible.
 
 ---
 
-## 14.3. Regla visual
+## 14.3. Pantallas estrechas
+
+Por debajo de:
+
+```text
+1024px
+```
+
+la fotografía continúa integrada en `Fondo visual y foto juntos`.
+
+Debe adaptarse proporcionalmente al ancho disponible y a la geometría resultante de la cabecera.
+
+La fotografía permanece presente tanto en el estado expandido como en el compacto y su comportamiento permanece lo mismo al comportamiento del escritorio.
+
+---
+
+## 14.4. Regla visual
 
 No utilizar:
 
@@ -971,14 +1380,14 @@ El icono utilizado debe corresponder al mapeo establecido.
 
 ## 15.3. Controles globales
 
-| Función                     | Icono concreto       |
-| --------------------------- | -------------------- |
-| Selector de idioma          | `IconWorld`          |
-| Desplegar selector          | `IconChevronDown`    |
-| Expandir sección            | `IconChevronDown`    |
-| Contraer sección            | `IconChevronUp`      |
-| Activar tema claro          | `IconSun`            |
-| Activar tema oscuro         | `IconMoon`           |
+| Función                     | Icono concreto    |
+| --------------------------- | ----------------- |
+| Selector de idioma          | `IconWorld`       |
+| Desplegar selector          | `IconChevronDown` |
+| Expandir sección            | `IconChevronDown` |
+| Contraer sección            | `IconChevronUp`   |
+| Activar tema claro          | `IconSun`         |
+| Activar tema oscuro         | `IconMoon`        |
 
 El selector de tema representa la acción disponible.
 
@@ -998,14 +1407,14 @@ Tema claro activo
 
 ## 15.4. Navegación principal
 
-| Elemento          | Icono concreto |
-| ----------------- | -------------- |
-| Inicio            | `IconHome`     |
-| Sobre mí          | `IconUser`     |
-| Contactos         | `IconMail`     |
-| Certificaciones   | `IconAward`    |
-| Proyectos         | `IconFolder`   |
-| Artículos         | `IconNotebook` |
+| Elemento        | Icono concreto |
+| --------------- | -------------- |
+| Inicio          | `IconHome`     |
+| Sobre mí        | `IconUser`     |
+| Contactos       | `IconMail`     |
+| Certificaciones | `IconAward`    |
+| Proyectos       | `IconFolder`   |
+| Artículos       | `IconNotebook` |
 
 El mismo mapeo debe mantenerse en los temas claro y oscuro.
 
@@ -1015,13 +1424,13 @@ El cambio de tema no sustituye un icono por otro para representar una misma secc
 
 ## 15.5. Tipos de contenido y acciones
 
-| Elemento o acción        | Icono concreto    |
-| ------------------------ | ----------------- |
-| Proyecto                 | `IconFolder`      |
-| Artículo                 | `IconFileText`    |
-| Certificado              | `IconCertificate` |
-| Certificación            | `IconAward`       |
-| Acceso explícito         | `IconArrowRight`  |
+| Elemento o acción | Icono concreto    |
+| ----------------- | ----------------- |
+| Proyecto          | `IconFolder`      |
+| Artículo          | `IconFileText`    |
+| Certificado       | `IconCertificate` |
+| Certificación     | `IconAward`       |
+| Acceso explícito  | `IconArrowRight`  |
 
 Estos iconos se utilizan cuando el tipo de contenido necesita representación iconográfica, como en el área de Actualizaciones.
 
@@ -1043,13 +1452,13 @@ El `id` determina el icono concreto utilizado por el frontend.
 
 El mapeo es:
 
-| Identificador técnico       | Categoría representada                 | Icono concreto           |
-| --------------------------- | -------------------------------------- | ------------------------ |
-| `technology`                | Tecnología                             | `IconDeviceDesktopCode`  |
-| `development_automation`    | Desarrollo y automatización            | `IconCode`               |
-| `professional_experience`   | Experiencia profesional                | `IconBriefcase`          |
-| `education`                 | Formación                              | `IconSchool`             |
-| `languages`                 | Idiomas                                | `IconLanguage`           |
+| Identificador técnico     | Categoría representada      | Icono concreto          |
+| ------------------------- | --------------------------- | ----------------------- |
+| `technology`              | Tecnología                  | `IconDeviceDesktopCode` |
+| `development_automation`  | Desarrollo y automatización | `IconCode`              |
+| `professional_experience` | Experiencia profesional     | `IconBriefcase`         |
+| `education`               | Formación                   | `IconSchool`            |
+| `languages`               | Idiomas                     | `IconLanguage`          |
 
 Conceptualmente:
 
@@ -1090,14 +1499,14 @@ Cuando un medio de contacto utiliza iconografía, el frontend aplica el icono co
 
 El mapeo definido es:
 
-| Tipo de medio            | Icono concreto        |
-| ------------------------ | --------------------- |
-| Red profesional          | `IconBrandLinkedin`   |
-| Repositorio de código    | `IconBrandGithub`     |
-| Sitio web                | `IconWorldWww`        |
-| Correo electrónico       | `IconMail`            |
-| Teléfono                 | `IconPhone`           |
-| Mensajería               | `IconBrandWhatsapp`   |
+| Tipo de medio         | Icono concreto      |
+| --------------------- | ------------------- |
+| Red profesional       | `IconBrandLinkedin` |
+| Repositorio de código | `IconBrandGithub`   |
+| Sitio web             | `IconWorldWww`      |
+| Correo electrónico    | `IconMail`          |
+| Teléfono              | `IconPhone`         |
+| Mensajería            | `IconBrandWhatsapp` |
 
 Cuando un medio utiliza una imagen en lugar de un icono, este mapeo no participa en la representación del elemento visual.
 
@@ -1122,6 +1531,8 @@ Los tamaños definidos no modifican el icono seleccionado por el mapeo.
 
 ## 15.9. Selector de idioma
 
+En escritorio:
+
 ```text
 altura             => 48px
 ancho              => 104px
@@ -1134,9 +1545,19 @@ Debe permanecer directamente visible.
 
 No debe estar oculto dentro de una sección de configuración.
 
+En pantallas estrechas continúa directamente disponible dentro de:
+
+```text
+Menú | Idioma | Tema
+```
+
+No se traslada al interior de `Menú`.
+
 ---
 
 ## 15.10. Selector de tema
+
+En escritorio:
 
 ```text
 altura        => 48px
@@ -1146,6 +1567,12 @@ borde         => 1px
 ```
 
 Se ubica inmediatamente junto al selector de idioma.
+
+En pantallas estrechas continúa directamente disponible dentro de:
+
+```text
+Menú | Idioma | Tema
+```
 
 Debe permitir cambiar directamente entre:
 
@@ -1165,9 +1592,9 @@ Cantidad de elementos
 Orden
 Jerarquía
 Navegación
-Dimensiones
+Dimensiones correspondientes a la composición activa
 Espaciado
-Disposición
+Disposición correspondiente a la composición activa
 Formato de las tarjetas
 Actualizaciones
 Iconos
@@ -1179,6 +1606,8 @@ Solamente cambia la representación visual correspondiente al tema seleccionado.
 
 ## 15.11. Botón principal
 
+Base:
+
 ```text
 altura             => 48px
 padding horizontal => 24px
@@ -1187,9 +1616,27 @@ font-weight        => 600
 border-radius      => 0
 ```
 
+En escritorio utiliza su ancho natural cuando no existe una regla específica diferente.
+
+En pantallas estrechas, las acciones principales que forman parte del flujo de contenido pueden ocupar:
+
+```text
+ancho => 100%
+```
+
+cuando corresponde a la composición definida.
+
+La altura permanece en:
+
+```text
+48px
+```
+
 ---
 
 ## 15.12. Botón secundario
+
+Base:
 
 ```text
 altura             => 48px
@@ -1197,6 +1644,8 @@ padding horizontal => 24px
 borde              => 1px
 border-radius      => 0
 ```
+
+Las reglas responsive de ancho siguen la composición de la acción correspondiente.
 
 ---
 
@@ -1290,6 +1739,8 @@ Sección destacada
 
 El acceso debe indicar explícitamente su destino.
 
+Las tarjetas de contenido destacado utilizan la misma regla de rejilla adaptable establecida en `20.3. Rejilla`.
+
 ---
 
 ## 16.3. Proyecto destacado
@@ -1373,7 +1824,7 @@ La uniformidad visual no debe forzar contratos idénticos entre tipos de conteni
 
 Dentro de un mismo tipo de elemento, las tarjetas deben mantener una estructura visual consistente.
 
-El cambio de tema no modifica la estructura interna, el orden, el contenido ni la disposición de estas tarjetas.
+El cambio de tema no modifica la estructura interna, el orden, el contenido ni la disposición correspondiente al ancho disponible.
 
 ---
 
@@ -1478,7 +1929,13 @@ La tarjeta completa de actualización no constituye implícitamente un enlace.
 
 ## 16.9. Relación entre contenido principal y exposición
 
-El contenido principal y el área de exposición tienen funciones visuales distintas.
+En escritorio amplio:
+
+```text
+ancho >= 1360px
+```
+
+el contenido principal y el área de exposición utilizan regiones laterales distintas.
 
 ```text
 Contenido principal
@@ -1498,11 +1955,67 @@ La atención principal permanece en el contenido destacado.
 
 ---
 
+## 16.10. Inicio en escritorio intermedio
+
+Cuando:
+
+```text
+1024px <= ancho < 1360px
+```
+
+Actualizaciones deja de ocupar la columna lateral de `320px`.
+
+Pasa al flujo de la columna principal después de las secciones destacadas.
+
+El orden es:
+
+```text
+Proyectos destacados
+Artículos destacados
+Certificaciones destacadas
+Actualizaciones
+```
+
+La naturaleza de Actualizaciones no cambia.
+
+Solamente cambia su posición dentro de la composición.
+
+---
+
+## 16.11. Inicio en pantallas estrechas
+
+Cuando:
+
+```text
+ancho < 1024px
+```
+
+Inicio utiliza una composición global vertical.
+
+Conceptualmente:
+
+```text
+Cabecera
+Navegación móvil
+Proyectos destacados
+Artículos destacados
+Certificaciones destacadas
+Actualizaciones
+```
+
+El orden editorial de las secciones se conserva.
+
+Actualizaciones no utiliza una columna lateral.
+
+Las rejillas internas continúan presentando tantas tarjetas completas como permita el ancho disponible.
+
+---
+
 # 17. Páginas internas
 
 Las páginas internas comparten un mismo armazón.
 
-Conceptualmente:
+En escritorio:
 
 ```text
 +-------------+----------------------------------------+
@@ -1573,7 +2086,7 @@ La variación ocurre dentro de esta región sin modificar:
 ```text
 Cabecera
 Navegación
-Estructura global
+Estructura global correspondiente al ancho disponible
 Idioma activo
 Tema activo
 ```
@@ -1603,6 +2116,93 @@ Detalle
 ```
 
 No aparece una nueva región global ni una estructura paralela para el detalle.
+
+---
+
+## 17.3. Pantallas estrechas
+
+Cuando:
+
+```text
+ancho < 1024px
+```
+
+las páginas internas utilizan:
+
+```text
+Cabecera
+Navegación móvil
+Contenido
+```
+
+como armazón global.
+
+La región `Contenido` utiliza el ancho disponible.
+
+La composición global de una columna no obliga a convertir todos los componentes internos en una única columna.
+
+La regla interna es:
+
+```text
+Composición horizontal que cabe correctamente
+=> puede mantenerse
+
+Composición horizontal que deja de caber correctamente
+=> reorganizar verticalmente
+```
+
+La decisión depende del espacio real disponible y de la legibilidad del componente.
+
+---
+
+## 17.4. Contenido interno ancho
+
+La página completa no debe adquirir desplazamiento horizontal debido a un componente interno.
+
+Cuando un componente supera el espacio disponible, la prioridad es:
+
+```text
+1. Reorganizar
+2. Redimensionar proporcionalmente
+3. Adaptar internamente
+4. Utilizar desplazamiento horizontal solamente en el elemento
+```
+
+La reorganización se utiliza cuando puede cambiarse la disposición sin perder información o significado.
+
+El redimensionamiento se utiliza para elementos que continúan siendo legibles después de reducirse.
+
+La adaptación interna puede modificar la representación del componente.
+
+Ejemplos:
+
+```text
+Metadatos horizontales
+=> disposición vertical
+```
+
+```text
+Tabla
+=> representación adaptada mediante bloques
+```
+
+cuando esa transformación conserva correctamente la información.
+
+El desplazamiento horizontal se utiliza solamente cuando las alternativas anteriores perjudicarían el contenido.
+
+Cuando sea necesario:
+
+```text
+Elemento concreto
+=> overflow horizontal
+```
+
+No:
+
+```text
+Página completa
+=> overflow horizontal
+```
 
 ---
 
@@ -1728,6 +2328,34 @@ Los tres valores existen para este tipo de elemento.
 
 ---
 
+## 18.5. Adaptación responsive
+
+En escritorio puede mantenerse la composición horizontal definida editorialmente entre texto y elemento visual.
+
+Cuando:
+
+```text
+ancho < 1024px
+```
+
+los bloques que no pueden conservar correctamente esa composición se reorganizan verticalmente.
+
+El elemento visual utiliza el ancho disponible y mantiene sus proporciones.
+
+El orden editorial de cada bloque se conserva.
+
+No se genera automáticamente una alternancia basada en:
+
+```text
+posición impar
+posición par
+índice del bloque
+```
+
+La adaptación cambia la disposición necesaria, no el orden editorial.
+
+---
+
 # 19. Contactos
 
 La página de Contactos combina:
@@ -1774,19 +2402,13 @@ El propio enlace del medio es un vínculo que lleva hacia el medio directamente.
 
 Las tarjetas se organizan horizontalmente mientras exista espacio disponible.
 
-Conceptualmente:
+La cantidad de columnas depende del ancho disponible.
 
-```text
-+-------------+ +-------------+ +-------------+
-| contacto    | | contacto    | | contacto    |
-+-------------+ +-------------+ +-------------+
-
-+-------------+ +-------------+
-| contacto    | | contacto    |
-+-------------+ +-------------+
-```
+Cuando una nueva tarjeta ya no cabe correctamente en la fila actual, continúa en la siguiente.
 
 Los medios presentes dependen de los datos disponibles.
+
+No se define un número fijo de tarjetas por fila.
 
 ---
 
@@ -1890,6 +2512,44 @@ Los mecanismos técnicos de validación, envío y protección no modifican la id
 
 ---
 
+## 19.5. Adaptación responsive
+
+Los campos permanecen verticales y utilizan todo el ancho disponible de la región del formulario.
+
+No se reorganizan horizontalmente en escritorio.
+
+El botón principal utiliza:
+
+```text
+ancho >= 1024px
+=> ancho natural
+=> altura 48px
+=> padding horizontal 24px
+```
+
+Cuando:
+
+```text
+ancho < 1024px
+```
+
+utiliza:
+
+```text
+ancho  => 100%
+altura => 48px
+```
+
+La misma regla se aplica durante:
+
+```text
+Enviando...
+```
+
+La adaptación no modifica los estados ni el contenido del formulario.
+
+---
+
 # 20. Tarjetas
 
 Las tarjetas constituyen un patrón visual compartido por diferentes regiones del sitio.
@@ -1979,33 +2639,51 @@ Certificación
 
 ## 20.3. Rejilla
 
-Las páginas de listado utilizan una rejilla de tarjetas.
+Las páginas de listado y las regiones destacadas que utilizan tarjetas presentan tantas tarjetas completas como permita el ancho disponible.
 
-En la representación de escritorio:
+No se define:
 
 ```text
-3 tarjetas por fila
+cantidad mínima fija de columnas
+cantidad máxima fija de columnas
+cantidad fijas de tarjetas por fila
 ```
 
-cuando el ancho disponible permite mantener correctamente las dimensiones y el espaciado establecidos.
+La regla es:
+
+```text
+Tarjetas que caben correctamente
+=> permanecen en la fila actual
+
+Siguiente tarjeta ya no cabe correctamente
+=> continúa en la fila siguiente
+```
+
+La cantidad de columnas constituye una consecuencia del espacio disponible.
+
+El mínimo natural es una tarjeta por fila.
 
 Conceptualmente:
 
 ```text
-+-------------+ +-------------+ +-------------+
-| tarjeta     | | tarjeta     | | tarjeta     |
-+-------------+ +-------------+ +-------------+
+Si cabe uno
+=> una tarjeta por fila
 
-+-------------+ +-------------+ +-------------+
-| tarjeta     | | tarjeta     | | tarjeta     |
-+-------------+ +-------------+ +-------------+
-
-...
+Si cabe más que uno
+=> cuanto cabe de tarjeta por fila sin romper la tarjeta como elemento único
 ```
 
-La rejilla continúa en nuevas filas mientras existan elementos.
-
 La cantidad total de elementos no constituye una restricción estructural del componente.
+
+Esta regla se aplica a las rejillas de:
+
+```text
+Proyectos
+Artículos
+Certificaciones
+Contactos
+Contenido destacado
+```
 
 ---
 
@@ -2156,6 +2834,52 @@ El detalle no incorpora una sección adicional de conocimientos relacionados.
 
 ---
 
+## 21.6. Adaptación responsive del detalle
+
+En escritorio puede mantenerse una composición horizontal mientras el espacio disponible permita representar correctamente sus regiones.
+
+Cuando:
+
+```text
+ancho < 1024px
+```
+
+el detalle se reorganiza verticalmente.
+
+Para una certificación, el orden conceptual es:
+
+```text
+Imagen
+Certificación
+Nombre
+Entidad
+Fecha
+Expiración
+Código de credencial
+Enlace de verificación
+Volver a certificaciones
+```
+
+Cada bloque utiliza el ancho disponible.
+
+La imagen se redimensiona proporcionalmente.
+
+Los valores definidos por el contrato se conservan.
+
+En particular:
+
+```text
+Sin fecha de expiración
+=> No expira
+
+Credencial no disponible
+=> No disponible
+```
+
+Un certificado utiliza la misma lógica responsive, pero no incorpora campos propios de una certificación que no pertenezcan a su tipo.
+
+---
+
 # 22. Proyectos
 
 La página de Proyectos utiliza la rejilla general de tarjetas.
@@ -2263,6 +2987,37 @@ No se requiere representar en el detalle una distribución porcentual de todos l
 El orden visual del listado constituye una decisión editorial.
 
 No debe modificarse automáticamente solamente porque un repositorio haya recibido una actualización técnica reciente.
+
+---
+
+## 22.5. Adaptación responsive del detalle
+
+En escritorio puede mantenerse la composición horizontal entre imagen y panel de metadatos cuando el espacio disponible resulta adecuado.
+
+Cuando:
+
+```text
+ancho < 1024px
+```
+
+la imagen y el panel de metadatos se reorganizan verticalmente.
+
+Cada región utiliza el ancho disponible.
+
+La imagen mantiene sus proporciones.
+
+El panel de metadatos puede reorganizar también sus elementos internamente en disposición vertical cuando sea necesario.
+
+La adaptación conserva:
+
+```text
+Contenido
+Orden semántico
+Acciones
+Información técnica
+```
+
+No elimina datos para mantener la composición horizontal de escritorio.
 
 ---
 
@@ -2375,6 +3130,54 @@ imágenes
 ```
 
 deben recibir estilos compatibles con los tokens generales definidos en esta especificación.
+
+En escritorio se conserva el ancho de lectura definido para el contenido principal.
+
+---
+
+## 23.5. Adaptación responsive del artículo
+
+Cuando:
+
+```text
+ancho < 1024px
+```
+
+el artículo utiliza el ancho disponible dentro del contenedor y respeta:
+
+```text
+padding horizontal general => 16px
+```
+
+La jerarquía y el orden del contenido Markdown no cambian.
+
+Permanecen en su orden editorial:
+
+```text
+Títulos
+Párrafos
+Listas
+Citas
+Imágenes
+Tablas
+Código
+Diagramas
+Grafos
+Videos
+```
+
+Las imágenes y demás elementos visuales se redimensionan proporcionalmente cuando continúan siendo legibles.
+
+Para contenidos anchos se utiliza la prioridad:
+
+```text
+1. Reorganizar
+2. Redimensionar proporcionalmente
+3. Adaptar internamente
+4. Desplazamiento horizontal propio
+```
+
+La página completa no adquiere desplazamiento horizontal por la presencia de una tabla, bloque de código, diagrama u otro elemento.
 
 ---
 
@@ -2960,7 +3763,7 @@ La cabecera constituye una unidad única.
 
 Durante su carga mantiene el espacio estructural correspondiente y utiliza skeleton adaptado a su composición.
 
-### Cabecera expandida pendiente
+### Cabecera expandida pendiente en escritorio
 
 El skeleton respeta aproximadamente:
 
@@ -2971,12 +3774,39 @@ Nombre
 Descripción breve
 ```
 
-### Cabecera compacta pendiente
+### Cabecera compacta pendiente en escritorio
 
 Cuando corresponde la geometría compacta, respeta aproximadamente:
 
 ```text
 altura             => 112px
+Fondo visual y foto juntos
+Nombre
+```
+
+### Pantallas estrechas
+
+Cuando:
+
+```text
+ancho < 1024px
+```
+
+el skeleton no utiliza obligatoriamente las alturas de escritorio.
+
+Respeta aproximadamente la geometría responsive resultante del contenido, el padding y el ancho disponible.
+
+En estado expandido representa:
+
+```text
+Fondo visual y foto juntos
+Nombre
+Descripción breve
+```
+
+En estado compacto representa:
+
+```text
 Fondo visual y foto juntos
 Nombre
 ```
@@ -3136,6 +3966,8 @@ Enviar
 independientemente del resultado recibido.
 
 El frontend no conserva una condición local que impida futuros intentos basándose en una respuesta anterior del backend.
+
+El ancho del botón durante el envío conserva las reglas responsive definidas para el estado normal.
 
 ---
 
@@ -3406,29 +4238,719 @@ La aplicación debe informar el estado allí donde afecta a la representación.
 
 No debe convertir un fallo localizado en una pantalla global de error cuando las demás regiones continúan utilizables.
 
+Las reglas responsive continúan aplicándose a los estados.
+
+Un skeleton, error, estado vacío o contenido no encontrado utiliza la geometría correspondiente al ancho disponible y no fuerza la composición de escritorio.
+
 ---
 
 # 25. Adaptación a diferentes pantallas
 
-La escala tipográfica para pantallas pequeñas se encuentra definida.
+No consiste en reducir proporcionalmente la representación de escritorio.
 
-La adaptación estructural completa del layout todavía debe responder a la etapa específica de diseño responsive.
-
-Los valores tipográficos establecidos no determinan por sí solos:
+Debe conservar:
 
 ```text
-Disposición de la navegación
-Distribución de columnas
-Comportamiento de la cabecera
-Posición del área de exposición
-Orden de las regiones
-Tratamiento de controles
-Cantidad de tarjetas por fila en pantallas menores
+Contenido
+Jerarquía
+Identidad visual
+Funciones
+Estados
+Orden editorial
 ```
 
-Estas decisiones deben definirse expresamente antes de considerarse parte cerrada de la especificación responsive.
+y puede modificar:
 
-Hasta entonces, las proporciones documentadas para el layout y las rejillas corresponden principalmente a la representación de escritorio.
+```text
+Composición
+Posición
+Ancho disponible
+Organización interna
+Distribución de tarjetas
+```
+
+---
+
+## 25.1. Puntos de ruptura
+
+La aplicación utiliza tres composiciones principales:
+
+```text
+ancho >= 1360px
+=> escritorio amplio
+
+1024px <= ancho < 1360px
+=> escritorio intermedio
+
+ancho < 1024px
+=> composición estrecha
+```
+
+No se introduce una sucesión adicional de puntos de ruptura únicamente para modificar cantidades fijas de columnas.
+
+Los componentes que pueden responder naturalmente al espacio disponible deben hacerlo sin depender de un número predeterminado de columnas.
+
+---
+
+## 25.2. Tipografía
+
+La escala de escritorio se utiliza cuando:
+
+```text
+ancho >= 1024px
+```
+
+La escala para pantallas estrechas se utiliza cuando:
+
+```text
+ancho < 1024px
+```
+
+No existe una tercera escala tipográfica para el escritorio intermedio.
+
+No se utiliza escalado continuo entre las dos escalas.
+
+---
+
+## 25.3. Espaciado
+
+El padding horizontal general utiliza:
+
+```text
+ancho >= 1360px
+=> 24px
+
+1024px <= ancho < 1360px
+=> 24px
+
+ancho < 1024px
+=> 16px
+```
+
+Permanecen definidos:
+
+```text
+padding de paneles       => 16px
+gap entre tarjetas       => 16px
+título / párrafo         => 12px
+párrafo / párrafo        => 16px
+secciones mayores        => 32px
+grupos grandes           => 48px
+altura de controles      => 48px
+```
+
+La composición estrecha no reduce automáticamente todos los espacios verticales.
+
+No se utiliza `8px` como padding horizontal general de la aplicación.
+
+---
+
+## 25.4. Escritorio amplio
+
+Cuando:
+
+```text
+ancho >= 1360px
+```
+
+Inicio utiliza:
+
+```text
+navegación => 224px
+contenido  => 1fr
+exposición => 320px
+```
+
+con:
+
+```text
+gap entre regiones => 24px
+```
+
+La columna principal conserva:
+
+```text
+mínimo => 720px
+```
+
+El ancho interior principal puede utilizar hasta:
+
+```text
+960px
+```
+
+El ancho máximo total previsto es:
+
+```text
+1504px
+```
+
+---
+
+## 25.5. Umbral de Inicio
+
+La composición de tres regiones de Inicio requiere:
+
+```text
+24px
++ 224px
++ 24px
++ 720px
++ 24px
++ 320px
++ 24px
+= 1360px
+```
+
+Por debajo de ese ancho no se intenta mantener simultáneamente:
+
+```text
+navegación de 224px
+contenido mínimo de 720px
+área de exposición de 320px
+gaps y paddings correspondientes
+```
+
+---
+
+## 25.6. Escritorio intermedio
+
+Cuando:
+
+```text
+1024px <= ancho < 1360px
+```
+
+la navegación continúa lateral y mantiene:
+
+```text
+224px
+```
+
+Las páginas internas continúan utilizando:
+
+```text
+navegación | contenido
+```
+
+Inicio deja de utilizar la columna lateral de Actualizaciones.
+
+Actualizaciones pasa debajo del contenido destacado.
+
+Conceptualmente:
+
+```text
+Navegación | Contenido
+
+Contenido
+|
++-- Proyectos destacados
++-- Artículos destacados
++-- Certificaciones destacadas
++-- Actualizaciones
+```
+
+Durante toda la composición de escritorio permanecen:
+
+```text
+navegación lateral => 224px
+cabecera expandida => 320px
+cabecera compacta  => 112px
+```
+
+No se reducen progresivamente estas dimensiones para intentar mantener la composición de escritorio amplio.
+
+---
+
+## 25.7. Composición estrecha
+
+Cuando:
+
+```text
+ancho < 1024px
+```
+
+la estructura lateral deja de utilizarse.
+
+La composición global es:
+
+```text
+Cabecera
+Navegación móvil
+Contenido
+```
+
+La aplicación no reproduce una versión reducida de la barra lateral.
+
+---
+
+## 25.8. Cabecera estrecha
+
+La cabecera mantiene su identidad.
+
+El estado expandido conserva:
+
+```text
+Fondo visual y foto juntos
+Nombre
+Descripción breve
+```
+
+El estado compacto conserva:
+
+```text
+Fondo visual y foto juntos
+Nombre
+```
+
+La descripción breve no permanece visible en el estado compacto.
+
+La fotografía:
+
+```text
+permanece visible
+permanece integrada
+mantiene proporciones
+no utiliza formato circular
+```
+
+Las alturas rígidas de:
+
+```text
+320px
+112px
+```
+
+pertenecen al escritorio.
+
+En la composición estrecha, la altura deriva del contenido, del padding y del ancho disponible.
+
+---
+
+## 25.9. Barra de navegación estrecha
+
+La barra aparece inmediatamente debajo de la cabecera.
+
+Presenta:
+
+```text
+Menú | Idioma | Tema
+```
+
+Idioma y Tema no se ocultan dentro de Menú.
+
+La barra continúa disponible durante el desplazamiento junto con la cabecera compacta.
+
+---
+
+## 25.10. Apertura del menú
+
+Al activar `Menú`:
+
+```text
+Menú cerrado
+        |
+        V
+Navegación expandida
+```
+
+La navegación aparece debajo de la barra dentro del flujo normal.
+
+La apertura desplaza el contenido hacia abajo.
+
+No se utiliza:
+
+```text
+drawer
+overlay
+panel lateral superpuesto
+```
+
+Al cerrar el menú, el contenido recupera el espacio correspondiente.
+
+---
+
+## 25.11. Grupos expandibles del menú
+
+Cada grupo utiliza dos estados visuales.
+
+Estado cerrado:
+
+```text
+IconChevronDown
+```
+
+Al activarlo:
+
+```text
+IconChevronDown
+=> IconChevronUp
+
+grupo
+=> abierto
+```
+
+Solamente el grupo activado permanece abierto.
+
+Estado abierto:
+
+```text
+IconChevronUp
+```
+
+Al activarlo nuevamente:
+
+```text
+IconChevronUp
+=> IconChevronDown
+
+grupo
+=> cerrado
+```
+
+La operación afecta solamente al grupo.
+
+No realiza navegación hacia un elemento.
+
+La regla se aplica a todos los grupos expandibles de la navegación.
+
+Si se activa más que uno grupo al mismo tiempo, uno no cerra al otro automaticamente. 
+
+---
+
+## 25.12. Selección de un destino desde el menú
+
+Cuando se selecciona un elemento concreto:
+
+```text
+elemento
+=> navegar
+
+grupo
+=> cerrado
+=> IconChevronDown
+
+Menú
+=> cerrado
+```
+
+Cuando se selecciona un acceso directo:
+
+```text
+destino
+=> navegar
+
+Menú
+=> cerrado
+```
+
+La navegación expandida no permanece ocupando espacio después de seleccionar el destino.
+
+---
+
+## 25.13. Inicio en composición estrecha
+
+El orden es:
+
+```text
+Cabecera
+Navegación móvil
+Proyectos destacados
+Artículos destacados
+Certificaciones destacadas
+Actualizaciones
+```
+
+Actualizaciones deja de ser lateral.
+
+Su contenido y su función permanecen iguales.
+
+Las secciones destacadas conservan su orden editorial.
+
+---
+
+## 25.14. Páginas internas en composición estrecha
+
+La estructura global es:
+
+```text
+Cabecera
+Navegación móvil
+Contenido
+```
+
+Dentro de `Contenido`, un componente no se convierte obligatoriamente en vertical solamente porque la composición global sea estrecha.
+
+Se utiliza:
+
+```text
+Horizontal y cabe correctamente
+=> mantener
+
+Horizontal y no cabe correctamente
+=> reorganizar verticalmente
+```
+
+---
+
+## 25.15. Rejillas
+
+Las rejillas no utilizan un número fijo de columnas.
+
+La regla es:
+
+```text
+Presentar tantas tarjetas completas como permita el ancho disponible.
+
+Cuando la siguiente tarjeta no cabe correctamente:
+=> continuar en la fila siguiente.
+```
+
+No existe:
+
+```text
+mínimo fijo de columnas
+máximo fijo de columnas
+cantidad fijas de tarjetas por fila
+```
+
+El mínimo natural es una tarjeta por fila.
+
+---
+
+## 25.16. Contenido ancho
+
+La prioridad es:
+
+```text
+1. Reorganizar
+2. Redimensionar proporcionalmente
+3. Adaptar internamente
+4. Desplazamiento horizontal propio
+```
+
+El desplazamiento horizontal de toda la página no se utiliza como solución para un componente interno.
+
+Si resulta imprescindible:
+
+```text
+componente concreto
+=> overflow horizontal
+```
+
+---
+
+## 25.17. elementos visuales
+
+Las imágenes, diagramas y demás elementos visuales utilizan el espacio disponible sin deformarse.
+
+La regla general es:
+
+```text
+ancho necesario menor
+=> redimensionar proporcionalmente
+```
+
+mientras el elemento continúe siendo legible.
+
+Un elemento necesario no desaparece automáticamente por utilizar una pantalla estrecha.
+
+---
+
+## 25.18. Botones
+
+La altura estándar permanece:
+
+```text
+48px
+```
+
+En escritorio, las acciones principales utilizan normalmente su ancho natural.
+
+En composición estrecha, cuando forman parte del flujo principal:
+
+```text
+ancho => 100%
+```
+
+Los controles compactos de la navegación mantienen la geometría necesaria para constituir:
+
+```text
+Menú | Idioma | Tema
+```
+
+y no se transforman individualmente en botones de ancho completo.
+
+---
+
+## 25.19. Formulario
+
+Los campos permanecen verticales y utilizan el ancho disponible.
+
+El botón utiliza:
+
+```text
+ancho >= 1024px
+=> ancho natural
+=> altura 48px
+=> padding horizontal 24px
+```
+
+```text
+ancho < 1024px
+=> ancho 100%
+=> altura 48px
+```
+
+Durante:
+
+```text
+Enviando...
+```
+
+se conserva la misma regla de ancho.
+
+---
+
+## 25.20. Sobre mí
+
+En escritorio puede mantenerse una composición horizontal entre texto y elemento visual.
+
+En composición estrecha, cuando la disposición horizontal deja de caber correctamente:
+
+```text
+elemento visual
+texto
+```
+
+o el orden editorial definido para el bloque se presentan verticalmente.
+
+El orden del bloque no se invierte automáticamente por su índice.
+
+Los elementos visuales mantienen sus proporciones.
+
+---
+
+## 25.21. Proyecto
+
+En escritorio puede mantenerse:
+
+```text
+imagen | panel de metadatos
+```
+
+cuando el espacio resulta adecuado.
+
+En composición estrecha:
+
+```text
+imagen
+panel de metadatos
+```
+
+se presentan verticalmente.
+
+El panel puede reorganizar también sus metadatos internamente.
+
+La imagen se redimensiona proporcionalmente.
+
+---
+
+## 25.22. Certificado y Certificación
+
+En escritorio puede utilizarse una composición horizontal cuando el contenido cabe correctamente.
+
+En composición estrecha, una Certificación utiliza conceptualmente:
+
+```text
+Imagen
+Certificación
+Nombre
+Entidad
+Fecha
+Expiración
+Código de credencial
+Enlace de verificación
+Volver a certificaciones
+```
+
+Cada región utiliza el ancho disponible.
+
+La imagen mantiene sus proporciones.
+
+Los valores:
+
+```text
+No expira
+No disponible
+```
+
+se conservan cuando corresponden.
+
+Un Certificado utiliza la misma adaptación sin incorporar campos que no pertenecen a su contrato.
+
+---
+
+## 25.23. Artículo
+
+En escritorio conserva el ancho de lectura definido.
+
+En composición estrecha utiliza el ancho disponible y:
+
+```text
+padding horizontal => 16px
+```
+
+El orden editorial no cambia.
+
+Las tablas, bloques de código, diagramas, grafos, imágenes y otros contenidos anchos utilizan la prioridad general definida en `25.16. Contenido ancho`.
+
+---
+
+## 25.24. Estados comunes
+
+Los estados comunes utilizan la composición responsive correspondiente al ancho disponible.
+
+Esto incluye:
+
+```text
+Skeleton
+Estado vacío
+Error de carga
+Contenido no encontrado
+Estados del formulario
+```
+
+Un estado no hace regresar la geometría de escritorio.
+
+La unidad de presentación mantiene sus límites independientemente de la composición utilizada.
+
+---
+
+## 25.25. Principio de conservación
+
+Responsive puede modificar:
+
+```text
+posición
+disposición
+ancho
+cantidad natural de columnas
+organización interna
+```
+
+pero no modifica arbitrariamente:
+
+```text
+contenido
+jerarquía
+orden editorial
+funciones
+estados
+identidad visual
+```
+
+La adaptación debe utilizar el espacio disponible para reorganizar la interfaz sin introducir una segunda versión conceptual del sitio.
 
 ---
 
@@ -3436,7 +4958,7 @@ Hasta entonces, las proporciones documentadas para el layout y las rejillas corr
 
 Los dos temas representan exactamente el mismo sitio.
 
-Deben compartir exactamente:
+Para un mismo ancho disponible deben compartir exactamente:
 
 - estructura;
 - contenido;
@@ -3447,7 +4969,7 @@ Deben compartir exactamente:
 - jerarquía;
 - espaciado;
 - bordes estructurales;
-- dimensiones;
+- dimensiones correspondientes a la composición activa;
 - iconografía;
 - navegación;
 - composición de cabecera;
@@ -3459,6 +4981,8 @@ Deben compartir exactamente:
 - campos de formularios;
 - estructura de listados;
 - estructura de páginas de detalle;
+- reglas responsive;
+- puntos de ruptura;
 - reglas de los estados comunes;
 - límites de las unidades de presentación;
 - comportamiento de carga, vacío, error y contenido no encontrado;
@@ -3473,8 +4997,8 @@ Tema claro
 +-- mismo contenido
 +-- mismo orden
 +-- misma cantidad
-+-- misma estructura
-+-- misma disposición
++-- misma estructura responsive
++-- misma disposición para el mismo ancho
 +-- mismos estados
 
 Tema oscuro
@@ -3483,8 +5007,8 @@ Tema oscuro
 +-- mismo contenido
 +-- mismo orden
 +-- misma cantidad
-+-- misma estructura
-+-- misma disposición
++-- misma estructura responsive
++-- misma disposición para el mismo ancho
 +-- mismos estados
 ```
 
@@ -3510,7 +5034,8 @@ Cambiar el orden
 Cambiar la cantidad de elementos
 Cambiar la navegación
 Cambiar el formato de las tarjetas
-Cambiar la disposición
+Cambiar la composición responsive
+Cambiar los puntos de ruptura
 Cambiar los espacios estructurales
 Cambiar los textos
 Cambiar los iconos
@@ -3534,6 +5059,46 @@ Ambos son representaciones visuales de la misma interfaz.
 ```text
 Título => Noto Serif Display / Cormorant Garamond / Georgia / serif
 Cuerpo => Inter / Noto Sans / Arial / sans-serif
+```
+
+---
+
+## Escalas tipográficas
+
+```text
+ancho >= 1024px
+=> escala de escritorio
+
+ancho < 1024px
+=> escala de pantallas estrechas
+```
+
+### Escritorio
+
+```text
+Nombre => 64px
+H1     => 48px
+H2     => 36px
+H3     => 28px
+H4     => 22px
+Lead   => 18px
+Base   => 16px
+Secundario => 14px
+Auxiliar   => 12px
+```
+
+### Pantallas estrechas
+
+```text
+Nombre => 40px
+H1     => 32px
+H2     => 28px
+H3     => 24px
+H4     => 20px
+Lead   => 18px
+Base   => 16px
+Secundario => 14px
+Auxiliar   => 12px
 ```
 
 ---
@@ -3582,16 +5147,65 @@ Separador             => #202936
 64
 ```
 
+```text
+Padding general >= 1024px => 24px
+Padding general < 1024px  => 16px
+```
+
 ---
 
-## Layout de escritorio
+## Puntos de ruptura
 
 ```text
-Navegación    => 224px
-Contenido     => 1fr
-Exposición    => 320px
-Gap principal => 24px
-Máximo total  => 1504px
+>= 1360px
+=> escritorio amplio
+
+1024px–1359px
+=> escritorio intermedio
+
+< 1024px
+=> composición estrecha
+```
+
+---
+
+## Layout de escritorio amplio
+
+```text
+Navegación       => 224px
+Contenido        => 1fr
+Exposición       => 320px
+Gap principal    => 24px
+Mínimo contenido => 720px
+Máximo interior  => 960px
+Máximo total     => 1504px
+```
+
+---
+
+## Layout de escritorio intermedio
+
+```text
+Navegación => 224px
+Contenido  => 1fr
+
+Actualizaciones
+=> debajo del contenido destacado
+```
+
+---
+
+## Layout estrecho
+
+```text
+Cabecera
+Navegación móvil
+Contenido
+```
+
+```text
+Navegación móvil
+=> Menú | Idioma | Tema
 ```
 
 ---
@@ -3599,10 +5213,11 @@ Máximo total  => 1504px
 ## Cabecera
 
 ```text
-Expandida         => 320px
-Compacta          => 112px
-Foto expandida    => 280px x 280px
-Foto compacta     => 72px x 72px
+Escritorio expandida => 320px
+Escritorio compacta  => 112px
+Foto expandida       => 280px x 280px
+Foto compacta        => 72px x 72px
+Pantallas estrechas  => altura derivada del contenido
 ```
 
 ---
@@ -3645,14 +5260,35 @@ Acceso             => IconArrowRight
 
 ---
 
-## Rejilla de escritorio
+## Rejillas
 
 ```text
-Listados
-=> 3 tarjetas por fila cuando el ancho disponible lo permite
+Columnas
+=> tantas tarjetas completas como permita el ancho disponible
 
-Continuación
-=> nuevas filas
+Siguiente tarjeta no cabe
+=> nueva fila
+
+Mínimo natural
+=> una tarjeta por fila
+```
+
+No existe una cantidad fija de columnas.
+
+---
+
+## Contenido ancho
+
+```text
+1. Reorganizar
+2. Redimensionar proporcionalmente
+3. Adaptar internamente
+4. Scroll horizontal del elemento
+```
+
+```text
+Página completa
+=> sin overflow horizontal provocado por un componente interno
 ```
 
 ---
@@ -3662,67 +5298,96 @@ Continuación
 Los siguientes elementos de identidad visual quedan definidos:
 
 1. tipografía concreta;
-2. escala tipográfica;
-3. alturas de línea;
-4. pesos tipográficos;
-5. paleta del tema claro;
-6. paleta del tema oscuro;
-7. estados visuales;
-8. sombras;
-9. bordes;
-10. espaciado;
-11. proporciones del layout de escritorio;
-12. cabecera expandida y compacta;
-13. navegación;
-14. foto y composición de cabecera;
-15. biblioteca, mapeo, tamaños y uso de iconos;
-16. mapeo de controles globales;
-17. mapeo de navegación;
-18. mapeo de tipos de contenido y acciones;
-19. mapeo de iconos de Sobre mí;
-20. mapeo de iconos de Contactos;
-21. estructura visual de Inicio;
-22. representación de contenido destacado;
-23. área de exposición y actualizaciones;
-24. estructura general de las páginas internas;
-25. región variable de Contenido;
-26. composición visual de Sobre mí;
-27. composición visual de Contactos;
-28. formulario de contacto;
-29. lenguaje visual común de tarjetas;
-30. rejillas de listados;
-31. representación de certificados;
-32. representación de certificaciones;
-33. listado y detalle de Proyectos;
-34. representación del lenguaje principal de los proyectos;
-35. listado y detalle de Artículos;
-36. representación de fechas de Artículos;
-37. representación de contenido Markdown;
-38. equivalencia estructural y de contenido entre los temas claro y oscuro;
-39. representaciones de escritorio de las páginas definidas en los temas claro y oscuro;
-40. unidad de presentación y límites de contenido independiente;
-41. representación mediante skeleton durante la carga;
-42. comportamiento de estados vacíos;
-43. comportamiento de errores de carga;
-44. tratamiento de elementos visuales obligatorios fallidos;
-45. estados de carga y error de elementos subordinados de navegación;
-46. estados de carga y error de cabecera;
-47. representación de páginas y elementos no encontrados;
-48. estado de envío en curso del formulario;
-49. confirmación de envío satisfactorio;
-50. representación de errores de validación;
-51. comportamiento visible del honeypot;
-52. representación del límite de envíos;
-53. representación de fallos de envío;
-54. relación entre estados y colores semánticos;
-55. conservación de regiones independientes durante estados parciales.
+2. escala tipográfica de escritorio;
+3. escala tipográfica de pantallas estrechas;
+4. puntos de ruptura tipográficos;
+5. alturas de línea;
+6. pesos tipográficos;
+7. paleta del tema claro;
+8. paleta del tema oscuro;
+9. estados visuales;
+10. sombras;
+11. bordes;
+12. escala de espaciado;
+13. adaptación del padding general;
+14. proporciones del layout de escritorio amplio;
+15. composición de escritorio intermedio;
+16. composición de pantallas estrechas;
+17. punto de ruptura natural de Inicio;
+18. cabecera expandida y compacta de escritorio;
+19. adaptación de cabecera en pantallas estrechas;
+20. navegación lateral de escritorio;
+21. navegación móvil;
+22. apertura y cierre del menú móvil;
+23. apertura y cierre de grupos expandibles;
+24. restablecimiento de grupos después de la navegación;
+25. permanencia de navegación y controles durante el desplazamiento;
+26. foto y composición de cabecera;
+27. biblioteca, mapeo, tamaños y uso de iconos;
+28. mapeo de controles globales;
+29. mapeo de navegación;
+30. mapeo de tipos de contenido y acciones;
+31. mapeo de iconos de Sobre mí;
+32. mapeo de iconos de Contactos;
+33. estructura visual de Inicio;
+34. representación de contenido destacado;
+35. área de exposición y actualizaciones;
+36. reorganización de Actualizaciones en escritorio intermedio;
+37. composición vertical de Inicio en pantallas estrechas;
+38. estructura general de las páginas internas;
+39. región variable de Contenido;
+40. adaptación de componentes internos según espacio disponible;
+41. reglas para contenido interno ancho;
+42. composición visual de Sobre mí;
+43. adaptación responsive de Sobre mí;
+44. composición visual de Contactos;
+45. formulario de contacto;
+46. adaptación responsive del formulario;
+47. lenguaje visual común de tarjetas;
+48. rejillas adaptables de listados;
+49. representación de certificados;
+50. representación de certificaciones;
+51. adaptación responsive de Certificado y Certificación;
+52. listado y detalle de Proyectos;
+53. representación del lenguaje principal de los proyectos;
+54. adaptación responsive del detalle de Proyecto;
+55. listado y detalle de Artículos;
+56. representación de fechas de Artículos;
+57. representación de contenido Markdown;
+58. adaptación responsive de Artículos;
+59. equivalencia estructural y de contenido entre los temas claro y oscuro;
+60. equivalencia responsive entre los temas claro y oscuro;
+61. unidad de presentación y límites de contenido independiente;
+62. representación mediante skeleton durante la carga;
+63. adaptación responsive de skeletons;
+64. comportamiento de estados vacíos;
+65. comportamiento de errores de carga;
+66. tratamiento de elementos visuales obligatorios fallidos;
+67. estados de carga y error de elementos subordinados de navegación;
+68. estados de carga y error de cabecera;
+69. representación de páginas y elementos no encontrados;
+70. estado de envío en curso del formulario;
+71. confirmación de envío satisfactorio;
+72. representación de errores de validación;
+73. comportamiento visible del honeypot;
+74. representación del límite de envíos;
+75. representación de fallos de envío;
+76. relación entre estados y colores semánticos;
+77. conservación de regiones independientes durante estados parciales;
+78. conservación de contenido y jerarquía durante la adaptación responsive;
+79. reorganización antes que eliminación de contenido;
+80. prevención de desplazamiento horizontal de la página;
+81. redimensionamiento proporcional de elementos visuales;
+82. scroll horizontal limitado al componente cuando resulte necesario.
 
 Los modelos visuales deben utilizar los iconos concretos establecidos en el mapeo de esta especificación.
 
-Las representaciones visuales finales de escritorio constituyen la referencia de composición para las páginas definidas en esta especificación.
+Las representaciones visuales finales de escritorio continúan constituyendo la referencia de identidad y composición para las páginas definidas, complementadas por las reglas responsive establecidas para escritorio intermedio y pantallas estrechas.
 
 Los estados comunes definidos forman parte de la referencia de comportamiento visual para todas las páginas y regiones correspondientes.
 
-La adaptación estructural completa para diferentes tamaños de pantalla permanece pendiente de la etapa correspondiente de diseño responsive.
+La adaptación responsive definida en esta especificación forma parte de la referencia cerrada de diseño.
 
-Esta especificación constituye la referencia base de identidad visual para las siguientes etapas de diseño e implementación de `sitio`.
+La definición de accesibilidad continúa en la etapa correspondiente antes de considerar completa la etapa de responsive y accesibilidad de `sitio`.
+
+Esta especificación constituye la referencia base de identidad visual, responsive y comportamiento visual para las siguientes etapas de diseño e implementación de `sitio`.

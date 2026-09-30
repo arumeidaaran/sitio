@@ -241,9 +241,11 @@ Durante el desplazamiento, la cabecera reduce su presencia manteniendo visibles 
 
 La descripción breve pertenece al estado expandido y no necesita permanecer visible cuando la cabecera se encuentra compactada.
 
-La navegación es vertical y permanece disponible durante el desplazamiento.
+En las composiciones de escritorio, la navegación es vertical y permanece disponible durante el desplazamiento.
 
-Los controles de idioma y tema aparecen directamente al comienzo de la navegación.
+En las composiciones estrechas, la navegación se reorganiza para utilizar el espacio horizontal disponible sin mantener una barra lateral reducida artificialmente.
+
+Los controles de idioma y tema aparecen directamente en la navegación.
 
 No se encuentran ocultos dentro de una sección adicional de configuración.
 
@@ -310,7 +312,7 @@ Ver todos los artículos
 Ver todas las certificaciones
 ```
 
-Si la navegación supera el espacio vertical disponible, dispone de desplazamiento interno.
+Si la navegación supera el espacio disponible, dispone del comportamiento correspondiente a la composición utilizada.
 
 La región `Contenido` presenta la información correspondiente a la página activa.
 
@@ -329,7 +331,7 @@ Contenido
 => cambia según la página
 ```
 
-La composición interna de `Contenido` depende de la naturaleza de cada página.
+La composición interna de `Contenido` depende de la naturaleza de cada página y del espacio disponible.
 
 La navegación interna conserva el contexto lingüístico previamente establecido y utiliza ese mismo idioma para construir el acceso hacia las demás secciones.
 
@@ -828,7 +830,11 @@ Conceptualmente:
 +-----------------+ +-----------------+ +-----------------+ 
 ```
 
-Las tarjetas se distribuyen horizontalmente mientras exista espacio disponible, continúan en una nueva fila cuando sea necesario y no hay orden de precedencia entre un certificado y una certificación puramente. El orden para sus apariciones mediante es sus fechas.
+Las tarjetas se distribuyen horizontalmente de acuerdo con el espacio disponible y continúan en una nueva fila cuando la siguiente tarjeta ya no puede presentarse correctamente en la misma línea.
+
+La cantidad de tarjetas por fila no constituye una propiedad fija del listado.
+
+No hay orden de precedencia entre un certificado y una certificación puramente. El orden para sus apariciones mediante es sus fechas.
 
 ### Tarjeta de certificado
 
@@ -920,6 +926,10 @@ Conceptualmente:
 | proyecto    | | proyecto    | | proyecto    |
 +-------------+ +-------------+ +-------------+
 ```
+
+Las tarjetas se distribuyen de acuerdo con el espacio disponible y continúan en filas sucesivas cuando sea necesario.
+
+La cantidad de tarjetas por fila no se establece previamente.
 
 Cada tarjeta presenta:
 
@@ -1138,6 +1148,12 @@ Certificación
 
 Las tarjetas completas no constituyen implícitamente enlaces cuando existe una acción o un enlace explícito dentro de ellas.
 
+Las rejillas presentan tantas tarjetas completas como permita el ancho disponible.
+
+Cuando una tarjeta adicional ya no puede presentarse correctamente en la misma fila, continúa en la fila siguiente.
+
+La cantidad de columnas resulta del espacio disponible y no de un número fijo establecido para cada página o dispositivo.
+
 ## Contenido
 
 El frontend presenta diferentes tipos de contenido obtenidos mediante `sitio-api`.
@@ -1193,6 +1209,343 @@ El frontend no necesita recibir en Inicio información que solamente será utili
 Markdown se utiliza como fuente editorial de los artículos.
 
 Constituye la fuente general para todos los contenidos de artículos.
+
+## Adaptación responsive
+
+La presentación se adapta al espacio disponible sin reducir la interfaz de escritorio de forma proporcional ni eliminar contenido para hacerla caber.
+
+La adaptación conserva:
+
+```text
+Contenido
+Jerarquía
+Identidad visual
+Funciones
+Estados
+Orden editorial
+```
+
+y modifica cuando sea necesario:
+
+```text
+Composición
+Posición
+Ancho disponible
+Organización interna
+Distribución de tarjetas
+```
+
+### Composición general
+
+La aplicación contempla composiciones de escritorio amplio, escritorio intermedio y pantallas estrechas.
+
+En el escritorio amplio, Inicio puede mantener simultáneamente:
+
+```text
+Navegación
+Contenido principal
+Área de exposición
+```
+
+Las páginas internas utilizan:
+
+```text
+Navegación
+Contenido
+```
+
+Cuando el espacio de escritorio deja de ser suficiente para mantener correctamente las tres regiones de Inicio, la navegación lateral continúa disponible y el área de exposición pasa a formar parte del flujo principal debajo del contenido destacado.
+
+Las páginas internas continúan utilizando la composición lateral mientras exista espacio suficiente para mantenerla correctamente.
+
+Cuando el espacio disponible requiere abandonar la estructura de escritorio, la aplicación utiliza una composición estrecha formada conceptualmente por:
+
+```text
+Cabecera
+Navegación
+Contenido
+```
+
+No se intenta conservar una barra lateral reducida ni comprimir progresivamente todos los elementos para mantener la misma estructura.
+
+### Tipografía y espaciado
+
+La tipografía utiliza una escala correspondiente a las composiciones de escritorio y otra adaptada a las pantallas estrechas.
+
+Los tamaños de texto que no necesitan reducirse mantienen su proporción entre composiciones.
+
+No se introduce una escala intermedia adicional cuando la estructura puede resolverse mediante las escalas establecidas.
+
+El espaciado horizontal general se adapta al espacio disponible.
+
+El espaciado interno de los componentes y la separación vertical entre bloques mantienen la escala visual definida cuando no existe una necesidad concreta de reducirlos.
+
+Una pantalla estrecha no implica reducir automáticamente todos los espacios verticales.
+
+### Cabecera
+
+La cabecera mantiene la misma identidad visual en todas las composiciones.
+
+El estado expandido conserva:
+
+```text
+Fondo visual y foto juntos
+Nombre
+Descripción breve
+```
+
+El estado compacto conserva:
+
+```text
+Fondo visual y foto juntos
+Nombre
+```
+
+La fotografía permanece integrada en la cabecera y no se sustituye por un avatar independiente ni desaparece por utilizar una pantalla estrecha.
+
+En escritorio, la cabecera utiliza la geometría correspondiente a sus estados expandido y compacto.
+
+En pantallas estrechas, su altura se adapta al contenido y al espacio disponible en lugar de reproducir las dimensiones rígidas de escritorio.
+
+### Navegación en escritorio
+
+Mientras la composición de escritorio permanece activa, la navegación continúa como una región lateral.
+
+Su ancho no se reduce progresivamente para intentar conservar otras regiones que ya no caben correctamente.
+
+La adaptación de la página se realiza reorganizando el contenido antes que comprimiendo la navegación.
+
+### Navegación en pantallas estrechas
+
+En las pantallas estrechas, la barra de navegación aparece inmediatamente debajo de la cabecera.
+
+Presenta directamente:
+
+```text
+Menú
+Idioma
+Tema
+```
+
+La selección de idioma y tema permanece disponible sin quedar oculta dentro del propio menú.
+
+Al activar el menú, la navegación se presenta debajo de la barra dentro del flujo normal del documento.
+
+No utiliza un panel lateral, una superposición sobre la página ni una región flotante independiente.
+
+Conceptualmente:
+
+```text
+Cabecera
+Navegación principal
+Menú expandido
+Contenido
+```
+
+La apertura del menú desplaza el contenido.
+
+Al cerrarlo, el espacio ocupado por la navegación expandida deja de formar parte del flujo.
+
+Los accesos directos continúan funcionando como destinos de navegación.
+
+Las secciones que contienen elementos pueden alternar entre estado cerrado y abierto.
+
+Conceptualmente:
+
+```text
+Sección cerrada
+=> indicador de sección cerrada
+
+Activar sección
+=> cambiar indicador
+=> abrir solamente el grupo correspondiente
+```
+
+Cuando una sección está abierta:
+
+```text
+Sección abierta
+=> indicador de sección abierta
+
+Activar nuevamente
+=> cambiar indicador
+=> cerrar solamente el grupo correspondiente
+```
+
+La misma regla se aplica a todas las secciones que dispongan de contenido expandible.
+
+El indicador visual forma parte del propio control de la sección y representa su estado.
+
+Al seleccionar un recurso concreto dentro de una sección:
+
+```text
+Navegar
+Cerrar menú
+Restablecer el grupo a su estado cerrado
+```
+
+La navegación y los controles globales continúan disponibles durante el desplazamiento mediante la composición compacta correspondiente.
+
+No es necesario regresar al comienzo de la página para volver a acceder al menú, al idioma o al tema.
+
+### Inicio
+
+La composición de Inicio depende del espacio disponible.
+
+Cuando existe espacio suficiente, las actualizaciones pueden ocupar su área de exposición propia.
+
+En una composición de escritorio más estrecha, esa región pasa debajo del contenido destacado dentro del flujo principal.
+
+En pantallas estrechas, la página adopta una organización vertical:
+
+```text
+Cabecera
+Navegación
+Contenido destacado
+Actualizaciones
+```
+
+Las secciones destacadas mantienen su orden editorial.
+
+Las actualizaciones modifican su posición visual, pero no su función, contenido ni criterio de orden.
+
+Las rejillas de contenido destacado utilizan la misma distribución adaptable definida para las demás tarjetas.
+
+### Páginas internas
+
+Las páginas internas adoptan una estructura global de una sola región de contenido cuando dejan de utilizar la navegación lateral.
+
+Esto no obliga a que todos los componentes internos sean siempre verticales.
+
+Una composición interna puede permanecer horizontal mientras el contenido continúe cabiendo correctamente y conserve su legibilidad.
+
+Cuando una disposición horizontal deja de funcionar correctamente, se reorganiza verticalmente.
+
+La adaptación depende del espacio real disponible y de la naturaleza del componente.
+
+### Contenido ancho
+
+Un componente interno no debe provocar desplazamiento horizontal de la página completa.
+
+Cuando un contenido supera el espacio disponible, se aplica la siguiente prioridad conceptual:
+
+```text
+Reorganizar
+Redimensionar proporcionalmente
+Adaptar internamente
+Utilizar desplazamiento horizontal propio cuando sea necesario
+```
+
+La reorganización se utiliza cuando la disposición puede cambiar sin alterar la información ni su significado.
+
+El redimensionamiento se utiliza cuando el elemento puede reducirse manteniendo la legibilidad.
+
+La adaptación interna permite que un componente utilice una representación más adecuada al espacio disponible.
+
+El desplazamiento horizontal se reserva para contenidos cuya naturaleza no permite aplicar correctamente las alternativas anteriores.
+
+Cuando resulta necesario, afecta exclusivamente al elemento correspondiente y no a toda la página.
+
+### Imágenes y recursos visuales
+
+Las imágenes y demás recursos visuales respetan el espacio disponible de su contenedor.
+
+Se redimensionan proporcionalmente cuando sea necesario.
+
+Un recurso visual que forma parte del contenido o de la identidad de una sección no desaparece automáticamente por utilizar una pantalla estrecha.
+
+La adaptación reorganiza o redimensiona el recurso antes de eliminarlo.
+
+### Botones
+
+Los botones conservan su identidad visual y sus dimensiones entre composiciones.
+
+En las composiciones de escritorio pueden utilizar un ancho determinado por su contenido.
+
+En las pantallas estrechas, las acciones principales pueden utilizar todo el ancho disponible cuando ello favorece la composición.
+
+El cambio de ancho no modifica el texto ni el estado representado por el control.
+
+### Formulario de contacto
+
+Los campos del formulario ya utilizan una disposición vertical y aprovechan el ancho disponible de su región.
+
+Por este motivo, la adaptación responsive no necesita modificar su orden.
+
+La acción principal utiliza un ancho adecuado a su contenido en las composiciones de escritorio y ocupa el ancho disponible en las pantallas estrechas.
+
+El mismo comportamiento se conserva mientras el envío se encuentra en curso.
+
+Los estados del formulario no cambian por la composición utilizada.
+
+### Sobre mí
+
+Los bloques de `Sobre mí` pueden utilizar composiciones horizontales entre texto y recurso visual cuando existe espacio suficiente.
+
+En pantallas estrechas, los bloques que ya no caben correctamente se reorganizan verticalmente.
+
+El recurso visual utiliza el ancho disponible y mantiene sus proporciones.
+
+El orden editorial de cada bloque se conserva.
+
+La aplicación no altera automáticamente el orden de texto e imagen en función de la posición del bloque dentro de la página.
+
+### Detalle de proyecto
+
+El detalle de un proyecto puede mantener una composición horizontal entre sus elementos principales mientras exista espacio suficiente.
+
+En una composición estrecha, la imagen y la información relacionada se organizan verticalmente.
+
+La imagen mantiene sus proporciones y utiliza el espacio disponible.
+
+Los grupos de información también pueden reorganizarse internamente cuando una disposición horizontal deja de ser adecuada.
+
+El contenido y su orden semántico permanecen iguales.
+
+### Detalle de certificado y certificación
+
+El detalle de un certificado o una certificación puede utilizar una composición horizontal cuando existe espacio suficiente.
+
+En pantallas estrechas, la imagen, la información principal y los datos de la credencial se reorganizan verticalmente.
+
+Cada región utiliza el ancho disponible.
+
+La imagen mantiene sus proporciones.
+
+Los valores representados por el recurso no cambian debido a la composición utilizada.
+
+Un certificado aplica la misma lógica de adaptación utilizando solamente los datos que pertenecen a su propio contrato.
+
+### Artículo
+
+El artículo mantiene su estructura editorial independientemente de la composición utilizada.
+
+En pantallas amplias conserva un ancho de lectura adecuado.
+
+En pantallas estrechas utiliza el ancho disponible del contenedor.
+
+Los elementos que forman parte del Markdown mantienen su jerarquía y su orden, pero se reorganizan adecuándose al espacio disponible.
+
+Conceptualmente:
+
+```text
+Títulos
+Párrafos
+Listas
+Citas
+Imágenes
+Tablas
+Código
+Diagramas
+Gráficos
+Videos
+```
+
+Las imágenes y otros recursos visuales se redimensionan proporcionalmente cuando sea posible.
+
+Las tablas, bloques de código, diagramas y demás contenidos anchos utilizan las mismas reglas generales de reorganización, redimensionamiento, adaptación interna y desplazamiento propio.
+
+La adaptación responsive no modifica el contenido editorial del artículo.
 
 ## Estados comunes
 
@@ -3072,14 +3425,36 @@ Representación de Sobre mí
 Discriminación entre icono e imagen
 Mapeo de iconos de Tabler
 Representación de tarjetas
+Distribución adaptable de tarjetas
+Composición de escritorio amplio
+Composición de escritorio intermedio
+Composición de pantallas estrechas
+Reorganización de Actualizaciones
+Cabecera responsive
+Navegación lateral
+Navegación en pantallas estrechas
+Apertura y cierre del menú
+Apertura y cierre de grupos de navegación
+Restablecimiento del grupo después de navegar
+Persistencia de los controles globales durante el desplazamiento
+Adaptación de tipografía y espaciado
+Reorganización de componentes internos
+Redimensionamiento proporcional de recursos visuales
+Prevención del desplazamiento horizontal de la página
+Desplazamiento interno de contenidos anchos cuando sea necesario
+Adaptación del formulario
+Adaptación de Sobre mí
 Listado de proyectos
 Detalle de proyectos
+Adaptación del detalle de proyectos
 Representación de lenguajes y porcentajes
 Listado de artículos
 Fechas de publicación y actualización
 Representación del contenido Markdown
+Adaptación del contenido de artículos
 Listado de certificados y certificaciones
 Discriminación entre certificado y certificación
+Adaptación del detalle de certificados y certificaciones
 Representación de certificaciones sin expiración
 Representación de credenciales no disponibles
 Carga de medios de contacto
