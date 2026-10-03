@@ -232,9 +232,10 @@ Regla general:
 | Superficie secundaria | `#F1ECE5` |
 | Texto principal       | `#141414` |
 | Texto secundario      | `#5E6167` |
-| Texto tenue           | `#7A7E85` |
-| Borde                 | `#D9D3CA` |
-| Separador             | `#E6E0D8` |
+| Texto tenue           | `#676B72` |
+| Borde                 | `#7A7E85` |
+
+El mismo token de borde se utiliza para los bordes estructurales, bordes de controles y separadores cuando una línea resulta necesaria.
 
 ---
 
@@ -306,10 +307,10 @@ Regla general:
 ### Enlaces
 
 ```text
-normal  => #B51E23
-hover   => #99181C
-visited => #7C3A65
-focus   => #B51E23
+normal        => #B51E23
+hover         => #99181C
+visited       => #7C3A65
+focus outline => #141414
 ```
 
 ### Botón principal
@@ -324,7 +325,7 @@ texto        => #FFFFFF
 
 ```text
 fondo => #FFFFFF
-borde => #D9D3CA
+borde => #7A7E85
 texto => #141414
 ```
 
@@ -382,7 +383,7 @@ texto           => #F2F1EE
 | Estado      | Color     |
 | ----------- | --------- |
 | Éxito       | `#2F6D59` |
-| Advertencia | `#9A6A16` |
+| Advertencia | `#8F6112` |
 | Error       | `#B51E23` |
 | Información | `#365E96` |
 
@@ -401,12 +402,22 @@ texto           => #F2F1EE
 
 Todos los elementos interactivos deben disponer de foco visible.
 
+La geometría del indicador es:
+
 ```css
-outline: 2px solid currentColor;
+outline: 2px solid var(--focus-color);
 outline-offset: 2px;
 ```
 
-El color concreto debe corresponder al color principal interactivo del tema.
+En el tema claro:
+
+```text
+--focus-color => #141414
+```
+
+El tratamiento funcional del foco permanece igual entre temas.
+
+El valor cromático utilizado debe pertenecer a la paleta correspondiente y conservar el contraste necesario sobre las superficies permitidas.
 
 ---
 
@@ -462,7 +473,7 @@ box-shadow: 0 8px 24px rgba(0, 0, 0, 0.40);
 
 ## 8.3. Uso previsto
 
-Las sombras pueden utilizarse en:
+Las sombras deben utilizarse en:
 
 - paneles;
 - navegación sticky;
@@ -504,11 +515,12 @@ Línea de acento => 3px
 ## 9.3. Tema claro
 
 ```text
-Borde estándar => #D9D3CA
-Separador      => #E6E0D8
-Acento rojo    => #B51E23
-Acento verde   => #2F6D59
+Borde         => #7A7E85
+Acento rojo   => #B51E23
+Acento verde  => #2F6D59
 ```
+
+El valor `#7A7E85` se utiliza tanto para bordes como para separadores cuando la composición requiere una línea.
 
 ---
 
@@ -1003,7 +1015,7 @@ Artículos
 
 ## 13.3. Jerarquía expandible
 
-Las secciones con contenido subordinado pueden expandirse y contraerse.
+Las secciones con contenido subordinado deben expandirse y contraerse.
 
 Ejemplo:
 
@@ -1618,7 +1630,7 @@ border-radius      => 0
 
 En escritorio utiliza su ancho natural cuando no existe una regla específica diferente.
 
-En pantallas estrechas, las acciones principales que forman parte del flujo de contenido pueden ocupar:
+En pantallas estrechas, las acciones principales que forman parte del flujo de contenido deben ocupar:
 
 ```text
 ancho => 100%
@@ -2338,7 +2350,7 @@ Cuando:
 ancho < 1024px
 ```
 
-los bloques que no pueden conservar correctamente esa composición se reorganizan verticalmente.
+los bloques que no deben conservar correctamente esa composición se reorganizan verticalmente.
 
 El elemento visual utiliza el ancho disponible y mantiene sus proporciones.
 
@@ -2793,7 +2805,7 @@ ni dejar un hueco sin contenido.
 
 ## 21.4. Diferencia gráfica entre tipos
 
-Certificado y Certificación pueden presentar diferencias internas porque representan elementos distintos.
+Certificado y Certificación deben presentar diferencias internas porque representan elementos distintos.
 
 Esta diferencia no rompe la identidad visual general.
 
@@ -3385,7 +3397,7 @@ Un error definitivo no mantiene skeleton.
 
 ### Colecciones durante la carga
 
-Las unidades completas pueden presentarse a medida que se encuentran disponibles.
+Las unidades completas deben presentarse a medida que se encuentran disponibles.
 
 Una unidad individual todavía incompleta permanece representada mediante su skeleton.
 
@@ -3690,7 +3702,7 @@ No representa tarjetas dentro de la navegación.
 
 Cuando una sección se encuentra contraída, no es necesario representar visualmente la carga de elementos que no se encuentran visibles.
 
-Las secciones independientes pueden alcanzar estados diferentes.
+Las secciones independientes deben alcanzar estados diferentes.
 
 Conceptualmente:
 
@@ -4288,7 +4300,7 @@ ancho < 1024px
 
 No se introduce una sucesión adicional de puntos de ruptura únicamente para modificar cantidades fijas de columnas.
 
-Los componentes que pueden responder naturalmente al espacio disponible deben hacerlo sin depender de un número predeterminado de columnas.
+Los componentes que deben responder naturalmente al espacio disponible deben hacerlo sin depender de un número predeterminado de columnas.
 
 ---
 
@@ -4954,6 +4966,945 @@ La adaptación debe utilizar el espacio disponible para reorganizar la interfaz 
 
 ---
 
+# 26. Accesibilidad
+
+La accesibilidad forma parte de la estructura, la presentación y el comportamiento normal de la aplicación.
+
+No constituye una representación paralela ni una segunda versión del sitio.
+
+La misma interfaz debe proporcionar la información, jerarquía, relaciones, estados y mecanismos de interacción necesarios para su utilización mediante diferentes formas de acceso.
+
+---
+
+## 26.1. Nivel de conformidad
+
+La referencia de accesibilidad del proyecto es:
+
+```text
+WCAG 2.2
+Nivel AA
+```
+
+El cumplimiento adicional de requisitos correspondientes al nivel AAA puede conservarse cuando resulte adecuado.
+
+Alcanzar un requisito AAA concreto no convierte AAA en el nivel general de conformidad del proyecto.
+
+Una combinación o comportamiento que no alcance AAA puede permanecer cuando cumple el requisito AA correspondiente.
+
+---
+
+## 26.2. Orden estructural y navegación mediante teclado
+
+El orden visual, el orden del documento y el recorrido mediante teclado deben permanecer coherentes.
+
+La presentación no utiliza reorganizaciones visuales que produzcan un orden diferente del orden semántico.
+
+Conceptualmente:
+
+```text
+Orden visual
+=> orden del DOM
+=> orden normal de foco
+```
+
+Los controles interactivos deben utilizar elementos nativos cuando exista un elemento adecuado para su función.
+
+El comportamiento nativo del teclado se conserva.
+
+Los controles deben disponer de foco visible.
+
+No se utilizan valores positivos de `tabindex` para reconstruir artificialmente un orden diferente.
+
+La estructura correcta del documento tiene prioridad sobre el uso de `tabindex` cuando la estructura ya comporta lo mismo orden de lo visual. `tabindex` solamente se utiliza cuando un elemento necesita participar legítimamente en el orden normal de foco y su implementación lo requiere.
+
+
+Un elemento gráfico que forma parte de un control no constituye un segundo objetivo de foco cuando no dispone de una acción propia.
+
+---
+
+## 26.3. Regiones semánticas y encabezados
+
+La estructura principal utiliza las regiones semánticas correspondientes.
+
+Conceptualmente:
+
+```html
+<header>
+<nav>
+<main>
+```
+
+Las regiones no reciben foco solamente por existir.
+
+La jerarquía de encabezados corresponde a la jerarquía real del contenido.
+
+Conceptualmente:
+
+```text
+H1
+=> página actual
+
+H2
+=> secciones principales
+
+H3
+=> subsecciones
+
+H4
+=> nivel subordinado cuando existe
+```
+
+El nivel de encabezado no se selecciona a partir de su tamaño visual.
+
+La carga inicial de una página no mueve automáticamente el foco hacia `main` ni hacia otro elemento únicamente para anunciar la página.
+
+La aplicación no incorpora un enlace adicional de salto al contenido principal.
+
+La navegación entre regiones repetidas se apoya en la estructura semántica, los encabezados y la organización de la navegación.
+
+---
+
+## 26.4. Grupos expandibles
+
+Las secciones expandibles utilizan un único control para toda la fila interactiva.
+
+El icono de expansión o contracción pertenece a ese mismo control.
+
+No constituye un botón independiente.
+
+El estado cerrado utiliza:
+
+```text
+IconChevronDown
+aria-expanded="false"
+```
+
+El estado abierto utiliza:
+
+```text
+IconChevronUp
+aria-expanded="true"
+```
+
+El control puede relacionarse con la región afectada mediante:
+
+```text
+aria-controls
+```
+
+El estado debe ser perceptible visualmente y estar disponible semánticamente.
+
+El icono puede utilizar:
+
+```text
+aria-hidden="true"
+```
+
+cuando `aria-expanded` comunica el mismo estado a las tecnologías de asistencia.
+
+Los elementos de un grupo cerrado no forman parte del recorrido mediante teclado mientras permanecen ocultos.
+
+La misma regla se aplica a la navegación expandible utilizada en pantallas estrechas.
+
+Cuando el menú está cerrado, sus elementos ocultos tampoco forman parte del recorrido mediante teclado.
+
+El objetivo interactivo y el objetivo utilizado por las pruebas corresponde al control completo y no al elemento SVG interno.
+
+---
+
+## 26.5. Nombres accesibles de controles
+
+Todo control dispone de un nombre accesible que comunica su función.
+
+Cuando existe texto visible suficiente:
+
+```text
+texto visible
+=> nombre del control
+```
+
+El icono que acompaña a ese texto no se anuncia de forma independiente.
+
+Cuando un control está formado solamente por un icono, dispone de un nombre accesible explícito y localizado.
+
+Conceptualmente:
+
+```text
+Icono sin texto visible
+=> nombre accesible que describe la acción
+```
+
+El nombre describe la función disponible y no solamente la apariencia gráfica del icono.
+
+Los iconos decorativos o redundantes deben permanecer fuera del árbol de accesibilidad.
+
+---
+
+## 26.6. Etiquetas y placeholders del formulario
+
+Todos los campos visibles disponen de una etiqueta visible asociada estructuralmente al control.
+
+La asociación utiliza:
+
+```text
+label
+=> for
+=> id del control
+```
+
+o la relación nativa equivalente.
+
+Activar la etiqueta desplaza el foco al campo correspondiente.
+
+El placeholder no sustituye la etiqueta.
+
+Los placeholders definidos son:
+
+```text
+Nombre
+=> Escriba su nombre
+
+Apellido
+=> Escriba su apellido
+
+Dirección de correo electrónico
+=> Escriba su dirección de correo electrónico
+
+Motivo del contacto
+=> Escriba el motivo del contacto
+
+Mensaje
+=> Escriba su mensaje
+```
+
+Una condición indispensable para completar correctamente un campo no debe existir solamente dentro del placeholder.
+
+Cuando una instrucción necesita permanecer disponible después de comenzar la entrada, debe representarse mediante contenido persistente asociado al campo.
+
+El placeholder utiliza en el tema claro:
+
+```text
+#676B72
+```
+
+---
+
+## 26.7. Validación accesible de campos
+
+Cuando un campo contiene un error de validación:
+
+```text
+campo
+=> aria-invalid="true"
+```
+
+El mensaje de error visible se relaciona con el campo mediante:
+
+```text
+aria-describedby
+```
+
+o un mecanismo semántico equivalente.
+
+El mensaje aparece junto al campo correspondiente.
+
+El error debe comunicar la condición concreta que necesita corregirse.
+
+Los valores introducidos permanecen disponibles.
+
+La validación no mueve automáticamente el foco hacia cada campo inválido.
+
+Los errores individuales de los campos no utilizan todos simultáneamente:
+
+```text
+role="alert"
+```
+
+La representación visible y la información suministrada a tecnologías de asistencia deben comunicar el mismo problema.
+
+Cuando el error desaparece, el estado inválido y las relaciones asociadas se actualizan de acuerdo con el estado actual del campo.
+
+---
+
+## 26.8. Mensajes generales del formulario
+
+Los mensajes generales permanecen visibles mientras continúan siendo pertinentes.
+
+No desaparecen automáticamente después de un período breve.
+
+### Envío satisfactorio
+
+El mensaje es:
+
+```text
+Mensaje enviado correctamente.
+```
+
+Utiliza:
+
+```text
+role="status"
+```
+
+La comunicación es no interruptiva.
+
+No mueve el foco automáticamente.
+
+### Límite de envíos
+
+El mensaje es:
+
+```text
+Se alcanzó el límite de 5 envíos por hora.
+
+Inténtelo de nuevo más tarde.
+```
+
+Utiliza:
+
+```text
+role="status"
+```
+
+La comunicación es no interruptiva.
+
+No mueve el foco automáticamente.
+
+### Fallo de envío
+
+El mensaje es:
+
+```text
+No fue posible enviar el mensaje.
+
+Inténtelo de nuevo.
+```
+
+Utiliza:
+
+```text
+role="alert"
+```
+
+La comunicación debe producirse cuando aparece el error.
+
+No utiliza:
+
+```text
+alertdialog
+```
+
+No mueve el foco automáticamente.
+
+Los mensajes correspondientes a cada campo permanecen separados de estos avisos generales.
+
+---
+
+## 26.9. Estado accesible de los skeletons
+
+Las formas internas del skeleton constituyen una representación visual.
+
+No constituyen contenido accesible independiente.
+
+Deben permanecer fuera del árbol de accesibilidad mediante:
+
+```text
+aria-hidden="true"
+```
+
+La unidad real cuyo contenido se encuentra pendiente comunica el estado de carga.
+
+Mientras permanece pendiente:
+
+```text
+aria-busy="true"
+```
+
+Cuando la operación termina:
+
+```text
+aria-busy="false"
+```
+
+o el atributo deja de estar presente cuando ya no resulta necesario.
+
+La carga de una unidad independiente no convierte toda la página en una única región ocupada.
+
+Conceptualmente:
+
+```text
+Tarjeta pendiente
+=> tarjeta ocupada
+
+Página
+=> no ocupada únicamente por esa tarjeta
+```
+
+Los skeletons no reciben foco.
+
+No contienen controles ficticios.
+
+No se añade un texto oculto equivalente a:
+
+```text
+Cargando...
+```
+
+solamente para crear una representación adicional destinada a tecnologías de asistencia.
+
+La animación visual del skeleton permanece mientras la operación continúa pendiente.
+
+Cuando la carga termina con contenido, vacío o error, el skeleton desaparece y la unidad adopta el estado correspondiente.
+
+---
+
+## 26.10. Clasificación de imágenes
+
+La alternativa textual depende de la función real de la imagen en su contexto.
+
+La aplicación distingue entre:
+
+```text
+Imagen decorativa
+Imagen informativa
+Imagen funcional
+Imagen de texto necesaria
+Imagen compleja
+Imagen relacionada con una experiencia sensorial específica
+```
+
+La clasificación no depende únicamente del archivo utilizado ni de su apariencia visual.
+
+Una misma imagen puede necesitar un tratamiento diferente cuando cambia su función.
+
+---
+
+## 26.11. Imágenes decorativas
+
+Las imágenes puramente decorativas no introducen información redundante.
+
+Cuando corresponda, se implementan mediante recursos visuales de CSS.
+
+Si una imagen decorativa necesita utilizar un elemento `<img>`, utiliza:
+
+```html
+alt=""
+```
+
+Una imagen que comunica información necesaria no utiliza `background-image` como sustitución de una imagen accesible.
+
+---
+
+## 26.12. Imágenes informativas
+
+Una imagen informativa dispone de un texto alternativo que comunica la información esencial aportada por la imagen dentro de su contexto.
+
+La alternativa no necesita describir cada detalle visual cuando esos detalles no forman parte de la información transmitida.
+
+---
+
+## 26.13. Imágenes funcionales
+
+Cuando una imagen forma parte de una acción o constituye la representación principal de una acción, su alternativa comunica la función o el destino correspondiente.
+
+La alternativa no se limita a describir la apariencia del recurso visual.
+
+---
+
+## 26.14. Imágenes de texto
+
+Cuando resulta necesario utilizar una imagen que contiene texto y ese texto forma parte de la información que debe transmitirse, la alternativa incluye el contenido textual relevante.
+
+---
+
+## 26.15. Imágenes complejas
+
+Una imagen compleja puede disponer de una alternativa breve y de una descripción adicional cuando la información completa no puede expresarse adecuadamente mediante `alt`.
+
+La alternativa breve permite identificar el contenido sin convertir el atributo en una descripción excesivamente extensa.
+
+---
+
+## 26.16. Experiencias sensoriales específicas
+
+Cuando la finalidad de una imagen incluye una experiencia visual o sensorial concreta y no constituye mera decoración, utiliza una identificación descriptiva compatible con esa función.
+
+---
+
+## 26.17. Iconos
+
+Cuando un icono acompaña a un texto visible que ya comunica completamente el significado:
+
+```text
+Icono
+=> aria-hidden="true"
+
+Texto
+=> comunica el significado
+```
+
+Cuando un icono constituye por sí mismo un control, el control dispone de un nombre accesible localizado.
+
+Cuando un icono representa visualmente un estado que también se encuentra comunicado mediante semántica propia del control, el icono no necesita anunciarse de forma independiente.
+
+La exclusión del icono del árbol de accesibilidad no elimina su función visual.
+
+---
+
+## 26.18. Fotografía de la cabecera
+
+La fotografía personal de la cabecera constituye una imagen informativa relacionada con la identidad presentada.
+
+Utiliza un elemento:
+
+```html
+<img>
+```
+
+No se implementa como `background-image`.
+
+La alternativa conceptual corresponde a:
+
+```text
+Retrato de <nombre localizado>
+```
+
+La frase completa se localiza para el idioma correspondiente.
+
+No se construye mediante concatenación de fragmentos que presupongan que todos los idiomas utilizan la misma estructura gramatical.
+
+La representación localizada del nombre corresponde igualmente al idioma utilizado.
+
+La misma función informativa se conserva en:
+
+```text
+Cabecera expandida
+Cabecera compacta
+Composición estrecha
+```
+
+El fondo visual que acompaña a la fotografía puede permanecer como decoración cuando no aporta información propia.
+
+---
+
+## 26.19. Localización de información accesible
+
+Los textos utilizados para proporcionar accesibilidad forman parte de la internacionalización del sitio.
+
+Esto incluye, cuando corresponde:
+
+```text
+Alternativas textuales
+Nombres accesibles
+Placeholders
+Instrucciones
+Mensajes de validación
+Mensajes de estado
+Mensajes de error
+Título del documento
+```
+
+No existe una segunda variante lingüística destinada exclusivamente a tecnologías de asistencia.
+
+La información accesible utiliza el idioma correspondiente a la interfaz o al contenido al que pertenece.
+
+Los nombres personales también utilizan la representación localizada establecida para el idioma correspondiente.
+
+La localización puede modificar el sistema de escritura utilizado para representar el nombre.
+
+---
+
+## 26.20. Método de cálculo de contraste
+
+El contraste utiliza la luminancia relativa definida para WCAG.
+
+Cada componente sRGB se normaliza:
+
+```text
+Csrgb = valor / 255
+```
+
+Después:
+
+```text
+si Csrgb <= 0.04045
+=> C = Csrgb / 12.92
+
+si Csrgb > 0.04045
+=> C = ((Csrgb + 0.055) / 1.055) ^ 2.4
+```
+
+La luminancia relativa es:
+
+```text
+L = 0.2126R + 0.7152G + 0.0722B
+```
+
+El contraste se calcula mediante:
+
+```text
+(Lmás_claro + 0.05) / (Lmás_oscuro + 0.05)
+```
+
+El valor completo se utiliza para determinar conformidad.
+
+No se redondea previamente para transformar un resultado inferior al umbral en un resultado conforme.
+
+Para texto normal en nivel AA:
+
+```text
+contraste >= 4.5:1
+```
+
+Para texto grande en nivel AA:
+
+```text
+contraste >= 3:1
+```
+
+Para texto normal en nivel AAA:
+
+```text
+contraste >= 7:1
+```
+
+Para texto grande en nivel AAA:
+
+```text
+contraste >= 4.5:1
+```
+
+Los elementos no textuales necesarios para identificar componentes, estados o información gráfica utilizan el umbral aplicable de:
+
+```text
+contraste >= 3:1
+```
+
+No existe un umbral AAA adicional independiente para contraste no textual.
+
+---
+
+## 26.21. Garantía cromática del tema claro
+
+Los tokens del tema claro se definen de manera que su función pueda utilizarse en todos los contextos permitidos por el propio sistema sin depender de una comprobación manual diferente para cada página.
+
+Las superficies claras consideradas para los colores generales son:
+
+```text
+Fondo principal       => #F6F3EE
+Superficie primaria   => #FFFFFF
+Superficie secundaria => #F1ECE5
+Rojo suave            => #F7E9E8
+Verde suave           => #E8F2EE
+```
+
+Los colores generales de texto deben mantener:
+
+```text
+>= 4.5:1
+```
+
+sobre cualquiera de estas superficies cuando su función permite ese uso.
+
+El borde utilizado por el sistema debe mantener:
+
+```text
+>= 3:1
+```
+
+sobre cualquiera de estas superficies cuando representa una separación o componente que necesita ser percibido.
+
+Las combinaciones específicas de un componente deben cumplir el requisito correspondiente dentro de las combinaciones que ese componente permite.
+
+---
+
+## 26.22. Tokens accesibles del tema claro
+
+Los valores definitivos son:
+
+```text
+Fondo principal       => #F6F3EE
+Superficie primaria   => #FFFFFF
+Superficie secundaria => #F1ECE5
+
+Texto principal       => #141414
+Texto secundario      => #5E6167
+Texto tenue           => #676B72
+
+Borde                 => #7A7E85
+
+Rojo principal        => #B51E23
+Rojo hover            => #99181C
+Rojo suave            => #F7E9E8
+
+Verde principal       => #2F6D59
+Verde hover           => #255847
+Verde suave           => #E8F2EE
+
+Éxito                 => #2F6D59
+Advertencia           => #8F6112
+Error                 => #B51E23
+Información           => #365E96
+
+Focus color           => #141414
+Placeholder           => #676B72
+```
+
+Los componentes utilizan:
+
+```text
+Botón principal
+fondo normal => #B51E23
+fondo hover  => #99181C
+texto        => #FFFFFF
+
+Botón secundario
+fondo        => #FFFFFF
+borde        => #7A7E85
+texto        => #141414
+
+Enlaces
+normal       => #B51E23
+hover        => #99181C
+visited      => #7C3A65
+```
+
+---
+
+## 26.23. Auditoría de contraste del tema claro
+
+Los colores generales fueron comprobados frente a todas las superficies en las que se permite su utilización.
+
+La tabla registra el peor resultado encontrado entre las combinaciones permitidas.
+
+| Elemento                              | Peor contraste comprobado | AA      | AAA        |
+| ------------------------------------- | ------------------------: | ------- | ---------- |
+| Texto principal `#141414`             |           `15.5939186510` | Cumple  | Cumple     |
+| Texto secundario `#5E6167`            |            `5.2564684488` | Cumple  | No cumple  |
+| Texto tenue `#676B72`                 |            `4.5313966803` | Cumple  | No cumple  |
+| Borde `#7A7E85`                       |            `3.4512126340` | Cumple  | Cumple*    |
+| Rojo principal `#B51E23`              |            `5.5991006265` | Cumple  | No cumple  |
+| Rojo hover `#99181C`                  |            `7.1049041610` | Cumple  | Cumple     |
+| Verde principal `#2F6D59`             |            `5.1485125447` | Cumple  | No cumple  |
+| Verde hover `#255847`                 |            `6.9286169810` | Cumple  | No cumple  |
+| Advertencia `#8F6112`                 |            `4.5736401147` | Cumple  | No cumple  |
+| Información `#365E96`                 |            `5.5577743673` | Cumple  | No cumple  |
+| Enlace visitado `#7C3A65`             |            `6.7073905201` | Cumple  | No cumple  |
+
+También quedan comprobadas las combinaciones específicas principales:
+
+| Combinación                                      | Contraste | AA      | AAA       |
+| ------------------------------------------------ | --------: | ------- | --------- |
+| Placeholder `#676B72` sobre `#FFFFFF`            |  `5.3534` | Cumple  | No cumple |
+| `#FFFFFF` sobre rojo principal `#B51E23`         |  `6.6147` | Cumple  | No cumple |
+| `#FFFFFF` sobre rojo hover `#99181C`             |  `8.3937` | Cumple  | Cumple    |
+| Texto principal `#141414` sobre `#FFFFFF`        | `18.4225` | Cumple  | Cumple    |
+| Borde `#7A7E85` sobre `#FFFFFF`                  |  `4.0772` | Cumple  | Cumple*   |
+| Verde principal `#2F6D59` sobre `#E8F2EE`        |  `5.3197` | Cumple  | No cumple |
+| Verde hover `#255847` sobre `#E8F2EE`            |  `7.1590` | Cumple  | Cumple    |
+
+`Cumple*` indica que el elemento no textual satisface el requisito de contraste no textual aplicable. WCAG no incorpora un umbral AAA adicional independiente para este tipo de contraste.
+
+Estas comprobaciones corresponden a los valores opacos indicados.
+
+Si la representación efectiva modifica el color, debe comprobarse el resultado efectivo.
+
+---
+
+## 26.24. Bordes y separadores
+
+El tema claro utiliza:
+
+```text
+Borde => #7A7E85
+```
+
+como token único para las líneas que deben mantener contraste suficiente.
+
+No existen valores independientes de menor contraste para:
+
+```text
+Borde estructural
+Borde de control
+Separador
+```
+
+cuando esas líneas necesitan ser perceptibles.
+
+El grosor continúa dependiendo de la función visual definida en `9. Bordes`.
+
+El tema oscuro mantiene la misma función estructural de los bordes y separadores.
+
+El cambio de tema no modifica el significado ni la función de una línea.
+
+---
+
+## 26.25. Foco visible
+
+El indicador general utiliza:
+
+```css
+outline: 2px solid var(--focus-color);
+outline-offset: 2px;
+```
+
+En el tema claro:
+
+```text
+--focus-color => #141414
+```
+
+El foco debe permanecer perceptible sobre las superficies en las que puede aparecer.
+
+No utiliza `currentColor` como regla general para permitir que cada control produzca un resultado de contraste diferente.
+
+El indicador puede coexistir con estados como:
+
+```text
+Activo
+Seleccionado
+Error
+Advertencia
+```
+
+sin sustituir el significado propio de esos estados.
+
+El foco identifica qué control se encuentra actualmente enfocado.
+
+Los demás estados continúan comunicando su propio significado.
+
+---
+
+## 26.26. Estados semánticos y color
+
+Los colores semánticos no constituyen el único medio para comunicar información.
+
+Conceptualmente:
+
+```text
+Color
++ texto o información equivalente
++ estructura técnica correspondiente
+=> significado del estado
+```
+
+Esto se aplica a:
+
+```text
+Éxito
+Advertencia
+Error
+Información
+```
+
+y a los demás estados necesarios para utilizar la aplicación.
+
+El estado debe continuar siendo comprensible cuando el color no puede distinguirse.
+
+---
+
+## 26.27. Enlaces
+
+Los enlaces deben disponer de semántica de enlace y de una identificación visible suficiente.
+
+Un enlace situado dentro de texto corrido no se diferencia únicamente mediante color.
+
+Utiliza subrayado u otra señal visual equivalente que permita reconocerlo independientemente de la percepción cromática.
+
+Los enlaces utilizados como acciones aisladas tampoco dependen exclusivamente del color ni únicamente del contexto de la composición.
+
+Deben disponer de texto, tratamiento visual y estructura técnica que permitan reconocer su función interactiva.
+
+El texto del enlace debe comunicar adecuadamente su destino o acción.
+
+Los estados:
+
+```text
+normal
+hover
+visited
+focus
+```
+
+deben conservar el contraste correspondiente en las combinaciones permitidas.
+
+---
+
+## 26.28. Colores efectivos
+
+La validación corresponde al color realmente representado.
+
+Los valores comprobados no deben considerarse automáticamente válidos cuando se modifican mediante:
+
+```text
+opacity
+rgba
+superposición
+gradiente
+composición sobre fotografía
+otra mezcla visual
+```
+
+Conceptualmente:
+
+```text
+Token sin modificación
+=> conserva el resultado comprobado
+
+Color efectivo modificado
+=> requiere comprobar el resultado efectivo
+```
+
+La comprobación debe utilizar el fondo efectivo sobre el que se representa el elemento.
+
+---
+
+## 26.29. Título del documento
+
+Cada página dispone de un `<title>` que describe su contenido o propósito.
+
+Durante la navegación interna de Angular, el título se actualiza para corresponder a la página activa aunque no se produzca una carga completa de un nuevo documento HTML.
+
+El título también se actualiza cuando cambia el idioma.
+
+La identificación general del sitio es localizada y responde conceptualmente a:
+
+```text
+Portafolio de <nombre localizado>
+```
+
+La representación del nombre personal también corresponde al idioma activo.
+
+La página inicial utiliza:
+
+```text
+<nombre localizado del sitio>
+```
+
+Las páginas internas utilizan:
+
+```text
+<título localizado de la página> | <nombre localizado del sitio>
+```
+
+Los recursos individuales utilizan:
+
+```text
+<nombre o título localizado del recurso> | <nombre localizado del sitio>
+```
+
+La información específica aparece antes de la identificación general del sitio.
+
+Conceptualmente:
+
+```html
+<title>título específico | nombre del sitio</title>
+```
+
+El separador forma parte de la convención definida para el sitio y no modifica la jerarquía de la información.
+
+---
+
 # Relación entre tema claro y tema oscuro
 
 Los dos temas representan exactamente el mismo sitio.
@@ -5042,6 +5993,9 @@ Cambiar los iconos
 Cambiar los campos mostrados
 Cambiar el significado de los estados
 Cambiar las reglas de una unidad de presentación
+Cambiar las reglas funcionales de accesibilidad
+Cambiar la estructura semántica
+Cambiar la navegación mediante teclado
 ```
 
 El tema oscuro no debe ser considerado un diseño independiente.
@@ -5109,12 +6063,28 @@ Auxiliar   => 12px
 Fondo principal       => #F6F3EE
 Superficie primaria   => #FFFFFF
 Superficie secundaria => #F1ECE5
+
 Texto principal       => #141414
 Texto secundario      => #5E6167
+Texto tenue           => #676B72
+
+Borde                 => #7A7E85
+
 Rojo principal        => #B51E23
+Rojo hover            => #99181C
+Rojo suave            => #F7E9E8
+
 Verde principal       => #2F6D59
-Borde                 => #D9D3CA
-Separador             => #E6E0D8
+Verde hover           => #255847
+Verde suave           => #E8F2EE
+
+Éxito                 => #2F6D59
+Advertencia           => #8F6112
+Error                 => #B51E23
+Información           => #365E96
+
+Focus color           => #141414
+Placeholder           => #676B72
 ```
 
 ---
@@ -5293,6 +6263,24 @@ Página completa
 
 ---
 
+## Accesibilidad
+
+```text
+Referencia            => WCAG 2.2
+Nivel                  => AA
+Orden visual           => orden del DOM => orden de foco
+Foco claro             => 2px / offset 2px / #141414
+Skeleton visual        => fuera del contenido accesible
+Unidad cargando        => aria-busy
+Grupo expandible       => aria-expanded
+Campo inválido         => aria-invalid
+Error asociado         => aria-describedby
+Resultado no urgente   => role="status"
+Fallo de envío         => role="alert"
+```
+
+---
+
 # Estado de la especificación
 
 Los siguientes elementos de identidad visual quedan definidos:
@@ -5378,7 +6366,43 @@ Los siguientes elementos de identidad visual quedan definidos:
 79. reorganización antes que eliminación de contenido;
 80. prevención de desplazamiento horizontal de la página;
 81. redimensionamiento proporcional de elementos visuales;
-82. scroll horizontal limitado al componente cuando resulte necesario.
+82. scroll horizontal limitado al componente cuando resulte necesario;
+83. nivel WCAG 2.2 AA como referencia de accesibilidad;
+84. coherencia entre orden visual, orden del DOM y orden de foco;
+85. navegación mediante teclado y uso restringido de `tabindex`;
+86. estructura semántica de cabecera, navegación y contenido principal;
+87. jerarquía semántica de encabezados;
+88. ausencia de movimiento automático de foco durante la carga inicial;
+89. navegación estructural sin enlace adicional de salto al contenido principal;
+90. semántica de los grupos expandibles;
+91. comunicación mediante `aria-expanded` y relación mediante `aria-controls`;
+92. exclusión del recorrido de foco de contenido oculto;
+93. nombres accesibles de controles;
+94. tratamiento accesible de iconos con texto e iconos sin texto;
+95. asociación entre etiquetas y campos del formulario;
+96. placeholders concretos del formulario;
+97. representación semántica de errores de validación;
+98. relación de errores mediante `aria-describedby`;
+99. representación no interruptiva de confirmaciones y límites;
+100. representación inmediata de fallos de envío;
+101. semántica de unidades de carga mediante `aria-busy`;
+102. exclusión accesible de las formas visuales del skeleton;
+103. clasificación funcional de imágenes;
+104. tratamiento de imágenes decorativas, informativas, funcionales, complejas y de texto;
+105. alternativa textual localizada de la fotografía personal;
+106. localización de textos relacionados con accesibilidad;
+107. método y umbrales de cálculo de contraste;
+108. paleta accesible definitiva del tema claro;
+109. garantía de contraste de los usos permitidos del tema claro;
+110. auditoría AA y AAA de la paleta clara;
+111. token único de borde accesible del tema claro;
+112. indicador de foco del tema claro;
+113. comunicación de estados sin dependencia exclusiva del color;
+114. identificación estructural y visual de enlaces;
+115. comprobación de colores efectivos después de composiciones visuales;
+116. actualización localizada del título del documento;
+117. composición del título mediante información específica y nombre localizado del sitio;
+118. localización de la representación del nombre personal dentro del título.
 
 Los modelos visuales deben utilizar los iconos concretos establecidos en el mapeo de esta especificación.
 
@@ -5388,6 +6412,8 @@ Los estados comunes definidos forman parte de la referencia de comportamiento vi
 
 La adaptación responsive definida en esta especificación forma parte de la referencia cerrada de diseño.
 
-La definición de accesibilidad continúa en la etapa correspondiente antes de considerar completa la etapa de responsive y accesibilidad de `sitio`.
+Las decisiones de accesibilidad incluidas en esta especificación forman parte de la referencia cerrada de la etapa de accesibilidad hasta el punto actualmente definido.
 
-Esta especificación constituye la referencia base de identidad visual, responsive y comportamiento visual para las siguientes etapas de diseño e implementación de `sitio`.
+La definición de accesibilidad continúa para los aspectos todavía pendientes antes de considerar completa la etapa de responsive y accesibilidad de `sitio`.
+
+Esta especificación constituye la referencia base de identidad visual, responsive, accesibilidad definida y comportamiento visual para las siguientes etapas de diseño e implementación de `sitio`.

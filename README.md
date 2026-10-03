@@ -1916,6 +1916,437 @@ Enviar
 
 No se actualiza automáticamente la página, no se vacían los campos y no se sustituye la página completa por el error.
 
+## Accesibilidad
+
+La accesibilidad forma parte de la estructura, la presentación y el comportamiento de la aplicación.
+
+El proyecto utiliza el nivel AA de las pautas WCAG de W3C/WAI como referencia de conformidad.
+
+Cuando una decisión alcanza también requisitos de niveles superiores, puede conservarse sin convertir ese nivel adicional en una exigencia general para toda la aplicación.
+
+La accesibilidad no se resuelve mediante una representación paralela de la interfaz.
+
+La misma estructura utilizada visualmente debe proporcionar la información, jerarquía, relaciones y estados necesarios para diferentes formas de interacción.
+
+### Orden y navegación mediante teclado
+
+El orden visual, el orden estructural del documento y el recorrido normal mediante teclado deben permanecer coherentes.
+
+La presentación no debe reorganizar visualmente elementos de forma que contradiga el orden semántico utilizado para la navegación.
+
+La aplicación prioriza la estructura natural del documento y los controles nativos antes que mecanismos manuales para modificar el orden de foco.
+
+Todos los controles interactivos deben utilizarse mediante teclado cuando su naturaleza permita interacción.
+
+El foco debe permanecer visible durante la navegación.
+
+Los elementos que forman visualmente parte de un mismo control no deben introducir objetivos de foco independientes cuando no representan acciones distintas.
+
+Conceptualmente:
+
+```text
+Orden visual
+=> orden estructural
+=> orden de navegación
+```
+
+La navegación mediante teclado debe permitir recorrer la interfaz sin producir saltos arbitrarios ni secuencias distintas de la estructura presentada visualmente.
+
+### Estructura semántica
+
+La estructura global utiliza regiones semánticas correspondientes a la cabecera, navegación y contenido principal.
+
+Estas regiones permiten identificar la organización general del documento sin convertirse automáticamente en elementos de foco.
+
+La jerarquía de encabezados representa la estructura real del contenido.
+
+Conceptualmente:
+
+```text
+Página
+=> encabezado principal
+
+Sección principal
+=> encabezado de sección
+
+Subsección
+=> nivel subordinado correspondiente
+```
+
+El nivel de un encabezado se determina por su posición semántica y no por el tamaño visual deseado.
+
+La carga inicial de una página no desplaza automáticamente el foco hacia una región únicamente por su existencia.
+
+La composición definida no incorpora un control adicional específico para saltar al contenido principal.
+
+La identificación y navegación entre las regiones repetidas se apoya en la estructura semántica, la jerarquía de encabezados y la organización de la navegación.
+
+### Controles expandibles
+
+Los grupos expandibles comunican su estado de forma visual y semántica.
+
+La fila que identifica el grupo constituye un único control.
+
+El indicador gráfico de apertura o cierre forma parte de ese control y no representa una acción independiente.
+
+Conceptualmente:
+
+```text
+Grupo cerrado
+=> estado visual cerrado
+=> estado semántico cerrado
+
+Grupo abierto
+=> estado visual abierto
+=> estado semántico abierto
+```
+
+Los elementos pertenecientes a una región cerrada no forman parte del recorrido mediante teclado mientras permanecen ocultos.
+
+Cuando la región vuelve a abrirse, sus elementos recuperan su participación normal en la navegación.
+
+La misma regla se aplica al menú de las composiciones estrechas.
+
+Los indicadores visuales pueden quedar excluidos de las tecnologías de asistencia cuando la información equivalente ya está expresada semánticamente por el propio control.
+
+### Nombres de controles
+
+Todo control interactivo debe disponer de un nombre accesible que comunique su función.
+
+Cuando el propio control contiene texto visible suficiente, ese texto constituye su identificación principal.
+
+Un icono que acompaña un texto con el mismo significado no necesita anunciarse de forma independiente.
+
+Cuando un control utiliza solamente un icono, debe proporcionar un nombre localizado que describa la acción disponible.
+
+Conceptualmente:
+
+```text
+Control con texto suficiente
+=> texto visible identifica la acción
+
+Control solamente con icono
+=> nombre accesible localizado
+```
+
+El nombre debe describir la función del control y no limitarse a describir la forma del icono.
+
+### Formulario
+
+Todos los campos visibles del formulario disponen de una etiqueta visible y asociada estructuralmente al control correspondiente.
+
+La etiqueta constituye la identificación principal del campo.
+
+Los textos auxiliares dentro de un control pueden proporcionar una instrucción breve, pero no sustituyen la etiqueta ni contienen por sí solos información indispensable para completar correctamente el campo.
+
+Las instrucciones utilizadas antes de la entrada deben permanecer generales y coherentes con la función del campo.
+
+Los errores de validación aparecen junto al campo correspondiente y se relacionan semánticamente con ese control.
+
+El campo afectado comunica también su estado inválido.
+
+El mensaje debe permitir identificar qué necesita corregirse sin depender solamente de un cambio cromático.
+
+Los valores introducidos se conservan durante la validación.
+
+La aparición de errores de campo no provoca una sucesión automática de cambios de foco.
+
+Los errores individuales tampoco se convierten todos simultáneamente en avisos interruptivos.
+
+Conceptualmente:
+
+```text
+Campo
+=> etiqueta visible
+=> instrucción auxiliar cuando corresponde
+=> estado de validación
+=> mensaje relacionado cuando existe un error
+```
+
+### Mensajes del formulario
+
+Los resultados generales del formulario permanecen visibles mientras continúan siendo pertinentes.
+
+No crean avisos que desaparecen automáticamente después de un período breve, sus avisos son fijos.
+
+Una confirmación satisfactoria se comunica mediante un anuncio no interruptivo.
+
+La información relacionada con un límite temporal de envío también utiliza una comunicación no interruptiva.
+
+Un fallo que impide completar el envío utiliza una comunicación inmediata adecuada a un error de operación.
+
+Estos avisos no desplazan automáticamente el foco.
+
+Los mensajes de cada campo permanecen separados de los avisos generales del formulario.
+
+El color semántico depende del significado de un resultado.
+
+### Estados de carga
+
+Los skeletons no constituyen contenido accesible. 
+
+La información semántica de carga pertenece a la unidad real cuyo contenido todavía se encuentra pendiente.
+
+Conceptualmente:
+
+```text
+Unidad pendiente
+=> comunica estado de carga
+
+Skeleton
+=> representación visual
+=> no constituye contenido independiente
+```
+
+Las unidades independientes mantienen estados independientes.
+
+La carga de una tarjeta, sección o elemento concreto no convierte automáticamente toda la página en una única región pendiente.
+
+Los skeletons no reciben foco ni contienen controles ficticios.
+
+No se incorpora un mensaje oculto de carga únicamente para crear una segunda representación destinada a tecnologías de asistencia.
+
+Cuando la operación termina, la unidad deja de comunicar el estado pendiente y adopta el estado final correspondiente.
+
+### Movimiento de los skeletons
+
+La indicación visual de carga puede utilizar movimiento hasta el contenido cargarse por completo o un error ocurra.
+
+Conceptualmente:
+
+```text
+Movimiento de franja de luminosidad en gradiente 
+=> skeleton con indicación animada
+```
+
+El usuario no controla este movimiento porque forma parte de la estructura del sitio para informar que el contenido todavía no está disponible.
+
+### Imágenes
+
+Las alternativas textuales se determinan según la función que cada imagen cumple dentro de su contexto.
+
+Una misma forma visual puede necesitar tratamientos diferentes cuando cambia su función.
+
+La aplicación distingue conceptualmente entre:
+
+```text
+Imagen decorativa
+Imagen informativa
+Imagen funcional
+Imagen de texto necesaria
+Imagen compleja
+Imagen relacionada con una experiencia sensorial específica
+```
+
+Una imagen puramente decorativa no debe introducir información redundante para tecnologías de asistencia.
+
+Cuando resulta adecuado, la decoración se incorpora mediante recursos de presentación.
+
+Si una imagen decorativa necesita existir como elemento de imagen, utiliza una alternativa vacía.
+
+Una imagen informativa dispone de una alternativa que transmite la información esencial que aporta en ese contexto.
+
+Una imagen funcional comunica mediante su alternativa la función o el destino correspondiente.
+
+Una imagen que necesariamente presenta texto debe proporcionar una alternativa equivalente al contenido relevante.
+
+Una imagen compleja puede utilizar una identificación breve acompañada por una descripción adicional cuando la información no puede expresarse adecuadamente mediante una alternativa corta.
+
+Una imagen cuya finalidad incluye una experiencia sensorial concreta utiliza una identificación descriptiva compatible con esa función.
+
+Una imagen que transmite información necesaria no se transforma en un recurso puramente decorativo para evitar proporcionar una alternativa textual.
+
+### Iconos
+
+Los iconos utilizados como apoyo de un texto visible suficiente no se anuncian de forma independiente.
+
+Conceptualmente:
+
+```text
+Icono + texto suficiente
+=> texto comunica el significado
+=> icono funciona como apoyo visual
+```
+
+Cuando un icono constituye por sí mismo un control, el control dispone de un nombre accesible localizado.
+
+Cuando un icono representa visualmente un estado que también está disponible semánticamente, puede quedar fuera de la información anunciada de forma independiente.
+
+La existencia de una representación semántica no elimina la necesidad de que el estado continúe siendo perceptible visualmente.
+
+### Fotografía de la cabecera
+
+La fotografía personal de la cabecera constituye información relacionada con la identidad presentada por el sitio.
+
+No se considera una imagen puramente decorativa.
+
+La fotografía dispone de una alternativa textual localizada que identifica su función como retrato de la persona presentada.
+
+La representación lingüística del nombre utilizada en esa alternativa corresponde al idioma del contenido.
+
+La alternativa completa se localiza de acuerdo con la estructura natural de cada idioma y no depende de concatenaciones parciales que presupongan una misma construcción lingüística.
+
+La función informativa de la fotografía permanece igual en las distintas composiciones y estados de la cabecera.
+
+El fondo visual que acompaña a la fotografía puede permanecer como elemento puramente decorativo cuando no aporta información adicional.
+
+### Localización de la accesibilidad
+
+Los textos utilizados para proporcionar accesibilidad forman parte de la misma internacionalización del sitio.
+
+Esto comprende, según corresponda:
+
+```text
+Alternativas textuales
+Nombres de controles
+Instrucciones
+Mensajes
+Errores
+Estados
+Títulos del documento
+```
+
+La aplicación no mantiene una variante lingüística independiente destinada exclusivamente a tecnologías de asistencia.
+
+La información accesible debe corresponder al idioma utilizado por la interfaz o por el contenido al que pertenece.
+
+La representación de nombres personales también forma parte de la localización cuando el proyecto dispone de una representación definida para cada idioma.
+
+Esto permite utilizar las formas y sistemas de escritura correspondientes sin asumir que todos los idiomas comparten una misma representación textual.
+
+### Color y contraste
+
+Las combinaciones de color permitidas por el sistema deben mantener el nivel de contraste establecido para el proyecto.
+
+La conformidad implica no escoger una combinación diferente para cada página. Todo el sitio queda con el mismo tema elegido, con sus colores y contrastes, hasta que el usuario lo cambie. 
+
+Los colores destinados a texto general deben utilizarse sobre las superficies para las que fueron definidos sin perder el nivel de contraste exigido, en línea con lo que estabelece la WCAG.
+
+Los bordes y demás elementos visuales necesarios para identificar componentes también deben mantener el contraste correspondiente en todas las superficies en las que pueden aparecer.
+
+Los componentes que poseen una combinación propia entre primer plano y fondo deben mantener igualmente los requisitos aplicables en todos sus estados.
+
+Conceptualmente:
+
+```text
+Token de texto
++ superficie permitida
+=> combinación válida
+
+Borde
++ superficie permitida
+=> combinación válida
+
+Componente
++ estados permitidos
+=> combinaciones válidas
+```
+
+La paleta del tema claro y oscuro queda definida de manera que todos sus usos permitidos mantienen el nivel AA.
+
+La evaluación adicional frente a requisitos de nivel AAA puede registrarse como información técnica, pero un elemento no necesita alcanzar ese nivel adicional para formar parte de la paleta mientras satisfaga el nivel establecido para el proyecto.
+
+### Bordes y separación
+
+Los temas claro y oscuro utilizan un tratamiento de borde común capaz de conservar el contraste necesario en las superficies para las que está definido.
+
+No se mantienen variantes visualmente más débiles cuya única diferencia dependa de considerar previamente si una determinada línea será esencial o decorativa.
+
+Esta decisión permite que los bordes utilizados por el sistema conserven una garantía común de contraste dentro de sus contextos permitidos.
+
+### Foco visible
+
+Los controles interactivos utilizan un indicador de foco visible que no depende del color propio de cada control para determinar su contraste.
+
+El sistema dispone de un tratamiento de foco definido para permanecer perceptible sobre las superficies en las que puede aparecer.
+
+La indicación debe distinguir el control enfocado sin alterar el orden de navegación ni introducir un segundo estado funcional.
+
+El foco visual acompaña el significado de estados como:
+
+```text
+Activo
+Seleccionado
+Error
+Advertencia
+```
+
+### Estados semánticos y uso del color
+
+Los colores semánticos funcionan como apoyo visual y no constituyen el único medio utilizado para comunicar un estado.
+
+Conceptualmente:
+
+```text
+Color
++ texto o información equivalente
++ estrutura técnica del sitio
+=> significado del estado
+```
+
+Éxito, advertencia, error e información deben comprenderse aunque el usuario no distinga el color utilizado.
+
+La misma regla se aplica a cualquier estado interactivo o informativo cuyo significado sea necesario para utilizar el sitio.
+
+### Enlaces
+
+Un enlace situado dentro de texto corrido no depende exclusivamente del color para diferenciarse del contenido que lo rodea.
+
+Utiliza una señal visual adicional que permita reconocer su función independientemente de la percepción cromática.
+
+Los enlaces que aparecen como acciones aisladas no deben ser identificados mediante su propio contexto y composición aunque estos permiten reconocer su función interactiva. Algún otro señal, descripción o texto del enlace necesita identificarlos, tecnicamente, estructuralmente y visualmente.
+
+Los diferentes estados de un enlace mantienen los requisitos de contraste correspondientes a los contextos en los que pueden aparecer.
+
+### Colores efectivos
+
+La validación de un color corresponde al resultado visual realmente presentado.
+
+La aplicación de transparencia, superposición, gradiente u otro tratamiento que modifique el color final requiere conservar los mismos requisitos de contraste.
+
+Conceptualmente:
+
+```text
+Token validado sin modificación
+=> conserva la combinación prevista
+
+Token visualmente modificado
+=> evaluar el resultado efectivo
+```
+
+Un valor no se considera automáticamente equivalente al token validado cuando su representación final ha cambiado.
+
+### Título del documento
+
+Cada página debe disponer de un título de documento que describa su contenido o propósito.
+
+Durante la navegación interna, el título del documento se actualiza para corresponder a la página activa.
+
+El título se localiza de acuerdo con el idioma activo.
+
+En las páginas internas y en los recursos individuales, la información específica de la página aparece antes de la identificación general del sitio.
+
+La página inicial utiliza la identificación localizada del sitio.
+
+Conceptualmente:
+
+```text
+Página inicial
+=> nombre localizado del sitio
+
+Página interna
+=> título localizado de la página
+=> nombre localizado del sitio
+
+Recurso individual
+=> nombre o título localizado del recurso
+=> nombre localizado del sitio
+```
+
+El nombre del sitio identifica el portafolio y utiliza la representación localizada del nombre personal correspondiente al idioma activo.
+
+Cuando cambia el idioma, cambia también el título completo de acuerdo con esa localización.
+
 ## Internacionalización
 
 El sitio utiliza etiquetas de idioma explícitas.
@@ -2471,7 +2902,7 @@ Listado
 => sitio representa el resultado
 
 Detalle
-=> sitio-api retorna los datos completos necesarios
+=> sitio-api retorna los datos completos necesarios para representar el elemento
 => sitio representa el resultado
 ```
 
