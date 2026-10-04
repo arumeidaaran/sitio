@@ -103,7 +103,7 @@ El frontend no accede directamente a las fuentes internas utilizadas por el back
 
 El frontend utiliza `TypeScript` y `Angular` como base de la aplicación.
 
-JavaScript puede formar parte del proyecto cuando corresponda a herramientas o configuraciones que lo utilicen de forma natural, manteniendo TypeScript como lenguaje principal del código de la aplicación.
+JavaScript debe formar parte del proyecto cuando corresponda a herramientas o configuraciones que lo utilicen de forma natural, manteniendo TypeScript como lenguaje principal del código de la aplicación.
 
 `Tailwind CSS` proporciona las utilidades utilizadas para construir la presentación visual.
 
@@ -298,7 +298,7 @@ Navegación
 
 La navegación no reproduce necesariamente todos los elementos existentes.
 
-Cuando una sección puede crecer indefinidamente, presenta una cantidad limitada de elementos y un acceso explícito a la sección completa.
+Cuando una sección debe crecer indefinidamente, presenta una cantidad limitada de elementos y un acceso explícito a la sección completa.
 
 El acceso al listado completo debe indicar el destino correspondiente.
 
@@ -426,7 +426,7 @@ Ver todos los artículos
 
 La sección presenta elementos seleccionados editorialmente dentro de Certificaciones.
 
-Estos elementos pueden corresponder a:
+Estos elementos deben corresponder a:
 
 ```text
 Certificado
@@ -455,7 +455,7 @@ Recurso
 +-- destacado
 |   |
 |   +-- sí
-|   |   => puede aparecer en Inicio
+|   |   => debe aparecer en Inicio
 |   |
 |   +-- no
 |       => no forma parte de la selección destacada
@@ -479,7 +479,7 @@ Representación
 
 La selección destacada no depende necesariamente de la fecha de publicación, importancia automática ni otro criterio implícito.
 
-Los elementos pueden ser seleccionados y ordenados deliberadamente.
+Los elementos deben ser seleccionados y ordenados deliberadamente.
 
 ### Actualizaciones
 
@@ -497,7 +497,7 @@ Novedades y contenido reciente
 ...
 ```
 
-Esta región puede contener actividad relacionada con:
+Esta región debe contener actividad relacionada con:
 
 ```text
 Proyecto
@@ -545,7 +545,7 @@ Certificación
 
 Las actualizaciones se ordenan de acuerdo con la fecha de actividad, desde la más reciente hacia la menos reciente.
 
-No existe un período temporal fijo para determinar qué contenido puede aparecer.
+No existe un período temporal fijo para determinar qué contenido debe aparecer.
 
 Conceptualmente:
 
@@ -567,7 +567,7 @@ Actualizaciones
 => qué contenido tuvo actividad más recientemente
 ```
 
-Un mismo elemento puede pertenecer simultáneamente a ambas regiones.
+Un mismo elemento debe pertenecer simultáneamente a ambas regiones.
 
 ## Páginas internas
 
@@ -593,7 +593,7 @@ Página interna
 
 Las páginas internas no utilizan el área de exposición de Inicio.
 
-La región `Contenido` puede adoptar una composición propia según la naturaleza de la página sin modificar la estructura global del sitio.
+La región `Contenido` debe adoptar una composición propia según la naturaleza de la página sin modificar la estructura global del sitio.
 
 ## Sobre mí
 
@@ -687,7 +687,7 @@ Ver perfil
 
 cuando el propio medio ya permite realizar la navegación.
 
-Los diferentes tipos de contacto pueden incluir:
+Los diferentes tipos de contacto deben incluir:
 
 ```text
 LinkedIn
@@ -713,7 +713,7 @@ Mensaje
 
 `Nombre` y `Apellido` se mantienen como campos separados.
 
-El nombre proporcionado puede ser utilizado posteriormente para dirigirse a la persona durante una respuesta.
+El nombre proporcionado debe ser utilizado posteriormente para dirigirse a la persona durante una respuesta.
 
 Conceptualmente:
 
@@ -814,7 +814,7 @@ Certificación
 
 Un certificado representa principalmente un comprobante de realización o finalización de una actividad, curso o formación.
 
-Una certificación representa una credencial obtenida mediante un proceso de certificación y puede incorporar datos adicionales relacionados con su vigencia y verificación.
+Una certificación representa una credencial obtenida mediante un proceso de certificación y debe incorporar datos adicionales relacionados con su vigencia y verificación.
 
 La sección utiliza una rejilla de tarjetas.
 
@@ -830,7 +830,7 @@ Conceptualmente:
 +-----------------+ +-----------------+ +-----------------+ 
 ```
 
-Las tarjetas se distribuyen horizontalmente de acuerdo con el espacio disponible y continúan en una nueva fila cuando la siguiente tarjeta ya no puede presentarse correctamente en la misma línea.
+Las tarjetas se distribuyen horizontalmente de acuerdo con el espacio disponible y continúan en una nueva fila cuando la siguiente tarjeta ya no debe presentarse correctamente en la misma línea.
 
 La cantidad de tarjetas por fila no constituye una propiedad fija del listado.
 
@@ -976,7 +976,7 @@ sitio-api
 
 Los datos localizables, como la descripción, son proporcionados por `sitio-api` de acuerdo con el idioma solicitado.
 
-Los datos que no dependen del idioma pueden proceder de GitHub mediante `sitio-api`.
+Los datos que no dependen del idioma deben proceder de GitHub mediante `sitio-api`.
 
 Los porcentajes de lenguajes se calculan a partir de los datos obtenidos desde GitHub.
 
@@ -1051,9 +1051,9 @@ Archivo Markdown
 +-- Cuerpo del artículo
 ```
 
-El cuerpo puede variar libremente de acuerdo con las necesidades del artículo.
+El cuerpo debe variar libremente de acuerdo con las necesidades del artículo.
 
-Puede contener, según el contenido:
+Debe contener, según el contenido:
 
 ```text
 Texto
@@ -1150,7 +1150,7 @@ Las tarjetas completas no constituyen implícitamente enlaces cuando existe una 
 
 Las rejillas presentan tantas tarjetas completas como permita el ancho disponible.
 
-Cuando una tarjeta adicional ya no puede presentarse correctamente en la misma fila, continúa en la fila siguiente.
+Cuando una tarjeta adicional ya no debe presentarse correctamente en la misma fila, continúa en la fila siguiente.
 
 La cantidad de columnas resulta del espacio disponible y no de un número fijo establecido para cada página o dispositivo.
 
@@ -1239,7 +1239,7 @@ Distribución de tarjetas
 
 La aplicación contempla composiciones de escritorio amplio, escritorio intermedio y pantallas estrechas.
 
-En el escritorio amplio, Inicio puede mantener simultáneamente:
+En el escritorio amplio, Inicio debe mantener simultáneamente:
 
 ```text
 Navegación
@@ -1274,7 +1274,7 @@ La tipografía utiliza una escala correspondiente a las composiciones de escrito
 
 Los tamaños de texto que no necesitan reducirse mantienen su proporción entre composiciones.
 
-No se introduce una escala intermedia adicional cuando la estructura puede resolverse mediante las escalas establecidas.
+No se introduce una escala intermedia adicional cuando la estructura debe resolverse mediante las escalas establecidas.
 
 El espaciado horizontal general se adapta al espacio disponible.
 
@@ -1348,7 +1348,7 @@ Al cerrarlo, el espacio ocupado por la navegación expandida deja de formar part
 
 Los accesos directos continúan funcionando como destinos de navegación.
 
-Las secciones que contienen elementos pueden alternar entre estado cerrado y abierto.
+Las secciones que contienen elementos deben alternar entre estado cerrado y abierto.
 
 Conceptualmente:
 
@@ -1392,7 +1392,7 @@ No es necesario regresar al comienzo de la página para volver a acceder al men�
 
 La composición de Inicio depende del espacio disponible.
 
-Cuando existe espacio suficiente, las actualizaciones pueden ocupar su área de exposición propia.
+Cuando existe espacio suficiente, las actualizaciones deben ocupar su área de exposición propia.
 
 En una composición de escritorio más estrecha, esa región pasa debajo del contenido destacado dentro del flujo principal.
 
@@ -1417,7 +1417,7 @@ Las páginas internas adoptan una estructura global de una sola región de conte
 
 Esto no obliga a que todos los componentes internos sean siempre verticales.
 
-Una composición interna puede permanecer horizontal mientras el contenido continúe cabiendo correctamente y conserve su legibilidad.
+Una composición interna debe permanecer horizontal mientras el contenido continúe cabiendo correctamente y conserve su legibilidad.
 
 Cuando una disposición horizontal deja de funcionar correctamente, se reorganiza verticalmente.
 
@@ -1436,9 +1436,9 @@ Adaptar internamente
 Utilizar desplazamiento horizontal propio cuando sea necesario
 ```
 
-La reorganización se utiliza cuando la disposición puede cambiar sin alterar la información ni su significado.
+La reorganización se utiliza cuando la disposición debe cambiar sin alterar la información ni su significado.
 
-El redimensionamiento se utiliza cuando el elemento puede reducirse manteniendo la legibilidad.
+El redimensionamiento se utiliza cuando el elemento debe reducirse manteniendo la legibilidad.
 
 La adaptación interna permite que un componente utilice una representación más adecuada al espacio disponible.
 
@@ -1460,9 +1460,9 @@ La adaptación reorganiza o redimensiona el recurso antes de eliminarlo.
 
 Los botones conservan su identidad visual y sus dimensiones entre composiciones.
 
-En las composiciones de escritorio pueden utilizar un ancho determinado por su contenido.
+En las composiciones de escritorio deben utilizar un ancho determinado por su contenido.
 
-En las pantallas estrechas, las acciones principales pueden utilizar todo el ancho disponible cuando ello favorece la composición.
+En las pantallas estrechas, las acciones principales deben utilizar todo el ancho disponible cuando ello favorece la composición.
 
 El cambio de ancho no modifica el texto ni el estado representado por el control.
 
@@ -1480,7 +1480,7 @@ Los estados del formulario no cambian por la composición utilizada.
 
 ### Sobre mí
 
-Los bloques de `Sobre mí` pueden utilizar composiciones horizontales entre texto y recurso visual cuando existe espacio suficiente.
+Los bloques de `Sobre mí` deben utilizar composiciones horizontales entre texto y recurso visual cuando existe espacio suficiente.
 
 En pantallas estrechas, los bloques que ya no caben correctamente se reorganizan verticalmente.
 
@@ -1492,19 +1492,19 @@ La aplicación no altera automáticamente el orden de texto e imagen en función
 
 ### Detalle de proyecto
 
-El detalle de un proyecto puede mantener una composición horizontal entre sus elementos principales mientras exista espacio suficiente.
+El detalle de un proyecto debe mantener una composición horizontal entre sus elementos principales mientras exista espacio suficiente.
 
 En una composición estrecha, la imagen y la información relacionada se organizan verticalmente.
 
 La imagen mantiene sus proporciones y utiliza el espacio disponible.
 
-Los grupos de información también pueden reorganizarse internamente cuando una disposición horizontal deja de ser adecuada.
+Los grupos de información también deben reorganizarse internamente cuando una disposición horizontal deja de ser adecuada.
 
 El contenido y su orden semántico permanecen iguales.
 
 ### Detalle de certificado y certificación
 
-El detalle de un certificado o una certificación puede utilizar una composición horizontal cuando existe espacio suficiente.
+El detalle de un certificado o una certificación debe utilizar una composición horizontal cuando existe espacio suficiente.
 
 En pantallas estrechas, la imagen, la información principal y los datos de la credencial se reorganizan verticalmente.
 
@@ -1563,13 +1563,13 @@ Identidad visual
 
 cuando las regiones correspondientes continúan disponibles.
 
-Un estado técnico interno que no modifica materialmente lo que el usuario puede ver o hacer no requiere una representación visible propia.
+Un estado técnico interno que no modifica materialmente lo que el usuario debe ver o hacer no requiere una representación visible propia.
 
 ### Unidad de contenido
 
 La presentación distingue entre regiones estructurales y unidades de contenido.
 
-Una unidad de contenido constituye la menor entidad que puede comprenderse y utilizarse de forma independiente.
+Una unidad de contenido constituye la menor entidad que debe comprenderse y utilizarse de forma independiente.
 
 Una unidad solamente se presenta como cargada cuando todos los elementos necesarios para constituirla están disponibles.
 
@@ -1584,7 +1584,7 @@ Unidad incompleta
 => em cambio, presentar el estado correspondiente
 ```
 
-Cuando una colección contiene múltiples unidades independientes, cada unidad puede alcanzar su estado de forma independiente.
+Cuando una colección contiene múltiples unidades independientes, cada unidad debe alcanzar su estado de forma independiente.
 
 Conceptualmente:
 
@@ -1640,7 +1640,7 @@ El skeleton solamente representa una operación de carga en curso.
 
 No permanece como representación de un elemento cuya carga ya terminó con error.
 
-En las colecciones, las unidades completas pueden sustituir sus representaciones de carga de forma independiente.
+En las colecciones, las unidades completas deben sustituir sus representaciones de carga de forma independiente.
 
 Una unidad todavía incompleta no se presenta parcialmente.
 
@@ -1733,7 +1733,7 @@ La aplicación no incorpora una acción automática de reintento para estos esta
 
 Los elementos visuales necesarios forman parte de la unidad a la que pertenecen.
 
-Si un elemento visual obligatorio no puede cargarse, la unidad no se considera completa.
+Si un elemento visual obligatorio no debe cargarse, la unidad no se considera completa.
 
 No se utiliza una imagen genérica de sustitución para presentar una unidad incompleta como si hubiera cargado correctamente.
 
@@ -1765,7 +1765,7 @@ Mientras se obtienen sus datos, conserva su espacio estructural y utiliza una re
 
 La cabecera solamente se presenta como contenido cuando los elementos necesarios para constituirla se encuentran disponibles.
 
-Si la unidad no puede cargarse completamente, la región de cabecera presenta un estado de error.
+Si la unidad no debe cargarse completamente, la región de cabecera presenta un estado de error.
 
 El mensaje utiliza una representación localizada equivalente a:
 
@@ -1898,7 +1898,7 @@ El frontend no mantiene contadores, temporizadores ni una condición local equiv
 
 #### Fallo de envío
 
-Cuando una solicitud válida no puede completar la operación de envío, el formulario conserva todos los valores introducidos.
+Cuando una solicitud válida no debe completar la operación de envío, el formulario conserva todos los valores introducidos.
 
 El aviso utiliza el estado semántico de error y una representación localizada equivalente a:
 
@@ -1922,7 +1922,7 @@ La accesibilidad forma parte de la estructura, la presentación y el comportamie
 
 El proyecto utiliza el nivel AA de las pautas WCAG de W3C/WAI como referencia de conformidad.
 
-Cuando una decisión alcanza también requisitos de niveles superiores, puede conservarse sin convertir ese nivel adicional en una exigencia general para toda la aplicación.
+Cuando una decisión alcanza también requisitos de niveles superiores, debe conservarse sin convertir ese nivel adicional en una exigencia general para toda la aplicación.
 
 La accesibilidad no se resuelve mediante una representación paralela de la interfaz.
 
@@ -2007,7 +2007,7 @@ Cuando la región vuelve a abrirse, sus elementos recuperan su participación no
 
 La misma regla se aplica al menú de las composiciones estrechas.
 
-Los indicadores visuales pueden quedar excluidos de las tecnologías de asistencia cuando la información equivalente ya está expresada semánticamente por el propio control.
+Los indicadores visuales deben quedar excluidos de las tecnologías de asistencia cuando la información equivalente ya está expresada semánticamente por el propio control.
 
 ### Nombres de controles
 
@@ -2037,7 +2037,7 @@ Todos los campos visibles del formulario disponen de una etiqueta visible y asoc
 
 La etiqueta constituye la identificación principal del campo.
 
-Los textos auxiliares dentro de un control pueden proporcionar una instrucción breve, pero no sustituyen la etiqueta ni contienen por sí solos información indispensable para completar correctamente el campo.
+Los textos auxiliares dentro de un control deben proporcionar una instrucción breve, pero no sustituyen la etiqueta ni contienen por sí solos información indispensable para completar correctamente el campo.
 
 Las instrucciones utilizadas antes de la entrada deben permanecer generales y coherentes con la función del campo.
 
@@ -2110,7 +2110,7 @@ Cuando la operación termina, la unidad deja de comunicar el estado pendiente y 
 
 ### Movimiento de los skeletons
 
-La indicación visual de carga puede utilizar movimiento hasta el contenido cargarse por completo o un error ocurra.
+La indicación visual de carga debe utilizar movimiento hasta el contenido cargarse por completo o un error ocurra.
 
 Conceptualmente:
 
@@ -2125,7 +2125,7 @@ El usuario no controla este movimiento porque forma parte de la estructura del s
 
 Las alternativas textuales se determinan según la función que cada imagen cumple dentro de su contexto.
 
-Una misma forma visual puede necesitar tratamientos diferentes cuando cambia su función.
+Una misma forma visual debe necesitar tratamientos diferentes cuando cambia su función.
 
 La aplicación distingue conceptualmente entre:
 
@@ -2150,7 +2150,7 @@ Una imagen funcional comunica mediante su alternativa la función o el destino c
 
 Una imagen que necesariamente presenta texto debe proporcionar una alternativa equivalente al contenido relevante.
 
-Una imagen compleja puede utilizar una identificación breve acompañada por una descripción adicional cuando la información no puede expresarse adecuadamente mediante una alternativa corta.
+Una imagen compleja debe utilizar una identificación breve acompañada por una descripción adicional cuando la información no debe expresarse adecuadamente mediante una alternativa corta.
 
 Una imagen cuya finalidad incluye una experiencia sensorial concreta utiliza una identificación descriptiva compatible con esa función.
 
@@ -2170,7 +2170,7 @@ Icono + texto suficiente
 
 Cuando un icono constituye por sí mismo un control, el control dispone de un nombre accesible localizado.
 
-Cuando un icono representa visualmente un estado que también está disponible semánticamente, puede quedar fuera de la información anunciada de forma independiente.
+Cuando un icono representa visualmente un estado que también está disponible semánticamente, debe quedar fuera de la información anunciada de forma independiente.
 
 La existencia de una representación semántica no elimina la necesidad de que el estado continúe siendo perceptible visualmente.
 
@@ -2188,7 +2188,7 @@ La alternativa completa se localiza de acuerdo con la estructura natural de cada
 
 La función informativa de la fotografía permanece igual en las distintas composiciones y estados de la cabecera.
 
-El fondo visual que acompaña a la fotografía puede permanecer como elemento puramente decorativo cuando no aporta información adicional.
+El fondo visual que acompaña a la fotografía debe permanecer como elemento puramente decorativo cuando no aporta información adicional.
 
 ### Localización de la accesibilidad
 
@@ -2218,47 +2218,143 @@ Esto permite utilizar las formas y sistemas de escritura correspondientes sin as
 
 Las combinaciones de color permitidas por el sistema deben mantener el nivel de contraste establecido para el proyecto.
 
-La conformidad implica no escoger una combinación diferente para cada página. Todo el sitio queda con el mismo tema elegido, con sus colores y contrastes, hasta que el usuario lo cambie. 
+La conformidad implica no escoger una combinación diferente para cada página. Todo el sitio queda con el mismo tema elegido, con sus colores y contrastes, hasta que el usuario lo cambie.
 
-Los colores destinados a texto general deben utilizarse sobre las superficies para las que fueron definidos sin perder el nivel de contraste exigido, en línea con lo que estabelece la WCAG.
+Los temas disponibles forman parte de una misma interfaz y deben mantener el mismo nivel de conformidad.
 
-Los bordes y demás elementos visuales necesarios para identificar componentes también deben mantener el contraste correspondiente en todas las superficies en las que pueden aparecer.
+La garantía de contraste se aplica por separado a cada tema completo.
 
-Los componentes que poseen una combinación propia entre primer plano y fondo deben mantener igualmente los requisitos aplicables en todos sus estados.
+La existencia de una combinación válida en un tema no permite presuponer que su equivalente en otro tema también sea válida.
+
+Cada tema se evalúa según las combinaciones que debe producir realmente.
+
+Es obligatorio que todos los colores de una paleta puedan combinarse arbitrariamente entre sí. Toda combinación permitida por la presentación debe mantener el contraste correspondiente a la función que desempeña.
 
 Conceptualmente:
 
 ```text
-Token de texto
+Color
++ función
 + superficie permitida
-=> combinación válida
-
-Borde
-+ superficie permitida
-=> combinación válida
-
-Componente
-+ estados permitidos
-=> combinaciones válidas
+=> combinación validada
 ```
 
-La paleta del tema claro y oscuro queda definida de manera que todos sus usos permitidos mantienen el nivel AA.
+La comprobación considera el peor caso entre las superficies sobre las que cada color debe utilizarse.
 
-La evaluación adicional frente a requisitos de nivel AAA puede registrarse como información técnica, pero un elemento no necesita alcanzar ese nivel adicional para formar parte de la paleta mientras satisfaga el nivel establecido para el proyecto.
+Un color solamente forma parte de una función cuando cumple el requisito correspondiente en todas las superficies permitidas para esa función.
+
+La conformidad se determina mediante el resultado real de la combinación y no mediante el redondeo de un valor inferior hasta el umbral requerido.
+
+Los colores destinados a texto general deben utilizarse sobre las superficies para las que fueron definidos sin perder el nivel de contraste exigido.
+
+Esto comprende las distintas jerarquías de texto utilizadas por la interfaz, incluidos el texto principal, el texto secundario, el texto de menor énfasis y los textos auxiliares utilizados dentro de controles.
+
+Las superficies principales, secundarias y semánticas deben mantener combinaciones válidas con los textos que deben aparecer sobre ellas.
+
+Una superficie utilizada solamente como fondo no necesita satisfacer por sí sola un contraste textual.
+
+El requisito corresponde al texto o a la información visual que se presenta sobre ella.
+
+Conceptualmente:
+
+```text
+Superficie
+=> debe constituir solamente un fondo
+
+Texto sobre superficie
+=> debe mantener el contraste correspondiente
+```
+
+Los colores interactivos disponen de combinaciones válidas tanto en su estado normal como en los estados visuales que modifican su apariencia.
+
+Un mismo color no necesita desempeñar simultáneamente funciones incompatibles.
+
+Los colores utilizados como primer plano de texto o iconos deben diferir de los colores utilizados como fondos rellenos cuando sus requisitos de contraste son distintos.
+
+Conceptualmente:
+
+```text
+Color de primer plano
+=> texto, enlace o icono
+
+Color de fondo
+=> superficie de un control
+
+Cada función
+=> combinación propia validada
+```
+
+Los colores semánticos utilizados para éxito, advertencia, error e información mantienen el contraste exigido en las superficies en las que deben aparecer.
+
+Los estados interactivos asociados a estos colores también deben conservar una combinación válida.
+
+Los enlaces visitados mantienen los mismos requisitos de contraste aplicables a los demás textos interactivos dentro de su contexto.
+
+Los textos auxiliares de los controles, incluidos aquellos presentados antes de introducir un valor, se consideran texto y no quedan excluidos de los requisitos de contraste por utilizar una función secundaria.
+
+Los bordes y demás elementos visuales necesarios para identificar componentes también deben mantener el contraste correspondiente en todas las superficies en las que deben aparecer.
+
+Los componentes que poseen una combinación propia entre primer plano y fondo deben mantener igualmente los requisitos aplicables en todos sus estados.
+
+Esto incluye tanto el contraste del contenido del control respecto de su propio fondo como el contraste visual necesario para reconocer el componente respecto de las superficies que lo rodean.
+
+Conceptualmente:
+
+```text
+Contenido del control
++ fondo del control
+=> contraste del contenido
+
+Control
++ superficie adyacente
+=> contraste necesario para identificarlo
+```
+
+Los botones principales mantienen combinaciones válidas entre su contenido y su fondo tanto en estado normal como en los estados que modifican visualmente ese fondo.
+
+Los botones secundarios mantienen una combinación válida para su texto y, cuando su identificación depende de un contorno, también para ese borde respecto de la superficie adyacente.
+
+El indicador de foco utiliza una combinación destinada específicamente a permanecer perceptible sobre las superficies en las que debe aparecer.
+
+Su validación corresponde a información visual funcional y no depende de que el color utilizado alcance los requisitos propios del texto normal.
+
+Los recursos de apoyo visual, las superficies utilizadas por estados y las representaciones de carga conservan las funciones para las que fueron definidas.
+
+Su presencia en la paleta no autoriza reutilizarlos como texto, borde funcional u otra información necesaria cuando esa nueva función no haya sido validada.
+
+La paleta de cada tema queda definida de manera que todos sus usos permitidos mantienen el nivel AA.
+
+La evaluación adicional frente a requisitos de nivel AAA debe registrarse como información técnica.
+
+Algunas combinaciones deben alcanzar también ese nivel superior, pero un elemento no necesita hacerlo para formar parte de la paleta mientras satisfaga el nivel establecido para el proyecto.
 
 ### Bordes y separación
 
-Los temas claro y oscuro utilizan un tratamiento de borde común capaz de conservar el contraste necesario en las superficies para las que está definido.
+Los elementos visuales necesarios para reconocer un componente o comprender su estado utilizan un tratamiento capaz de conservar el contraste correspondiente respecto de las superficies adyacentes.
 
-No se mantienen variantes visualmente más débiles cuya única diferencia dependa de considerar previamente si una determinada línea será esencial o decorativa.
+Una línea puramente decorativa debe utilizar un tratamiento visual diferente cuando su presencia no sea necesaria para identificar un componente, separar información indispensable ni comprender un estado.
 
-Esta decisión permite que los bordes utilizados por el sistema conserven una garantía común de contraste dentro de sus contextos permitidos.
+Conceptualmente:
+
+```text
+Borde funcional
+=> identifica componente o estado
+=> mantiene contraste funcional
+
+Separador decorativo
+=> no transmite información necesaria
+=> debe utilizar tratamiento visual propio
+```
+
+Un separador decorativo no debe reutilizarse como borde funcional solamente por compartir una función visual semejante.
+
+Si una línea pasa a ser necesaria para reconocer un componente o su estado, utiliza el tratamiento definido para los bordes funcionales.
 
 ### Foco visible
 
 Los controles interactivos utilizan un indicador de foco visible que no depende del color propio de cada control para determinar su contraste.
 
-El sistema dispone de un tratamiento de foco definido para permanecer perceptible sobre las superficies en las que puede aparecer.
+El sistema dispone de un tratamiento de foco definido para permanecer perceptible sobre las superficies en las que debe aparecer.
 
 La indicación debe distinguir el control enfocado sin alterar el orden de navegación ni introducir un segundo estado funcional.
 
@@ -2296,7 +2392,7 @@ Utiliza una señal visual adicional que permita reconocer su función independie
 
 Los enlaces que aparecen como acciones aisladas no deben ser identificados mediante su propio contexto y composición aunque estos permiten reconocer su función interactiva. Algún otro señal, descripción o texto del enlace necesita identificarlos, tecnicamente, estructuralmente y visualmente.
 
-Los diferentes estados de un enlace mantienen los requisitos de contraste correspondientes a los contextos en los que pueden aparecer.
+Los diferentes estados de un enlace, incluido el estado visitado, mantienen los requisitos de contraste correspondientes a los contextos en los que deben aparecer.
 
 ### Colores efectivos
 
@@ -2307,14 +2403,49 @@ La aplicación de transparencia, superposición, gradiente u otro tratamiento qu
 Conceptualmente:
 
 ```text
-Token validado sin modificación
+Color validado sin modificación
 => conserva la combinación prevista
 
-Token visualmente modificado
+Color visualmente modificado
 => evaluar el resultado efectivo
 ```
 
-Un valor no se considera automáticamente equivalente al token validado cuando su representación final ha cambiado.
+Un valor no se considera automáticamente equivalente al color validado cuando su representación final ha cambiado.
+
+Los fondos fotográficos o variables se consideran según el color efectivo que debe quedar inmediatamente detrás del contenido.
+
+No se presupone que una fotografía concreta mantendrá por sí sola el contraste necesario.
+
+### Contraste de la cabecera
+
+El texto presentado sobre el fondo visual de la cabecera debe conservar el contraste correspondiente independientemente de la luminosidad de la fotografía utilizada.
+
+El tema oscuro incorpora una capa de contraste detrás de la región ocupada por el texto de la cabecera.
+
+Esta capa debe ser suficiente para conservar el nivel AA incluso cuando el área original de la fotografía situada detrás del texto alcance su máxima luminosidad posible.
+
+Conceptualmente:
+
+```text
+Fotografía
++ capa de contraste
++ texto de cabecera
+=> combinación garantizada
+```
+
+La garantía pertenece al tratamiento de la interfaz y no a las características particulares de una fotografía concreta.
+
+Por este motivo, la sustitución futura de la imagen no debe exigir volver a depender visualmente de que una determinada zona de la fotografía sea oscura.
+
+La capa cubre completamente la región ocupada por el bloque textual.
+
+Debe disminuir progresivamente fuera de esa región cuando ello forme parte de la composición visual, pero no debe reducirse dentro del espacio utilizado por el texto hasta perder la garantía establecida.
+
+El nombre y la descripción breve utilizan un color de texto validado para esta combinación.
+
+La diferencia de tamaño entre ambos textos no se utiliza para permitir una combinación insuficiente para texto normal.
+
+De esta manera, el texto de la cabecera conserva el nivel AA tanto en su estado expandido como en cualquier composición en la que permanezca superpuesto al fondo visual.
 
 ### Título del documento
 
@@ -2435,7 +2566,7 @@ El idioma por defecto pertenece a la configuración de `sitio`.
 
 `Sitio-api` no necesita conocerlo para aplicar reglas de presentación.
 
-Su valor puede modificarse sin alterar la lógica general de selección del idioma.
+Su valor debe modificarse sin alterar la lógica general de selección del idioma.
 
 Todo el frontend debe disponer de una versión completa en el idioma por defecto.
 
@@ -2546,7 +2677,7 @@ Una dirección válida tiene prioridad durante el acceso correspondiente.
 
 Si el idioma obtenido mediante la dirección es diferente de la preferencia previamente almacenada, la nueva selección sustituye el valor anterior.
 
-Si la escritura en `localStorage` no puede realizarse después de resolver correctamente un idioma válido, el idioma obtenido continúa siendo utilizado durante ese acceso.
+Si la escritura en `localStorage` no logra realizarse después de resolver correctamente un idioma válido, el idioma obtenido continúa siendo utilizado durante ese acceso.
 
 La imposibilidad de persistir la preferencia no invalida el idioma ya resuelto.
 
@@ -2605,7 +2736,7 @@ Artículo concreto
 
 ## Selección de idioma
 
-El usuario puede modificar explícitamente el idioma mediante los controles proporcionados por la interfaz.
+Es permitido al usuario modificar explícitamente el idioma mediante los controles proporcionados por la interfaz.
 
 Una selección válida sustituye la preferencia anterior.
 
@@ -2631,7 +2762,7 @@ La aplicación no modifica el idioma de forma automática durante la navegación
 
 ## Selección de tema
 
-El usuario puede cambiar explícitamente entre los temas disponibles mediante un control visible al comienzo de la navegación.
+Es permitido al usuario cambiar explícitamente entre los temas disponibles mediante un control visible al comienzo de la navegación.
 
 El cambio de tema modifica exclusivamente la representación visual de la aplicación sin modificar:
 
@@ -2666,6 +2797,10 @@ Diferente representación visual
 ```
 
 Cambiar el tema no provoca una nueva selección, reorganización ni sustitución de los contenidos mostrados.
+
+Los temas mantienen de forma independiente las combinaciones de color necesarias para conservar el nivel de contraste establecido para la aplicación.
+
+El cambio entre ellos no modifica el nivel de conformidad requerido ni permite utilizar combinaciones no validadas en el tema seleccionado.
 
 ## Disponibilidad de contenido
 
@@ -2835,7 +2970,7 @@ Cada contenido identifica cuál es su idioma original.
 
 Este idioma debe encontrarse siempre entre sus idiomas soportados.
 
-Cada variante puede disponer de su propio `slug`.
+Cada variante debe disponer de su propio `slug`.
 
 Conceptualmente:
 
@@ -3260,9 +3395,9 @@ El contrato base contiene conceptualmente:
 
 `type` debe contener uno de los valores personal, comercial o empresarial.
 
-`website` puede ser nulo cuando no existe un sitio web adicional disponible.
+`website` debe ser nulo cuando no existe un sitio web adicional disponible.
 
-`whatsapp` indica expresamente si el número telefónico también puede utilizarse mediante WhatsApp.
+`whatsapp` indica expresamente si el número telefónico también se utiliza mediante WhatsApp.
 
 Los iconos correspondientes a los medios de contacto son seleccionados por el frontend.
 
@@ -3649,7 +3784,7 @@ Conceptualmente:
 }
 ```
 
-El nombre concreto dentro de `content` puede variar según el tipo de recurso cuando su contrato utiliza una propiedad diferente, como ocurre con el título de un artículo.
+El nombre concreto dentro de `content` debe variar según el tipo de recurso cuando su contrato utiliza una propiedad diferente, como ocurre con el título de un artículo.
 
 `update_type` distingue conceptualmente entre:
 

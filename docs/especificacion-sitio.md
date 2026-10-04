@@ -199,7 +199,7 @@ Regla general:
 
 - los títulos deben permanecer relativamente compactos;
 - los textos de lectura deben disponer de mayor espacio vertical;
-- la navegación puede utilizar una densidad ligeramente mayor que el cuerpo principal.
+- la navegación debe utilizar una densidad ligeramente mayor que el cuerpo principal.
 
 ---
 
@@ -273,21 +273,37 @@ El mismo token de borde se utiliza para los bordes estructurales, bordes de cont
 | Texto principal       | `#F2F1EE` |
 | Texto secundario      | `#B8BDC6` |
 | Texto tenue           | `#8E97A3` |
-| Borde                 | `#2A3340` |
-| Separador             | `#202936` |
+| Borde funcional       | `#737B8B` |
+| Separador decorativo  | `#202936` |
+
+`#737B8B` se utiliza cuando una línea resulta necesaria para reconocer un componente, comprender un estado o proporcionar una separación estructural que necesita ser percibida.
+
+`#202936` se reserva para separadores puramente decorativos cuya presencia no constituye información necesaria.
+
+Un separador que pase a desempeñar una función necesaria debe utilizar el valor de borde funcional.
 
 ---
 
 ## 6.2. Colores de identidad
 
-| Uso                    | Color     |
-| ---------------------- | --------- |
-| Rojo principal         | `#D6363B` |
-| Rojo hover             | `#E2484D` |
-| Rojo suave / selección | `#3A1618` |
-| Verde principal        | `#58B28D` |
-| Verde hover            | `#449977` |
-| Verde suave            | `#173328` |
+| Uso                          | Color     |
+| ---------------------------- | --------- |
+| Rojo interactivo             | `#FE6162` |
+| Rojo interactivo hover       | `#FE686A` |
+| Rojo de fondo principal      | `#D6363B` |
+| Rojo de fondo hover          | `#C92F35` |
+| Rojo suave / selección       | `#3A1618` |
+| Verde principal              | `#58B28D` |
+| Verde hover                  | `#4FA683` |
+| Verde suave                  | `#173328` |
+
+El rojo utilizado como primer plano y el rojo utilizado como fondo de controles mantienen funciones distintas.
+
+Los valores de primer plano se utilizan cuando el rojo aparece como texto, enlace, icono o información equivalente.
+
+Los valores de fondo se utilizan en componentes rellenos que presentan texto claro sobre la superficie roja.
+
+No debe intercambiarse un valor entre estas funciones sin comprobar nuevamente el contraste resultante.
 
 ---
 
@@ -297,6 +313,17 @@ El mismo token de borde se utiliza para los bordes estructurales, bordes de cont
 | ------------- | --------- |
 | Casi negro    | `#0A0E13` |
 | Blanco cálido | `#F7F5F1` |
+
+---
+
+## 6.4. Colores auxiliares accesibles
+
+| Uso              | Color     |
+| ---------------- | --------- |
+| Enlace visitado  | `#BB7FD3` |
+| Foco             | `#E2484D` |
+| Placeholder      | `#8E97A3` |
+| Base de skeleton | `#18212C` |
 
 ---
 
@@ -344,17 +371,17 @@ texto           => #B51E23
 ### Enlaces
 
 ```text
-normal  => #E2484D
-hover   => #F05C60
-visited => #B77BCF
-focus   => #E2484D
+normal        => #FE6162
+hover         => #FE686A
+visited       => #BB7FD3
+focus outline => #E2484D
 ```
 
 ### Botón principal
 
 ```text
 fondo normal => #D6363B
-fondo hover  => #E2484D
+fondo hover  => #C92F35
 texto        => #FFFFFF
 ```
 
@@ -362,7 +389,7 @@ texto        => #FFFFFF
 
 ```text
 fondo => transparent
-borde => #2A3340
+borde => #737B8B
 texto => #F2F1EE
 ```
 
@@ -393,7 +420,7 @@ texto           => #F2F1EE
 | ----------- | --------- |
 | Éxito       | `#58B28D` |
 | Advertencia | `#D6A34A` |
-| Error       | `#E2484D` |
+| Error       | `#FE6162` |
 | Información | `#6FA8FF` |
 
 ---
@@ -415,9 +442,15 @@ En el tema claro:
 --focus-color => #141414
 ```
 
+En el tema oscuro:
+
+```text
+--focus-color => #E2484D
+```
+
 El tratamiento funcional del foco permanece igual entre temas.
 
-El valor cromático utilizado debe pertenecer a la paleta correspondiente y conservar el contraste necesario sobre las superficies permitidas.
+Cada valor cromático conserva el contraste necesario sobre las superficies permitidas de su propio tema.
 
 ---
 
@@ -527,11 +560,15 @@ El valor `#7A7E85` se utiliza tanto para bordes como para separadores cuando la 
 ## 9.4. Tema oscuro
 
 ```text
-Borde estándar => #2A3340
-Separador      => #202936
-Acento rojo    => #D6363B
-Acento verde   => #58B28D
+Borde funcional      => #737B8B
+Separador decorativo => #202936
+Acento rojo          => #D6363B
+Acento verde         => #58B28D
 ```
+
+`#737B8B` se utiliza en bordes de controles y en cualquier línea necesaria para reconocer un componente, un estado o una separación estructural.
+
+`#202936` solamente debe utilizarse cuando la línea es decorativa y su ausencia no modifica la comprensión ni la identificación de un componente.
 
 ---
 
@@ -925,6 +962,77 @@ No desaparece completamente en el estado compacto.
 
 ---
 
+## 12.5. Contraste de la cabecera en el tema oscuro
+
+El nombre y la descripción breve utilizan:
+
+```text
+#F2F1EE
+```
+
+cuando se representan sobre el fondo visual de la cabecera.
+
+La región situada detrás del bloque textual utiliza una capa negra con:
+
+```text
+rgba(0, 0, 0, 0.60)
+```
+
+como opacidad mínima efectiva.
+
+La capa cubre completamente la zona ocupada por el texto.
+
+debe degradarse hacia una opacidad menor o hacia transparencia fuera de esa región.
+
+No debe reducirse dentro del área ocupada por el nombre o por la descripción breve.
+
+Conceptualmente:
+
+```text
+Fotografía
+        |
+        V
+Capa negra >= 60%
+        |
+        V
+Texto #F2F1EE
+```
+
+La garantía se calcula suponiendo el caso más luminoso posible detrás del texto.
+
+Un fondo original:
+
+```text
+#FFFFFF
+```
+
+después de una capa negra al `60%` produce como peor fondo efectivo:
+
+```text
+#666666
+```
+
+El contraste resultante es:
+
+```text
+#F2F1EE sobre #666666
+=> 5.0834876786:1
+```
+
+El resultado supera:
+
+```text
+4.5:1
+```
+
+y permite que tanto el nombre como la descripción breve satisfagan AA sin depender de que el texto pueda considerarse grande.
+
+La regla se conserva en cualquier composición donde el texto permanezca superpuesto a la fotografía.
+
+La sustitución futura de la fotografía no modifica esta garantía mientras permanezcan el color del texto y la capa mínima establecida.
+
+---
+
 # 13. Navegación
 
 ## 13.1. Dimensiones de escritorio
@@ -984,7 +1092,7 @@ Proyectos
 Artículos
 ```
 
-Cada una puede representar contenido subordinado.
+Cada una debe representar contenido subordinado.
 
 Las secciones de contenido mantienen líneas divisorias que permiten distinguir visualmente un grupo del siguiente.
 
@@ -1370,7 +1478,7 @@ Los nombres definidos a continuación corresponden directamente a los iconos uti
 
 El mapeo pertenece exclusivamente al frontend.
 
-`Sitio-api` puede proporcionar identificadores o tipos de contenido necesarios para determinar qué debe representarse, pero no determina el nombre del icono de Tabler.
+`Sitio-api` debe proporcionar identificadores o tipos de contenido necesarios para determinar qué debe representarse, pero no determina el nombre del icono de Tabler.
 
 Conceptualmente:
 
@@ -1878,7 +1986,7 @@ No deben añadirse dentro de esta región citas, frases de efecto ni otros bloqu
 
 ## 16.8. Actualización
 
-Cada actualización puede representar actividad relacionada con:
+Cada actualización debe representar actividad relacionada con:
 
 ```text
 Proyecto
@@ -1887,7 +1995,7 @@ Certificado
 Certificación
 ```
 
-El acontecimiento puede representar:
+El acontecimiento debe representar:
 
 ```text
 Contenido nuevo
@@ -2077,7 +2185,7 @@ La región `Contenido` constituye el espacio variable de las páginas internas.
 
 No implica una composición textual única.
 
-Puede contener:
+debe contener:
 
 ```text
 Texto
@@ -2157,7 +2265,7 @@ La regla interna es:
 
 ```text
 Composición horizontal que cabe correctamente
-=> puede mantenerse
+=> debe mantenerse
 
 Composición horizontal que deja de caber correctamente
 => reorganizar verticalmente
@@ -2180,11 +2288,11 @@ Cuando un componente supera el espacio disponible, la prioridad es:
 4. Utilizar desplazamiento horizontal solamente en el elemento
 ```
 
-La reorganización se utiliza cuando puede cambiarse la disposición sin perder información o significado.
+La reorganización se utiliza cuando debe cambiarse la disposición sin perder información o significado.
 
 El redimensionamiento se utiliza para elementos que continúan siendo legibles después de reducirse.
 
-La adaptación interna puede modificar la representación del componente.
+La adaptación interna debe modificar la representación del componente.
 
 Ejemplos:
 
@@ -2246,7 +2354,7 @@ Sobre mí
 +-- ...
 ```
 
-La composición puede distribuir texto y elemento visual a uno u otro lado.
+La composición debe distribuir texto y elemento visual a uno u otro lado.
 
 La posición forma parte de la composición editorial del frontend.
 
@@ -2342,7 +2450,7 @@ Los tres valores existen para este tipo de elemento.
 
 ## 18.5. Adaptación responsive
 
-En escritorio puede mantenerse la composición horizontal definida editorialmente entre texto y elemento visual.
+En escritorio debe mantenerse la composición horizontal definida editorialmente entre texto y elemento visual.
 
 Cuando:
 
@@ -2848,7 +2956,7 @@ El detalle no incorpora una sección adicional de conocimientos relacionados.
 
 ## 21.6. Adaptación responsive del detalle
 
-En escritorio puede mantenerse una composición horizontal mientras el espacio disponible permita representar correctamente sus regiones.
+En escritorio debe mantenerse una composición horizontal mientras el espacio disponible permita representar correctamente sus regiones.
 
 Cuando:
 
@@ -3004,7 +3112,7 @@ No debe modificarse automáticamente solamente porque un repositorio haya recibi
 
 ## 22.5. Adaptación responsive del detalle
 
-En escritorio puede mantenerse la composición horizontal entre imagen y panel de metadatos cuando el espacio disponible resulta adecuado.
+En escritorio debe mantenerse la composición horizontal entre imagen y panel de metadatos cuando el espacio disponible resulta adecuado.
 
 Cuando:
 
@@ -3018,7 +3126,7 @@ Cada región utiliza el ancho disponible.
 
 La imagen mantiene sus proporciones.
 
-El panel de metadatos puede reorganizar también sus elementos internamente en disposición vertical cuando sea necesario.
+El panel de metadatos debe reorganizar también sus elementos internamente en disposición vertical cuando sea necesario.
 
 La adaptación conserva:
 
@@ -3104,7 +3212,7 @@ El cuerpo de los artículos utiliza contenido procedente de Markdown.
 
 El artículo no está obligado a mantener una estructura rígida equivalente a Proyecto o Certificaciones.
 
-Puede contener:
+debe contener:
 
 ```text
 Párrafos
@@ -3224,7 +3332,7 @@ Mensajes técnicos sin localizar
 Códigos HTTP como contenido principal
 ```
 
-cuando esa información no modifica la acción que puede realizar.
+cuando esa información no modifica la acción que debe realizar.
 
 ---
 
@@ -3232,7 +3340,7 @@ cuando esa información no modifica la acción que puede realizar.
 
 Los estados se aplican a unidades de presentación.
 
-Una unidad de presentación constituye la menor entidad que puede comprenderse y utilizarse de forma independiente.
+Una unidad de presentación constituye la menor entidad que debe comprenderse y utilizarse de forma independiente.
 
 Una unidad solamente se presenta como contenido normal cuando todos sus elementos necesarios se encuentran disponibles.
 
@@ -3266,7 +3374,7 @@ Elemento destacado
 Actualización
 ```
 
-Por lo tanto, una colección puede presentar simultáneamente unidades que ya se encuentran completas y posiciones que todavía se encuentran cargando o que terminaron con error.
+Por lo tanto, una colección debe presentar simultáneamente unidades que ya se encuentran completas y posiciones que todavía se encuentran cargando o que terminaron con error.
 
 Conceptualmente:
 
@@ -3308,7 +3416,7 @@ Detalle de certificación
 Contactos durante su carga
 ```
 
-Si una parte necesaria de una unidad única no puede obtenerse o representarse correctamente, no se presenta el resto como un contenido completo.
+Si una parte necesaria de una unidad única no debe obtenerse o representarse correctamente, no se presenta el resto como un contenido completo.
 
 La unidad adopta el estado correspondiente.
 
@@ -3420,7 +3528,7 @@ Elemento 3 completo
 
 ## 24.3. Contenido vacío
 
-El estado vacío solamente puede aparecer después de completar correctamente la carga.
+El estado vacío solamente debe aparecer después de completar correctamente la carga.
 
 Conceptualmente:
 
@@ -3661,7 +3769,7 @@ Imagen obligatoria fallida
 
 No se utiliza una imagen genérica de sustitución para transformar una unidad incompleta en una representación aparentemente válida.
 
-Un elemento visual puramente opcional o decorativo puede seguir sus propias reglas cuando su ausencia no invalida el contenido.
+Un elemento visual puramente opcional o decorativo debe seguir sus propias reglas cuando su ausencia no invalida el contenido.
 
 ---
 
@@ -3829,7 +3937,7 @@ Si una parte obligatoria todavía se encuentra pendiente, la unidad continúa en
 
 ### Error
 
-Cuando la cabecera no puede constituirse completamente:
+Cuando la cabecera no debe constituirse completamente:
 
 ```text
 No fue posible cargar la información de la cabecera.
@@ -4016,7 +4124,7 @@ Enviar otro
 
 como acción adicional.
 
-El formulario permanece en la página y puede volver a utilizarse.
+El formulario permanece en la página y debe volver a utilizarse.
 
 ---
 
@@ -4041,19 +4149,19 @@ Introduzca una dirección de correo electrónico válida.
 ```
 
 ```text
-El nombre no puede superar los 100 caracteres.
+El nombre no debe superar los 100 caracteres.
 ```
 
 ```text
-El apellido no puede superar los 100 caracteres.
+El apellido no debe superar los 100 caracteres.
 ```
 
 ```text
-El motivo no puede superar los 200 caracteres.
+El motivo no debe superar los 200 caracteres.
 ```
 
 ```text
-El mensaje no puede superar los 10000 caracteres.
+El mensaje no debe superar los 10000 caracteres.
 ```
 
 La validación no depende únicamente de un mensaje general equivalente a:
@@ -4141,13 +4249,13 @@ estado local equivalente al límite del backend
 
 Cada nueva activación de `Enviar` genera una nueva solicitud.
 
-Corresponde al backend determinar en ese momento si la solicitud puede continuar o si el límite sigue vigente.
+Corresponde al backend determinar en ese momento si la solicitud debe continuar o si el límite sigue vigente.
 
 ---
 
 ### 24.8.7. Fallo de envío
 
-Cuando los datos son válidos pero la operación no puede completarse:
+Cuando los datos son válidos pero la operación no debe completarse:
 
 ```text
 No fue posible enviar el mensaje.
@@ -4271,7 +4379,7 @@ Estados
 Orden editorial
 ```
 
-y puede modificar:
+y debe modificar:
 
 ```text
 Composición
@@ -4385,7 +4493,7 @@ La columna principal conserva:
 mínimo => 720px
 ```
 
-El ancho interior principal puede utilizar hasta:
+El ancho interior principal debe utilizar hasta:
 
 ```text
 960px
@@ -4826,7 +4934,7 @@ se conserva la misma regla de ancho.
 
 ## 25.20. Sobre mí
 
-En escritorio puede mantenerse una composición horizontal entre texto y elemento visual.
+En escritorio debe mantenerse una composición horizontal entre texto y elemento visual.
 
 En composición estrecha, cuando la disposición horizontal deja de caber correctamente:
 
@@ -4845,7 +4953,7 @@ Los elementos visuales mantienen sus proporciones.
 
 ## 25.21. Proyecto
 
-En escritorio puede mantenerse:
+En escritorio debe mantenerse:
 
 ```text
 imagen | panel de metadatos
@@ -4862,7 +4970,7 @@ panel de metadatos
 
 se presentan verticalmente.
 
-El panel puede reorganizar también sus metadatos internamente.
+El panel debe reorganizar también sus metadatos internamente.
 
 La imagen se redimensiona proporcionalmente.
 
@@ -4870,7 +4978,7 @@ La imagen se redimensiona proporcionalmente.
 
 ## 25.22. Certificado y Certificación
 
-En escritorio puede utilizarse una composición horizontal cuando el contenido cabe correctamente.
+En escritorio debe utilizarse una composición horizontal cuando el contenido cabe correctamente.
 
 En composición estrecha, una Certificación utiliza conceptualmente:
 
@@ -4941,7 +5049,7 @@ La unidad de presentación mantiene sus límites independientemente de la compos
 
 ## 25.25. Principio de conservación
 
-Responsive puede modificar:
+Responsive debe modificar:
 
 ```text
 posición
@@ -4985,11 +5093,11 @@ WCAG 2.2
 Nivel AA
 ```
 
-El cumplimiento adicional de requisitos correspondientes al nivel AAA puede conservarse cuando resulte adecuado.
+El cumplimiento adicional de requisitos correspondientes al nivel AAA debe conservarse cuando resulte adecuado.
 
 Alcanzar un requisito AAA concreto no convierte AAA en el nivel general de conformidad del proyecto.
 
-Una combinación o comportamiento que no alcance AAA puede permanecer cuando cumple el requisito AA correspondiente.
+Una combinación o comportamiento que no alcance AAA debe permanecer cuando cumple el requisito AA correspondiente.
 
 ---
 
@@ -5086,7 +5194,7 @@ IconChevronUp
 aria-expanded="true"
 ```
 
-El control puede relacionarse con la región afectada mediante:
+El control debe relacionarse con la región afectada mediante:
 
 ```text
 aria-controls
@@ -5094,7 +5202,7 @@ aria-controls
 
 El estado debe ser perceptible visualmente y estar disponible semánticamente.
 
-El icono puede utilizar:
+El icono debe utilizar:
 
 ```text
 aria-hidden="true"
@@ -5185,6 +5293,12 @@ El placeholder utiliza en el tema claro:
 
 ```text
 #676B72
+```
+
+En el tema oscuro utiliza:
+
+```text
+#8E97A3
 ```
 
 ---
@@ -5375,7 +5489,7 @@ Imagen relacionada con una experiencia sensorial específica
 
 La clasificación no depende únicamente del archivo utilizado ni de su apariencia visual.
 
-Una misma imagen puede necesitar un tratamiento diferente cuando cambia su función.
+Una misma imagen debe necesitar un tratamiento diferente cuando cambia su función.
 
 ---
 
@@ -5419,7 +5533,7 @@ Cuando resulta necesario utilizar una imagen que contiene texto y ese texto form
 
 ## 26.15. Imágenes complejas
 
-Una imagen compleja puede disponer de una alternativa breve y de una descripción adicional cuando la información completa no puede expresarse adecuadamente mediante `alt`.
+Una imagen compleja debe disponer de una alternativa breve y de una descripción adicional cuando la información completa no debe expresarse adecuadamente mediante `alt`.
 
 La alternativa breve permite identificar el contenido sin convertir el atributo en una descripción excesivamente extensa.
 
@@ -5483,7 +5597,7 @@ Cabecera compacta
 Composición estrecha
 ```
 
-El fondo visual que acompaña a la fotografía puede permanecer como decoración cuando no aporta información propia.
+El fondo visual que acompaña a la fotografía debe permanecer como decoración cuando no aporta información propia.
 
 ---
 
@@ -5510,7 +5624,7 @@ La información accesible utiliza el idioma correspondiente a la interfaz o al c
 
 Los nombres personales también utilizan la representación localizada establecida para el idioma correspondiente.
 
-La localización puede modificar el sistema de escritura utilizado para representar el nombre.
+La localización debe modificar el sistema de escritura utilizado para representar el nombre.
 
 ---
 
@@ -5711,7 +5825,249 @@ Si la representación efectiva modifica el color, debe comprobarse el resultado 
 
 ---
 
-## 26.24. Bordes y separadores
+## 26.24. Garantía cromática del tema oscuro
+
+Los tokens del tema oscuro se definen de manera que cada función mantenga el nivel AA sobre todas las superficies en las que el sistema permite utilizarla.
+
+Las superficies oscuras consideradas para los colores generales son:
+
+```text
+Fondo principal       => #0F141B
+Superficie primaria   => #141B24
+Superficie secundaria => #18212C
+Rojo suave            => #3A1618
+Verde suave           => #173328
+```
+
+Los colores de texto general deben mantener:
+
+```text
+>= 4.5:1
+```
+
+en todas las superficies sobre las que puedan aparecer.
+
+Los elementos no textuales necesarios para identificar componentes o estados deben mantener:
+
+```text
+>= 3:1
+```
+
+respecto de la superficie adyacente correspondiente.
+
+La comprobación de un token utiliza el peor resultado producido entre todas sus combinaciones permitidas.
+
+Conceptualmente:
+
+```text
+Token
++ todas sus superficies permitidas
+        |
+        V
+peor resultado
+        |
+        V
+determina la conformidad
+```
+
+Los valores que solamente funcionan como superficies no necesitan satisfacer por sí mismos un umbral textual.
+
+El requisito corresponde a la información situada sobre ellos.
+
+El tema oscuro separa las funciones de rojo de primer plano y rojo de fondo.
+
+Esta separación es necesaria porque los requisitos de:
+
+```text
+rojo como texto sobre superficie oscura
+```
+
+y:
+
+```text
+texto blanco sobre fondo rojo
+```
+
+requieren rangos de luminancia diferentes.
+
+No debe reutilizarse el rojo de fondo como color general de texto ni el rojo interactivo como fondo del botón principal.
+
+---
+
+## 26.25. Tokens accesibles del tema oscuro
+
+Los valores definitivos son:
+
+```text
+Fondo principal       => #0F141B
+Superficie primaria   => #141B24
+Superficie secundaria => #18212C
+
+Texto principal       => #F2F1EE
+Texto secundario      => #B8BDC6
+Texto tenue           => #8E97A3
+
+Borde funcional       => #737B8B
+Separador decorativo  => #202936
+
+Rojo interactivo      => #FE6162
+Rojo hover            => #FE686A
+Rojo de fondo         => #D6363B
+Rojo de fondo hover   => #C92F35
+Rojo suave            => #3A1618
+
+Verde principal       => #58B28D
+Verde hover           => #4FA683
+Verde suave           => #173328
+
+Éxito                 => #58B28D
+Advertencia           => #D6A34A
+Error                 => #FE6162
+Información           => #6FA8FF
+
+Focus color           => #E2484D
+Placeholder           => #8E97A3
+Enlace visitado       => #BB7FD3
+
+Casi negro            => #0A0E13
+Blanco cálido         => #F7F5F1
+
+Skeleton base         => #18212C
+```
+
+Los componentes utilizan:
+
+```text
+Botón principal
+fondo normal => #D6363B
+fondo hover  => #C92F35
+texto        => #FFFFFF
+
+Botón secundario
+fondo        => transparent
+borde        => #737B8B
+texto        => #F2F1EE
+
+Enlaces
+normal       => #FE6162
+hover        => #FE686A
+visited      => #BB7FD3
+focus        => #E2484D
+```
+
+---
+
+## 26.26. Auditoría de contraste del tema oscuro
+
+Los colores del tema oscuro fueron comprobados según sus funciones y frente a todas las superficies en las que se permite su utilización.
+
+Cuando un color debe aparecer en múltiples superficies, la tabla utiliza la combinación con menor contraste.
+
+| Elemento                                    | Peor caso comprobado                                                   | Contraste        | AA      | AAA                      |
+| ------------------------------------------- | ---------------------------------------------------------------------- | ---------------: | ------- | ------------------------ |
+| Fondo principal `#0F141B`                   | Texto tenue `#8E97A3`                                                  | `6.2538873158:1` | Cumple  | No cumple                |
+| Superficie primaria `#141B24`               | Texto tenue `#8E97A3`                                                  | `5.8627986079:1` | Cumple  | No cumple                |
+| Superficie secundaria `#18212C`             | Texto tenue `#8E97A3`                                                  | `5.4965511091:1` | Cumple  | No cumple                |
+| Texto principal `#F2F1EE`                   | sobre `#173328`                                                        | `12.0681208570:1`| Cumple  | Cumple                   |
+| Texto secundario `#B8BDC6`                  | sobre `#173328`                                                        | `7.2261022755:1` | Cumple  | Cumple                   |
+| Texto tenue `#8E97A3`                       | sobre `#173328`                                                        | `4.6122661865:1` | Cumple  | No cumple                |
+| Borde funcional `#737B8B`                   | sobre `#173328`                                                        | `3.2032708892:1` | Cumple  | Cumple*                  |
+| Rojo interactivo `#FE6162`                  | sobre `#173328`                                                        | `4.6088541127:1` | Cumple  | No cumple                |
+| Rojo interactivo hover `#FE686A`            | sobre `#173328`                                                        | `4.8048821419:1` | Cumple  | No cumple                |
+| Verde principal `#58B28D`                   | sobre `#173328`                                                        | `5.3016380075:1` | Cumple  | No cumple                |
+| Verde hover `#4FA683`                       | sobre `#173328`                                                        | `4.6181145990:1` | Cumple  | No cumple                |
+| Advertencia `#D6A34A`                       | sobre `#173328`                                                        | `5.9697345002:1` | Cumple  | No cumple                |
+| Información `#6FA8FF`                       | sobre `#173328`                                                        | `5.6607425863:1` | Cumple  | No cumple                |
+| Foco `#E2484D`                              | sobre `#173328`                                                        | `3.4193508748:1` | Cumple  | Cumple*                  |
+| Placeholder `#8E97A3`                       | sobre `#173328`                                                        | `4.6122661865:1` | Cumple  | No cumple                |
+| Botón principal normal                      | `#FFFFFF` sobre `#D6363B`                                              | `4.7190498141:1` | Cumple  | No cumple                |
+| Botón principal hover                       | `#FFFFFF` sobre `#C92F35`                                              | `5.3278994839:1` | Cumple  | No cumple                |
+| Botón secundario, texto                     | `#F2F1EE` sobre `#18212C`                                              | `14.3818765872:1`| Cumple  | Cumple                   |
+| Botón secundario, borde                     | `#737B8B` contra `#18212C`                                             | `3.8174167420:1` | Cumple  | Cumple*                  |
+| Enlace visitado `#BB7FD3`                   | sobre `#173328`                                                        | `4.6016656338:1` | Cumple  | No cumple                |
+| Cabecera, nombre `#F2F1EE`                  | fotografía con capa negra mínima del `60%`; peor fondo `#666666`       | `5.0834876786:1` | Cumple  | Cumple*                  |
+| Cabecera, descripción breve `#F2F1EE`       | fotografía con capa negra mínima del `60%`; peor fondo `#666666`       | `5.0834876786:1` | Cumple  | No cumple                |
+
+`Cumple*` indica que el elemento no textual satisface el requisito de contraste no textual aplicable.
+
+WCAG no incorpora un umbral AAA adicional independiente para contraste no textual.
+
+El nombre de la cabecera satisface además el umbral AAA correspondiente a texto grande.
+
+La descripción breve se evalúa como texto normal y no alcanza el umbral AAA de `7:1`.
+
+La conformidad principal del proyecto permanece definida en AA.
+
+---
+
+## 26.27. Contraste sobre la fotografía de la cabecera
+
+La fotografía constituye un fondo variable y no debe considerarse equivalente a una superficie cromática fija.
+
+En el tema oscuro, todo texto superpuesto a la imagen utiliza:
+
+```text
+#F2F1EE
+```
+
+La región completa situada detrás del texto incorpora:
+
+```css
+background: rgba(0, 0, 0, 0.60);
+```
+
+o un tratamiento visual equivalente que garantice como mínimo la misma reducción de luminosidad.
+
+La capa debe formar parte de un gradiente.
+
+Cuando se utiliza gradiente:
+
+```text
+área ocupada por el texto
+=> opacidad negra >= 60%
+
+área externa al texto
+=> debe reducir progresivamente la opacidad
+```
+
+La capa no debe iniciar su reducción dentro del área real ocupada por el bloque textual.
+
+La garantía no depende de una posición horizontal fija ni de un porcentaje fijo del ancho de la fotografía.
+
+Depende del espacio ocupado por:
+
+```text
+Nombre
+Descripción breve
+```
+
+en la composición activa.
+
+El peor caso matemático supone:
+
+```text
+Fotografía original => #FFFFFF
+Capa negra          => 60%
+Fondo resultante    => #666666
+Texto               => #F2F1EE
+Contraste           => 5.0834876786:1
+```
+
+Por lo tanto:
+
+```text
+5.0834876786:1 >= 4.5:1
+```
+
+La combinación satisface AA para texto normal.
+
+La garantía se conserva aunque la fotografía sea sustituida posteriormente por otra imagen más luminosa.
+
+No debe dependerse de inspeccionar visualmente una fotografía concreta para determinar si el texto resulta legible.
+
+---
+
+## 26.28. Bordes y separadores
 
 El tema claro utiliza:
 
@@ -5733,13 +6089,41 @@ cuando esas líneas necesitan ser perceptibles.
 
 El grosor continúa dependiendo de la función visual definida en `9. Bordes`.
 
-El tema oscuro mantiene la misma función estructural de los bordes y separadores.
+El tema oscuro utiliza:
 
-El cambio de tema no modifica el significado ni la función de una línea.
+```text
+Borde funcional      => #737B8B
+Separador decorativo => #202936
+```
+
+El borde funcional se utiliza cuando la línea participa en la identificación de:
+
+```text
+Control
+Componente
+Estado
+Separación estructural necesaria
+```
+
+El separador decorativo solamente debe utilizarse cuando su ausencia no elimina información necesaria.
+
+Conceptualmente:
+
+```text
+Línea necesaria
+=> #737B8B
+
+Línea puramente decorativa
+=> #202936
+```
+
+Una línea inicialmente decorativa que pase a desempeñar una función necesaria debe cambiar al tratamiento funcional.
+
+El cambio de tema no modifica el significado de la línea.
 
 ---
 
-## 26.25. Foco visible
+## 26.29. Foco visible
 
 El indicador general utiliza:
 
@@ -5754,11 +6138,26 @@ En el tema claro:
 --focus-color => #141414
 ```
 
-El foco debe permanecer perceptible sobre las superficies en las que puede aparecer.
+En el tema oscuro:
+
+```text
+--focus-color => #E2484D
+```
+
+En el peor caso permitido del tema oscuro:
+
+```text
+#E2484D sobre #173328
+=> 3.4193508748:1
+```
+
+El indicador satisface el requisito de contraste no textual aplicable.
+
+El foco debe permanecer perceptible sobre las superficies en las que debe aparecer.
 
 No utiliza `currentColor` como regla general para permitir que cada control produzca un resultado de contraste diferente.
 
-El indicador puede coexistir con estados como:
+El indicador debe coexistir con estados como:
 
 ```text
 Activo
@@ -5775,7 +6174,7 @@ Los demás estados continúan comunicando su propio significado.
 
 ---
 
-## 26.26. Estados semánticos y color
+## 26.30. Estados semánticos y color
 
 Los colores semánticos no constituyen el único medio para comunicar información.
 
@@ -5799,11 +6198,22 @@ Información
 
 y a los demás estados necesarios para utilizar la aplicación.
 
-El estado debe continuar siendo comprensible cuando el color no puede distinguirse.
+El estado debe continuar siendo comprensible cuando el color no debe distinguirse.
+
+Los valores semánticos del tema oscuro son:
+
+```text
+Éxito       => #58B28D
+Advertencia => #D6A34A
+Error       => #FE6162
+Información => #6FA8FF
+```
+
+Todos ellos mantienen AA sobre las superficies permitidas para su función.
 
 ---
 
-## 26.27. Enlaces
+## 26.31. Enlaces
 
 Los enlaces deben disponer de semántica de enlace y de una identificación visible suficiente.
 
@@ -5816,6 +6226,24 @@ Los enlaces utilizados como acciones aisladas tampoco dependen exclusivamente de
 Deben disponer de texto, tratamiento visual y estructura técnica que permitan reconocer su función interactiva.
 
 El texto del enlace debe comunicar adecuadamente su destino o acción.
+
+En el tema claro:
+
+```text
+normal  => #B51E23
+hover   => #99181C
+visited => #7C3A65
+focus   => #141414
+```
+
+En el tema oscuro:
+
+```text
+normal  => #FE6162
+hover   => #FE686A
+visited => #BB7FD3
+focus   => #E2484D
+```
 
 Los estados:
 
@@ -5830,7 +6258,7 @@ deben conservar el contraste correspondiente en las combinaciones permitidas.
 
 ---
 
-## 26.28. Colores efectivos
+## 26.32. Colores efectivos
 
 La validación corresponde al color realmente representado.
 
@@ -5857,9 +6285,11 @@ Color efectivo modificado
 
 La comprobación debe utilizar el fondo efectivo sobre el que se representa el elemento.
 
+La fotografía de la cabecera utiliza la excepción controlada definida en `26.27. Contraste sobre la fotografía de la cabecera`, donde el resultado efectivo se garantiza mediante la capa mínima establecida.
+
 ---
 
-## 26.29. Título del documento
+## 26.33. Título del documento
 
 Cada página dispone de un `<title>` que describe su contenido o propósito.
 
@@ -6095,12 +6525,46 @@ Placeholder           => #676B72
 Fondo principal       => #0F141B
 Superficie primaria   => #141B24
 Superficie secundaria => #18212C
+
 Texto principal       => #F2F1EE
 Texto secundario      => #B8BDC6
-Rojo principal        => #D6363B
+Texto tenue           => #8E97A3
+
+Borde funcional       => #737B8B
+Separador decorativo  => #202936
+
+Rojo interactivo      => #FE6162
+Rojo hover            => #FE686A
+Rojo de fondo         => #D6363B
+Rojo de fondo hover   => #C92F35
+Rojo suave            => #3A1618
+
 Verde principal       => #58B28D
-Borde                 => #2A3340
-Separador             => #202936
+Verde hover           => #4FA683
+Verde suave           => #173328
+
+Éxito                 => #58B28D
+Advertencia           => #D6A34A
+Error                 => #FE6162
+Información           => #6FA8FF
+
+Focus color           => #E2484D
+Placeholder           => #8E97A3
+Enlace visitado       => #BB7FD3
+
+Casi negro            => #0A0E13
+Blanco cálido         => #F7F5F1
+
+Skeleton base         => #18212C
+```
+
+### Cabecera del tema oscuro
+
+```text
+Texto                 => #F2F1EE
+Capa negra mínima     => 60%
+Peor fondo resultante => #666666
+Contraste mínimo      => 5.0834876786:1
 ```
 
 ---
@@ -6269,7 +6733,8 @@ Página completa
 Referencia            => WCAG 2.2
 Nivel                  => AA
 Orden visual           => orden del DOM => orden de foco
-Foco claro             => 2px / offset 2px / #141414
+Foco tema claro        => 2px / offset 2px / #141414
+Foco tema oscuro       => 2px / offset 2px / #E2484D
 Skeleton visual        => fuera del contenido accesible
 Unidad cargando        => aria-busy
 Grupo expandible       => aria-expanded
@@ -6402,7 +6867,25 @@ Los siguientes elementos de identidad visual quedan definidos:
 115. comprobación de colores efectivos después de composiciones visuales;
 116. actualización localizada del título del documento;
 117. composición del título mediante información específica y nombre localizado del sitio;
-118. localización de la representación del nombre personal dentro del título.
+118. localización de la representación del nombre personal dentro del título;
+119. paleta accesible definitiva del tema oscuro;
+120. garantía de contraste de todos los usos permitidos del tema oscuro;
+121. separación entre rojo de primer plano y rojo de fondo en el tema oscuro;
+122. auditoría AA y AAA de la paleta oscura;
+123. borde funcional accesible del tema oscuro;
+124. separador decorativo independiente del borde funcional;
+125. indicador de foco accesible del tema oscuro;
+126. estados semánticos accesibles del tema oscuro;
+127. enlaces normales, hover y visitados accesibles del tema oscuro;
+128. contraste de botones principales en estado normal y hover del tema oscuro;
+129. contraste de botones secundarios del tema oscuro;
+130. contraste del placeholder del tema oscuro;
+131. contraste de texto principal, secundario y tenue sobre las superficies permitidas del tema oscuro;
+132. garantía de contraste sobre fondos semánticos del tema oscuro;
+133. capa mínima de contraste de la cabecera del tema oscuro;
+134. garantía de contraste de la cabecera frente al caso de máxima luminosidad de la fotografía;
+135. conservación de la capa mínima detrás de toda la región textual de la cabecera;
+136. independencia entre la garantía de contraste de la cabecera y la fotografía concreta utilizada.
 
 Los modelos visuales deben utilizar los iconos concretos establecidos en el mapeo de esta especificación.
 
@@ -6413,6 +6896,8 @@ Los estados comunes definidos forman parte de la referencia de comportamiento vi
 La adaptación responsive definida en esta especificación forma parte de la referencia cerrada de diseño.
 
 Las decisiones de accesibilidad incluidas en esta especificación forman parte de la referencia cerrada de la etapa de accesibilidad hasta el punto actualmente definido.
+
+La auditoría de contraste queda cerrada para los temas claro y oscuro dentro de los usos permitidos definidos por esta especificación.
 
 La definición de accesibilidad continúa para los aspectos todavía pendientes antes de considerar completa la etapa de responsive y accesibilidad de `sitio`.
 
