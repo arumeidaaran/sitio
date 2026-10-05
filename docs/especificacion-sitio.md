@@ -2664,7 +2664,7 @@ altura => 48px
 La misma regla se aplica durante:
 
 ```text
-Enviando...
+enviando...
 ```
 
 La adaptación no modifica los estados ni el contenido del formulario.
@@ -4060,10 +4060,12 @@ Durante la operación:
 Campos
 => conservan valores
 => temporalmente no modificables
+=> continúan disponibles para el recorrido de foco
 
 Botón
-=> Enviando...
+=> enviando...
 => no permite iniciar un segundo envío simultáneo
+=> continúa disponible para el recorrido de foco
 ```
 
 No se utiliza:
@@ -4078,10 +4080,18 @@ para representar esta operación.
 
 La navegación permanece disponible.
 
-Cuando la operación termina, el control vuelve a:
+El inicio del envío no desplaza el foco.
+
+Cuando la operación se inicia desde el botón de envío, el foco permanece en ese control.
+
+Cuando el envío se inicia mediante teclado desde otro campo, el foco permanece en ese campo.
+
+Mientras la operación continúa pendiente, cualquier nueva tentativa de envío por el host debe ser ignorada por el backend antes de generar una segunda solicitud, independientemente de si procede de una activación del botón o de otra forma de envío del formulario.
+
+Cuando la operación termina, los campos vuelven a quedar disponibles para edición y el control vuelve a:
 
 ```text
-Enviar
+enviar
 ```
 
 independientemente del resultado recibido.
@@ -4089,6 +4099,8 @@ independientemente del resultado recibido.
 El frontend no conserva una condición local que impida futuros intentos basándose en una respuesta anterior del backend.
 
 El ancho del botón durante el envío conserva las reglas responsive definidas para el estado normal.
+
+La semántica accesible concreta de este estado se define en `26.8. Mensajes generales del formulario`.
 
 ---
 
@@ -4930,7 +4942,7 @@ ancho < 1024px
 Durante:
 
 ```text
-Enviando...
+enviando...
 ```
 
 se conserva la misma regla de ancho.
@@ -5365,6 +5377,229 @@ Cuando el error desaparece, el estado inválido y las relaciones asociadas se ac
 Los mensajes generales permanecen visibles mientras continúan siendo pertinentes.
 
 No desaparecen automáticamente después de un período breve.
+
+### Envío en curso
+
+Durante una operación de envío, el formulario comunica que se encuentra ocupado mediante:
+
+```html
+<form aria-busy="true">
+```
+
+Cuando la operación finaliza:
+
+```text
+aria-busy="true"
+=> aria-busy="false"
+```
+
+o el atributo deja de estar presente cuando ya no resulta necesario.
+
+`aria-busy` se aplica al formulario como conjunto.
+
+No se aplica individualmente a cada campo, porque la operación pendiente corresponde al envío del formulario completo.
+
+Los campos textuales visibles pasan temporalmente al estado nativo:
+
+```html
+readonly
+```
+
+Conceptualmente:
+
+```html
+<input readonly>
+```
+
+```html
+<textarea readonly></textarea>
+```
+
+No utilizan:
+
+```html
+disabled
+```
+
+durante el envío.
+
+Los campos continúan formando parte del recorrido normal de foco y sus valores permanecen disponibles para las tecnologías de asistencia.
+
+No se añade:
+
+```text
+aria-readonly="true"
+```
+
+cuando el control nativo ya utiliza `readonly`.
+
+La semántica nativa constituye la fuente del estado de solo lectura.
+
+El botón de envío conserva su elemento nativo:
+
+```html
+<button type="submit">
+```
+
+Durante la operación utiliza:
+
+```html
+<button type="submit" aria-disabled="true">
+    enviando...
+</button>
+```
+
+No utiliza:
+
+```html
+disabled
+```
+
+durante este estado.
+
+El control permanece en el recorrido normal de foco.
+
+El texto visible:
+
+```text
+enviando...
+```
+
+constituye también su nombre accesible durante la operación.
+
+No se añade un `aria-label` diferente para sustituir ese texto.
+
+`aria-disabled="true"` comunica que el control se encuentra temporalmente indisponible, pero no bloquea por sí mismo una nueva activación.
+
+Por ese motivo, mientras la operación permanece pendiente, la lógica del frontend y del backend deben ambos impedir funcionalmente cualquier nuevo envío antes de crear una segunda solicitud.
+
+Esta protección se aplica independientemente de que la nueva tentativa proceda de:
+
+```text
+Activación del botón
+Teclado
+Envío del formulario desde otro control
+```
+
+Conceptualmente:
+
+```text
+Operación pendiente
+        |
+        V
+Nueva tentativa de envío
+        |
+        V
+No iniciar segunda solicitud
+```
+
+El estado de progreso se anuncia mediante una región:
+
+```html
+<div role="status">
+    enviando...
+</div>
+```
+
+La región `role="status"` existe en el documento antes de comenzar la operación.
+
+Al iniciar el envío, su contenido cambia para comunicar:
+
+```text
+enviando...
+```
+
+La comunicación es no interruptiva.
+
+No recibe foco.
+
+No se transforma el propio botón en una región de estado.
+
+El botón conserva su semántica de botón.
+
+La región utilizada para el anuncio de progreso permanece fuera del elemento:
+
+```html
+<form aria-busy="true">
+```
+
+Conceptualmente:
+
+```html
+<form aria-busy="true">
+    ...
+</form>
+
+<div role="status">
+    enviando...
+</div>
+```
+
+Esta separación permite que el progreso se comunique mientras el formulario continúa marcado como ocupado.
+
+La región de estado no introduce una segunda representación visual de:
+
+```text
+enviando...
+```
+
+mientras el texto ya se encuentra visible en el botón.
+
+Debe permanecer visualmente oculta siempre que continúe disponible para las tecnologías de asistencia. Pero no debe ocultarse mediante un mecanismo que también la retire del árbol de accesibilidad.
+
+El inicio de la operación no mueve el foco.
+
+Cuando el envío se inicia desde el botón:
+
+```text
+Botón
+=> conserva foco
+```
+
+Cuando el envío se inicia mediante teclado desde uno de los campos:
+
+```text
+Campo
+=> pasa a readonly
+=> conserva foco
+```
+
+No se mueve el foco hacia:
+
+```text
+role="status"
+```
+
+ni hacia otro elemento solamente para anunciar el progreso.
+
+Cuando la solicitud termina, los estados temporales se restauran antes de representar el resultado final.
+
+Conceptualmente:
+
+```text
+Formulario
+=> aria-busy deja de indicar operación pendiente
+
+Campos
+=> quitar readonly
+
+Botón
+=> quitar aria-disabled
+=> enviando... cambia a Enviar
+
+Región de progreso
+=> deja de anunciar enviando...
+```
+
+Después se representa el resultado correspondiente.
+
+No se añade un mensaje independiente equivalente a:
+
+```text
+envío terminado.
+```
+
+porque el resultado final ya comunica el desenlace de la operación.
 
 ### Envío satisfactorio
 
@@ -6980,24 +7215,34 @@ Página completa
 ## Accesibilidad
 
 ```text
-Referencia                 => WCAG 2.2
-Nivel                       => AA
-Orden visual                => orden del DOM => orden de foco
-Foco tema claro             => 2px / offset 2px / #141414
-Foco tema oscuro            => 2px / offset 2px / #E2484D
-Skeleton visual             => fuera del contenido accesible
-Unidad cargando             => aria-busy
-Grupo expandible            => aria-expanded
-Campo inválido              => aria-invalid
-Error asociado              => aria-describedby
-Resultado no urgente        => role="status"
-Fallo de envío              => role="alert"
-Carga inicial               => sin movimiento programático de foco
-Cambio interno de vista     => foco en H1
-H1 de una nueva vista       => tabindex="-1"
-main                        => no recibe foco por el cambio de vista
-Cambio dentro de misma vista=> conservar foco
-Anuncio adicional de ruta   => no utilizar aria-live
+Referencia                  => WCAG 2.2
+Nivel                        => AA
+Orden visual                 => orden del DOM => orden de foco
+Foco tema claro              => 2px / offset 2px / #141414
+Foco tema oscuro             => 2px / offset 2px / #E2484D
+Skeleton visual              => fuera del contenido accesible
+Unidad cargando              => aria-busy
+Grupo expandible             => aria-expanded
+Campo inválido               => aria-invalid
+Error asociado               => aria-describedby
+Formulario enviando          => aria-busy="true"
+Campos durante envío         => readonly
+Campos durante envío         => no utilizar disabled
+Botón durante envío          => aria-disabled="true"
+Botón durante envío          => no utilizar disabled
+Texto del botón              => enviando...
+Segundo envío simultáneo     => bloqueado funcionalmente
+Progreso del envío           => role="status"
+Región de progreso           => fuera del formulario aria-busy
+Foco durante envío           => conservar en el control de origen
+Resultado no urgente         => role="status"
+Fallo de envío               => role="alert"
+Carga inicial                => sin movimiento programático de foco
+Cambio interno de vista      => foco en H1
+H1 de una nueva vista        => tabindex="-1"
+main                         => no recibe foco por el cambio de vista
+Cambio dentro de misma vista => conservar foco
+Anuncio adicional de ruta    => no utilizar aria-live
 ```
 
 ---
@@ -7150,7 +7395,18 @@ Los siguientes elementos de identidad visual quedan definidos:
 142. conservación del foco durante actualizaciones que permanecen dentro de la misma vista;
 143. tratamiento de las vistas de contenido no encontrado como destinos completos de navegación;
 144. cierre del menú de navegación estrecho antes de trasladar el foco al encabezado principal de la nueva vista;
-145. comunicación del cambio de contexto mediante el título del documento y el encabezado principal sin una región `aria-live` adicional.
+145. comunicación del cambio de contexto mediante el título del documento y el encabezado principal sin una región `aria-live` adicional;
+146. estado ocupado del formulario durante el envío mediante `aria-busy`;
+147. estado temporal de solo lectura de los campos mediante `readonly`;
+148. conservación de los campos en el recorrido de foco durante el envío;
+149. indisponibilidad semántica temporal del botón mediante `aria-disabled`;
+150. conservación del botón de envío en el recorrido de foco;
+151. bloqueo funcional de cualquier segundo envío mientras existe una solicitud pendiente;
+152. anuncio no interruptivo de `enviando...` mediante `role="status"`;
+153. ubicación de la región de progreso fuera del formulario marcado como ocupado;
+154. conservación del foco en el control desde el que se inició el envío;
+155. restauración de los estados semánticos del formulario antes de comunicar el resultado final;
+156. ausencia de un anuncio adicional de finalización cuando el resultado ya comunica el desenlace.
 
 Los modelos visuales deben utilizar los iconos concretos establecidos en el mapeo de esta especificación.
 
@@ -7165,6 +7421,8 @@ Las decisiones de accesibilidad incluidas en esta especificación forman parte d
 La auditoría de contraste queda cerrada para los temas claro y oscuro dentro de los usos permitidos definidos por esta especificación.
 
 La gestión de contexto y foco durante los cambios de vista queda cerrada para la navegación interna de la aplicación.
+
+La semántica accesible del estado de envío en curso del formulario queda cerrada mediante el estado ocupado del formulario, los campos temporalmente de solo lectura, la indisponibilidad semántica y funcional del control de envío, la comunicación no interruptiva del progreso y la conservación del foco.
 
 La definición de accesibilidad continúa para los aspectos todavía pendientes antes de considerar completa la etapa de responsive y accesibilidad de `sitio`.
 

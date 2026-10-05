@@ -1817,19 +1817,60 @@ Durante el envío:
 Formulario
 => permanece visible
 => conserva los valores
-=> campos temporalmente no modificables
+=> comunica que la operación está en curso
+
+Campos
+=> conservan los valores
+=> temporalmente no modificables
+=> continúan disponibles para el recorrido de foco
 
 Enviar
-=> Enviando...
+=> enviando...
+=> temporalmente no disponible para una nueva activación
+=> continúa disponible para el recorrido de foco
 ```
+
+Una nueva activación del envío no inicia una segunda solicitud mientras la operación actual continúa pendiente.
 
 La navegación y las demás regiones disponibles permanecen utilizables.
 
-Cuando la operación termina, el control vuelve a:
+El inicio del envío se comunica también de forma no interruptiva a las tecnologías de asistencia.
+
+Esta comunicación no introduce un segundo mensaje visible que repita innecesariamente el texto ya mostrado por el control de envío.
+
+La información accesible sobre el progreso se mantiene separada de la región que está siendo procesada para que pueda comunicarse mientras la operación continúa.
+
+El inicio del envío no desplaza automáticamente el foco.
+
+Cuando la acción fue iniciada desde el control de envío, el foco permanece en ese control durante la operación.
+
+Cuando el envío fue iniciado desde otro control del formulario mediante teclado, el foco permanece en el control desde el que se realizó la acción.
+
+Cuando la operación termina:
 
 ```text
-Enviar
+Formulario
+=> deja de comunicar una operación en curso
+
+Campos
+=> vuelven a estar disponibles para modificación
+
+"Enviando..." 
+=> Regresa a "enviar"
+
+Control de envío
+=> vuelve a estar disponible
 ```
+
+Después se representa el resultado correspondiente.
+
+No se incorpora un aviso adicional equivalente a:
+
+```text
+Envío terminado.
+```
+
+porque el propio resultado informa qué ocurrió.
 
 El frontend no mantiene un estado persistente que determine si una nueva solicitud será aceptada por los mecanismos de protección del backend.
 
@@ -2063,11 +2104,127 @@ Campo
 => mensaje relacionado cuando existe un error
 ```
 
+### Envío en curso del formulario
+
+El estado de envío en curso debe comunicarse de forma visual, funcional y semántica.
+
+El formulario como conjunto comunica que existe una operación pendiente.
+
+Los campos conservan los valores introducidos y pasan temporalmente a un estado no modificable.
+
+Este estado no los retira del recorrido normal de foco ni impide que su contenido continúe disponible para las tecnologías de asistencia.
+
+Conceptualmente:
+
+```text
+Campo durante el envío
+=> conserva su valor
+=> no permite modificación
+=> permanece disponible para el foco
+```
+
+El control de envío permanece presente y conserva su posición en el recorrido mediante teclado.
+
+Durante la operación comunica que temporalmente no puede iniciar otra solicitud.
+
+El cambio visible de:
+
+```text
+enviar
+=> enviando...
+```
+
+también comunica el estado actual del control.
+
+La indisponibilidad temporal del control debe corresponder a un bloqueo funcional real de cualquier nueva tentativa de envío por el backend y por los campos visuales y botones del formulario mientras la solicitud anterior continúa pendiente.
+
+No basta con representar visualmente que el control está indisponible.
+
+Conceptualmente:
+
+```text
+Operación pendiente
+=> control temporalmente no disponible
+=> nueva activación no inicia otra solicitud
+```
+
+El backend debe bloquear otras solicitudes para el mismo host mientras una esté en transito. 
+
+El estado de progreso se comunica además mediante un anuncio no interruptivo.
+
+La comunicación debe producirse sin desplazar el foco.
+
+No se utiliza un aviso interruptivo para indicar que el envío está en curso.
+
+No se añade una segunda representación visual de `enviando...` cuando el propio control ya proporciona ese texto.
+
+La información destinada a comunicar el progreso a tecnologías de asistencia se mantiene separada de la región que está siendo procesada.
+
+Esto permite que el estado de progreso pueda comunicarse inmediatamente aunque el formulario completo se encuentre marcado como ocupado por la operación.
+
+Conceptualmente:
+
+```text
+Formulario
+=> operación en curso
+
+Control
+=> enviando...
+
+Comunicación accesible
+=> operación en curso
+=> no interruptiva
+=> sin mover foco
+```
+
+El inicio del envío conserva el foco en el elemento desde el que se realizó la acción.
+
+Si la acción se inicia desde el control de envío:
+
+```text
+Control de envío
+=> conserva foco
+```
+
+Si la acción se inicia mediante teclado desde otro control del formulario:
+
+```text
+Control de origen
+=> conserva foco
+```
+
+No se mueve el foco hacia el mensaje de progreso.
+
+Cuando la operación termina, los estados temporales se restauran antes de representar el resultado final.
+
+Conceptualmente:
+
+```text
+Formulario
+=> deja de comunicar operación pendiente
+
+Campos
+=> vuelven a permitir modificación
+
+Control
+=> vuelve a estar disponible
+=> vuelve a presentar Enviar
+
+Comunicación de progreso
+=> deja de estar activa
+```
+
+Después se utiliza la comunicación correspondiente al resultado ya definido para éxito, límite de envíos, validación o fallo.
+
+No se anuncia adicionalmente que la operación terminó cuando el propio resultado ya proporciona esa información.
+
 ### Mensajes del formulario
 
 Los resultados generales del formulario permanecen visibles mientras continúan siendo pertinentes.
 
 No crean avisos que desaparecen automáticamente después de un período breve, sus avisos son fijos.
+
+El estado de envío en curso se comunica mediante un anuncio no interruptivo mientras la operación permanece pendiente.
 
 Una confirmación satisfactoria se comunica mediante un anuncio no interruptivo.
 
