@@ -1268,7 +1268,6 @@ Menú | Idioma | Tema
 Contenido
 ```
 
-
 Con expansión del menú:
 
 ```text
@@ -1369,6 +1368,8 @@ Menú
 ```
 
 El menú no permanece abierto después de completar la selección del destino.
+
+Cuando la selección produce una nueva vista mediante navegación interna, después de completar el cierre del menú y representar el destino se aplica la gestión de foco definida en `26.34. Cambio de vista y foco`.
 
 La barra:
 
@@ -4766,6 +4767,10 @@ Menú
 
 La navegación expandida no permanece ocupando espacio después de seleccionar el destino.
 
+Cuando la navegación produce una nueva vista, el cierre del menú y del grupo precede al foco programático sobre el encabezado principal de la vista de destino.
+
+El comportamiento de foco se encuentra definido en `26.34. Cambio de vista y foco`.
+
 ---
 
 ## 25.13. Inicio en composición estrecha
@@ -5123,8 +5128,19 @@ Los controles deben disponer de foco visible.
 
 No se utilizan valores positivos de `tabindex` para reconstruir artificialmente un orden diferente.
 
-La estructura correcta del documento tiene prioridad sobre el uso de `tabindex` cuando la estructura ya comporta lo mismo orden de lo visual. `tabindex` solamente se utiliza cuando un elemento necesita participar legítimamente en el orden normal de foco y su implementación lo requiere.
+La estructura correcta del documento tiene prioridad sobre el uso de `tabindex` cuando la estructura ya comporta lo mismo orden de lo visual.
 
+`tabindex` solamente se utiliza cuando existe una necesidad concreta de foco que no queda resuelta mediante el comportamiento nativo.
+
+El valor:
+
+```html
+tabindex="-1"
+```
+
+solamente debe utilizarse para permitir que un elemento reciba foco programáticamente sin incorporarlo al recorrido secuencial mediante `Tab`.
+
+Este comportamiento se utiliza en el encabezado principal de una nueva vista según `26.34. Cambio de vista y foco`.
 
 Un elemento gráfico que forma parte de un control no constituye un segundo objetivo de foco cuando no dispone de una acción propia.
 
@@ -5165,6 +5181,10 @@ H4
 El nivel de encabezado no se selecciona a partir de su tamaño visual.
 
 La carga inicial de una página no mueve automáticamente el foco hacia `main` ni hacia otro elemento únicamente para anunciar la página.
+
+Esta regla corresponde a la carga inicial del sitio.
+
+El cambio de una vista por otra mediante navegación interna utiliza el comportamiento específico definido en `26.34. Cambio de vista y foco`.
 
 La aplicación no incorpora un enlace adicional de salto al contenido principal.
 
@@ -6335,6 +6355,236 @@ El separador forma parte de la convención definida para el sitio y no modifica 
 
 ---
 
+## 26.34. Cambio de vista y foco
+
+La carga inicial del sitio y la navegación interna entre vistas utilizan comportamientos de foco diferentes.
+
+La aplicación no desplaza el foco solamente porque Angular haya creado una región, actualizado un componente o terminado una operación de carga. El movimiento programático se utiliza específicamente cuando una navegación interna sustituye una vista conceptual por otra.
+
+### Carga inicial
+
+Durante el acceso inicial al sitio:
+
+```text
+Carga inicial
+=> conservar comportamiento normal del navegador
+=> no mover foco programáticamente
+```
+
+La existencia de:
+
+```html
+<main>
+```
+
+o de:
+
+```html
+<h1>
+```
+
+no produce por sí misma un movimiento de foco.
+
+La carga inicial no intenta reproducir programáticamente un comportamiento que ya corresponde al inicio normal de un documento.
+
+### Navegación interna hacia una nueva vista
+
+Una navegación interna constituye un cambio de vista cuando el enrutamiento sustituye el contenido principal actual por otra página conceptual de la aplicación.
+
+El cambio de la dirección por sí solo no determina esta condición.
+
+Una modificación que conserva la misma vista conceptual no debe provocar el movimiento definido para una nueva página.
+
+La secuencia general es:
+
+```text
+Activar un destino interno
+        |
+        V
+Navegación de Angular
+        |
+        V
+Nueva vista confirmada
+        |
+        +-- actualizar <title>
+        |
+        +-- representar la nueva vista
+        |
+        +-- disponer del H1 correspondiente
+        |
+        V
+Mover foco al H1
+```
+
+El foco solamente se desplaza cuando el encabezado principal de la nueva vista ya existe y representa correctamente el destino alcanzado.
+
+No se mueve el foco hacia un skeleton que represente provisionalmente un encabezado todavía no disponible.
+
+Cuando el texto del encabezado depende del contenido solicitado, el movimiento ocurre después de que ese encabezado pueda representarse con su contenido correspondiente.
+
+### Encabezado principal enfocable
+
+El encabezado principal de una vista utiliza:
+
+```html
+<h1 tabindex="-1">...</h1>
+```
+
+solamente cuando necesita recibir el foco después de una navegación interna.
+
+`tabindex="-1"` permite:
+
+```text
+Foco programático
+=> permitido
+
+Recorrido normal mediante Tab
+=> no incorpora el H1 como parada adicional
+```
+
+El encabezado no se transforma en un control interactivo.
+
+Su función continúa siendo representar semánticamente el encabezado principal de la página.
+
+Después de recibir el foco, la navegación secuencial posterior continúa mediante los elementos interactivos siguientes de acuerdo con el orden normal del documento.
+
+No se utilizan valores positivos de `tabindex` para colocar el encabezado dentro de una posición artificial de la secuencia.
+
+### Región principal
+
+La región:
+
+```html
+<main>
+```
+
+continúa delimitando semánticamente el contenido principal.
+
+No recibe foco únicamente como consecuencia de una navegación interna.
+
+La relación es:
+
+```text
+<title>
+=> identifica el documento o vista
+
+H1
+=> identifica el contenido principal de la vista
+=> recibe foco después del cambio interno de vista
+
+main
+=> delimita la región principal
+=> no constituye el destino automático de foco
+```
+
+### Actualizaciones dentro de una misma vista
+
+No producen un movimiento programático al `H1`:
+
+```text
+Carga o sustitución de datos dentro de la vista actual
+Finalización de un skeleton
+Aparición de un estado vacío dentro de una unidad
+Aparición de un error dentro de una unidad
+Apertura de un grupo expandible
+Cierre de un grupo expandible
+Cambio de tema
+Cambio de dirección que no sustituye la vista conceptual
+```
+
+Los estados del formulario mantienen las reglas específicas definidas para sus mensajes y validación.
+
+La actualización de una unidad independiente no convierte la operación en una nueva vista.
+
+Conceptualmente:
+
+```text
+Misma vista
++ contenido actualizado
+=> conservar foco
+
+Nueva vista
+=> foco en H1
+```
+
+### Contenido no encontrado
+
+Un resultado de contenido no encontrado constituye una vista cuando es el destino final de una navegación.
+
+Cuando se alcanza mediante navegación interna, su encabezado principal recibe el mismo tratamiento.
+
+Conceptualmente:
+
+```text
+Navegación interna
+        |
+        V
+Vista no encontrada
+        |
+        V
+H1 de la vista
+=> foco
+```
+
+No se mantiene el foco en el enlace o control que pertenecía a la vista anterior.
+
+### Navegación en pantallas estrechas
+
+Cuando un destino se selecciona desde el menú de una composición estrecha:
+
+```text
+Seleccionar destino
+        |
+        V
+Navegar
+        |
+        +-- cerrar grupo cuando corresponda
+        |
+        +-- cerrar Menú
+        |
+        V
+Representar nueva vista
+        |
+        V
+Mover foco al H1
+```
+
+El cierre de la navegación expandida ocurre antes de situar el foco en la nueva vista.
+
+De esta manera, el foco no permanece asociado a un control perteneciente a una representación del menú que dejó de estar disponible.
+
+### Anuncio del cambio de contexto
+
+No se incorpora una región adicional:
+
+```text
+aria-live
+```
+
+ni un aviso independiente equivalente a:
+
+```text
+Página cambiada
+```
+
+solamente para anunciar la navegación.
+
+El contexto se proporciona mediante:
+
+```text
+<title>
+=> identificación general de la vista
+
+H1 enfocado
+=> contexto inmediato del contenido representado
+```
+
+El encabezado principal localizado proporciona a las tecnologías de asistencia el nombre de la nueva vista cuando recibe el foco.
+
+No se repite esta información mediante una segunda región de anuncios cuando el cambio ya queda comunicado por el propio destino del foco.
+
+---
+
 # Relación entre tema claro y tema oscuro
 
 Los dos temas representan exactamente el mismo sitio.
@@ -6730,18 +6980,24 @@ Página completa
 ## Accesibilidad
 
 ```text
-Referencia            => WCAG 2.2
-Nivel                  => AA
-Orden visual           => orden del DOM => orden de foco
-Foco tema claro        => 2px / offset 2px / #141414
-Foco tema oscuro       => 2px / offset 2px / #E2484D
-Skeleton visual        => fuera del contenido accesible
-Unidad cargando        => aria-busy
-Grupo expandible       => aria-expanded
-Campo inválido         => aria-invalid
-Error asociado         => aria-describedby
-Resultado no urgente   => role="status"
-Fallo de envío         => role="alert"
+Referencia                 => WCAG 2.2
+Nivel                       => AA
+Orden visual                => orden del DOM => orden de foco
+Foco tema claro             => 2px / offset 2px / #141414
+Foco tema oscuro            => 2px / offset 2px / #E2484D
+Skeleton visual             => fuera del contenido accesible
+Unidad cargando             => aria-busy
+Grupo expandible            => aria-expanded
+Campo inválido              => aria-invalid
+Error asociado              => aria-describedby
+Resultado no urgente        => role="status"
+Fallo de envío              => role="alert"
+Carga inicial               => sin movimiento programático de foco
+Cambio interno de vista     => foco en H1
+H1 de una nueva vista       => tabindex="-1"
+main                        => no recibe foco por el cambio de vista
+Cambio dentro de misma vista=> conservar foco
+Anuncio adicional de ruta   => no utilizar aria-live
 ```
 
 ---
@@ -6885,7 +7141,16 @@ Los siguientes elementos de identidad visual quedan definidos:
 133. capa mínima de contraste de la cabecera del tema oscuro;
 134. garantía de contraste de la cabecera frente al caso de máxima luminosidad de la fotografía;
 135. conservación de la capa mínima detrás de toda la región textual de la cabecera;
-136. independencia entre la garantía de contraste de la cabecera y la fotografía concreta utilizada.
+136. independencia entre la garantía de contraste de la cabecera y la fotografía concreta utilizada;
+137. distinción entre carga inicial y cambio interno de vista para la gestión de foco;
+138. ausencia de movimiento programático de foco durante la carga inicial;
+139. foco programático en el encabezado principal después de una navegación interna hacia una nueva vista;
+140. uso de `tabindex="-1"` en el encabezado principal para permitir foco programático sin modificar el recorrido normal mediante teclado;
+141. conservación de `main` como región semántica sin convertirla en destino automático de foco;
+142. conservación del foco durante actualizaciones que permanecen dentro de la misma vista;
+143. tratamiento de las vistas de contenido no encontrado como destinos completos de navegación;
+144. cierre del menú de navegación estrecho antes de trasladar el foco al encabezado principal de la nueva vista;
+145. comunicación del cambio de contexto mediante el título del documento y el encabezado principal sin una región `aria-live` adicional.
 
 Los modelos visuales deben utilizar los iconos concretos establecidos en el mapeo de esta especificación.
 
@@ -6898,6 +7163,8 @@ La adaptación responsive definida en esta especificación forma parte de la ref
 Las decisiones de accesibilidad incluidas en esta especificación forman parte de la referencia cerrada de la etapa de accesibilidad hasta el punto actualmente definido.
 
 La auditoría de contraste queda cerrada para los temas claro y oscuro dentro de los usos permitidos definidos por esta especificación.
+
+La gestión de contexto y foco durante los cambios de vista queda cerrada para la navegación interna de la aplicación.
 
 La definición de accesibilidad continúa para los aspectos todavía pendientes antes de considerar completa la etapa de responsive y accesibilidad de `sitio`.
 

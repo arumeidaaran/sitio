@@ -2083,7 +2083,7 @@ El color semántico depende del significado de un resultado.
 
 ### Estados de carga
 
-Los skeletons no constituyen contenido accesible. 
+Los skeletons no constituyen contenido accesible.
 
 La información semántica de carga pertenece a la unidad real cuyo contenido todavía se encuentra pendiente.
 
@@ -2477,6 +2477,77 @@ Recurso individual
 El nombre del sitio identifica el portafolio y utiliza la representación localizada del nombre personal correspondiente al idioma activo.
 
 Cuando cambia el idioma, cambia también el título completo de acuerdo con esa localización.
+
+### Cambio de vista y foco
+
+La carga inicial del sitio conserva el comportamiento normal de foco del navegador.
+
+La existencia de una región principal o de un encabezado no provoca por sí sola un desplazamiento programático del foco.
+
+Cuando la navegación interna sustituye la vista actual por otra vista conceptual, el cambio debe proporcionar contexto equivalente al comienzo de una nueva página.
+
+Después de que la nueva vista haya sido representada, el foco pasa a su encabezado principal.
+
+Conceptualmente:
+
+```text
+Carga inicial
+=> conservar comportamiento normal de foco
+
+Navegación interna hacia una nueva vista
+=> actualizar contexto del documento
+=> representar la nueva vista
+=> situar el foco en su encabezado principal
+```
+
+El encabezado principal debe admitir foco programático sin convertirse por ello en una parada adicional dentro del recorrido normal mediante teclado.
+
+Después de recibir el foco como consecuencia de una navegación, el recorrido posterior continúa según el orden natural de los elementos interactivos de la nueva vista.
+
+El movimiento de foco se encuentra vinculado al cambio completo de vista y no a cualquier actualización de la interfaz.
+
+No desplazan automáticamente el foco:
+
+```text
+Carga o sustitución de datos dentro de la misma vista
+Finalización de un estado de carga
+Aparición de un estado vacío dentro de una unidad
+Aparición de un error dentro de una unidad
+Apertura o cierre de un grupo expandible
+Cambio de tema
+Cambios de dirección que no sustituyen la vista conceptual
+```
+
+En estos casos, el foco permanece en el elemento correspondiente a la interacción actual o conserva su posición cuando no existe una acción que justifique modificarla.
+
+La región principal continúa cumpliendo una función semántica y no se convierte en destino de foco solamente porque cambie la vista.
+
+El encabezado principal proporciona el contexto inmediato de la nueva vista.
+
+El título del documento proporciona el contexto general correspondiente a esa misma vista.
+
+Conceptualmente:
+
+```text
+Título del documento
+=> identifica la vista
+
+Encabezado principal enfocado
+=> identifica el nuevo contenido
+
+Región principal
+=> delimita semánticamente el contenido
+```
+
+No se añade un anuncio independiente que repita el cambio de página cuando el título del documento y el encabezado principal ya proporcionan el contexto necesario.
+
+Una vista de contenido no encontrado se considera igualmente una vista resultante de la navegación.
+
+Cuando se alcanza mediante navegación interna, su encabezado principal recibe el foco después de que la vista haya sido representada.
+
+En las composiciones donde la navegación se encuentra temporalmente expandida, la selección de un destino completa primero la transición de navegación correspondiente y después sitúa el foco en el encabezado principal de la nueva vista.
+
+De esta manera, el foco no permanece asociado a un control perteneciente a una representación de navegación que dejó de estar disponible después del cambio.
 
 ## Internacionalización
 
