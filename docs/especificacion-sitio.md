@@ -1616,7 +1616,7 @@ este mapeo no participa en la representación del elemento visual.
 
 ## 15.7. Contactos
 
-Cuando un medio de contacto utiliza iconografía, el frontend aplica el icono correspondiente al tipo de medio.
+Los medios de contacto utilizan el icono correspondiente a su tipo.
 
 El mapeo definido es:
 
@@ -1629,7 +1629,7 @@ El mapeo definido es:
 | Teléfono              | `IconPhone`         |
 | Mensajería            | `IconBrandWhatsapp` |
 
-Cuando un medio utiliza una imagen en lugar de un icono, este mapeo no participa en la representación del elemento visual.
+Las tarjetas de Contactos no utilizan una imagen de contenido como alternativa al icono.
 
 ---
 
@@ -2443,9 +2443,25 @@ Los tres valores existen para este tipo de elemento.
 
 `src` determina qué imagen se representa.
 
-`alt` proporciona su alternativa textual.
+`alt` contiene la alternativa textual determinada por `sitio-api` para la función de la imagen dentro de ese bloque.
 
 `href` determina el destino asociado.
+
+El frontend utiliza directamente el valor de `alt` recibido. No genera una alternativa a partir del título o del texto del bloque, no sustituye el valor recibido y no decide por su cuenta si la alternativa debe quedar vacía.
+
+La imagen de `Sobre mí` representa normalmente información relacionada con el contenido del bloque.
+
+Cuando su función es informativa, `alt` comunica de forma breve la información visual que aporta.
+
+Cuando la imagen constituye por sí misma la representación de una acción o un destino, `alt` comunica la función correspondiente.
+
+Cuando la imagen no debe añadir información diferente a la ya disponible en el contexto, `sitio-api` proporciona:
+
+```text
+alt = ""
+```
+
+El valor de `alt` no utiliza `null`.
 
 ---
 
@@ -2498,7 +2514,7 @@ Conceptualmente:
 
 ```text
 --------------------------------
-| icono o imagen               |
+| icono                        |
 | ---------------------------- |
 | nombre del medio             |
 | enlace del medio             |
@@ -2508,12 +2524,14 @@ Conceptualmente:
 La tarjeta contiene:
 
 ```text
-elemento visual
+Icono
 Tipo de medio
 Enlace
 ```
 
-Cuando el elemento visual es un icono, debe utilizarse el mapeo definido en `15.7. Contactos`.
+El icono debe utilizar el mapeo definido en `15.7. Contactos`.
+
+Las tarjetas de Contactos no utilizan imágenes de contenido como representación del medio.
 
 El propio enlace del medio es un vínculo que lleva hacia el medio directamente.
 
@@ -2720,7 +2738,7 @@ Conceptualmente:
 
 ```text
 Contacto
-=> icono o imagen
+=> icono
 => tipo de medio
 => enlace
 
@@ -5746,6 +5764,270 @@ La clasificación no depende únicamente del archivo utilizado ni de su aparienc
 
 Una misma imagen debe necesitar un tratamiento diferente cuando cambia su función.
 
+### Responsabilidad de las imágenes de contenido
+
+Toda imagen que forme parte del contenido recibido por `sitio` dispone de:
+
+```text
+src
+alt
+```
+
+`src` identifica el elemento visual.
+
+`alt` contiene el valor final de la alternativa textual correspondiente a la representación solicitada.
+
+Ambas propiedades son obligatorias cuando el contrato contiene una imagen.
+
+`alt` utiliza siempre una cadena.
+
+Debe contener texto cuando la imagen necesita una alternativa textual, o vacío cuando debe permanecer fuera de la información anunciada como imagen. No utiliza `null` y no se omite.
+
+La responsabilidad se distribuye de la siguiente manera:
+
+```text
+sitio-api
+=> conoce la representación solicitada
+=> determina la función editorial de la imagen
+=> proporciona src
+=> proporciona el valor final de alt
+
+sitio
+=> representa src
+=> representa exactamente el valor recibido en alt
+```
+
+`Sitio` no determina el valor de `alt` mediante la posición visual de la imagen.
+
+No genera una alternativa a partir de:
+
+```text
+Nombre
+Título
+Descripción
+Tipo de recurso
+Dirección
+Otros campos disponibles
+```
+
+No sustituye una alternativa recibida por otra.
+
+No transforma por su cuenta un valor con texto en una alternativa vacía.
+
+No transforma por su cuenta una alternativa vacía en texto.
+
+Conceptualmente:
+
+```html
+<img src="valor recibido" alt="valor recibido">
+```
+
+### Sobre mí
+
+Las imágenes de `Sobre mí` acompañan bloques de contenido y representan normalmente información relacionada con aquello que el bloque comunica.
+
+Cuando la imagen aporta información propia:
+
+```text
+alt
+=> descripción breve de la información visual relevante
+```
+
+La alternativa no necesita reproducir el título ni resumir todo el contenido del bloque.
+
+Cuando la imagen constituye por sí misma la representación de una acción o un destino:
+
+```text
+alt
+=> función o destino correspondiente
+```
+
+Cuando la imagen se encuentra dentro de un enlace que ya dispone de otro contenido suficiente para identificar su destino, la alternativa continúa correspondiendo a la función propia de la imagen.
+
+Cuando la imagen no debe aportar información adicional:
+
+```text
+alt=""
+```
+
+En todos los casos, `sitio-api` proporciona el valor final y `sitio` lo representa sin modificarlo.
+
+### Proyectos
+
+Las imágenes de proyectos utilizan tratamientos diferentes entre las representaciones resumidas y el detalle.
+
+En las tarjetas de proyectos de Inicio y de los listados ya se encuentran disponibles:
+
+```text
+Nombre
+Descripción
+Acción de acceso
+```
+
+La imagen funciona como apoyo visual redundante para la identificación del recurso.
+
+Por lo tanto:
+
+```text
+Proyecto en representación resumida
+=> alt=""
+```
+
+`Sitio-api` debe proporcionar la alternativa vacía en estos contratos resumidos.
+
+En el detalle, la imagen principal constituye información propia del proyecto.
+
+Puede representar, según el contenido:
+
+```text
+Interfaz
+Resultado
+Aspecto visual
+Elemento relevante del proyecto
+```
+
+Por lo tanto:
+
+```text
+Proyecto en detalle
+=> alt informativo
+```
+
+La alternativa describe brevemente la información visual relevante.
+
+No se genera automáticamente a partir del nombre del proyecto.
+
+El contenido editorial determina el valor y `sitio-api` lo proporciona en el contrato de detalle.
+
+### Artículos
+
+En las representaciones resumidas de artículos utilizadas en Inicio y en los listados ya se encuentran disponibles:
+
+```text
+Título
+Descripción
+Fecha
+Acción de acceso
+```
+
+La imagen principal funciona como apoyo editorial.
+
+Por lo tanto:
+
+```text
+Artículo en representación resumida
+=> alt=""
+```
+
+`Sitio-api` proporciona la alternativa vacía para estas representaciones.
+
+En el detalle del artículo, la imagen principal se clasifica de acuerdo con su función editorial concreta.
+
+Cuando solamente funciona como portada y no añade información diferente del contenido textual:
+
+```text
+alt=""
+```
+
+Cuando aporta información propia necesaria para comprender aquello que se presenta:
+
+```text
+alt
+=> alternativa informativa correspondiente
+```
+
+`Sitio` no decide entre estos estados.
+
+El valor forma parte del contenido proporcionado para el artículo.
+
+Las imágenes incluidas dentro del cuerpo Markdown se consideran individualmente.
+
+Cada una debe disponer de la alternativa correspondiente a su propia función.
+
+Conceptualmente:
+
+```text
+Imagen informativa
+=> alternativa informativa
+
+Imagen decorativa
+=> alternativa vacía
+
+Imagen funcional
+=> función o destino
+
+Imagen de texto necesaria
+=> texto relevante
+
+Imagen compleja
+=> alternativa breve
+=> descripción adicional
+
+Imagen sensorial específica
+=> identificación descriptiva correspondiente
+```
+
+La alternativa se define dentro del contenido editorial y llega al frontend a través del contenido procesado por `sitio-api`.
+
+### Certificados y certificaciones
+
+En las tarjetas de certificados y certificaciones ya se encuentran disponibles los datos necesarios para identificar cada recurso.
+
+Según el tipo, esto incluye:
+
+```text
+Tipo
+Nombre
+Entidad
+Fecha
+Expiración
+Acción de acceso
+```
+
+La imagen funciona como apoyo visual redundante en la representación resumida.
+
+Por lo tanto:
+
+```text
+Certificado en representación resumida
+=> alt=""
+
+Certificación en representación resumida
+=> alt=""
+```
+
+`Sitio-api` proporciona la alternativa vacía en estas representaciones.
+
+En el detalle, la imagen representa el documento o credencial propiamente dicho.
+
+Por lo tanto:
+
+```text
+Certificado en detalle
+=> alt informativo
+
+Certificación en detalle
+=> alt informativo
+```
+
+La alternativa identifica brevemente el documento representado.
+
+No necesita reproducir todos los datos que ya aparecen estructuralmente en la página.
+
+La información extensa necesaria para comprender el documento no debe concentrarse únicamente dentro de `alt`.
+
+Cuando existe información necesaria que no debe expresarse correctamente mediante una alternativa breve, esta debe formar parte del contenido textual accesible del detalle.
+
+### Contactos
+
+Las tarjetas de Contactos no utilizan imágenes de contenido para representar los medios disponibles.
+
+Cada medio utiliza el icono definido por su tipo.
+
+Por lo tanto, las reglas de `src` y `alt` para imágenes de contenido no se aplican a la representación visual de estas tarjetas.
+
+El tratamiento accesible de los iconos se encuentra definido en `26.17. Iconos`.
+
 ---
 
 ## 26.11. Imágenes decorativas
@@ -5776,7 +6058,7 @@ La alternativa no necesita describir cada detalle visual cuando esos detalles no
 
 Cuando una imagen forma parte de una acción o constituye la representación principal de una acción, su alternativa comunica la función o el destino correspondiente.
 
-La alternativa no se limita a describir la apariencia del recurso visual.
+La alternativa no se limita a describir la apariencia del elemento visual.
 
 ---
 
@@ -5818,6 +6100,10 @@ Cuando un icono representa visualmente un estado que también se encuentra comun
 
 La exclusión del icono del árbol de accesibilidad no elimina su función visual.
 
+Los iconos utilizados en las tarjetas de Contactos siguen estas mismas reglas.
+
+Cuando el tipo de medio ya se encuentra identificado mediante texto visible suficiente, el icono funciona como apoyo visual y no se anuncia de forma independiente.
+
 ---
 
 ## 26.18. Fotografía de la cabecera
@@ -5854,6 +6140,10 @@ Composición estrecha
 
 El fondo visual que acompaña a la fotografía debe permanecer como decoración cuando no aporta información propia.
 
+La fotografía de la cabecera pertenece a la estructura del sitio y utiliza la regla específica definida en esta sección.
+
+No depende de los contratos de imágenes de contenido descritos en `26.10. Clasificación de imágenes`.
+
 ---
 
 ## 26.19. Localización de información accesible
@@ -5880,6 +6170,8 @@ La información accesible utiliza el idioma correspondiente a la interfaz o al c
 Los nombres personales también utilizan la representación localizada establecida para el idioma correspondiente.
 
 La localización debe modificar el sistema de escritura utilizado para representar el nombre.
+
+Las alternativas textuales que forman parte de contenido localizado son proporcionadas por `sitio-api` junto con la variante correspondiente del contenido.
 
 ---
 
@@ -7243,6 +7535,21 @@ H1 de una nueva vista        => tabindex="-1"
 main                         => no recibe foco por el cambio de vista
 Cambio dentro de misma vista => conservar foco
 Anuncio adicional de ruta    => no utilizar aria-live
+Imagen de contenido          => src y alt obligatorios
+alt                          => texto o cadena vacía
+alt                          => no utilizar null
+Alternativa de contenido     => determinada por sitio-api
+Representación de alt        => utilizar exactamente el valor recibido
+Proyecto resumido            => alt=""
+Proyecto en detalle          => alt informativo
+Artículo resumido            => alt=""
+Artículo en detalle          => alt según función editorial
+Imagen de artículo Markdown  => alt según función individual
+Certificado resumido         => alt=""
+Certificación resumida       => alt=""
+Certificado en detalle       => alt informativo
+Certificación en detalle     => alt informativo
+Contactos                    => iconos, sin imagen de contenido
 ```
 
 ---
@@ -7406,7 +7713,23 @@ Los siguientes elementos de identidad visual quedan definidos:
 153. ubicación de la región de progreso fuera del formulario marcado como ocupado;
 154. conservación del foco en el control desde el que se inició el envío;
 155. restauración de los estados semánticos del formulario antes de comunicar el resultado final;
-156. ausencia de un anuncio adicional de finalización cuando el resultado ya comunica el desenlace.
+156. ausencia de un anuncio adicional de finalización cuando el resultado ya comunica el desenlace;
+157. presencia obligatoria de `src` y `alt` en todas las imágenes de contenido;
+158. utilización de una cadena textual o una cadena vacía como valor de `alt`, sin utilizar `null`;
+159. responsabilidad de `sitio-api` sobre la determinación del valor final de `alt` según la función y el contexto de la imagen;
+160. representación directa de `alt` por `sitio` sin generación, sustitución, vaciado ni reclasificación por parte del frontend;
+161. posibilidad de utilizar un mismo elemento visual con alternativas distintas cuando cambia su función entre representaciones;
+162. tratamiento informativo o funcional de las imágenes de `Sobre mí` según su función editorial;
+163. alternativa vacía para las imágenes de proyectos utilizadas en representaciones resumidas;
+164. alternativa informativa para la imagen principal de un proyecto en su detalle;
+165. alternativa vacía para las imágenes principales de artículos utilizadas en representaciones resumidas;
+166. determinación editorial de la alternativa de la imagen principal de un artículo en su detalle;
+167. clasificación individual de las imágenes incluidas dentro del contenido Markdown;
+168. alternativa vacía para las imágenes de certificados y certificaciones utilizadas en representaciones resumidas;
+169. alternativa informativa para las imágenes de certificados y certificaciones en sus páginas de detalle;
+170. disposición de información extensa de documentos mediante contenido textual accesible en lugar de concentrarla únicamente en `alt`;
+171. utilización exclusiva de iconos como representación visual de los medios de Contactos;
+172. exclusión de imágenes de contenido de las tarjetas de Contactos.
 
 Los modelos visuales deben utilizar los iconos concretos establecidos en el mapeo de esta especificación.
 
@@ -7423,6 +7746,8 @@ La auditoría de contraste queda cerrada para los temas claro y oscuro dentro de
 La gestión de contexto y foco durante los cambios de vista queda cerrada para la navegación interna de la aplicación.
 
 La semántica accesible del estado de envío en curso del formulario queda cerrada mediante el estado ocupado del formulario, los campos temporalmente de solo lectura, la indisponibilidad semántica y funcional del control de envío, la comunicación no interruptiva del progreso y la conservación del foco.
+
+Las alternativas textuales de las imágenes de contenido quedan cerradas mediante la clasificación funcional correspondiente a cada representación, la responsabilidad de `sitio-api` sobre el valor final de `alt`, la representación directa de ese valor por `sitio`, las reglas concretas para `Sobre mí`, proyectos, artículos, certificados y certificaciones, y la utilización exclusiva de iconos en las tarjetas de Contactos.
 
 La definición de accesibilidad continúa para los aspectos todavía pendientes antes de considerar completa la etapa de responsive y accesibilidad de `sitio`.
 

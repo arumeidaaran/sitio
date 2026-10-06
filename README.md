@@ -648,6 +648,10 @@ De esta manera, la elección del icono específico continúa perteneciendo a la 
 
 Cuando el elemento es una imagen, su contrato contiene la fuente de la imagen, el texto alternativo y el destino asociado.
 
+El texto alternativo es definido como parte del contenido y corresponde a la función de la imagen dentro del bloque.
+
+`Sitio` representa el texto alternativo proporcionado por `sitio-api` sin generar, sustituir ni reinterpretar su contenido.
+
 ## Contactos
 
 La página de Contactos combina dos mecanismos:
@@ -668,12 +672,16 @@ Conceptualmente:
 
 ```text
 --------------------------------
-| icono o imagen               |
+| icono                        |
 | ---------------------------- |
 | tipo de contacto             |
 | enlace                       |
 --------------------------------
 ```
+
+Cada medio utiliza el icono correspondiente a su tipo.
+
+Las tarjetas de Contactos no utilizan imágenes de contenido como representación del medio.
 
 El texto correspondiente al medio identifica la tarjeta.
 
@@ -1110,7 +1118,7 @@ Conceptualmente:
 
 ```text
 Contacto
-=> icono o imagen
+=> icono
 => tipo
 => enlace
 
@@ -2313,6 +2321,56 @@ Una imagen cuya finalidad incluye una experiencia sensorial concreta utiliza una
 
 Una imagen que transmite información necesaria no se transforma en un recurso puramente decorativo para evitar proporcionar una alternativa textual.
 
+Las imágenes que forman parte del contenido proporcionado por `sitio-api` incluyen siempre su fuente y su alternativa textual.
+
+La alternativa textual constituye parte del contenido y es determinada por `sitio-api` de acuerdo con la función de la imagen en la representación solicitada.
+
+La alternativa puede permanecer vacía cuando la imagen no debe aportar información adicional a las tecnologías de asistencia, pero no se omite ni utiliza un valor nulo.
+
+`Sitio` utiliza directamente la alternativa recibida.
+
+No genera una alternativa a partir de otros campos, no sustituye el valor recibido, no decide vaciarlo y no reclasifica por su cuenta la función de la imagen.
+
+Conceptualmente:
+
+```text
+sitio-api
+=> determina la alternativa según la función de la imagen y el contexto solicitado
+
+sitio
+=> representa la alternativa recibida sin reinterpretarla
+```
+
+Esta separación permite que una misma imagen de contenido pueda recibir un tratamiento accesible distinto cuando aparece en representaciones diferentes.
+
+En `Sobre mí`, las imágenes acompañan al contenido del bloque y su alternativa es definida editorialmente según la función que desempeñan.
+
+Cuando la propia imagen constituye la representación de una acción, la alternativa proporcionada debe comunicar la función o el destino correspondiente.
+
+En las representaciones resumidas de proyectos, la imagen funciona como apoyo visual de información que ya identifica el recurso y utiliza una alternativa vacía.
+
+En el detalle de un proyecto, la imagen principal es informativa y dispone de una alternativa que comunica la información visual relevante.
+
+En las representaciones resumidas de artículos, la imagen principal funciona como apoyo editorial y utiliza una alternativa vacía.
+
+En el detalle de un artículo, la imagen principal puede continuar siendo una representación editorial sin información adicional o puede aportar información propia.
+
+La alternativa proporcionada corresponde a esa función editorial.
+
+Las imágenes incluidas dentro del contenido de los artículos se consideran individualmente.
+
+Cada imagen recibe la alternativa correspondiente a su propia función dentro del contenido.
+
+En las representaciones resumidas de certificados y certificaciones, la imagen funciona como apoyo visual de información ya disponible en la tarjeta y utiliza una alternativa vacía.
+
+En el detalle de un certificado o una certificación, la imagen del documento constituye información y dispone de una alternativa breve que identifica aquello que se representa.
+
+La alternativa no necesita reproducir todos los datos del documento cuando esos datos ya forman parte del contenido estructurado de la página.
+
+La información extensa necesaria para comprender un documento debe formar parte del contenido accesible de la página y no concentrarse únicamente en una alternativa textual.
+
+Las tarjetas de Contactos utilizan iconos y no imágenes de contenido para representar los medios disponibles.
+
 ### Iconos
 
 Los iconos utilizados como apoyo de un texto visible suficiente no se anuncian de forma independiente.
@@ -3284,6 +3342,7 @@ sitio-api
 => seleccionar las actualizaciones
 => ordenar las actualizaciones por fecha de actividad
 => obtener y normalizar datos de fuentes externas
+=> determinar las alternativas textuales de las imágenes de contenido según su función y contexto
 => recibir y procesar el formulario de contacto
 => retornar solamente la información necesaria para cada contexto
 
@@ -3299,6 +3358,7 @@ sitio
 => realizar una nueva solicitud cuando sea necesario
 => construir las rutas visibles localizadas
 => representar la información recibida
+=> representar las alternativas textuales recibidas sin generarlas ni sustituirlas
 => seleccionar componentes visuales
 => seleccionar los iconos concretos
 => representar los tipos técnicos mediante textos localizados
@@ -3308,6 +3368,8 @@ sitio
 `Sitio-api` no selecciona automáticamente una variante lingüística alternativa cuando el idioma solicitado no existe.
 
 `Sitio-api` tampoco determina la posición, color, tamaño, icono concreto ni demás características propias de la presentación.
+
+La determinación de la alternativa textual de una imagen de contenido forma parte de los datos suministrados y no constituye una decisión visual del frontend.
 
 `Sitio` no necesita conocer cómo el backend obtiene o almacena las distintas variantes del contenido.
 
@@ -3511,6 +3573,29 @@ El objeto `content` utiliza nombres técnicos en inglés.
 
 El `slug` forma parte del contenido localizado cuando el recurso dispone de página individual localizada.
 
+Toda imagen que forme parte de un recurso de contenido contiene obligatoriamente:
+
+```text
+src
+alt
+```
+
+`src` identifica la fuente de la imagen.
+
+`alt` contiene la alternativa textual determinada por `sitio-api` para la función de esa imagen dentro de la representación solicitada.
+
+Las dos propiedades siempre forman parte del contrato cuando existe una imagen de contenido.
+
+`alt` debe contener una alternativa textual a las tecnologías de asistencia, aunque su valor sea de "tipo texto vacío" cuando la imagen no aporta información adicional.
+
+`alt` no utiliza `null`.
+
+El texto de `alt` es localizado.
+
+El frontend utiliza el valor recibido sin generarlo, sustituirlo ni modificarlo de acuerdo con la posición en la que la imagen se representa.
+
+La misma fuente visual puede disponer de una alternativa distinta en representaciones diferentes cuando su función cambia entre esos contextos.
+
 ### Sobre mí
 
 La representación de `Sobre mí` contiene bloques editoriales.
@@ -3628,6 +3713,8 @@ El contrato base contiene conceptualmente:
 `whatsapp` indica expresamente si el número telefónico también se utiliza mediante WhatsApp.
 
 Los iconos correspondientes a los medios de contacto son seleccionados por el frontend.
+
+Las tarjetas de Contactos utilizan estos iconos como representación visual del medio y no reciben una imagen de contenido para esta función.
 
 `POST` recibe conceptualmente:
 
@@ -4129,6 +4216,12 @@ Esta segunda condición constituye una regla de publicación y mantenimiento, pe
 
 Los `slug` deben pertenecer a la variante lingüística correspondiente y ser válidos dentro del contexto en el que identifican el recurso.
 
+Toda imagen de contenido debe incluir su fuente y su alternativa textual.
+
+La alternativa textual debe permanecer vacía si su función corresponda a decorativa, sin omitirse ni utilizar un valor nulo.
+
+La validación debe conservar el valor definido por `sitio-api` para cada representación sin exigir al frontend reconstruirlo a partir de otros datos.
+
 Los bloques visuales de `Sobre mí` deben respetar los contratos correspondientes a su discriminador:
 
 ```text
@@ -4171,6 +4264,8 @@ Fecha de actividad
 Tipos de certificaciones
 Fechas de artículos
 Datos de proyectos
+Imágenes de contenido
+Alternativas textuales
 Medios de contacto
 Datos del formulario
 ```
@@ -4217,6 +4312,12 @@ Conservación del idioma activo del sistema
 Aviso cuando el contenido utiliza otro idioma
 Representación de Sobre mí
 Discriminación entre icono e imagen
+Alternativas textuales de imágenes de contenido
+Conservación de la alternativa textual recibida
+Alternativas vacías en representaciones resumidas
+Alternativas informativas en representaciones de detalle
+Alternativas de imágenes incluidas en artículos
+Representación de Contactos mediante iconos
 Mapeo de iconos de Tabler
 Representación de tarjetas
 Distribución adaptable de tarjetas
