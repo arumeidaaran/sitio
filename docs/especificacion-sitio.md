@@ -51,7 +51,7 @@ Las tarjetas forman parte del lenguaje visual común del sitio, aunque cada tipo
 
 El tema claro y el tema oscuro mantienen la misma identidad, estructura, contenido, jerarquía y disposición para una misma composición responsive.
 
-El cambio de tema solamente modifica la representación visual correspondiente a cada paleta.
+El cambio de tema solamente cambia la representación visual correspondiente a cada paleta.
 
 La estructura del sitio se adapta al espacio disponible sin convertir las composiciones estrechas en una reducción proporcional de la representación de escritorio.
 
@@ -568,7 +568,7 @@ Acento verde         => #58B28D
 
 `#737B8B` se utiliza en bordes de controles y en cualquier línea necesaria para reconocer un componente, un estado o una separación estructural.
 
-`#202936` solamente debe utilizarse cuando la línea es decorativa y su ausencia no modifica la comprensión ni la identificación de un componente.
+`#202936` solamente debe utilizarse cuando la línea es decorativa y su ausencia no cambia la comprensión ni la identificación de un componente.
 
 ---
 
@@ -1029,7 +1029,7 @@ y permite que tanto el nombre como la descripción breve satisfagan AA sin depen
 
 La regla se conserva en cualquier composición donde el texto permanezca superpuesto a la fotografía.
 
-La sustitución futura de la fotografía no modifica esta garantía mientras permanezcan el color del texto y la capa mínima establecida.
+La sustitución futura de la fotografía no cambia esta garantía mientras permanezcan el color del texto y la capa mínima establecida.
 
 ---
 
@@ -1369,7 +1369,7 @@ Menú
 
 El menú no permanece abierto después de completar la selección del destino.
 
-Cuando la selección produce una nueva vista mediante navegación interna, después de completar el cierre del menú y representar el destino se aplica la gestión de foco definida en `26.34. Cambio de vista y foco`.
+Cuando la selección produce una nueva vista mediante navegación interna, después de completar el cierre del menú y representar el destino se aplica la gestión de foco definida en `26.35. Cambio de vista y foco`.
 
 La barra:
 
@@ -1646,7 +1646,7 @@ Los iconos funcionan como apoyo visual.
 
 No sustituyen el texto cuando el significado pueda resultar ambiguo.
 
-Los tamaños definidos no modifican el icono seleccionado por el mapeo.
+Los tamaños definidos no cambian el icono seleccionado por el mapeo.
 
 ---
 
@@ -1702,7 +1702,7 @@ tema claro
 tema oscuro
 ```
 
-El cambio de tema no modifica la página representada.
+El cambio de tema no cambia la página representada.
 
 Debe conservar:
 
@@ -1842,7 +1842,7 @@ Las secciones destacadas presentan contenido seleccionado editorialmente.
 
 La composición no depende de una cantidad fija de elementos.
 
-Los componentes deben admitir variaciones en la cantidad recibida sin modificar la estructura general de Inicio.
+Los componentes deben admitir variaciones en la cantidad recibida sin cambiar la estructura general de Inicio.
 
 Cada sección termina con un acceso explícito hacia su listado completo.
 
@@ -1945,7 +1945,7 @@ La uniformidad visual no debe forzar contratos idénticos entre tipos de conteni
 
 Dentro de un mismo tipo de elemento, las tarjetas deben mantener una estructura visual consistente.
 
-El cambio de tema no modifica la estructura interna, el orden, el contenido ni la disposición correspondiente al ancho disponible.
+El cambio de tema no cambia la estructura interna, el orden, el contenido ni la disposición correspondiente al ancho disponible.
 
 ---
 
@@ -1979,7 +1979,7 @@ Actualizaciones
 
 La composición no depende de una cantidad fija de elementos.
 
-Debe admitir variaciones en la cantidad disponible sin modificar la estructura general del área.
+Debe admitir variaciones en la cantidad disponible sin cambiar la estructura general del área.
 
 No deben añadirse dentro de esta región citas, frases de efecto ni otros bloques que no representen una actualización.
 
@@ -2202,7 +2202,7 @@ Contenido proveniente de Markdown
 
 según la página correspondiente.
 
-La variación ocurre dentro de esta región sin modificar:
+La variación ocurre dentro de esta región sin cambiar:
 
 ```text
 Cabecera
@@ -2293,7 +2293,7 @@ La reorganización se utiliza cuando debe cambiarse la disposición sin perder i
 
 El redimensionamiento se utiliza para elementos que continúan siendo legibles después de reducirse.
 
-La adaptación interna debe modificar la representación del componente.
+La adaptación interna debe cambiar la representación del componente.
 
 Ejemplos:
 
@@ -2647,7 +2647,7 @@ foco visible
 botón principal
 ```
 
-Los mecanismos técnicos de validación, envío y protección no modifican la identidad visual general de la página.
+Los mecanismos técnicos de validación, envío y protección no cambian la identidad visual general de la página.
 
 ---
 
@@ -2679,13 +2679,9 @@ ancho  => 100%
 altura => 48px
 ```
 
-La misma regla se aplica durante:
+La misma regla se aplica durante `enviando...`.
 
-```text
-enviando...
-```
-
-La adaptación no modifica los estados ni el contenido del formulario.
+La adaptación no cambia los estados ni el contenido del formulario.
 
 ---
 
@@ -3125,7 +3121,7 @@ No se requiere representar en el detalle una distribución porcentual de todos l
 
 El orden visual del listado constituye una decisión editorial.
 
-No debe modificarse automáticamente solamente porque un repositorio haya recibido una actualización técnica reciente.
+No debe cambiarse automáticamente solamente porque un repositorio haya recibido una actualización técnica reciente.
 
 ---
 
@@ -3192,7 +3188,7 @@ La fecha de publicación corresponde a la publicación inicial.
 
 La fecha de actualización corresponde a la última versión publicada.
 
-Cuando todavía no existe una modificación posterior:
+Cuando todavía no existe una cambio posterior:
 
 ```text
 Fecha de publicación
@@ -3248,6 +3244,12 @@ Grafos
 Videos
 Otros elementos propios del contenido
 ```
+
+Los cambios de idioma definidos editorialmente dentro del contenido forman parte de la estructura semántica del artículo.
+
+El procesamiento de Markdown debe conservar la información necesaria para que esos cambios continúen identificados en la representación resultante.
+
+El frontend no analiza automáticamente el texto para inferir el idioma de un fragmento.
 
 ---
 
@@ -3351,7 +3353,7 @@ Mensajes técnicos sin localizar
 Códigos HTTP como contenido principal
 ```
 
-cuando esa información no modifica la acción que debe realizar.
+cuando esa información no cambia la acción que debe realizar.
 
 ---
 
@@ -3445,13 +3447,7 @@ La unidad adopta el estado correspondiente.
 
 El estado de carga utiliza skeleton.
 
-No se utiliza:
-
-```text
-Cargando...
-```
-
-como sustitución general del contenido.
+No se utiliza `Cargando...` como sustitución general del contenido.
 
 Tampoco se utiliza un spinner global para sustituir la página.
 
@@ -4077,7 +4073,7 @@ Durante la operación:
 ```text
 Campos
 => conservan valores
-=> temporalmente no modificables
+=> temporalmente no cambiables
 => continúan disponibles para el recorrido de foco
 
 Botón
@@ -4201,7 +4197,7 @@ La validación no depende únicamente de un mensaje general equivalente a:
 El formulario contiene errores.
 ```
 
-El usuario debe poder identificar qué campo requiere modificación.
+El usuario debe identificar qué campo requiere cambio.
 
 Cuando la validación del frontend determina que los datos todavía no cumplen el contrato, no se realiza la solicitud.
 
@@ -4410,7 +4406,7 @@ Estados
 Orden editorial
 ```
 
-y debe modificar:
+y debe cambiar:
 
 ```text
 Composición
@@ -4437,7 +4433,7 @@ ancho < 1024px
 => composición estrecha
 ```
 
-No se introduce una sucesión adicional de puntos de ruptura únicamente para modificar cantidades fijas de columnas.
+No se introduce una sucesión adicional de puntos de ruptura únicamente para cambiar cantidades fijas de columnas.
 
 Los componentes que deben responder naturalmente al espacio disponible deben hacerlo sin depender de un número predeterminado de columnas.
 
@@ -4799,7 +4795,7 @@ La navegación expandida no permanece ocupando espacio después de seleccionar e
 
 Cuando la navegación produce una nueva vista, el cierre del menú y del grupo precede al foco programático sobre el encabezado principal de la vista de destino.
 
-El comportamiento de foco se encuentra definido en `26.34. Cambio de vista y foco`.
+El comportamiento de foco se encuentra definido en `26.35. Cambio de vista y foco`.
 
 ---
 
@@ -4957,13 +4953,7 @@ ancho < 1024px
 => altura 48px
 ```
 
-Durante:
-
-```text
-enviando...
-```
-
-se conserva la misma regla de ancho.
+Durante `enviando...` se conserva la misma regla de ancho.
 
 ---
 
@@ -5084,7 +5074,7 @@ La unidad de presentación mantiene sus límites independientemente de la compos
 
 ## 25.25. Principio de conservación
 
-Responsive debe modificar:
+Responsive debe cambiar:
 
 ```text
 posición
@@ -5094,7 +5084,7 @@ cantidad natural de columnas
 organización interna
 ```
 
-pero no modifica arbitrariamente:
+pero no cambia arbitrariamente:
 
 ```text
 contenido
@@ -5134,6 +5124,10 @@ Alcanzar un requisito AAA concreto no convierte AAA en el nivel general de confo
 
 Una combinación o comportamiento que no alcance AAA debe permanecer cuando cumple el requisito AA correspondiente.
 
+Los criterios de nivel A continúan siendo obligatorios para la conformidad AA cuando no existe un criterio AA equivalente que sustituya la misma exigencia.
+
+El nivel propio de un criterio de WCAG no se cambia para adaptarlo al nivel general del proyecto.
+
 ---
 
 ## 26.2. Orden estructural y navegación mediante teclado
@@ -5170,7 +5164,7 @@ tabindex="-1"
 
 solamente debe utilizarse para permitir que un elemento reciba foco programáticamente sin incorporarlo al recorrido secuencial mediante `Tab`.
 
-Este comportamiento se utiliza en el encabezado principal de una nueva vista según `26.34. Cambio de vista y foco`.
+Este comportamiento se utiliza en el encabezado principal de una nueva vista según `26.35. Cambio de vista y foco`.
 
 Un elemento gráfico que forma parte de un control no constituye un segundo objetivo de foco cuando no dispone de una acción propia.
 
@@ -5214,7 +5208,7 @@ La carga inicial de una página no mueve automáticamente el foco hacia `main` n
 
 Esta regla corresponde a la carga inicial del sitio.
 
-El cambio de una vista por otra mediante navegación interna utiliza el comportamiento específico definido en `26.34. Cambio de vista y foco`.
+El cambio de una vista por otra mediante navegación interna utiliza el comportamiento específico definido en `26.35. Cambio de vista y foco`.
 
 La aplicación no incorpora un enlace adicional de salto al contenido principal.
 
@@ -5477,13 +5471,7 @@ durante este estado.
 
 El control permanece en el recorrido normal de foco.
 
-El texto visible:
-
-```text
-enviando...
-```
-
-constituye también su nombre accesible durante la operación.
+El texto visible `enviando...` constituye también su nombre accesible durante la operación.
 
 No se añade un `aria-label` diferente para sustituir ese texto.
 
@@ -5521,11 +5509,7 @@ El estado de progreso se anuncia mediante una región:
 
 La región `role="status"` existe en el documento antes de comenzar la operación.
 
-Al iniciar el envío, su contenido cambia para comunicar:
-
-```text
-enviando...
-```
+Al iniciar el envío, su contenido cambia para comunicar `enviando...`.
 
 La comunicación es no interruptiva.
 
@@ -5555,13 +5539,7 @@ Conceptualmente:
 
 Esta separación permite que el progreso se comunique mientras el formulario continúa marcado como ocupado.
 
-La región de estado no introduce una segunda representación visual de:
-
-```text
-enviando...
-```
-
-mientras el texto ya se encuentra visible en el botón.
+La región de estado no introduce una segunda representación visual de `enviando...` mientras el texto ya se encuentra visible en el botón.
 
 Debe permanecer visualmente oculta siempre que continúe disponible para las tecnologías de asistencia. Pero no debe ocultarse mediante un mecanismo que también la retire del árbol de accesibilidad.
 
@@ -5731,13 +5709,7 @@ Los skeletons no reciben foco.
 
 No contienen controles ficticios.
 
-No se añade un texto oculto equivalente a:
-
-```text
-Cargando...
-```
-
-solamente para crear una representación adicional destinada a tecnologías de asistencia.
+No se añade un texto oculto equivalente a `Cargando...` solamente para crear una representación adicional destinada a tecnologías de asistencia.
 
 La animación visual del skeleton permanece mientras la operación continúa pendiente.
 
@@ -5819,7 +5791,7 @@ No transforma por su cuenta una alternativa vacía en texto.
 Conceptualmente:
 
 ```html
-<img src="valor recibido" alt="valor recibido">
+<img src="{valor recibido}" alt="{valor recibido}">
 ```
 
 ### Sobre mí
@@ -5844,13 +5816,9 @@ alt
 
 Cuando la imagen se encuentra dentro de un enlace que ya dispone de otro contenido suficiente para identificar su destino, la alternativa continúa correspondiendo a la función propia de la imagen.
 
-Cuando la imagen no debe aportar información adicional:
+Cuando la imagen no aporta información adicional, el valor de `alt` es vacío.
 
-```text
-alt=""
-```
-
-En todos los casos, `sitio-api` proporciona el valor final y `sitio` lo representa sin modificarlo.
+En todos los casos, `sitio-api` proporciona el valor final y `sitio` lo representa sin cambiarlo.
 
 ### Proyectos
 
@@ -6036,13 +6004,9 @@ Las imágenes puramente decorativas no introducen información redundante.
 
 Cuando corresponda, se implementan mediante recursos visuales de CSS.
 
-Si una imagen decorativa necesita utilizar un elemento `<img>`, utiliza:
+Si una imagen decorativa necesita utilizar un elemento `<img>`, utiliza `alt=""`.
 
-```html
-alt=""
-```
-
-Una imagen que comunica información necesaria no utiliza `background-image` como sustitución de una imagen accesible.
+Na imagen que comunica información necesaria, no utiliza `background-image` como sustitución de una imagen accesible.
 
 ---
 
@@ -6169,13 +6133,350 @@ La información accesible utiliza el idioma correspondiente a la interfaz o al c
 
 Los nombres personales también utilizan la representación localizada establecida para el idioma correspondiente.
 
-La localización debe modificar el sistema de escritura utilizado para representar el nombre.
+La localización debe cambiar el sistema de escritura utilizado para representar el nombre.
 
 Las alternativas textuales que forman parte de contenido localizado son proporcionadas por `sitio-api` junto con la variante correspondiente del contenido.
 
+Cuando una alternativa textual pertenece a una variante presentada en un idioma diferente del idioma principal del documento, debe quedar incluida dentro del contexto semántico del idioma correspondiente a esa variante.
+
 ---
 
-## 26.20. Método de cálculo de contraste
+## 26.20. Idioma semántico
+
+El idioma del documento y de las partes que utilizan un idioma diferente debe determinarse programáticamente.
+
+Las etiquetas utilizadas corresponden al formato BCP 47 definido por la arquitectura lingüística del sitio.
+
+La aplicación utiliza el atributo `lang` para declarar el idioma correspondiente.
+
+### Criterios de conformidad
+
+La aplicación utiliza los criterios de WCAG 2.2 correspondientes a la identificación semántica del idioma.
+
+| Aspecto                        | Criterio                     | A      | AA        | AAA       |
+| ------------------------------ | ---------------------------- | ------ | --------- | --------- |
+| Idioma principal del documento | `3.1.1 Idioma de la página`  | cumple | No cumple | No cumple |
+| Idioma de las partes           | `3.1.2 Idioma de las partes` | Cumple | Cumple    | No cumple |
+
+No existe un criterio AA equivalente para la exigencia de idioma principal del documento, por lo que el criterio `3.1.1` conserva formalmente su nivel A.
+
+No existe un criterio AAA adicional que imponga una declaración semántica superior de `lang` para el idioma principal o para los cambios de idioma. Se utiliza excepcionalmente dentro de la conformidad AA del proyecto porque no existe un criterio AA diferente que sustituya la declaración del idioma principal del documento.
+
+El criterio `3.1.2` se aplica directamente en nivel AA a las partes cuyo idioma difiere del idioma principal.
+
+La revisión de nivel AA sigue siendo la regla definida en esta sección.
+
+### Idioma principal del documento
+
+El idioma principal del documento corresponde al idioma activo del sistema.
+
+Conceptualmente:
+
+```html
+<html lang="{idioma-activo}">
+```
+
+El valor utilizado debe ser una etiqueta BCP 47 válida correspondiente al idioma activo ya resuelto por `sitio`.
+
+La secuencia inicial es:
+
+```text
+Resolver idioma activo
+        |
+        V
+Establecer lang del documento
+        |
+        V
+Presentar la aplicación
+```
+
+El documento no debe presentarse con una declaración lingüística correspondiente a una variante provisional diferente de la que finalmente se utiliza como idioma activo del sistema.
+
+Cuando el usuario selecciona explícitamente otro idioma:
+
+```text
+Validar selección
+        |
+        V
+Establecer nuevo idioma activo
+        |
+        V
+Actualizar lang del documento
+        |
+        V
+Representar la página equivalente
+```
+
+La navegación interna que conserva el idioma activo también conserva el valor de `lang` del documento.
+
+Conceptualmente:
+
+```text
+Navegación interna
++ mismo idioma activo
+=> mismo lang del documento
+```
+
+La utilización de un idioma de respaldo para una unidad de contenido no cambia el idioma principal del documento.
+
+### Contenido en el mismo idioma del documento
+
+Cuando el contenido utiliza el mismo idioma declarado por su ancestro, no necesita repetir el atributo `lang`.
+
+Conceptualmente:
+
+```text
+Idioma del contenido
+= idioma heredado
+=> utilizar herencia normal
+```
+
+No se añaden declaraciones redundantes en cada elemento únicamente para repetir el mismo idioma.
+
+### Contenido presentado mediante un idioma de respaldo
+
+Cuando el idioma activo no está disponible para un contenido y la aplicación utiliza el idioma por defecto o el idioma original como respaldo, el idioma principal del documento continúa correspondiendo al idioma activo del sistema.
+
+La región que pertenece a la variante efectivamente presentada utiliza su idioma real.
+
+Conceptualmente:
+
+```html
+<html lang="{idioma-activo}">
+    ...
+    <article lang="{idioma-del-contenido}">
+        ...
+    </article>
+</html>
+```
+
+La estructura concreta utilizada para agrupar el contenido depende del componente representado.
+
+La declaración debe aplicarse a la región más adecuada que contenga exclusivamente el contenido perteneciente a esa variante.
+
+No debe ampliarse a una región que incluya también textos propios de la interfaz en otro idioma.
+
+Conceptualmente:
+
+```text
+Documento
+=> idioma activo del sistema
+
+Interfaz
+=> idioma activo del sistema
+
+Aviso de utilización de respaldo
+=> idioma activo del sistema
+
+Contenido presentado mediante respaldo
+=> idioma real de la variante
+```
+
+La utilización del respaldo no cambia:
+
+```text
+Idioma activo
+Preferencia almacenada
+Dirección localizada
+Navegación
+Idioma de los mensajes de interfaz
+lang del documento
+```
+
+### Unidades de contenido dentro de colecciones
+
+Una colección puede contener simultáneamente recursos cuyas variantes efectivamente presentadas utilicen idiomas diferentes.
+
+Cada unidad debe declarar su propio idioma cuando difiere del idioma heredado.
+
+Conceptualmente:
+
+```text
+Colección
+|
++-- Unidad A
+|   => mismo idioma del documento
+|   => hereda
+|
++-- Unidad B
+|   => idioma diferente
+|   => declara lang propio
+|
++-- Unidad C
+    => otro idioma diferente
+    => declara lang propio
+```
+
+No se asigna a toda la colección el idioma de una de sus unidades cuando esto produciría una declaración incorrecta para las demás.
+
+Una tarjeta puede contener simultáneamente:
+
+```text
+Contenido del recurso
+=> idioma de la variante presentada
+
+Texto de acción
+=> idioma activo de la interfaz
+```
+
+Por este motivo, cuando ambos idiomas son diferentes, `lang` debe aplicarse solamente a la parte que pertenece al contenido localizado.
+
+Conceptualmente:
+
+```html
+<article>
+    <div lang="{idioma-del-contenido}">
+        <p> texto localizado de la interfaz </p>
+    </div>
+</article>
+```
+
+La estructura exacta puede variar según el componente, pero la separación lingüística debe conservar el mismo resultado semántico.
+
+### Encabezados y alternativas textuales
+
+Los encabezados que pertenecen al contenido utilizan el idioma de la variante que representan.
+
+Cuando un encabezado principal corresponde a contenido presentado mediante un idioma de respaldo:
+
+```text
+H1
+=> idioma real del contenido
+```
+
+Esto se mantiene también cuando el encabezado recibe foco programático después de una navegación interna.
+
+Las alternativas textuales proporcionadas por `sitio-api` pertenecen igualmente al idioma de la variante de contenido correspondiente.
+
+Cuando una imagen se encuentra dentro de una región que ya declara el idioma de la variante, su alternativa hereda ese contexto lingüístico.
+
+Conceptualmente:
+
+```html
+<div lang="{idioma-del-contenido}">
+    <img src="{camino-de-la-imagen}" alt="{texto-alternativo-localizado}">
+</div>
+```
+
+No se cambia el texto de `alt` para adaptarlo al idioma del documento.
+
+Se conserva la alternativa proporcionada por la variante correspondiente.
+
+### Cambios de idioma dentro del contenido
+
+Una variante puede contener deliberadamente una parte escrita en otro idioma.
+
+Cuando el idioma de una parte difiere del idioma heredado y el cambio debe determinarse programáticamente, el elemento correspondiente declara su propio idioma.
+
+Conceptualmente:
+
+```html
+<p lang="{idioma-de-la-parte}">
+    ...
+</p>
+```
+
+Cuando solamente una parte menor del elemento utiliza otro idioma:
+
+```html
+<span lang="{idioma-de-la-parte}">...</span>
+```
+
+El atributo debe aplicarse al elemento semántico más adecuado para representar el cambio.
+
+No se introduce un elemento adicional únicamente por costumbre cuando un elemento semántico ya existente debe recibir correctamente la declaración.
+
+No es necesario declarar un cambio lingüístico para los casos exceptuados por WCAG, como:
+
+```text
+Nombres propios
+Términos técnicos
+Palabras de idioma indeterminado
+Palabras o expresiones que forman parte del uso habitual del idioma circundante
+```
+
+### Contenido procedente de Markdown
+
+Los cambios lingüísticos definidos editorialmente dentro del contenido Markdown deben conservarse durante todo su procesamiento.
+
+Conceptualmente:
+
+```text
+Contenido editorial
+=> identifica cambio lingüístico cuando corresponde
+
+sitio-api
+=> procesa el contenido
+=> conserva la información lingüística
+
+sitio
+=> representa el resultado
+=> mantiene lang correspondiente
+```
+
+El frontend no analiza palabras, frases o párrafos para intentar detectar automáticamente su idioma.
+
+La ausencia de una declaración editorial no se sustituye mediante detección heurística.
+
+### Valores y herencia
+
+Todo valor de `lang` establecido por la aplicación debe corresponder a una etiqueta BCP 47 válida.
+
+Cuando el idioma ya se encuentra correctamente declarado por un ancestro:
+
+```text
+mismo idioma
+=> heredar
+=> no repetir lang innecesariamente
+```
+
+Cuando existe un cambio real de idioma:
+
+```text
+idioma diferente
+=> declarar lang en la parte correspondiente
+```
+
+Cuando el idioma es conocido, no se utiliza `lang=""` para representar su valor.
+
+La aplicación tampoco conserva una declaración antigua cuando el contenido cambia posteriormente a una variante de otro idioma.
+
+La semántica debe corresponder siempre al contenido actualmente representado.
+
+### Responsabilidades
+
+No se añade una propiedad de idioma adicional al contrato general únicamente para establecer `lang` de una variante completa.
+
+`Sitio` ya conoce:
+
+```text
+Idioma activo
+Idioma solicitado
+Idioma de la solicitud que produjo el contenido presentado
+Idioma por defecto
+Idioma original
+Idiomas soportados
+```
+
+y debe utilizar esta información para aplicar el idioma semántico de la variante efectivamente representada.
+
+Para los cambios lingüísticos internos de una variante, la información pertenece al propio contenido editorial y debe conservarse mediante `sitio-api`.
+
+Conceptualmente:
+
+```text
+sitio-api
+=> conserva la información lingüística editorial del contenido
+
+sitio
+=> conoce el idioma de la variante presentada
+=> aplica el idioma semántico correspondiente
+=> no detecta idiomas mediante análisis automático
+```
+
+---
+
+## 26.21. Método de cálculo de contraste
 
 El contraste utiliza la luminancia relativa definida para WCAG.
 
@@ -6245,7 +6546,7 @@ No existe un umbral AAA adicional independiente para contraste no textual.
 
 ---
 
-## 26.21. Garantía cromática del tema claro
+## 26.22. Garantía cromática del tema claro
 
 Los tokens del tema claro se definen de manera que su función pueda utilizarse en todos los contextos permitidos por el propio sistema sin depender de una comprobación manual diferente para cada página.
 
@@ -6279,7 +6580,7 @@ Las combinaciones específicas de un componente deben cumplir el requisito corre
 
 ---
 
-## 26.22. Tokens accesibles del tema claro
+## 26.23. Tokens accesibles del tema claro
 
 Los valores definitivos son:
 
@@ -6332,7 +6633,7 @@ visited      => #7C3A65
 
 ---
 
-## 26.23. Auditoría de contraste del tema claro
+## 26.24. Auditoría de contraste del tema claro
 
 Los colores generales fueron comprobados frente a todas las superficies en las que se permite su utilización.
 
@@ -6368,11 +6669,11 @@ También quedan comprobadas las combinaciones específicas principales:
 
 Estas comprobaciones corresponden a los valores opacos indicados.
 
-Si la representación efectiva modifica el color, debe comprobarse el resultado efectivo.
+Si la representación efectiva cambia el color, debe comprobarse el resultado efectivo.
 
 ---
 
-## 26.24. Garantía cromática del tema oscuro
+## 26.25. Garantía cromática del tema oscuro
 
 Los tokens del tema oscuro se definen de manera que cada función mantenga el nivel AA sobre todas las superficies en las que el sistema permite utilizarla.
 
@@ -6441,7 +6742,7 @@ No debe reutilizarse el rojo de fondo como color general de texto ni el rojo int
 
 ---
 
-## 26.25. Tokens accesibles del tema oscuro
+## 26.26. Tokens accesibles del tema oscuro
 
 Los valores definitivos son:
 
@@ -6504,7 +6805,7 @@ focus        => #E2484D
 
 ---
 
-## 26.26. Auditoría de contraste del tema oscuro
+## 26.27. Auditoría de contraste del tema oscuro
 
 Los colores del tema oscuro fueron comprobados según sus funciones y frente a todas las superficies en las que se permite su utilización.
 
@@ -6547,7 +6848,7 @@ La conformidad principal del proyecto permanece definida en AA.
 
 ---
 
-## 26.27. Contraste sobre la fotografía de la cabecera
+## 26.28. Contraste sobre la fotografía de la cabecera
 
 La fotografía constituye un fondo variable y no debe considerarse equivalente a una superficie cromática fija.
 
@@ -6614,7 +6915,7 @@ No debe dependerse de inspeccionar visualmente una fotografía concreta para det
 
 ---
 
-## 26.28. Bordes y separadores
+## 26.29. Bordes y separadores
 
 El tema claro utiliza:
 
@@ -6666,11 +6967,11 @@ Línea puramente decorativa
 
 Una línea inicialmente decorativa que pase a desempeñar una función necesaria debe cambiar al tratamiento funcional.
 
-El cambio de tema no modifica el significado de la línea.
+El cambio de tema no cambia el significado de la línea.
 
 ---
 
-## 26.29. Foco visible
+## 26.30. Foco visible
 
 El indicador general utiliza:
 
@@ -6721,7 +7022,7 @@ Los demás estados continúan comunicando su propio significado.
 
 ---
 
-## 26.30. Estados semánticos y color
+## 26.31. Estados semánticos y color
 
 Los colores semánticos no constituyen el único medio para comunicar información.
 
@@ -6760,7 +7061,7 @@ Todos ellos mantienen AA sobre las superficies permitidas para su función.
 
 ---
 
-## 26.31. Enlaces
+## 26.32. Enlaces
 
 Los enlaces deben disponer de semántica de enlace y de una identificación visible suficiente.
 
@@ -6805,11 +7106,11 @@ deben conservar el contraste correspondiente en las combinaciones permitidas.
 
 ---
 
-## 26.32. Colores efectivos
+## 26.33. Colores efectivos
 
 La validación corresponde al color realmente representado.
 
-Los valores comprobados no deben considerarse automáticamente válidos cuando se modifican mediante:
+Los valores comprobados no deben considerarse automáticamente válidos cuando se cambian mediante:
 
 ```text
 opacity
@@ -6823,20 +7124,20 @@ otra mezcla visual
 Conceptualmente:
 
 ```text
-Token sin modificación
+Token sin cambio
 => conserva el resultado comprobado
 
-Color efectivo modificado
+Color efectivo cambiado
 => requiere comprobar el resultado efectivo
 ```
 
 La comprobación debe utilizar el fondo efectivo sobre el que se representa el elemento.
 
-La fotografía de la cabecera utiliza la excepción controlada definida en `26.27. Contraste sobre la fotografía de la cabecera`, donde el resultado efectivo se garantiza mediante la capa mínima establecida.
+La fotografía de la cabecera utiliza la excepción controlada definida en `26.28. Contraste sobre la fotografía de la cabecera`, donde el resultado efectivo se garantiza mediante la capa mínima establecida.
 
 ---
 
-## 26.33. Título del documento
+## 26.34. Título del documento
 
 Cada página dispone de un `<title>` que describe su contenido o propósito.
 
@@ -6878,11 +7179,11 @@ Conceptualmente:
 <title>título específico | nombre del sitio</title>
 ```
 
-El separador forma parte de la convención definida para el sitio y no modifica la jerarquía de la información.
+El separador forma parte de la convención definida para el sitio y no cambia la jerarquía de la información.
 
 ---
 
-## 26.34. Cambio de vista y foco
+## 26.35. Cambio de vista y foco
 
 La carga inicial del sitio y la navegación interna entre vistas utilizan comportamientos de foco diferentes.
 
@@ -6920,7 +7221,7 @@ Una navegación interna constituye un cambio de vista cuando el enrutamiento sus
 
 El cambio de la dirección por sí solo no determina esta condición.
 
-Una modificación que conserva la misma vista conceptual no debe provocar el movimiento definido para una nueva página.
+Una cambio que conserva la misma vista conceptual no debe provocar el movimiento definido para una nueva página.
 
 La secuencia general es:
 
@@ -6948,6 +7249,8 @@ El foco solamente se desplaza cuando el encabezado principal de la nueva vista y
 No se mueve el foco hacia un skeleton que represente provisionalmente un encabezado todavía no disponible.
 
 Cuando el texto del encabezado depende del contenido solicitado, el movimiento ocurre después de que ese encabezado pueda representarse con su contenido correspondiente.
+
+Cuando ese encabezado pertenece a una variante presentada mediante un idioma de respaldo, debe conservar además el idioma semántico definido en `26.20. Idioma semántico`.
 
 ### Encabezado principal enfocable
 
@@ -7144,7 +7447,8 @@ Para un mismo ancho disponible deben compartir exactamente:
 - reglas de los estados comunes;
 - límites de las unidades de presentación;
 - comportamiento de carga, vacío, error y contenido no encontrado;
-- comportamiento de los estados del formulario.
+- comportamiento de los estados del formulario;
+- estructura semántica de idioma.
 
 Conceptualmente:
 
@@ -7203,6 +7507,8 @@ Cambiar las reglas de una unidad de presentación
 Cambiar las reglas funcionales de accesibilidad
 Cambiar la estructura semántica
 Cambiar la navegación mediante teclado
+Cambiar el idioma semántico del documento
+Cambiar el idioma semántico de las partes
 ```
 
 El tema oscuro no debe ser considerado un diseño independiente.
@@ -7507,49 +7813,69 @@ Página completa
 ## Accesibilidad
 
 ```text
-Referencia                  => WCAG 2.2
-Nivel                        => AA
-Orden visual                 => orden del DOM => orden de foco
-Foco tema claro              => 2px / offset 2px / #141414
-Foco tema oscuro             => 2px / offset 2px / #E2484D
-Skeleton visual              => fuera del contenido accesible
-Unidad cargando              => aria-busy
-Grupo expandible             => aria-expanded
-Campo inválido               => aria-invalid
-Error asociado               => aria-describedby
-Formulario enviando          => aria-busy="true"
-Campos durante envío         => readonly
-Campos durante envío         => no utilizar disabled
-Botón durante envío          => aria-disabled="true"
-Botón durante envío          => no utilizar disabled
-Texto del botón              => enviando...
-Segundo envío simultáneo     => bloqueado funcionalmente
-Progreso del envío           => role="status"
-Región de progreso           => fuera del formulario aria-busy
-Foco durante envío           => conservar en el control de origen
-Resultado no urgente         => role="status"
-Fallo de envío               => role="alert"
-Carga inicial                => sin movimiento programático de foco
-Cambio interno de vista      => foco en H1
-H1 de una nueva vista        => tabindex="-1"
-main                         => no recibe foco por el cambio de vista
-Cambio dentro de misma vista => conservar foco
-Anuncio adicional de ruta    => no utilizar aria-live
-Imagen de contenido          => src y alt obligatorios
-alt                          => texto o cadena vacía
-alt                          => no utilizar null
-Alternativa de contenido     => determinada por sitio-api
-Representación de alt        => utilizar exactamente el valor recibido
-Proyecto resumido            => alt=""
-Proyecto en detalle          => alt informativo
-Artículo resumido            => alt=""
-Artículo en detalle          => alt según función editorial
-Imagen de artículo Markdown  => alt según función individual
-Certificado resumido         => alt=""
-Certificación resumida       => alt=""
-Certificado en detalle       => alt informativo
-Certificación en detalle     => alt informativo
-Contactos                    => iconos, sin imagen de contenido
+Referencia                    => WCAG 2.2
+Nivel                          => AA
+Orden visual                   => orden del DOM => orden de foco
+Foco tema claro                => 2px / offset 2px / #141414
+Foco tema oscuro               => 2px / offset 2px / #E2484D
+Skeleton visual                => fuera del contenido accesible
+Unidad cargando                => aria-busy
+Grupo expandible               => aria-expanded
+Campo inválido                 => aria-invalid
+Error asociado                 => aria-describedby
+Formulario enviando            => aria-busy="true"
+Campos durante envío           => readonly
+Campos durante envío           => no utilizar disabled
+Botón durante envío            => aria-disabled="true"
+Botón durante envío            => no utilizar disabled
+Texto del botón                => enviando...
+Segundo envío simultáneo       => bloqueado funcionalmente
+Progreso del envío             => role="status"
+Región de progreso             => fuera del formulario aria-busy
+Foco durante envío             => conservar en el control de origen
+Resultado no urgente           => role="status"
+Fallo de envío                 => role="alert"
+Carga inicial                  => sin movimiento programático de foco
+Cambio interno de vista        => foco en H1
+H1 de una nueva vista          => tabindex="-1"
+main                           => no recibe foco por el cambio de vista
+Cambio dentro de misma vista   => conservar foco
+Anuncio adicional de ruta      => no utilizar aria-live
+Imagen de contenido            => src y alt obligatorios
+alt                            => texto o cadena vacía
+alt                            => no utilizar null
+Alternativa de contenido       => determinada por sitio-api
+Representación de alt          => utilizar exactamente el valor recibido
+Proyecto resumido              => alt=""
+Proyecto en detalle            => alt informativo
+Artículo resumido              => alt=""
+Artículo en detalle            => alt según función editorial
+Imagen de artículo Markdown    => alt según función individual
+Certificado resumido           => alt=""
+Certificación resumida         => alt=""
+Certificado en detalle         => alt informativo
+Certificación en detalle       => alt informativo
+Contactos                      => iconos, sin imagen de contenido
+Idioma principal               => lang del documento
+Idioma principal WCAG          => 3.1.1 nivel A
+Idioma de las partes WCAG      => 3.1.2 nivel AA
+Etiqueta lingüística           => BCP 47
+Idioma del documento           => idioma activo del sistema
+Cambio manual de idioma        => actualizar lang del documento
+Navegación con mismo idioma    => conservar lang del documento
+Contenido en mismo idioma      => heredar lang
+Contenido mediante respaldo    => declarar lang de la variante
+Documento durante respaldo     => conservar idioma activo del sistema
+Colección multilingüe          => lang independiente por unidad
+Texto de interfaz              => idioma activo del sistema
+H1 de contenido de respaldo    => idioma real de la variante
+Alt de contenido localizado    => idioma de la variante
+Cambio interno de idioma       => lang en la parte correspondiente
+Contenido Markdown             => conservar cambios lingüísticos editoriales
+Detección automática de idioma => no utilizar
+lang redundante                => no repetir cuando se hereda correctamente
+lang vacío con idioma conocido => no utilizar
+AAA específico para lang       => no existe requisito adicional
 ```
 
 ---
@@ -7697,7 +8023,7 @@ Los siguientes elementos de identidad visual quedan definidos:
 137. distinción entre carga inicial y cambio interno de vista para la gestión de foco;
 138. ausencia de movimiento programático de foco durante la carga inicial;
 139. foco programático en el encabezado principal después de una navegación interna hacia una nueva vista;
-140. uso de `tabindex="-1"` en el encabezado principal para permitir foco programático sin modificar el recorrido normal mediante teclado;
+140. uso de `tabindex="-1"` en el encabezado principal para permitir foco programático sin cambiar el recorrido normal mediante teclado;
 141. conservación de `main` como región semántica sin convertirla en destino automático de foco;
 142. conservación del foco durante actualizaciones que permanecen dentro de la misma vista;
 143. tratamiento de las vistas de contenido no encontrado como destinos completos de navegación;
@@ -7729,7 +8055,30 @@ Los siguientes elementos de identidad visual quedan definidos:
 169. alternativa informativa para las imágenes de certificados y certificaciones en sus páginas de detalle;
 170. disposición de información extensa de documentos mediante contenido textual accesible en lugar de concentrarla únicamente en `alt`;
 171. utilización exclusiva de iconos como representación visual de los medios de Contactos;
-172. exclusión de imágenes de contenido de las tarjetas de Contactos.
+172. exclusión de imágenes de contenido de las tarjetas de Contactos;
+173. utilización de `3.1.1 Idioma de la página`, nivel A, para la declaración del idioma principal al no existir un criterio AA equivalente para esa exigencia;
+174. utilización de `3.1.2 Idioma de las partes`, nivel AA, para las partes cuyo idioma difiere del idioma principal;
+175. ausencia de un criterio AAA adicional específico para la declaración semántica mediante `lang`;
+176. utilización de etiquetas BCP 47 válidas en las declaraciones lingüísticas;
+177. declaración del idioma activo del sistema como idioma principal del documento;
+178. actualización del idioma principal del documento después de una selección manual de idioma;
+179. conservación del idioma principal durante la navegación interna que mantiene el mismo idioma activo;
+180. conservación del idioma del documento cuando una unidad utiliza un idioma de respaldo;
+181. declaración del idioma real de las variantes presentadas mediante respaldo;
+182. aplicación de la declaración lingüística solamente a la región correspondiente al contenido que utiliza ese idioma;
+183. conservación del idioma activo del sistema en los textos propios de la interfaz y en el aviso de utilización de un idioma de respaldo;
+184. declaración independiente del idioma de cada unidad dentro de colecciones que presentan variantes en idiomas diferentes;
+185. separación semántica entre contenido localizado y acciones de interfaz cuando utilizan idiomas diferentes dentro del mismo componente;
+186. utilización del idioma real de la variante en sus encabezados y alternativas textuales;
+187. conservación del idioma semántico del encabezado principal cuando recibe foco programático;
+188. declaración de cambios lingüísticos internos en el elemento semántico correspondiente;
+189. aplicación de las excepciones establecidas por WCAG para nombres propios, términos técnicos, idiomas indeterminados y expresiones incorporadas al idioma circundante;
+190. conservación de los cambios lingüísticos editoriales durante el procesamiento del contenido Markdown;
+191. ausencia de detección automática del idioma por análisis del texto;
+192. utilización de herencia cuando el contenido mantiene el mismo idioma de su ancestro;
+193. ausencia de `lang=""` cuando el idioma es conocido;
+194. actualización de la declaración lingüística cuando cambia la variante representada;
+195. utilización del idioma de la solicitud que produjo el contenido presentado sin añadir una propiedad general adicional al contrato para determinar el idioma de la variante.
 
 Los modelos visuales deben utilizar los iconos concretos establecidos en el mapeo de esta especificación.
 
@@ -7748,6 +8097,8 @@ La gestión de contexto y foco durante los cambios de vista queda cerrada para l
 La semántica accesible del estado de envío en curso del formulario queda cerrada mediante el estado ocupado del formulario, los campos temporalmente de solo lectura, la indisponibilidad semántica y funcional del control de envío, la comunicación no interruptiva del progreso y la conservación del foco.
 
 Las alternativas textuales de las imágenes de contenido quedan cerradas mediante la clasificación funcional correspondiente a cada representación, la responsabilidad de `sitio-api` sobre el valor final de `alt`, la representación directa de ese valor por `sitio`, las reglas concretas para `Sobre mí`, proyectos, artículos, certificados y certificaciones, y la utilización exclusiva de iconos en las tarjetas de Contactos.
+
+El idioma semántico queda cerrado mediante la declaración del idioma activo del sistema en el documento, la declaración del idioma real de las partes que difieren de él, la conservación del idioma de las variantes presentadas mediante respaldo, la separación entre contenido e interfaz dentro de unidades multilingües y la conservación de los cambios lingüísticos definidos editorialmente dentro del contenido.
 
 La definición de accesibilidad continúa para los aspectos todavía pendientes antes de considerar completa la etapa de responsive y accesibilidad de `sitio`.
 

@@ -593,7 +593,7 @@ Página interna
 
 Las páginas internas no utilizan el área de exposición de Inicio.
 
-La región `Contenido` debe adoptar una composición propia según la naturaleza de la página sin modificar la estructura global del sitio.
+La región `Contenido` debe adoptar una composición propia según la naturaleza de la página sin cambiar la estructura global del sitio.
 
 ## Sobre mí
 
@@ -1080,6 +1080,10 @@ Otros elementos necesarios para el artículo
 
 Esta flexibilidad permite que los artículos tengan estructuras diferentes sin exigir una estructura rígida equivalente a la utilizada por proyectos o certificaciones.
 
+Cuando el contenido editorial incorpora cambios de idioma dentro de un artículo, esa información debe conservarse durante su procesamiento y representación.
+
+El frontend no determina el idioma de fragmentos del contenido mediante análisis automático.
+
 ## Tarjetas
 
 Las diferentes páginas reutilizan un mismo lenguaje visual de tarjetas.
@@ -1233,7 +1237,7 @@ Estados
 Orden editorial
 ```
 
-y modifica cuando sea necesario:
+y cambia cuando sea necesario:
 
 ```text
 Composición
@@ -1472,13 +1476,13 @@ En las composiciones de escritorio deben utilizar un ancho determinado por su co
 
 En las pantallas estrechas, las acciones principales deben utilizar todo el ancho disponible cuando ello favorece la composición.
 
-El cambio de ancho no modifica el texto ni el estado representado por el control.
+El cambio de ancho no cambia el texto ni el estado representado por el control.
 
 ### Formulario de contacto
 
 Los campos del formulario ya utilizan una disposición vertical y aprovechan el ancho disponible de su región.
 
-Por este motivo, la adaptación responsive no necesita modificar su orden.
+Por este motivo, la adaptación responsive no necesita cambiar su orden.
 
 La acción principal utiliza un ancho adecuado a su contenido en las composiciones de escritorio y ocupa el ancho disponible en las pantallas estrechas.
 
@@ -1553,7 +1557,7 @@ Las imágenes y otros recursos visuales se redimensionan proporcionalmente cuand
 
 Las tablas, bloques de código, diagramas y demás contenidos anchos utilizan las mismas reglas generales de reorganización, redimensionamiento, adaptación interna y desplazamiento propio.
 
-La adaptación responsive no modifica el contenido editorial del artículo.
+La adaptación responsive no cambia el contenido editorial del artículo.
 
 ## Estados comunes
 
@@ -1571,7 +1575,7 @@ Identidad visual
 
 cuando las regiones correspondientes continúan disponibles.
 
-Un estado técnico interno que no modifica materialmente lo que el usuario debe ver o hacer no requiere una representación visible propia.
+Un estado técnico interno que no cambia materialmente lo que el usuario debe ver o hacer no requiere una representación visible propia.
 
 ### Unidad de contenido
 
@@ -1983,7 +1987,7 @@ El orden visual, el orden estructural del documento y el recorrido normal median
 
 La presentación no debe reorganizar visualmente elementos de forma que contradiga el orden semántico utilizado para la navegación.
 
-La aplicación prioriza la estructura natural del documento y los controles nativos antes que mecanismos manuales para modificar el orden de foco.
+La aplicación prioriza la estructura natural del documento y los controles nativos antes que mecanismos manuales para cambiar el orden de foco.
 
 Todos los controles interactivos deben utilizarse mediante teclado cuando su naturaleza permita interacción.
 
@@ -2429,6 +2433,112 @@ La representación de nombres personales también forma parte de la localizació
 
 Esto permite utilizar las formas y sistemas de escritura correspondientes sin asumir que todos los idiomas comparten una misma representación textual.
 
+### Idioma semántico
+
+El idioma principal del documento corresponde al idioma activo del sistema.
+
+La declaración lingüística del documento se establece después de resolver el idioma activo y se actualiza cuando el usuario selecciona otro idioma.
+
+La navegación interna que conserva el mismo idioma activo no cambia esta declaración.
+
+Conceptualmente:
+
+```text
+Idioma activo del sistema
+=> idioma principal del documento
+
+Cambio manual de idioma
+=> actualizar idioma activo
+=> actualizar idioma principal del documento
+
+Navegación interna
+=> conservar idioma principal mientras no cambie el idioma activo
+```
+
+Cuando el contenido se presenta en el mismo idioma del sistema, utiliza normalmente el contexto lingüístico ya establecido por el documento.
+
+Cuando una variante de contenido se presenta mediante un idioma de respaldo diferente del idioma activo, el documento continúa utilizando el idioma del sistema y la región correspondiente al contenido declara su idioma real.
+
+Conceptualmente:
+
+```text
+Idioma del sistema
+=> documento
+=> interfaz
+=> navegación
+=> mensajes
+
+Contenido en el mismo idioma
+=> utiliza el contexto lingüístico del documento
+
+Contenido en otro idioma
+=> declara su propio idioma
+=> no cambia el idioma del documento
+```
+
+La utilización de un idioma de respaldo no modifica:
+
+```text
+Idioma activo
+Preferencia
+Dirección
+Navegación
+Idioma de la interfaz
+```
+
+El aviso que informa que el contenido se presenta en otro idioma pertenece a la interfaz y continúa utilizando el idioma activo del sistema.
+
+La declaración lingüística correspondiente al contenido debe limitarse a la región que realmente pertenece a esa variante.
+
+Los controles, acciones y demás textos propios de la interfaz que rodean ese contenido continúan perteneciendo al idioma del sistema.
+
+Una colección puede presentar simultáneamente unidades de contenido en idiomas diferentes.
+
+Cada unidad utiliza el idioma correspondiente a la variante que realmente representa.
+
+Conceptualmente:
+
+```text
+Colección
+|
++-- unidad en idioma del sistema
+|   => utiliza contexto del documento
+|
++-- unidad en otro idioma
+|   => declara idioma propio
+|
++-- unidad en otro idioma
+    => declara idioma propio
+```
+
+La colección completa no adopta el idioma de una unidad particular.
+
+Los textos accesibles que forman parte del contenido, incluidas las alternativas textuales proporcionadas para sus imágenes, pertenecen al mismo contexto lingüístico de la variante representada.
+
+Los encabezados y demás textos del contenido también utilizan el idioma real de esa variante.
+
+Cuando una parte concreta del contenido cambia de idioma dentro de una variante, el cambio debe declararse semánticamente en la región o fragmento correspondiente.
+
+La declaración se aplica a la parte más adecuada de la estructura y no a una región mayor que incluya contenido de otros idiomas.
+
+Conceptualmente:
+
+```text
+Contenido
+=> idioma de la variante
+
+Fragmento en otro idioma
+=> idioma propio del fragmento
+```
+
+Los cambios lingüísticos definidos editorialmente deben conservarse durante el procesamiento y la representación del contenido.
+
+El frontend no debe determinar el idioma mediante análisis del texto ni otro tipo de recurso programático.
+
+Cuando una parte utiliza el mismo idioma que su contexto superior, no necesita repetir innecesariamente la declaración lingüística.
+
+Las declaraciones utilizadas siguen las mismas etiquetas de idioma definidas por la arquitectura de internacionalización del sitio.
+
 ### Color y contraste
 
 Las combinaciones de color permitidas por el sistema deben mantener el nivel de contraste establecido para el proyecto.
@@ -2733,7 +2843,7 @@ Cambio de tema
 Cambios de dirección que no sustituyen la vista conceptual
 ```
 
-En estos casos, el foco permanece en el elemento correspondiente a la interacción actual o conserva su posición cuando no existe una acción que justifique modificarla.
+En estos casos, el foco permanece en el elemento correspondiente a la interacción actual o conserva su posición cuando no existe una acción que justifique cambiarla.
 
 La región principal continúa cumpliendo una función semántica y no se convierte en destino de foco solamente porque cambie la vista.
 
@@ -2789,6 +2899,7 @@ Navegación
 Preferencia del usuario
 Dirección localizada
 Segmentos visibles de las rutas
+Idioma principal del documento
 ```
 
 `Sitio` conoce directamente los idiomas para los que dispone de una interfaz completa y utiliza esta información para validar las direcciones, preferencias y selecciones realizadas por el usuario.
@@ -2824,11 +2935,26 @@ sitio
     +-- idioma activo
     +-- preferencia
     +-- reglas de presentación
+    +-- idioma semántico del documento y del contenido
 ```
 
 El backend no decide cuál idioma debe exhibir el frontend.
 
 Las etiquetas utilizadas siguen el formato BCP 47.
+
+El idioma activo del sistema determina también el idioma semántico principal del documento.
+
+Cuando una variante de contenido utiliza el mismo idioma, puede utilizar el contexto lingüístico ya establecido.
+
+Cuando una variante se presenta en otro idioma mediante las reglas de respaldo, solamente el contenido correspondiente adopta semánticamente ese idioma.
+
+La interfaz continúa utilizando el idioma activo.
+
+En una colección, cada unidad puede utilizar el idioma de su propia variante sin obligar a que todas las demás unidades adopten el mismo contexto lingüístico.
+
+Los cambios de idioma que formen parte del propio contenido deben conservarse y declararse en la parte correspondiente.
+
+El frontend no deduce estos cambios mediante análisis automático del texto.
 
 Los textos que forman parte de la interfaz son administrados por `sitio`.
 
@@ -2852,7 +2978,7 @@ El idioma por defecto pertenece a la configuración de `sitio`.
 
 `Sitio-api` no necesita conocerlo para aplicar reglas de presentación.
 
-Su valor debe modificarse sin alterar la lógica general de selección del idioma.
+Su valor debe cambiarse sin alterar la lógica general de selección del idioma.
 
 Todo el frontend debe disponer de una versión completa en el idioma por defecto.
 
@@ -2904,6 +3030,7 @@ Validación mediante sitio
         |       |
         |       +-- almacenar preferencia
         |       +-- establecer idioma activo
+        |       +-- establecer idioma del documento
         |       +-- cargar elementos
         |       +-- presentar
         |
@@ -2931,9 +3058,11 @@ Preferencia almacenada
 
 La resolución del idioma del sistema no depende de la disponibilidad de `sitio-api`.
 
-Una falla al obtener contenido desde el backend no modifica automáticamente el idioma activo ya determinado por el frontend.
+Una falla al obtener contenido desde el backend no cambia automáticamente el idioma activo ya determinado por el frontend.
 
 La presentación de la página ocurre después de determinar el idioma activo y preparar los elementos correspondientes, evitando mostrar temporalmente una variante diferente.
+
+El idioma semántico principal del documento debe corresponder al idioma activo ya resuelto antes de presentar la aplicación.
 
 ## Preferencia de idioma
 
@@ -2971,7 +3100,7 @@ La imposibilidad de persistir la preferencia no invalida el idioma ya resuelto.
 
 Después de la resolución inicial, el idioma activo se conserva durante la navegación interna.
 
-El cambio entre páginas no vuelve a consultar ni a modificar la preferencia almacenada.
+El cambio entre páginas no vuelve a consultar ni a cambiar la preferencia almacenada.
 
 Conceptualmente:
 
@@ -3022,7 +3151,7 @@ Artículo concreto
 
 ## Selección de idioma
 
-Es permitido al usuario modificar explícitamente el idioma mediante los controles proporcionados por la interfaz.
+Es permitido al usuario cambiar explícitamente el idioma mediante los controles proporcionados por la interfaz.
 
 Una selección válida sustituye la preferencia anterior.
 
@@ -3041,16 +3170,19 @@ Almacenar preferencia
 Establecer idioma activo
         |
         V
+Actualizar idioma principal del documento
+        |
+        V
 Cargar página equivalente
 ```
 
-La aplicación no modifica el idioma de forma automática durante la navegación normal.
+La aplicación no cambia el idioma de forma automática durante la navegación normal.
 
 ## Selección de tema
 
 Es permitido al usuario cambiar explícitamente entre los temas disponibles mediante un control visible al comienzo de la navegación.
 
-El cambio de tema modifica exclusivamente la representación visual de la aplicación sin modificar:
+El cambio de tema cambia exclusivamente la representación visual de la aplicación sin cambiar:
 
 ```text
 Idioma activo
@@ -3086,7 +3218,7 @@ Cambiar el tema no provoca una nueva selección, reorganización ni sustitución
 
 Los temas mantienen de forma independiente las combinaciones de color necesarias para conservar el nivel de contraste establecido para la aplicación.
 
-El cambio entre ellos no modifica el nivel de conformidad requerido ni permite utilizar combinaciones no validadas en el tema seleccionado.
+El cambio entre ellos no cambia el nivel de conformidad requerido ni permite utilizar combinaciones no validadas en el tema seleccionado.
 
 ## Disponibilidad de contenido
 
@@ -3229,13 +3361,21 @@ Cuando el idioma utilizado para el contenido difiere del idioma activo del siste
 Conserva el idioma de la interfaz
 Conserva la preferencia
 Conserva la dirección localizada
+Conserva el idioma principal del documento
 Presenta la variante seleccionada del contenido
+Declara el idioma real de esa variante
 Informa al usuario sobre la diferencia de idioma
 ```
 
-La ausencia de una traducción no constituye un cambio de preferencia del usuario y no modifica el idioma almacenado.
+La ausencia de una traducción no constituye un cambio de preferencia del usuario y no cambia el idioma almacenado.
 
 El aviso correspondiente forma parte de la interfaz y se presenta en el idioma activo del sistema.
+
+La declaración del idioma diferente se aplica al contenido que pertenece a la variante utilizada como respaldo y no a los textos de interfaz que aparecen junto a él.
+
+Cuando una página contiene múltiples recursos, cada recurso puede utilizar una variante lingüística diferente de forma independiente.
+
+La declaración semántica corresponde a cada unidad de contenido y no obliga a cambiar el idioma de toda la colección.
 
 ## Traducciones
 
@@ -3283,6 +3423,10 @@ Si esta condición no se cumple, la aplicación utiliza el idioma original como 
 Las traducciones utilizadas por el sitio representan contenido preparado o revisado para el idioma correspondiente.
 
 La generación automática de traducciones no forma parte del mecanismo utilizado para completar variantes ausentes.
+
+Los cambios lingüísticos deliberados dentro de una variante forman parte de su contenido editorial y deben conservarse durante el procesamiento.
+
+No se utiliza detección automática del idioma para reconstruir información lingüística que debe formar parte del contenido.
 
 ## Integración con sitio-api
 
@@ -3343,6 +3487,7 @@ sitio-api
 => ordenar las actualizaciones por fecha de actividad
 => obtener y normalizar datos de fuentes externas
 => determinar las alternativas textuales de las imágenes de contenido según su función y contexto
+=> conservar los cambios lingüísticos definidos editorialmente durante el procesamiento del contenido
 => recibir y procesar el formulario de contacto
 => retornar solamente la información necesaria para cada contexto
 
@@ -3357,6 +3502,9 @@ sitio
 => aplicar los respaldos
 => realizar una nueva solicitud cuando sea necesario
 => construir las rutas visibles localizadas
+=> declarar semánticamente el idioma activo del documento
+=> declarar el idioma real del contenido cuando difiere del idioma del sistema
+=> conservar los cambios lingüísticos internos presentes en el contenido
 => representar la información recibida
 => representar las alternativas textuales recibidas sin generarlas ni sustituirlas
 => seleccionar componentes visuales
@@ -3370,6 +3518,10 @@ sitio
 `Sitio-api` tampoco determina la posición, color, tamaño, icono concreto ni demás características propias de la presentación.
 
 La determinación de la alternativa textual de una imagen de contenido forma parte de los datos suministrados y no constituye una decisión visual del frontend.
+
+La declaración semántica del idioma no requiere que `sitio-api` decida el idioma principal de la interfaz.
+
+El frontend ya conoce el idioma activo y el idioma de la variante que finalmente presenta mediante las solicitudes realizadas.
 
 `Sitio` no necesita conocer cómo el backend obtiene o almacena las distintas variantes del contenido.
 
@@ -3548,6 +3700,10 @@ idioma seleccionado finalmente
 
 Estas informaciones son conocidas o determinadas por el propio frontend durante la ejecución de sus reglas.
 
+La declaración semántica del idioma de la variante presentada tampoco requiere una propiedad adicional en el contrato.
+
+El frontend conoce el idioma de la solicitud que produjo el contenido finalmente utilizado.
+
 Conceptualmente:
 
 ```text
@@ -3592,7 +3748,7 @@ Las dos propiedades siempre forman parte del contrato cuando existe una imagen d
 
 El texto de `alt` es localizado.
 
-El frontend utiliza el valor recibido sin generarlo, sustituirlo ni modificarlo de acuerdo con la posición en la que la imagen se representa.
+El frontend utiliza el valor recibido sin generarlo, sustituirlo ni cambiarlo de acuerdo con la posición en la que la imagen se representa.
 
 La misma fuente visual puede disponer de una alternativa distinta en representaciones diferentes cuando su función cambia entre esos contextos.
 
@@ -3819,6 +3975,8 @@ update_date >= publication_date
 ```
 
 No se requiere una categoría para representar el artículo.
+
+Los cambios de idioma definidos editorialmente dentro del cuerpo forman parte del contenido procesado y deben conservar su significado lingüístico durante la representación.
 
 ### Certificado
 
@@ -4216,6 +4374,12 @@ Esta segunda condición constituye una regla de publicación y mantenimiento, pe
 
 Los `slug` deben pertenecer a la variante lingüística correspondiente y ser válidos dentro del contexto en el que identifican el recurso.
 
+El idioma semántico principal del documento debe corresponder al idioma activo del sistema.
+
+Cuando una variante de contenido utiliza otro idioma mediante las reglas de respaldo, su región debe corresponder semánticamente al idioma real de esa variante sin cambiar el idioma principal del documento.
+
+Los cambios lingüísticos internos definidos editorialmente deben conservarse durante el procesamiento y la representación del contenido.
+
 Toda imagen de contenido debe incluir su fuente y su alternativa textual.
 
 La alternativa textual debe permanecer vacía si su función corresponda a decorativa, sin omitirse ni utilizar un valor nulo.
@@ -4255,6 +4419,9 @@ Metadatos lingüísticos
 Contenido disponible
 Idioma original
 Idiomas soportados por el contenido
+Idioma semántico del documento
+Idioma semántico del contenido
+Cambios lingüísticos internos
 Slug localizado
 Elementos de interfaz
 Selección de destacados
@@ -4287,6 +4454,16 @@ Resolución del idioma
 Validación mediante los idiomas de interfaz
 Persistencia de la preferencia
 Selección manual
+Idioma semántico principal del documento
+Actualización del idioma semántico después de una selección manual
+Conservación del idioma semántico durante la navegación interna
+Contenido en el mismo idioma del sistema
+Contenido presentado mediante idioma de respaldo
+Declaración independiente del idioma de cada unidad de contenido
+Colecciones con unidades presentadas en idiomas diferentes
+Conservación del idioma del sistema en los textos de interfaz
+Cambios lingüísticos internos dentro del contenido
+Conservación de cambios lingüísticos durante el procesamiento de artículos
 Navegación localizada
 Slug localizado
 Cambio de tema
