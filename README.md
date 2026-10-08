@@ -1013,7 +1013,7 @@ Todas las tarjetas mantienen ambos espacios de fecha.
 
 `update_date` representa la fecha de la última versión publicada.
 
-Cuando un artículo todavía no ha recibido una modificación posterior:
+Cuando un artículo todavía no ha recibido un cambio posterior:
 
 ```text
 publication_date
@@ -1288,152 +1288,104 @@ Los tamaños de texto que no necesitan reducirse mantienen su proporción entre 
 
 No se introduce una escala intermedia adicional cuando la estructura debe resolverse mediante las escalas establecidas.
 
+La escala tipográfica se implementa de forma relativa al tamaño base configurado por el usuario.
+
+La presentación normal conserva las proporciones tipográficas definidas para el sitio sin impedir que una preferencia distinta del usuario modifique el tamaño efectivo del texto.
+
+Todos los textos visibles de la aplicación forman parte de esta misma capacidad de redimensionamiento.
+
+Esto incluye:
+
+```text
+Encabezados
+Párrafos
+Navegación
+Controles
+Campos de formulario
+Acciones
+Metadatos
+Etiquetas
+Textos auxiliares
+Textos presentados dentro de controles
+```
+
+Los textos auxiliares presentes dentro de los campos utilizan el mismo tamaño correspondiente al texto del propio control.
+
+Los controles forman parte de la misma escala tipográfica de la interfaz y responden al redimensionamiento del texto.
+
 El espaciado horizontal general se adapta al espacio disponible.
 
 El espaciado interno de los componentes y la separación vertical entre bloques mantienen la escala visual definida cuando no existe una necesidad concreta de reducirlos.
 
 Una pantalla estrecha no implica reducir automáticamente todos los espacios verticales.
 
-### Cabecera
+Todo contenedor que incluye texto debe crecer cuando el redimensionamiento del texto o el espaciado configurado por el usuario requieren más espacio.
 
-La cabecera mantiene la misma identidad visual en todas las composiciones.
-
-El estado expandido conserva:
-
-```text
-Fondo visual y foto juntos
-Nombre
-Descripción breve
-```
-
-El estado compacto conserva:
-
-```text
-Fondo visual y foto juntos
-Nombre
-```
-
-La fotografía permanece integrada en la cabecera y no se sustituye por un avatar independiente ni desaparece por utilizar una pantalla estrecha.
-
-En escritorio, la cabecera utiliza la geometría correspondiente a sus estados expandido y compacto.
-
-En pantallas estrechas, su altura se adapta al contenido y al espacio disponible en lugar de reproducir las dimensiones rígidas de escritorio.
-
-### Navegación en escritorio
-
-Mientras la composición de escritorio permanece activa, la navegación continúa como una región lateral.
-
-Su ancho no se reduce progresivamente para intentar conservar otras regiones que ya no caben correctamente.
-
-La adaptación de la página se realiza reorganizando el contenido antes que comprimiendo la navegación.
-
-### Navegación en pantallas estrechas
-
-En las pantallas estrechas, la barra de navegación aparece inmediatamente debajo de la cabecera.
-
-Presenta directamente:
-
-```text
-Menú
-Idioma
-Tema
-```
-
-La selección de idioma y tema permanece disponible sin quedar oculta dentro del propio menú.
-
-Al activar el menú, la navegación se presenta debajo de la barra dentro del flujo normal del documento.
-
-No utiliza un panel lateral, una superposición sobre la página ni una región flotante independiente.
+Una dimensión visual definida para la presentación normal no debe recortar, truncar, ocultar ni superponer el contenido.
 
 Conceptualmente:
 
 ```text
-Cabecera
-Navegación principal
-Menú expandido
+Dimensión normal
+=> referencia de presentación
+
+Texto necesita más espacio
+=> contenedor crece
+=> contenido permanece completo
+```
+
+Los controles y regiones con contenido textual deben aumentar su dimensión necesaria antes de eliminar, recortar o superponer ese contenido.
+
+Los elementos cuya geometría no depende de contenido textual mantienen su dimensión cuando el redimensionamiento del texto no cambia la información ni la funcionalidad que contienen.
+
+### Zoom y reflujo
+
+Las capacidades normales del navegador para ampliar la página y el texto no deben restringirse.
+
+La ampliación debe conservar:
+
+```text
 Contenido
+Funcionalidad
+Navegación
+Controles
+Estados
+Orden
+Jerarquía
 ```
 
-La apertura del menú desplaza el contenido.
-
-Al cerrarlo, el espacio ocupado por la navegación expandida deja de formar parte del flujo.
-
-Los accesos directos continúan funcionando como destinos de navegación.
-
-Las secciones que contienen elementos deben alternar entre estado cerrado y abierto.
+La interfaz utiliza las mismas reglas responsive cuando la ampliación reduce el espacio disponible para la representación.
 
 Conceptualmente:
 
 ```text
-Sección cerrada
-=> indicador de sección cerrada
+Menor espacio disponible por tamaño de pantalla
+=> aplicar adaptación responsive
 
-Activar sección
-=> cambiar indicador
-=> abrir solamente el grupo correspondiente
+Menor espacio disponible por ampliación
+=> aplicar adaptación responsive
 ```
 
-Cuando una sección está abierta:
+La página debe continuar reorganizándose hasta el ancho mínimo exigido por el nivel de accesibilidad establecido para el proyecto.
+
+Durante este reflujo no debe perderse contenido ni funcionalidad.
+
+La página completa no debe requerir desplazamiento horizontal para acceder al contenido normal.
+
+Las cadenas textuales extensas deben ajustarse dentro del espacio disponible cuando su división no cambia su significado.
+
+Conceptualmente:
 
 ```text
-Sección abierta
-=> indicador de sección abierta
+Texto normal
+=> envolver
 
-Activar nuevamente
-=> cambiar indicador
-=> cerrar solamente el grupo correspondiente
+Cadena extensa divisible
+=> adaptar dentro del contenedor
+
+Contenido cuya estructura horizontal es necesaria
+=> tratamiento específico del componente
 ```
-
-La misma regla se aplica a todas las secciones que dispongan de contenido expandible.
-
-El indicador visual forma parte del propio control de la sección y representa su estado.
-
-Al seleccionar un recurso concreto dentro de una sección:
-
-```text
-Navegar
-Cerrar menú
-Restablecer el grupo a su estado cerrado
-```
-
-La navegación y los controles globales continúan disponibles durante el desplazamiento mediante la composición compacta correspondiente.
-
-No es necesario regresar al comienzo de la página para volver a acceder al menú, al idioma o al tema.
-
-### Inicio
-
-La composición de Inicio depende del espacio disponible.
-
-Cuando existe espacio suficiente, las actualizaciones deben ocupar su área de exposición propia.
-
-En una composición de escritorio más estrecha, esa región pasa debajo del contenido destacado dentro del flujo principal.
-
-En pantallas estrechas, la página adopta una organización vertical:
-
-```text
-Cabecera
-Navegación
-Contenido destacado
-Actualizaciones
-```
-
-Las secciones destacadas mantienen su orden editorial.
-
-Las actualizaciones modifican su posición visual, pero no su función, contenido ni criterio de orden.
-
-Las rejillas de contenido destacado utilizan la misma distribución adaptable definida para las demás tarjetas.
-
-### Páginas internas
-
-Las páginas internas adoptan una estructura global de una sola región de contenido cuando dejan de utilizar la navegación lateral.
-
-Esto no obliga a que todos los componentes internos sean siempre verticales.
-
-Una composición interna debe permanecer horizontal mientras el contenido continúe cabiendo correctamente y conserve su legibilidad.
-
-Cuando una disposición horizontal deja de funcionar correctamente, se reorganiza verticalmente.
-
-La adaptación depende del espacio real disponible y de la naturaleza del componente.
 
 ### Contenido ancho
 
@@ -1445,7 +1397,7 @@ Cuando un contenido supera el espacio disponible, se aplica la siguiente priorid
 Reorganizar
 Redimensionar proporcionalmente
 Adaptar internamente
-Utilizar desplazamiento horizontal propio cuando sea necesario
+Utilizar desplazamiento horizontal propio solamente cuando la estructura bidimensional deba conservarse
 ```
 
 La reorganización se utiliza cuando la disposición debe cambiar sin alterar la información ni su significado.
@@ -1454,9 +1406,33 @@ El redimensionamiento se utiliza cuando el elemento debe reducirse manteniendo l
 
 La adaptación interna permite que un componente utilice una representación más adecuada al espacio disponible.
 
-El desplazamiento horizontal se reserva para contenidos cuya naturaleza no permite aplicar correctamente las alternativas anteriores.
+El desplazamiento horizontal se reserva exclusivamente para contenidos cuya estructura bidimensional sea necesaria para su uso, comprensión o significado.
 
-Cuando resulta necesario, afecta exclusivamente al elemento correspondiente y no a toda la página.
+Cuando corresponde este tratamiento, el desplazamiento afecta exclusivamente al componente y no a toda la página.
+
+Un tipo de componente no queda exceptuado automáticamente por su categoría.
+
+Debe utilizar desplazamiento horizontal propio solamente cuando reorganizar, redimensionar o adaptar internamente perjudica la información que necesita conservar.
+
+### Orientación
+
+La aplicación no exige una orientación concreta del dispositivo.
+
+Todo el contenido y toda la funcionalidad deben permanecer disponibles tanto en una orientación vertical como horizontal.
+
+El cambio de orientación aplica las reglas responsive correspondientes al nuevo espacio disponible.
+
+La composición se determina mediante el espacio disponible y no mediante el nombre de la orientación.
+
+La aplicación no debe:
+
+```text
+Bloquear una orientación
+Exigir girar el dispositivo
+Ocultar contenido por la orientación
+Ocultar funciones por la orientación
+Mantener una función disponible solamente en una orientación
+```
 
 ### Imágenes y recursos visuales
 
@@ -1478,6 +1454,8 @@ En las pantallas estrechas, las acciones principales deben utilizar todo el anch
 
 El cambio de ancho no cambia el texto ni el estado representado por el control.
 
+Cuando el redimensionamiento del texto exige más espacio, el control debe crecer o reorganizarse antes de recortar, truncar u ocultar su texto.
+
 ### Formulario de contacto
 
 Los campos del formulario ya utilizan una disposición vertical y aprovechan el ancho disponible de su región.
@@ -1489,6 +1467,8 @@ La acción principal utiliza un ancho adecuado a su contenido en las composicion
 El mismo comportamiento se conserva mientras el envío se encuentra en curso.
 
 Los estados del formulario no cambian por la composición utilizada.
+
+Los campos, etiquetas, instrucciones, errores y controles deben conservarse completos cuando aumenta el tamaño o el espaciado del texto.
 
 ### Sobre mí
 
@@ -1556,6 +1536,8 @@ Videos
 Las imágenes y otros recursos visuales se redimensionan proporcionalmente cuando sea posible.
 
 Las tablas, bloques de código, diagramas y demás contenidos anchos utilizan las mismas reglas generales de reorganización, redimensionamiento, adaptación interna y desplazamiento propio.
+
+El desplazamiento horizontal propio solamente debe utilizarse cuando la estructura horizontal o bidimensional del contenido necesita conservarse para mantener su significado.
 
 La adaptación responsive no cambia el contenido editorial del artículo.
 
@@ -1833,7 +1815,7 @@ Formulario
 
 Campos
 => conservan los valores
-=> temporalmente no modificables
+=> temporalmente no cambiable
 => continúan disponibles para el recorrido de foco
 
 Enviar
@@ -1865,7 +1847,7 @@ Formulario
 => deja de comunicar una operación en curso
 
 Campos
-=> vuelven a estar disponibles para modificación
+=> vuelven a estar disponibles para cambio 
 
 "Enviando..." 
 => Regresa a "enviar"
@@ -2122,7 +2104,7 @@ El estado de envío en curso debe comunicarse de forma visual, funcional y semá
 
 El formulario como conjunto comunica que existe una operación pendiente.
 
-Los campos conservan los valores introducidos y pasan temporalmente a un estado no modificable.
+Los campos conservan los valores introducidos y pasan temporalmente a un estado no cambiable.
 
 Este estado no los retira del recorrido normal de foco ni impide que su contenido continúe disponible para las tecnologías de asistencia.
 
@@ -2131,7 +2113,7 @@ Conceptualmente:
 ```text
 Campo durante el envío
 => conserva su valor
-=> no permite modificación
+=> no permite cambio 
 => permanece disponible para el foco
 ```
 
@@ -2216,7 +2198,7 @@ Formulario
 => deja de comunicar operación pendiente
 
 Campos
-=> vuelven a permitir modificación
+=> vuelven a permitir cambio 
 
 Control
 => vuelve a estar disponible
@@ -2476,7 +2458,7 @@ Contenido en otro idioma
 => no cambia el idioma del documento
 ```
 
-La utilización de un idioma de respaldo no modifica:
+La utilización de un idioma de respaldo no cambia:
 
 ```text
 Idioma activo
@@ -2539,6 +2521,121 @@ Cuando una parte utiliza el mismo idioma que su contexto superior, no necesita r
 
 Las declaraciones utilizadas siguen las mismas etiquetas de idioma definidas por la arquitectura de internacionalización del sitio.
 
+### Redimensionamiento, reflujo y orientación
+
+El contenido debe conservarse completo y funcional cuando el usuario aumenta el tamaño del texto.
+
+La ampliación no debe producir:
+
+```text
+Contenido recortado
+Texto truncado
+Texto oculto
+Superposición
+Controles inaccesibles
+Pérdida de funcionalidad
+```
+
+La escala tipográfica debe responder al tamaño base configurado por el usuario sin perder las proporciones visuales definidas para la aplicación.
+
+Conceptualmente:
+
+```text
+Tamaño base del usuario
+=> escala tipográfica de la aplicación
+
+Aumento del texto
+=> escala aumenta
+=> contenedores se adaptan
+=> contenido permanece disponible
+```
+
+Las dimensiones visuales utilizadas en la presentación normal no constituyen límites rígidos para los componentes que contienen texto.
+
+Cuando el texto necesita más espacio:
+
+```text
+Contenedor
+=> crece o se reorganiza
+
+Texto
+=> permanece completo
+```
+
+Los controles que contienen texto también deben adaptarse al redimensionamiento.
+
+Los elementos sin contenido textual mantienen su geometría cuando el aumento del texto no cambia la información ni la funcionalidad que proporcionan.
+
+La aplicación no restringe las capacidades normales del navegador para ampliar la página.
+
+La ampliación y la reducción del espacio disponible deben activar las mismas reglas de reorganización utilizadas por la adaptación responsive.
+
+La interfaz debe conservar el contenido y la funcionalidad cuando alcanza el ancho mínimo exigido por el nivel de accesibilidad establecido para el proyecto.
+
+La página completa no debe requerir desplazamiento horizontal para acceder al contenido normal.
+
+Conceptualmente:
+
+```text
+Espacio suficiente
+=> composición correspondiente
+
+Espacio reducido
+=> reflujo
+
+Reflujo
+=> contenido completo
+=> funciones completas
+=> sin desplazamiento horizontal de la página
+```
+
+El desplazamiento horizontal debe limitarse a un componente cuando la estructura bidimensional de ese contenido necesita conservarse para mantener su uso, comprensión o significado.
+
+No debe utilizarse como sustitución general del reflujo.
+
+Las cadenas extensas deben ajustarse dentro de su contenedor cuando su división no altera el significado.
+
+El contenido cuya estructura horizontal necesita conservarse utiliza el tratamiento específico correspondiente a su propio componente.
+
+Los cambios realizados por el usuario sobre el espaciado entre líneas, párrafos, letras o palabras no deben provocar pérdida de contenido ni funcionalidad.
+
+Los contenedores deben crecer o reorganizarse para conservar:
+
+```text
+Texto
+Controles
+Relaciones
+Estados
+Acciones
+```
+
+La aplicación no exige una orientación determinada del dispositivo.
+
+Todo el contenido y todas las funciones permanecen disponibles en las diferentes orientaciones.
+
+El cambio de orientación utiliza las reglas responsive correspondientes al espacio disponible resultante.
+
+Conceptualmente:
+
+```text
+Orientación cambia
+=> espacio disponible cambia
+=> aplicar composición correspondiente
+```
+
+No se utiliza:
+
+```text
+Bloqueo de orientación
+Exigencia de girar el dispositivo
+Contenido exclusivo de una orientación
+Función exclusiva de una orientación
+```
+
+El cumplimiento de estas reglas no implica por sí solo el cumplimiento completo de criterios de nivel superior relacionados con la presentación visual.
+
+Los requisitos adicionales de esos criterios deben evaluarse de forma independiente antes de declarar su cumplimiento.
+
 ### Color y contraste
 
 Las combinaciones de color permitidas por el sistema deben mantener el nivel de contraste establecido para el proyecto.
@@ -2590,7 +2687,7 @@ Texto sobre superficie
 => debe mantener el contraste correspondiente
 ```
 
-Los colores interactivos disponen de combinaciones válidas tanto en su estado normal como en los estados visuales que modifican su apariencia.
+Los colores interactivos disponen de combinaciones válidas tanto en su estado normal como en los estados visuales que cambian su apariencia.
 
 Un mismo color no necesita desempeñar simultáneamente funciones incompatibles.
 
@@ -2635,7 +2732,7 @@ Control
 => contraste necesario para identificarlo
 ```
 
-Los botones principales mantienen combinaciones válidas entre su contenido y su fondo tanto en estado normal como en los estados que modifican visualmente ese fondo.
+Los botones principales mantienen combinaciones válidas entre su contenido y su fondo tanto en estado normal como en los estados que cambian visualmente ese fondo.
 
 Los botones secundarios mantienen una combinación válida para su texto y, cuando su identificación depende de un contorno, también para ese borde respecto de la superficie adyacente.
 
@@ -2728,10 +2825,10 @@ La aplicación de transparencia, superposición, gradiente u otro tratamiento qu
 Conceptualmente:
 
 ```text
-Color validado sin modificación
+Color validado sin cambio 
 => conserva la combinación prevista
 
-Color visualmente modificado
+Color visualmente cambiado
 => evaluar el resultado efectivo
 ```
 
@@ -4354,7 +4451,7 @@ La publicación del sitio utiliza el contenido aprobado de la rama principal.
 
 La aplicación utiliza TypeScript en modo estricto para aumentar la validación estática del código.
 
-Las modificaciones integradas deben verificar el formato, la calidad del código, las pruebas automatizadas y la construcción de producción antes de ser promovidas.
+Los cambios integradas deben verificar el formato, la calidad del código, las pruebas automatizadas y la construcción de producción antes de ser promovidas.
 
 Los idiomas utilizados por la interfaz forman parte de la configuración y los elementos propios de `sitio`.
 
@@ -4386,6 +4483,24 @@ La alternativa textual debe permanecer vacía si su función corresponda a decor
 
 La validación debe conservar el valor definido por `sitio-api` para cada representación sin exigir al frontend reconstruirlo a partir de otros datos.
 
+La presentación debe conservar todo el contenido y toda la funcionalidad durante el redimensionamiento del texto, la ampliación y el reflujo.
+
+La escala tipográfica debe responder al tamaño base configurado por el usuario.
+
+Los componentes que contienen texto deben aumentar su espacio o reorganizarse cuando el contenido ampliado o el espaciado configurado por el usuario lo requieren.
+
+No debe existir recorte, truncamiento, ocultación ni superposición provocados por estos cambios.
+
+La página completa no debe adquirir desplazamiento horizontal durante el reflujo del contenido normal.
+
+El desplazamiento horizontal propio debe limitarse a los componentes cuya estructura bidimensional necesita conservarse para mantener su uso, comprensión o significado.
+
+Las cadenas textuales extensas deben ajustarse al espacio disponible cuando su división no altera el significado.
+
+La aplicación debe conservar todo el contenido y toda la funcionalidad en las distintas orientaciones del dispositivo.
+
+El cambio de orientación debe reutilizar las reglas responsive correspondientes al espacio disponible resultante.
+
 Los bloques visuales de `Sobre mí` deben respetar los contratos correspondientes a su discriminador:
 
 ```text
@@ -4403,7 +4518,7 @@ type = certificate
 => contrato de certificado
 
 type = certification
-=> contrato de certificación
+=> contrato Certification
 ```
 
 Los artículos deben garantizar:
@@ -4422,6 +4537,12 @@ Idiomas soportados por el contenido
 Idioma semántico del documento
 Idioma semántico del contenido
 Cambios lingüísticos internos
+Escala tipográfica
+Redimensionamiento del texto
+Reflujo
+Adaptación de contenedores textuales
+Espaciado del texto
+Orientación
 Slug localizado
 Elementos de interfaz
 Selección de destacados
@@ -4510,9 +4631,29 @@ Apertura y cierre de grupos de navegación
 Restablecimiento del grupo después de navegar
 Persistencia de los controles globales durante el desplazamiento
 Adaptación de tipografía y espaciado
+Escala tipográfica relativa
+Respeto al tamaño base configurado por el usuario
+Redimensionamiento del texto
+Crecimiento de contenedores con contenido textual
+Adaptación de controles con texto
+Zoom del navegador sin restricciones
+Reflujo de la interfaz
+Conservación de contenido durante el reflujo
+Conservación de funcionalidad durante el reflujo
+Prevención del desplazamiento horizontal de la página
+Desplazamiento horizontal interno limitado a contenido bidimensional necesario
+Adaptación de cadenas textuales extensas
+Espaciado personalizado entre líneas
+Espaciado personalizado entre párrafos
+Espaciado personalizado entre letras
+Espaciado personalizado entre palabras
+Conservación de contenido con espaciado cambiado
+Conservación de funcionalidad con espaciado cambiado
+Funcionamiento en orientación vertical
+Funcionamiento en orientación horizontal
+Cambio de orientación
 Reorganización de componentes internos
 Redimensionamiento proporcional de recursos visuales
-Prevención del desplazamiento horizontal de la página
 Desplazamiento interno de contenidos anchos cuando sea necesario
 Adaptación del formulario
 Adaptación de Sobre mí

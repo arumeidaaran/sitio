@@ -57,6 +57,8 @@ La estructura del sitio se adapta al espacio disponible sin convertir las compos
 
 La adaptación responsive debe conservar el contenido, la jerarquía, la identidad visual, los estados y el orden editorial.
 
+El redimensionamiento del texto, la ampliación, el reflujo y los cambios de orientación deben conservar igualmente el contenido y la funcionalidad de la aplicación.
+
 ---
 
 # 1. Tipografía
@@ -132,6 +134,40 @@ No existe una tercera escala intermedia.
 
 Tampoco se utiliza escalado tipográfico continuo para transformar progresivamente una escala en la otra.
 
+Los tamaños tipográficos se implementan mediante unidades relativas al tamaño de fuente raíz.
+
+La raíz respeta el tamaño configurado por el usuario mediante:
+
+```css
+html {
+    font-size: 100%;
+}
+```
+
+No se establece:
+
+```css
+html {
+    font-size: 16px;
+}
+```
+
+como tamaño absoluto de la raíz.
+
+Conceptualmente:
+
+```text
+1rem
+=> tamaño de fuente raíz configurado por el usuario
+
+Configuración habitual equivalente a 16px
+=> 1rem = 16px
+```
+
+Los valores en píxeles indicados en esta sección representan la equivalencia visual de referencia cuando el tamaño raíz equivale a `16px`.
+
+No constituyen la unidad utilizada para implementar `font-size`.
+
 ---
 
 ## 2.1. Escritorio
@@ -142,17 +178,17 @@ Se utiliza cuando:
 ancho >= 1024px
 ```
 
-| Elemento                     | Tamaño |
-| ---------------------------- | -----: |
-| Nombre principal en cabecera | `64px` |
-| H1                           | `48px` |
-| H2                           | `36px` |
-| H3                           | `28px` |
-| H4                           | `22px` |
-| Texto destacado / lead       | `18px` |
-| Texto base                   | `16px` |
-| Texto secundario             | `14px` |
-| Texto auxiliar / etiquetas   | `12px` |
+| Elemento                     | Tamaño     | Equivalencia de referencia |
+| ---------------------------- | ---------: | -------------------------: |
+| Nombre principal en cabecera | `4rem`     |                     `64px` |
+| H1                           | `3rem`     |                     `48px` |
+| H2                           | `2.25rem`  |                     `36px` |
+| H3                           | `1.75rem`  |                     `28px` |
+| H4                           | `1.375rem` |                     `22px` |
+| Texto destacado / lead       | `1.125rem` |                     `18px` |
+| Texto base                   | `1rem`     |                     `16px` |
+| Texto secundario             | `0.875rem` |                     `14px` |
+| Texto auxiliar / etiquetas   | `0.75rem`  |                     `12px` |
 
 ---
 
@@ -164,21 +200,112 @@ Se utiliza cuando:
 ancho < 1024px
 ```
 
-| Elemento                     | Tamaño |
-| ---------------------------- | -----: |
-| Nombre principal en cabecera | `40px` |
-| H1                           | `32px` |
-| H2                           | `28px` |
-| H3                           | `24px` |
-| H4                           | `20px` |
-| Texto destacado / lead       | `18px` |
-| Texto base                   | `16px` |
-| Texto secundario             | `14px` |
-| Texto auxiliar / etiquetas   | `12px` |
+| Elemento                     | Tamaño     | Equivalencia de referencia |
+| ---------------------------- | ---------: | -------------------------: |
+| Nombre principal en cabecera | `2.5rem`   |                     `40px` |
+| H1                           | `2rem`     |                     `32px` |
+| H2                           | `1.75rem`  |                     `28px` |
+| H3                           | `1.5rem`   |                     `24px` |
+| H4                           | `1.25rem`  |                     `20px` |
+| Texto destacado / lead       | `1.125rem` |                     `18px` |
+| Texto base                   | `1rem`     |                     `16px` |
+| Texto secundario             | `0.875rem` |                     `14px` |
+| Texto auxiliar / etiquetas   | `0.75rem`  |                     `12px` |
 
 La escala cambia en el punto de ruptura correspondiente.
 
 No se utiliza `clamp()` para producir una transición continua entre ambas escalas.
+
+---
+
+## 2.3. Aplicación de la escala
+
+El cuerpo utiliza:
+
+```css
+body {
+    font-size: 1rem;
+}
+```
+
+Los controles nativos heredan la tipografía correspondiente de la aplicación.
+
+Conceptualmente:
+
+```css
+button,
+input,
+textarea,
+select {
+    font: inherit;
+}
+```
+
+La aplicación distribuye los tamaños de la escala de la siguiente manera:
+
+```text
+Nombre principal
+=> escala de Nombre principal
+
+H1
+=> escala de H1
+
+H2
+=> escala de H2
+
+H3
+=> escala de H3
+
+H4
+=> escala de H4
+
+Introducciones y textos destacados
+=> 1.125rem
+
+Párrafos
+=> 1rem
+
+Navegación principal
+=> 1rem
+
+Subelementos de navegación
+=> 1rem
+
+Botones
+=> 1rem
+
+Campos de formulario
+=> 1rem
+
+Selectores textuales
+=> 1rem
+
+Acciones y enlaces de interfaz
+=> 1rem
+
+Metadatos
+=> 0.875rem
+
+Fechas presentadas como metadatos
+=> 0.875rem
+
+Texto secundario
+=> 0.875rem
+
+Texto auxiliar
+=> 0.75rem
+
+Etiquetas pequeñas
+=> 0.75rem
+
+Placeholder
+=> mismo tamaño que el texto del campo
+=> 1rem
+```
+
+Los tamaños de texto de la interfaz no utilizan unidades dependientes directamente de la ventana para sustituir esta escala.
+
+La modificación del tamaño raíz realizada por el usuario debe modificar proporcionalmente toda la escala tipográfica.
 
 ---
 
@@ -195,11 +322,15 @@ No se utiliza `clamp()` para producir una transición continua entre ambas escal
 | Texto secundario |        `1.45` |
 | Texto auxiliar   |         `1.4` |
 
+Los valores de `line-height` permanecen sin unidad para responder proporcionalmente al tamaño efectivo de la fuente.
+
 Regla general:
 
 - los títulos deben permanecer relativamente compactos;
 - los textos de lectura deben disponer de mayor espacio vertical;
 - la navegación debe utilizar una densidad ligeramente mayor que el cuerpo principal.
+
+Los valores normales definidos en esta sección no impiden que el usuario sustituya el espaciado del texto según las reglas de accesibilidad definidas posteriormente.
 
 ---
 
@@ -637,6 +768,8 @@ El cambio de composición no implica reducir automáticamente el espaciado verti
 
 Los valores de separación definidos para paneles, tarjetas, párrafos, secciones y grupos se conservan mientras no exista una necesidad específica de reorganización.
 
+Los valores de espaciado visual normal no impiden que el espaciado textual configurado por el usuario requiera un crecimiento adicional de los contenedores.
+
 ---
 
 # 11. Proporciones del layout
@@ -669,6 +802,8 @@ Mientras la composición de escritorio permanece activa:
 Ancho fijo.
 
 No se reduce progresivamente dentro del escritorio.
+
+El contenido textual de la navegación debe envolverse y aumentar verticalmente los elementos correspondientes cuando su tamaño efectivo ya no cabe en una sola línea.
 
 ### Columna principal
 
@@ -825,6 +960,14 @@ No se mantiene una navegación lateral reducida.
 
 No se intenta conservar la estructura de escritorio mediante reducción proporcional de sus regiones.
 
+La composición estrecha debe continuar reorganizándose correctamente hasta un ancho disponible de:
+
+```text
+320px CSS
+```
+
+para el contenido de desplazamiento vertical.
+
 ---
 
 ## 11.6. Pie
@@ -862,9 +1005,9 @@ ancho >= 1024px
 utiliza:
 
 ```text
-altura             => 320px
-padding horizontal => 32px
-padding vertical   => 24px
+altura mínima       => 320px
+padding horizontal  => 32px
+padding vertical    => 24px
 ```
 
 Debe mostrar:
@@ -872,6 +1015,10 @@ Debe mostrar:
 - Fondo visual y foto juntos;
 - nombre;
 - descripción breve.
+
+`320px` constituye la dimensión normal mínima.
+
+La cabecera debe aumentar su altura cuando el tamaño efectivo o el espaciado del texto requieren más espacio para mantener completamente visibles el nombre y la descripción breve.
 
 ---
 
@@ -886,9 +1033,9 @@ ancho >= 1024px
 utiliza:
 
 ```text
-altura             => 112px
-padding horizontal => 24px
-padding vertical   => 16px
+altura mínima       => 112px
+padding horizontal  => 24px
+padding vertical    => 16px
 ```
 
 Debe mantener:
@@ -899,6 +1046,10 @@ Debe mantener:
 Debe ocultar:
 
 - descripción breve.
+
+`112px` constituye la dimensión normal mínima.
+
+La cabecera debe aumentar su altura cuando el nombre requiere más espacio después del redimensionamiento o modificación del espaciado textual.
 
 ---
 
@@ -944,7 +1095,7 @@ Nombre
 
 La descripción breve deja de mostrarse en el estado compacto.
 
-La cabecera no utiliza obligatoriamente las alturas rígidas de `320px` y `112px`.
+La cabecera no utiliza alturas máximas rígidas.
 
 Su altura deriva de:
 
@@ -952,6 +1103,8 @@ Su altura deriva de:
 Contenido
 Padding
 Ancho disponible
+Tamaño efectivo del texto
+Espaciado efectivo del texto
 ```
 
 La fotografía permanece integrada en `Fondo visual y foto juntos`.
@@ -1031,6 +1184,8 @@ La regla se conserva en cualquier composición donde el texto permanezca superpu
 
 La sustitución futura de la fotografía no cambia esta garantía mientras permanezcan el color del texto y la capa mínima establecida.
 
+Cuando el bloque textual aumenta debido al redimensionamiento o al espaciado del texto, la región cubierta por la capa debe aumentar junto con él.
+
 ---
 
 # 13. Navegación
@@ -1046,21 +1201,27 @@ ancho >= 1024px
 la navegación utiliza:
 
 ```text
-ancho                      => 224px
-padding superior           => 16px
-padding lateral            => 16px
-gap controles / menú       => 20px
-altura de ítem principal   => 48px
-padding horizontal de ítem => 16px
-gap icono / texto          => 12px
-sangría de subítems        => 32px
-altura de subítem          => 36px
-gap entre subítems         => 8px
-altura máxima visible      => 100vh
-overflow vertical          => auto
+ancho                           => 224px
+padding superior                => 16px
+padding lateral                 => 16px
+gap controles / menú            => 20px
+altura mínima de ítem principal => 48px
+padding horizontal de ítem      => 16px
+gap icono / texto               => 12px
+sangría de subítems             => 32px
+altura mínima de subítem        => 36px
+gap entre subítems              => 8px
+altura máxima visible           => 100vh
+overflow vertical               => auto
 ```
 
 El ancho de `224px` permanece fijo mientras la navegación lateral continúa activa.
+
+Los valores de `48px` y `36px` son alturas mínimas.
+
+Cada elemento debe aumentar verticalmente cuando su texto necesita más de una línea debido al tamaño efectivo, al espaciado o a la longitud del contenido.
+
+La navegación no recorta ni trunca el texto para conservar estas alturas mínimas.
 
 ---
 
@@ -1179,6 +1340,8 @@ El desplazamiento interno es una protección estructural.
 
 No debe utilizarse como justificación para insertar listas ilimitadas.
 
+El crecimiento vertical producido por texto redimensionado o por un mayor espaciado textual debe seguir utilizando este desplazamiento vertical interno cuando la navegación supera la altura visible.
+
 ---
 
 ## 13.6. Posicionamiento
@@ -1280,6 +1443,10 @@ Contenido
 La apertura de la navegación desplaza el contenido hacia abajo.
 
 Al cerrarla, el espacio correspondiente deja de formar parte del flujo, regresando al estado "Sin expansión del menú".
+
+La barra debe reorganizar sus controles cuando el ancho disponible o el tamaño efectivo del texto no permite conservarlos correctamente en una sola fila.
+
+No debe recortar texto ni producir desplazamiento horizontal de la página para conservar artificialmente la disposición horizontal.
 
 ---
 
@@ -1405,6 +1572,8 @@ La fotografía ocupa aproximadamente:
 
 del ancho visual de la cabecera.
 
+El crecimiento vertical de la cabecera provocado por el texto no exige aumentar proporcionalmente esta fotografía.
+
 ---
 
 ## 14.2. Estado compacto de escritorio
@@ -1416,6 +1585,8 @@ del ancho visual de la cabecera.
 ```
 
 La fotografía permanece visible.
+
+El crecimiento vertical necesario para acomodar el nombre no modifica automáticamente esta dimensión.
 
 ---
 
@@ -1648,23 +1819,32 @@ No sustituyen el texto cuando el significado pueda resultar ambiguo.
 
 Los tamaños definidos no cambian el icono seleccionado por el mapeo.
 
+El redimensionamiento del texto no obliga a redimensionar estos iconos cuando su función continúa correctamente representada junto al texto correspondiente.
+
 ---
 
 ## 15.9. Selector de idioma
 
-En escritorio:
+En escritorio, la presentación normal utiliza:
 
 ```text
-altura             => 48px
-ancho              => 104px
+altura mínima      => 48px
+ancho normal       => 104px
 padding horizontal => 12px
 border-radius      => 0
 borde              => 1px
+font-size          => 1rem
 ```
 
 Debe permanecer directamente visible.
 
 No debe estar oculto dentro de una sección de configuración.
+
+El ancho de `104px` constituye la referencia normal de presentación.
+
+Cuando el texto necesita más espacio debido al idioma, al redimensionamiento o al espaciado configurado por el usuario, el selector debe aumentar su espacio o la composición que lo contiene debe reorganizarse.
+
+No debe recortar ni truncar el texto para conservar `104px`.
 
 En pantallas estrechas continúa directamente disponible dentro de:
 
@@ -1688,6 +1868,16 @@ borde         => 1px
 ```
 
 Se ubica inmediatamente junto al selector de idioma.
+
+El control utiliza solamente un icono visible.
+
+Su geometría de:
+
+```text
+48px x 48px
+```
+
+permanece fija mientras su contenido visible continúa siendo exclusivamente iconográfico.
 
 En pantallas estrechas continúa directamente disponible dentro de:
 
@@ -1730,11 +1920,17 @@ Solamente cambia la representación visual correspondiente al tema seleccionado.
 Base:
 
 ```text
-altura             => 48px
+altura mínima      => 48px
 padding horizontal => 24px
-font-size          => 16px
+font-size          => 1rem
 font-weight        => 600
 border-radius      => 0
+```
+
+Con una raíz equivalente a `16px`:
+
+```text
+font-size => 16px
 ```
 
 En escritorio utiliza su ancho natural cuando no existe una regla específica diferente.
@@ -1747,11 +1943,15 @@ ancho => 100%
 
 cuando corresponde a la composición definida.
 
-La altura permanece en:
+La altura mínima permanece en:
 
 ```text
 48px
 ```
+
+El botón debe aumentar su altura cuando el texto redimensionado, el texto localizado o el espaciado configurado por el usuario necesitan más espacio.
+
+No debe recortar, ocultar ni truncar el texto para conservar una altura exacta de `48px`.
 
 ---
 
@@ -1760,13 +1960,16 @@ La altura permanece en:
 Base:
 
 ```text
-altura             => 48px
+altura mínima      => 48px
 padding horizontal => 24px
+font-size          => 1rem
 borde              => 1px
 border-radius      => 0
 ```
 
 Las reglas responsive de ancho siguen la composición de la acción correspondiente.
+
+El botón debe aumentar su altura cuando el contenido textual necesita más espacio.
 
 ---
 
@@ -1946,6 +2149,10 @@ La uniformidad visual no debe forzar contratos idénticos entre tipos de conteni
 Dentro de un mismo tipo de elemento, las tarjetas deben mantener una estructura visual consistente.
 
 El cambio de tema no cambia la estructura interna, el orden, el contenido ni la disposición correspondiente al ancho disponible.
+
+Las tarjetas deben aumentar su altura cuando el texto redimensionado o el espaciado configurado por el usuario requieren más espacio.
+
+No debe limitarse su altura para mantener una alineación visual a costa del contenido.
 
 ---
 
@@ -2130,6 +2337,8 @@ Actualizaciones no utiliza una columna lateral.
 
 Las rejillas internas continúan presentando tantas tarjetas completas como permita el ancho disponible.
 
+La composición debe continuar funcionando sin pérdida de contenido ni funcionalidad hasta un ancho de `320px CSS`.
+
 ---
 
 # 17. Páginas internas
@@ -2274,6 +2483,8 @@ Composición horizontal que deja de caber correctamente
 
 La decisión depende del espacio real disponible y de la legibilidad del componente.
 
+El mismo principio se aplica cuando el espacio disponible se reduce por la ampliación del navegador.
+
 ---
 
 ## 17.4. Contenido interno ancho
@@ -2286,7 +2497,7 @@ Cuando un componente supera el espacio disponible, la prioridad es:
 1. Reorganizar
 2. Redimensionar proporcionalmente
 3. Adaptar internamente
-4. Utilizar desplazamiento horizontal solamente en el elemento
+4. Utilizar desplazamiento horizontal solamente en el elemento cuando la estructura bidimensional sea necesaria
 ```
 
 La reorganización se utiliza cuando debe cambiarse la disposición sin perder información o significado.
@@ -2309,7 +2520,7 @@ Tabla
 
 cuando esa transformación conserva correctamente la información.
 
-El desplazamiento horizontal se utiliza solamente cuando las alternativas anteriores perjudicarían el contenido.
+El desplazamiento horizontal se utiliza solamente cuando las alternativas anteriores perjudican el uso, la comprensión o el significado porque la estructura bidimensional necesita conservarse.
 
 Cuando sea necesario:
 
@@ -2324,6 +2535,8 @@ No:
 Página completa
 => overflow horizontal
 ```
+
+La pertenencia a una categoría concreta, como tabla, código o diagrama, no constituye por sí sola una excepción al reflujo.
 
 ---
 
@@ -2469,13 +2682,7 @@ El valor de `alt` no utiliza `null`.
 
 En escritorio debe mantenerse la composición horizontal definida editorialmente entre texto y elemento visual.
 
-Cuando:
-
-```text
-ancho < 1024px
-```
-
-los bloques que no deben conservar correctamente esa composición se reorganizan verticalmente.
+Cuando la composición horizontal deja de caber correctamente por el ancho disponible o por el crecimiento del texto, el bloque se reorganiza verticalmente.
 
 El elemento visual utiliza el ancho disponible y mantiene sus proporciones.
 
@@ -2548,6 +2755,8 @@ Cuando una nueva tarjeta ya no cabe correctamente en la fila actual, continúa e
 Los medios presentes dependen de los datos disponibles.
 
 No se define un número fijo de tarjetas por fila.
+
+El crecimiento del texto debe reducir naturalmente la cantidad de tarjetas que caben en una fila antes de recortar el contenido de una tarjeta.
 
 ---
 
@@ -2662,7 +2871,7 @@ El botón principal utiliza:
 ```text
 ancho >= 1024px
 => ancho natural
-=> altura 48px
+=> altura mínima 48px
 => padding horizontal 24px
 ```
 
@@ -2675,13 +2884,15 @@ ancho < 1024px
 utiliza:
 
 ```text
-ancho  => 100%
-altura => 48px
+ancho         => 100%
+altura mínima => 48px
 ```
 
 La misma regla se aplica durante `enviando...`.
 
 La adaptación no cambia los estados ni el contenido del formulario.
+
+Los campos, etiquetas, placeholders, mensajes de validación y controles deben crecer o reorganizarse cuando el redimensionamiento o el espaciado del texto requieren más espacio.
 
 ---
 
@@ -2794,7 +3005,7 @@ Siguiente tarjeta ya no cabe correctamente
 => continúa en la fila siguiente
 ```
 
-La cantidad de columnas constituye una consecuencia del espacio disponible.
+La cantidad de columnas constituye una consecuencia del espacio disponible y del tamaño efectivo del contenido.
 
 El mínimo natural es una tarjeta por fila.
 
@@ -2820,6 +3031,8 @@ Contactos
 Contenido destacado
 ```
 
+El aumento del texto debe reducir la cantidad de columnas cuando sea necesario antes de producir recorte, superposición o desplazamiento horizontal de la página.
+
 ---
 
 ## 20.4. Altura y alineación
@@ -2829,6 +3042,8 @@ Las tarjetas pertenecientes a una misma rejilla deben mantener una composición 
 La estructura interna debe permitir que diferencias razonables de longitud de texto no destruyan la alineación general.
 
 Cuando existe una acción explícita al final de la tarjeta, su posición debe permanecer visualmente consistente dentro de la rejilla.
+
+La coherencia visual no establece una altura máxima que impida el crecimiento de una tarjeta cuando su contenido textual necesita más espacio.
 
 ---
 
@@ -2973,13 +3188,7 @@ El detalle no incorpora una sección adicional de conocimientos relacionados.
 
 En escritorio debe mantenerse una composición horizontal mientras el espacio disponible permita representar correctamente sus regiones.
 
-Cuando:
-
-```text
-ancho < 1024px
-```
-
-el detalle se reorganiza verticalmente.
+Cuando el espacio disponible deja de permitir esta composición, incluido el crecimiento provocado por el redimensionamiento del texto, el detalle se reorganiza verticalmente.
 
 Para una certificación, el orden conceptual es:
 
@@ -3129,13 +3338,14 @@ No debe cambiarse automáticamente solamente porque un repositorio haya recibido
 
 En escritorio debe mantenerse la composición horizontal entre imagen y panel de metadatos cuando el espacio disponible resulta adecuado.
 
-Cuando:
+Cuando el espacio disponible deja de resultar adecuado, incluido el crecimiento del texto:
 
 ```text
-ancho < 1024px
+imagen
+panel de metadatos
 ```
 
-la imagen y el panel de metadatos se reorganizan verticalmente.
+se presentan verticalmente.
 
 Cada región utiliza el ancho disponible.
 
@@ -3274,6 +3484,8 @@ deben recibir estilos compatibles con los tokens generales definidos en esta esp
 
 En escritorio se conserva el ancho de lectura definido para el contenido principal.
 
+Los textos del artículo utilizan la misma escala tipográfica relativa de la aplicación.
+
 ---
 
 ## 23.5. Adaptación responsive del artículo
@@ -3315,10 +3527,16 @@ Para contenidos anchos se utiliza la prioridad:
 1. Reorganizar
 2. Redimensionar proporcionalmente
 3. Adaptar internamente
-4. Desplazamiento horizontal propio
+4. Desplazamiento horizontal propio solamente cuando la estructura bidimensional sea necesaria
 ```
 
 La página completa no adquiere desplazamiento horizontal por la presencia de una tabla, bloque de código, diagrama u otro elemento.
+
+Una tabla debe adaptarse cuando la reorganización conserva correctamente su información.
+
+Un bloque de código debe ajustarse cuando la división de líneas no altera su significado.
+
+Cuando la relación espacial, la indentación o la estructura bidimensional resultan necesarias para conservar el significado, el componente utiliza desplazamiento horizontal propio.
 
 ---
 
@@ -3903,21 +4121,25 @@ Durante su carga mantiene el espacio estructural correspondiente y utiliza skele
 El skeleton respeta aproximadamente:
 
 ```text
-altura             => 320px
+altura mínima       => 320px
 Fondo visual y foto juntos
 Nombre
 Descripción breve
 ```
+
+La geometría efectiva debe acompañar el crecimiento que correspondería al contenido textual con el tamaño y espaciado activos.
 
 ### Cabecera compacta pendiente en escritorio
 
 Cuando corresponde la geometría compacta, respeta aproximadamente:
 
 ```text
-altura             => 112px
+altura mínima       => 112px
 Fondo visual y foto juntos
 Nombre
 ```
+
+La geometría efectiva debe acompañar el crecimiento que correspondería al nombre con el tamaño y espaciado activos.
 
 ### Pantallas estrechas
 
@@ -3927,9 +4149,9 @@ Cuando:
 ancho < 1024px
 ```
 
-el skeleton no utiliza obligatoriamente las alturas de escritorio.
+el skeleton no utiliza una altura máxima rígida.
 
-Respeta aproximadamente la geometría responsive resultante del contenido, el padding y el ancho disponible.
+Respeta aproximadamente la geometría responsive resultante del contenido, el padding, el ancho disponible, el tamaño del texto y su espaciado.
 
 En estado expandido representa:
 
@@ -4113,6 +4335,8 @@ independientemente del resultado recibido.
 El frontend no conserva una condición local que impida futuros intentos basándose en una respuesta anterior del backend.
 
 El ancho del botón durante el envío conserva las reglas responsive definidas para el estado normal.
+
+El tamaño y el espaciado del texto durante este estado deben seguir las mismas reglas de crecimiento del control que en el estado normal.
 
 La semántica accesible concreta de este estado se define en `26.8. Mensajes generales del formulario`.
 
@@ -4389,6 +4613,8 @@ Las reglas responsive continúan aplicándose a los estados.
 
 Un skeleton, error, estado vacío o contenido no encontrado utiliza la geometría correspondiente al ancho disponible y no fuerza la composición de escritorio.
 
+El redimensionamiento y el espaciado del texto se aplican igualmente a los estados comunes y sus mensajes.
+
 ---
 
 # 25. Adaptación a diferentes pantallas
@@ -4416,6 +4642,8 @@ Organización interna
 Distribución de tarjetas
 ```
 
+La misma adaptación responde tanto al ancho físico disponible como al ancho CSS resultante de la ampliación del navegador.
+
 ---
 
 ## 25.1. Puntos de ruptura
@@ -4437,6 +4665,10 @@ No se introduce una sucesión adicional de puntos de ruptura únicamente para ca
 
 Los componentes que deben responder naturalmente al espacio disponible deben hacerlo sin depender de un número predeterminado de columnas.
 
+No se crea un punto de ruptura adicional en `320px`.
+
+La composición estrecha debe continuar funcionando hasta ese ancho.
+
 ---
 
 ## 25.2. Tipografía
@@ -4456,6 +4688,24 @@ ancho < 1024px
 No existe una tercera escala tipográfica para el escritorio intermedio.
 
 No se utiliza escalado continuo entre las dos escalas.
+
+Los tamaños se implementan mediante `rem` según `2. Escala tipográfica`.
+
+La raíz utiliza:
+
+```css
+font-size: 100%;
+```
+
+La configuración del usuario determina el tamaño efectivo de `1rem`.
+
+La aplicación debe soportar un aumento del texto de:
+
+```text
+200%
+```
+
+sin pérdida de contenido ni funcionalidad.
 
 ---
 
@@ -4477,18 +4727,22 @@ ancho < 1024px
 Permanecen definidos:
 
 ```text
-padding de paneles       => 16px
-gap entre tarjetas       => 16px
-título / párrafo         => 12px
-párrafo / párrafo        => 16px
-secciones mayores        => 32px
-grupos grandes           => 48px
-altura de controles      => 48px
+padding de paneles         => 16px
+gap entre tarjetas         => 16px
+título / párrafo           => 12px
+párrafo / párrafo          => 16px
+secciones mayores          => 32px
+grupos grandes             => 48px
+altura mínima de controles => 48px
 ```
 
 La composición estrecha no reduce automáticamente todos los espacios verticales.
 
 No se utiliza `8px` como padding horizontal general de la aplicación.
+
+Los valores anteriores corresponden a la presentación normal.
+
+Cuando el usuario modifica el espaciado textual, los contenedores deben crecer o reorganizarse para conservar el contenido.
 
 ---
 
@@ -4597,15 +4851,17 @@ Contenido
 +-- Actualizaciones
 ```
 
-Durante toda la composición de escritorio permanecen:
+Durante toda la composición de escritorio permanecen como valores normales mínimos:
 
 ```text
-navegación lateral => 224px
-cabecera expandida => 320px
-cabecera compacta  => 112px
+navegación lateral => 224px de ancho
+cabecera expandida => 320px de altura mínima
+cabecera compacta  => 112px de altura mínima
 ```
 
-No se reducen progresivamente estas dimensiones para intentar mantener la composición de escritorio amplio.
+La navegación lateral no reduce progresivamente su ancho para intentar mantener la composición de escritorio amplio.
+
+Las alturas de cabecera deben crecer cuando el contenido textual necesita más espacio.
 
 ---
 
@@ -4628,6 +4884,14 @@ Contenido
 ```
 
 La aplicación no reproduce una versión reducida de la barra lateral.
+
+Esta composición debe continuar funcionando hasta:
+
+```text
+320px CSS
+```
+
+sin pérdida de contenido ni funcionalidad y sin desplazamiento horizontal de la página para el contenido normal.
 
 ---
 
@@ -4661,16 +4925,26 @@ mantiene proporciones
 no utiliza formato circular
 ```
 
-Las alturas rígidas de:
+Los valores:
 
 ```text
 320px
 112px
 ```
 
-pertenecen al escritorio.
+constituyen alturas mínimas normales de escritorio.
 
-En la composición estrecha, la altura deriva del contenido, del padding y del ancho disponible.
+No constituyen alturas máximas capaces de recortar texto.
+
+En la composición estrecha, la altura deriva de:
+
+```text
+Contenido
+Padding
+Ancho disponible
+Tamaño efectivo del texto
+Espaciado efectivo del texto
+```
 
 ---
 
@@ -4687,6 +4961,8 @@ Menú | Idioma | Tema
 Idioma y Tema no se ocultan dentro de Menú.
 
 La barra continúa disponible durante el desplazamiento junto con la cabecera compacta.
+
+Cuando la fila deja de caber correctamente por el ancho o por el tamaño del texto, la barra debe reorganizar sus controles sin ocultarlos.
 
 ---
 
@@ -4761,7 +5037,7 @@ No realiza navegación hacia un elemento.
 
 La regla se aplica a todos los grupos expandibles de la navegación.
 
-Si se activa más que uno grupo al mismo tiempo, uno no cerra al otro automaticamente. 
+Si se activa más que uno grupo al mismo tiempo, uno no cierra al otro automaticamente.
 
 ---
 
@@ -4842,6 +5118,8 @@ Horizontal y no cabe correctamente
 => reorganizar verticalmente
 ```
 
+El crecimiento del texto forma parte de la comprobación de si la composición continúa cabiendo correctamente.
+
 ---
 
 ## 25.15. Rejillas
@@ -4867,6 +5145,8 @@ cantidad fijas de tarjetas por fila
 
 El mínimo natural es una tarjeta por fila.
 
+El tamaño efectivo del texto participa en el espacio necesario de cada tarjeta.
+
 ---
 
 ## 25.16. Contenido ancho
@@ -4877,17 +5157,28 @@ La prioridad es:
 1. Reorganizar
 2. Redimensionar proporcionalmente
 3. Adaptar internamente
-4. Desplazamiento horizontal propio
+4. Desplazamiento horizontal propio cuando la estructura bidimensional sea necesaria
 ```
 
 El desplazamiento horizontal de toda la página no se utiliza como solución para un componente interno.
 
-Si resulta imprescindible:
+El cuarto tratamiento se reserva para contenido cuya disposición bidimensional necesita conservarse para mantener su uso, comprensión o significado.
+
+Si esta condición existe:
 
 ```text
 componente concreto
 => overflow horizontal
 ```
+
+No:
+
+```text
+Página completa
+=> overflow horizontal
+```
+
+Una tabla, bloque de código, diagrama, gráfico u otro contenido ancho debe utilizar primero las alternativas anteriores cuando estas conservan correctamente su información.
 
 ---
 
@@ -4904,13 +5195,13 @@ ancho necesario menor
 
 mientras el elemento continúe siendo legible.
 
-Un elemento necesario no desaparece automáticamente por utilizar una pantalla estrecha.
+Un elemento necesario no desaparece automáticamente por utilizar una pantalla estrecha, ni por ampliación y ni por cambio de orientación.
 
 ---
 
 ## 25.18. Botones
 
-La altura estándar permanece:
+La altura mínima estándar es:
 
 ```text
 48px
@@ -4924,13 +5215,21 @@ En composición estrecha, cuando forman parte del flujo principal:
 ancho => 100%
 ```
 
+Los botones con contenido textual deben crecer verticalmente cuando el texto necesita más espacio.
+
+La altura mínima de `48px` no constituye una altura máxima.
+
 Los controles compactos de la navegación mantienen la geometría necesaria para constituir:
 
 ```text
 Menú | Idioma | Tema
 ```
 
-y no se transforman individualmente en botones de ancho completo.
+mientras la fila cabe correctamente.
+
+Cuando deja de caber, la composición debe reorganizarse.
+
+Los controles no se recortan para conservar artificialmente una sola fila.
 
 ---
 
@@ -4943,25 +5242,27 @@ El botón utiliza:
 ```text
 ancho >= 1024px
 => ancho natural
-=> altura 48px
+=> altura mínima 48px
 => padding horizontal 24px
 ```
 
 ```text
 ancho < 1024px
 => ancho 100%
-=> altura 48px
+=> altura mínima 48px
 ```
 
-Durante `enviando...` se conserva la misma regla de ancho.
+Durante `enviando...`, se conserva la misma regla de ancho y altura mínima.
+
+Los campos y controles deben crecer cuando el texto o su espaciado necesitan más espacio.
 
 ---
 
 ## 25.20. Sobre mí
 
-En escritorio debe mantenerse una composición horizontal entre texto y elemento visual.
+En escritorio debe mantenerse una composición horizontal entre texto y elemento visual mientras el contenido cabe correctamente.
 
-En composición estrecha, cuando la disposición horizontal deja de caber correctamente:
+Cuando la disposición horizontal deja de caber correctamente:
 
 ```text
 elemento visual
@@ -4973,6 +5274,8 @@ o el orden editorial definido para el bloque se presentan verticalmente.
 El orden del bloque no se invierte automáticamente por su índice.
 
 Los elementos visuales mantienen sus proporciones.
+
+La misma reorganización se aplica cuando el aumento del texto hace que una composición anteriormente horizontal deje de caber.
 
 ---
 
@@ -4986,7 +5289,7 @@ imagen | panel de metadatos
 
 cuando el espacio resulta adecuado.
 
-En composición estrecha:
+Cuando deja de resultar adecuado:
 
 ```text
 imagen
@@ -4999,13 +5302,15 @@ El panel debe reorganizar también sus metadatos internamente.
 
 La imagen se redimensiona proporcionalmente.
 
+El redimensionamiento del texto participa en esta decisión de reorganización.
+
 ---
 
 ## 25.22. Certificado y Certificación
 
 En escritorio debe utilizarse una composición horizontal cuando el contenido cabe correctamente.
 
-En composición estrecha, una Certificación utiliza conceptualmente:
+Cuando deja de caber, una Certificación utiliza conceptualmente:
 
 ```text
 Imagen
@@ -5034,11 +5339,13 @@ se conservan cuando corresponden.
 
 Un Certificado utiliza la misma adaptación sin incorporar campos que no pertenecen a su contrato.
 
+El crecimiento del texto debe provocar esta reorganización antes de producir recorte o desplazamiento horizontal de la página.
+
 ---
 
 ## 25.23. Artículo
 
-En escritorio conserva el ancho de lectura definido.
+En escritorio, se conserva el ancho de lectura definido mientras ese ancho sigue siendo compatible con el espacio disponible.
 
 En composición estrecha utiliza el ancho disponible y:
 
@@ -5049,6 +5356,8 @@ padding horizontal => 16px
 El orden editorial no cambia.
 
 Las tablas, bloques de código, diagramas, grafos, imágenes y otros contenidos anchos utilizan la prioridad general definida en `25.16. Contenido ancho`.
+
+El texto debe refluir dentro del ancho disponible.
 
 ---
 
@@ -5070,6 +5379,8 @@ Un estado no hace regresar la geometría de escritorio.
 
 La unidad de presentación mantiene sus límites independientemente de la composición utilizada.
 
+Los mensajes y controles de estado siguen las mismas reglas de redimensionamiento y reflujo que el contenido normal.
+
 ---
 
 ## 25.25. Principio de conservación
@@ -5082,6 +5393,7 @@ disposición
 ancho
 cantidad natural de columnas
 organización interna
+altura necesaria para contenido textual
 ```
 
 pero no cambia arbitrariamente:
@@ -5096,6 +5408,134 @@ identidad visual
 ```
 
 La adaptación debe utilizar el espacio disponible para reorganizar la interfaz sin introducir una segunda versión conceptual del sitio.
+
+---
+
+## 25.26. Redimensionamiento y reflujo
+
+La interfaz debe conservar el contenido y la funcionalidad cuando el texto aumenta hasta:
+
+```text
+200%
+```
+
+La ampliación del navegador no debe estar restringida.
+
+La aplicación utiliza la configuración de la ventana gráfica:
+
+```html
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1"
+>
+```
+
+No utiliza restricciones equivalentes a:
+
+```text
+user-scalable=no
+maximum-scale=1
+```
+
+La reducción del ancho CSS provocada por la ampliación debe activar las mismas reglas responsive definidas para una ventana físicamente estrecha.
+
+Para contenido de desplazamiento vertical, la aplicación debe funcionar con:
+
+```text
+ancho => 320px CSS
+```
+
+sin pérdida de información ni funcionalidad y sin exigir desplazamiento horizontal de la página.
+
+Conceptualmente:
+
+```text
+1280px CSS
++ ampliación equivalente al 400%
+=> 320px CSS disponibles
+=> composición estrecha
+=> reflujo completo
+```
+
+No se introduce una versión diferente de la interfaz para este caso.
+
+Todo contenedor que incluye texto debe aumentar su dimensión necesaria cuando el redimensionamiento o el espaciado del texto requieren más espacio.
+
+Una dimensión normal definida en esta especificación debe funcionar como dimensión mínima cuando contiene texto.
+
+Conceptualmente:
+
+```text
+Dimensión normal
+=> valor mínimo
+
+Texto necesita más espacio
+=> crecer o reorganizar
+
+Resultado
+=> contenido completo
+=> funcionalidad completa
+```
+
+No debe producirse:
+
+```text
+Recorte
+Truncamiento
+Ocultación
+Superposición
+Pérdida de controles
+Pérdida de acciones
+Pérdida de información
+```
+
+Las cadenas extensas deben ajustarse dentro del contenedor cuando su división conserva el significado.
+
+Cuando la división altera el significado o la estructura necesaria, el componente debe aplicar su tratamiento específico sin convertir toda la página en una superficie de desplazamiento horizontal.
+
+---
+
+## 25.27. Orientación
+
+La aplicación no exige una orientación concreta.
+
+Debe funcionar completamente tanto en:
+
+```text
+orientación vertical
+orientación horizontal
+```
+
+La orientación no determina por sí misma una composición.
+
+El ancho y el espacio efectivo resultantes determinan cuál regla responsive se aplica.
+
+Conceptualmente:
+
+```text
+Cambio de orientación
+        |
+        V
+Cambiar espacio disponible
+        |
+        V
+Evaluar composición responsive
+        |
+        V
+Representar la misma funcionalidad
+```
+
+No se utiliza:
+
+```text
+Bloqueo de orientación
+Mensaje obligatorio para girar el dispositivo
+Contenido oculto por orientación
+Función disponible solamente en orientación vertical
+Función disponible solamente en orientación horizontal
+```
+
+No existe una excepción funcional del sitio que requiera una orientación específica.
 
 ---
 
@@ -5343,6 +5783,12 @@ En el tema oscuro utiliza:
 
 ```text
 #8E97A3
+```
+
+El placeholder utiliza el mismo tamaño tipográfico del texto del campo:
+
+```text
+1rem
 ```
 
 ---
@@ -6913,6 +7359,8 @@ La garantía se conserva aunque la fotografía sea sustituida posteriormente por
 
 No debe dependerse de inspeccionar visualmente una fotografía concreta para determinar si el texto resulta legible.
 
+Cuando el texto aumenta de tamaño o de espaciado, el área protegida por la capa debe acompañar el tamaño real del bloque textual.
+
 ---
 
 ## 26.29. Bordes y separadores
@@ -7415,6 +7863,504 @@ No se repite esta información mediante una segunda región de anuncios cuando e
 
 ---
 
+## 26.36. Redimensionamiento, reflujo, espaciado y orientación
+
+La aplicación debe conservar contenido, información y funcionalidad durante el redimensionamiento del texto, la ampliación del navegador, el reflujo, la modificación del espaciado textual y los cambios de orientación.
+
+### Criterios de conformidad
+
+Las decisiones de esta sección corresponden a los siguientes criterios de WCAG 2.2:
+
+| Aspecto                      | Criterio                               | AA     | AAA       |
+| ---------------------------- | -------------------------------------- | ------ | --------- |
+| Orientación                  | `1.3.4 Orientación`                    | Cumple | No Cumple |
+| Redimensionamiento del texto | `1.4.4 Redimensionamiento del texto`   | Cumple | No Cumple |
+| Reflujo                      | `1.4.10 Reflujo`                       | Cumple | No Cumple |
+| Espaciado del texto          | `1.4.12 Espaciado del texto`           | Cumple | No Cumple |
+| Presentación visual          | `1.4.8 Presentación visual`            | Cumple | Cumple    |
+
+
+Todo el sitio funciona sin exigir una orientación concreta.
+
+El texto aumenta hasta `200%` sin pérdida de contenido ni funcionalidad.
+
+El contenido de desplazamiento vertical funciona a `320px CSS` sin desplazamiento horizontal de página.
+
+Los valores exigidos pueden aplicarse sin pérdida de contenido ni funcionalidad.
+
+Presentación visual relacionado; no se declara cumplimiento completo mediante las decisiones de esta sección.
+
+El criterio `1.4.8` se revisa como referencia de nivel AAA, pero no debe declararse cumplido únicamente por satisfacer el redimensionamiento y el reflujo definidos aquí.
+
+---
+
+### Escala tipográfica relativa
+
+La implementación tipográfica utiliza:
+
+```css
+html {
+    font-size: 100%;
+}
+```
+
+La aplicación no sustituye la preferencia de tamaño raíz del usuario mediante un valor absoluto.
+
+El cuerpo utiliza:
+
+```css
+body {
+    font-size: 1rem;
+}
+```
+
+Los controles nativos heredan la tipografía correspondiente:
+
+```css
+button,
+input,
+textarea,
+select {
+    font: inherit;
+}
+```
+
+Las escalas completas son las definidas en `2. Escala tipográfica`.
+
+Con una raíz equivalente a `16px`, las conversiones son:
+
+```text
+4rem     => 64px
+3rem     => 48px
+2.5rem   => 40px
+2.25rem  => 36px
+2rem     => 32px
+1.75rem  => 28px
+1.5rem   => 24px
+1.375rem => 22px
+1.25rem  => 20px
+1.125rem => 18px
+1rem     => 16px
+0.875rem => 14px
+0.75rem  => 12px
+```
+
+Los valores en píxeles de esta relación solamente expresan la equivalencia visual de referencia.
+
+El tamaño efectivo sigue derivando de `rem`.
+
+---
+
+### Redimensionamiento del texto
+
+El texto debe aumentar hasta:
+
+```text
+200%
+```
+
+sin pérdida de contenido ni funcionalidad.
+
+La comprobación incluye:
+
+```text
+Nombre principal
+Encabezados
+Párrafos
+Navegación
+Subelementos de navegación
+Botones
+Selectores textuales
+Campos
+Placeholders
+Etiquetas
+Instrucciones
+Errores
+Mensajes de estado
+Acciones
+Metadatos
+Fechas
+Contenido Markdown
+```
+
+Todo contenedor que incluya texto debe crecer cuando el texto necesita más espacio.
+
+Las dimensiones normales definidas para elementos textuales funcionan como dimensiones mínimas.
+
+Conceptualmente:
+
+```text
+Ítem principal de navegación
+=> min-height: 48px
+
+Subítem de navegación
+=> min-height: 36px
+
+Botón principal
+=> min-height: 48px
+
+Botón secundario
+=> min-height: 48px
+
+Selector de idioma
+=> min-height: 48px
+
+Cabecera expandida de escritorio
+=> min-height: 320px
+
+Cabecera compacta de escritorio
+=> min-height: 112px
+```
+
+Cuando el contenido necesita más espacio:
+
+```text
+altura efectiva
+=> aumenta
+
+ancho efectivo
+=> aumenta cuando la composición lo admite
+
+composición
+=> se reorganiza cuando el ancho ya no resulta suficiente
+```
+
+No debe utilizarse:
+
+```text
+overflow oculto para eliminar texto
+ellipsis para sustituir contenido necesario
+altura máxima que recorte texto
+superposición deliberada
+reducción automática del texto para hacerlo caber
+```
+
+como solución al redimensionamiento.
+
+El selector de tema constituye un control iconográfico y conserva:
+
+```text
+48px x 48px
+```
+
+mientras no incorpore texto visible dentro del propio control.
+
+---
+
+### Zoom del navegador
+
+La aplicación no debe restringir la ampliación realizada mediante el navegador.
+
+La configuración de la ventana gráfica utiliza:
+
+```html
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1"
+>
+```
+
+No utiliza:
+
+```text
+user-scalable=no
+maximum-scale=1
+```
+
+ni otra restricción equivalente que impida la ampliación.
+
+El zoom que reduce el ancho CSS disponible debe provocar la misma adaptación estructural que una ventana físicamente más estrecha.
+
+Conceptualmente:
+
+```text
+Zoom aumenta
+        |
+        V
+Ancho CSS disponible disminuye
+        |
+        V
+Puntos de ruptura existentes
+        |
+        V
+Composición responsive correspondiente
+```
+
+No existe un tratamiento paralelo específico para zoom.
+
+---
+
+### Reflujo
+
+El contenido principal de la aplicación utiliza desplazamiento vertical.
+
+Debe funcionar con un ancho de:
+
+```text
+320px CSS
+```
+
+sin pérdida de:
+
+```text
+Contenido
+Información
+Controles
+Funciones
+Estados
+Acciones
+Navegación
+```
+
+y sin exigir desplazamiento horizontal de toda la página.
+
+La comprobación incluye el caso equivalente de:
+
+```text
+ventana de 1280px CSS
++ ampliación del 400%
+=> 320px CSS disponibles
+```
+
+La aplicación no incorpora un punto de ruptura específico en `320px`.
+
+La composición estrecha definida por debajo de `1024px` debe continuar reorganizándose correctamente hasta ese ancho.
+
+Conceptualmente:
+
+```text
+ancho >= 1024px
+=> composición de escritorio correspondiente
+
+ancho < 1024px
+=> composición estrecha
+
+ancho = 320px CSS
+=> composición estrecha
+=> contenido completo
+=> funcionalidad completa
+=> sin desplazamiento horizontal de página
+```
+
+Las rejillas deben reducir naturalmente su cantidad de columnas hasta:
+
+```text
+1 tarjeta por fila
+```
+
+cuando ese es el único número que cabe correctamente.
+
+Los componentes horizontales deben reorganizarse verticalmente cuando dejan de caber.
+
+Los controles de navegación estrecha deben reorganizarse cuando ya no caben en una sola fila.
+
+---
+
+### Excepciones de desplazamiento horizontal
+
+El desplazamiento horizontal propio se reserva para contenido cuya estructura bidimensional necesita conservarse para mantener:
+
+```text
+Uso
+Comprensión
+Significado
+```
+
+Conceptualmente:
+
+```text
+Contenido normal
+=> reflujo
+=> sin desplazamiento horizontal de página
+
+Contenido ancho adaptable
+=> reorganizar
+=> redimensionar
+=> adaptar internamente
+
+Contenido bidimensional necesario
+=> desplazamiento horizontal propio del componente
+```
+
+La excepción no se determina por el nombre del componente.
+
+Por lo tanto:
+
+```text
+Tabla
+=> adaptar cuando la adaptación conserva la información
+=> desplazamiento interno solamente cuando necesita preservar la relación bidimensional
+
+Código
+=> ajustar líneas cuando el ajuste conserva el significado
+=> desplazamiento interno cuando la estructura o indentación necesita preservarse
+
+Diagrama o gráfico
+=> redimensionar o adaptar cuando continúa legible
+=> desplazamiento interno cuando necesita preservar su relación espacial
+```
+
+El componente exceptuado no debe provocar:
+
+```text
+overflow horizontal de la página completa
+```
+
+---
+
+### Cadenas extensas
+
+Las cadenas textuales que admiten división deben ajustarse al ancho disponible.
+
+Esto se aplica a:
+
+```text
+Títulos
+Nombres de recursos
+Metadatos
+Direcciones
+Enlaces visibles
+Identificadores presentados
+Mensajes
+Errores
+Contenido recibido
+```
+
+Conceptualmente:
+
+```text
+Cadena divisible
+=> envolver o dividir dentro del contenedor
+
+Cadena cuya división cambia el significado
+=> tratamiento específico del componente
+```
+
+Una cadena extensa no debe producir desplazamiento horizontal de toda la página cuando su división conserva correctamente la información.
+
+---
+
+### Espaciado del texto
+
+La aplicación debe soportar simultáneamente los valores de prueba establecidos para `1.4.12 Espaciado del texto`.
+
+Estos valores son:
+
+```text
+Interlineado
+=> al menos 1.5 veces el tamaño de fuente
+
+Espacio después de párrafos
+=> al menos 2 veces el tamaño de fuente
+
+Espaciado entre letras
+=> al menos 0.12 veces el tamaño de fuente
+
+Espaciado entre palabras
+=> al menos 0.16 veces el tamaño de fuente
+```
+
+Estos valores no sustituyen los valores visuales normales definidos en `3. Alturas de línea` ni en `10. Espaciado`.
+
+Representan modificaciones que la interfaz debe soportar sin pérdida.
+
+Cuando se aplican simultáneamente:
+
+```text
+Contenido
+=> permanece completo
+
+Funcionalidad
+=> permanece completa
+
+Contenedores
+=> crecen cuando resulta necesario
+
+Composición
+=> se reorganiza cuando resulta necesario
+```
+
+No debe producirse:
+
+```text
+Texto recortado
+Texto oculto
+Superposición
+Pérdida de controles
+Pérdida de etiquetas
+Pérdida de mensajes
+Pérdida de acciones
+```
+
+Las alturas mínimas definidas para componentes textuales continúan funcionando como valores mínimos y no como límites máximos.
+
+---
+
+### Orientación
+
+La aplicación no restringe el contenido a una orientación específica.
+
+Debe funcionar completamente en:
+
+```text
+vertical
+horizontal
+```
+
+No existe una función de `sitio` cuya utilización requiera una excepción basada en orientación.
+
+No se utiliza:
+
+```text
+bloqueo de orientación
+requisito de girar el dispositivo
+mensaje que impida continuar hasta cambiar la orientación
+contenido exclusivo de una orientación
+funcionalidad exclusiva de una orientación
+```
+
+Cuando cambia la orientación:
+
+```text
+Orientación
+=> cambia dimensiones disponibles
+
+Dimensiones disponibles
+=> determinan composición responsive
+
+Composición
+=> conserva contenido y funcionalidad
+```
+
+La interfaz no utiliza la orientación como sustituto de las reglas basadas en espacio disponible.
+
+---
+
+### Relación con el nivel AAA
+
+El criterio:
+
+```text
+1.4.8 Presentación visual
+=> nivel AAA
+```
+
+contiene requisitos adicionales relacionados con la presentación de bloques de texto.
+
+Las decisiones de esta sección satisfacen aspectos relacionados con el redimensionamiento y el reflujo, pero no constituyen por sí solas una verificación completa de todos los requisitos de `1.4.8`.
+
+Por lo tanto:
+
+```text
+1.4.8
+=> relacionado
+=> no declarar cumplimiento completo todavía
+```
+
+La evaluación AAA debe realizarse sobre todas las condiciones del criterio antes de registrarlo como cumplido, pero el nivel AA sigue siendo el requisito.
+
+---
+
 # Relación entre tema claro y tema oscuro
 
 Los dos temas representan exactamente el mismo sitio.
@@ -7448,7 +8394,12 @@ Para un mismo ancho disponible deben compartir exactamente:
 - límites de las unidades de presentación;
 - comportamiento de carga, vacío, error y contenido no encontrado;
 - comportamiento de los estados del formulario;
-- estructura semántica de idioma.
+- estructura semántica de idioma;
+- escala tipográfica relativa;
+- reglas de redimensionamiento del texto;
+- reglas de reflujo;
+- reglas de espaciado del texto;
+- comportamiento entre orientaciones.
 
 Conceptualmente:
 
@@ -7462,6 +8413,7 @@ Tema claro
 +-- misma estructura responsive
 +-- misma disposición para el mismo ancho
 +-- mismos estados
++-- mismas reglas de redimensionamiento y reflujo
 
 Tema oscuro
 |
@@ -7472,6 +8424,7 @@ Tema oscuro
 +-- misma estructura responsive
 +-- misma disposición para el mismo ancho
 +-- mismos estados
++-- mismas reglas de redimensionamiento y reflujo
 ```
 
 Solamente deben variar los valores visuales necesarios para adaptar:
@@ -7509,6 +8462,11 @@ Cambiar la estructura semántica
 Cambiar la navegación mediante teclado
 Cambiar el idioma semántico del documento
 Cambiar el idioma semántico de las partes
+Cambiar la escala tipográfica
+Cambiar las reglas de redimensionamiento
+Cambiar las reglas de reflujo
+Cambiar las reglas de espaciado del texto
+Cambiar el comportamiento entre orientaciones
 ```
 
 El tema oscuro no debe ser considerado un diseño independiente.
@@ -7526,6 +8484,12 @@ Ambos son representaciones visuales de la misma interfaz.
 ```text
 Título => Noto Serif Display / Cormorant Garamond / Georgia / serif
 Cuerpo => Inter / Noto Sans / Arial / sans-serif
+
+Raíz
+=> font-size: 100%
+
+Texto base
+=> 1rem
 ```
 
 ---
@@ -7543,29 +8507,29 @@ ancho < 1024px
 ### Escritorio
 
 ```text
-Nombre => 64px
-H1     => 48px
-H2     => 36px
-H3     => 28px
-H4     => 22px
-Lead   => 18px
-Base   => 16px
-Secundario => 14px
-Auxiliar   => 12px
+Nombre     => 4rem     => 64px de referencia
+H1         => 3rem     => 48px de referencia
+H2         => 2.25rem  => 36px de referencia
+H3         => 1.75rem  => 28px de referencia
+H4         => 1.375rem => 22px de referencia
+Lead       => 1.125rem => 18px de referencia
+Base       => 1rem     => 16px de referencia
+Secundario => 0.875rem => 14px de referencia
+Auxiliar   => 0.75rem  => 12px de referencia
 ```
 
 ### Pantallas estrechas
 
 ```text
-Nombre => 40px
-H1     => 32px
-H2     => 28px
-H3     => 24px
-H4     => 20px
-Lead   => 18px
-Base   => 16px
-Secundario => 14px
-Auxiliar   => 12px
+Nombre     => 2.5rem   => 40px de referencia
+H1         => 2rem     => 32px de referencia
+H2         => 1.75rem  => 28px de referencia
+H3         => 1.5rem   => 24px de referencia
+H4         => 1.25rem  => 20px de referencia
+Lead       => 1.125rem => 18px de referencia
+Base       => 1rem     => 16px de referencia
+Secundario => 0.875rem => 14px de referencia
+Auxiliar   => 0.75rem  => 12px de referencia
 ```
 
 ---
@@ -7682,6 +8646,9 @@ Padding general < 1024px  => 16px
 
 < 1024px
 => composición estrecha
+
+320px CSS
+=> ancho mínimo de comprobación de reflujo para contenido vertical
 ```
 
 ---
@@ -7730,8 +8697,8 @@ Navegación móvil
 ## Cabecera
 
 ```text
-Escritorio expandida => 320px
-Escritorio compacta  => 112px
+Escritorio expandida => min-height 320px
+Escritorio compacta  => min-height 112px
 Foto expandida       => 280px x 280px
 Foto compacta        => 72px x 72px
 Pantallas estrechas  => altura derivada del contenido
@@ -7742,10 +8709,14 @@ Pantallas estrechas  => altura derivada del contenido
 ## Controles
 
 ```text
-Altura estándar  => 48px
-Icono navegación => 22px
-Icono controles  => 20px
-Border radius    => 0
+Altura mínima textual => 48px
+Icono navegación      => 22px
+Icono controles       => 20px
+Border radius         => 0
+
+Selector de tema
+=> 48px x 48px
+=> control iconográfico
 ```
 
 ---
@@ -7781,7 +8752,7 @@ Acceso             => IconArrowRight
 
 ```text
 Columnas
-=> tantas tarjetas completas como permita el ancho disponible
+=> tantas tarjetas completas como permita el ancho disponible y el tamaño efectivo del contenido
 
 Siguiente tarjeta no cabe
 => nueva fila
@@ -7800,13 +8771,44 @@ No existe una cantidad fija de columnas.
 1. Reorganizar
 2. Redimensionar proporcionalmente
 3. Adaptar internamente
-4. Scroll horizontal del elemento
+4. Scroll horizontal del elemento solamente para estructura bidimensional necesaria
 ```
 
 ```text
 Página completa
 => sin overflow horizontal provocado por un componente interno
 ```
+
+---
+
+## Redimensionamiento y reflujo
+
+```text
+Texto máximo de comprobación   => 200%
+Raíz                           => font-size: 100%
+Unidad tipográfica             => rem
+Zoom                           => no restringido
+Viewport                       => width=device-width, initial-scale=1
+user-scalable=no               => no utilizar
+maximum-scale=1                => no utilizar
+Reflujo vertical               => 320px CSS
+Página                         => sin desplazamiento horizontal para contenido normal
+Contenedores textuales         => crecen o se reorganizan
+Dimensiones normales con texto => valores mínimos
+Orientación                    => vertical y horizontal
+Bloqueo de orientación         => no utilizar
+```
+
+### Espaciado de texto
+
+```text
+Interlineado               => 1.5 veces el tamaño de fuente
+Espacio después de párrafo => 2 veces el tamaño de fuente
+Espaciado entre letras     => 0.12 veces el tamaño de fuente
+Espaciado entre palabras   => 0.16 veces el tamaño de fuente
+```
+
+Estos valores corresponden a la comprobación de adaptación y no sustituyen los valores visuales normales.
 
 ---
 
@@ -7876,6 +8878,19 @@ Detección automática de idioma => no utilizar
 lang redundante                => no repetir cuando se hereda correctamente
 lang vacío con idioma conocido => no utilizar
 AAA específico para lang       => no existe requisito adicional
+Orientación WCAG               => 1.3.4 nivel AA
+Redimensionamiento WCAG        => 1.4.4 nivel AA
+Reflujo WCAG                   => 1.4.10 nivel AA
+Espaciado del texto WCAG       => 1.4.12 nivel AA
+Presentación visual            => 1.4.8 nivel AAA relacionado
+Texto hasta 200%               => conservar contenido y funcionalidad
+Zoom                           => no restringir
+Reflujo                        => 320px CSS
+Página durante reflujo         => sin desplazamiento horizontal normal
+Contenido bidimensional        => desplazamiento horizontal propio cuando sea necesario
+Espaciado modificado           => conservar contenido y funcionalidad
+Orientación vertical           => funcionamiento completo
+Orientación horizontal         => funcionamiento completo
 ```
 
 ---
@@ -7885,8 +8900,8 @@ AAA específico para lang       => no existe requisito adicional
 Los siguientes elementos de identidad visual quedan definidos:
 
 1. tipografía concreta;
-2. escala tipográfica de escritorio;
-3. escala tipográfica de pantallas estrechas;
+2. escala tipográfica relativa de escritorio;
+3. escala tipográfica relativa de pantallas estrechas;
 4. puntos de ruptura tipográficos;
 5. alturas de línea;
 6. pesos tipográficos;
@@ -8078,7 +9093,40 @@ Los siguientes elementos de identidad visual quedan definidos:
 192. utilización de herencia cuando el contenido mantiene el mismo idioma de su ancestro;
 193. ausencia de `lang=""` cuando el idioma es conocido;
 194. actualización de la declaración lingüística cuando cambia la variante representada;
-195. utilización del idioma de la solicitud que produjo el contenido presentado sin añadir una propiedad general adicional al contrato para determinar el idioma de la variante.
+195. utilización del idioma de la solicitud que produjo el contenido presentado sin añadir una propiedad general adicional al contrato para determinar el idioma de la variante;
+196. implementación de la escala tipográfica mediante unidades relativas `rem`;
+197. respeto al tamaño de fuente raíz configurado por el usuario mediante `font-size: 100%`;
+198. equivalencia de referencia de la escala tipográfica basada en una raíz habitual de `16px` sin fijar ese valor como tamaño absoluto;
+199. aplicación de la escala tipográfica a encabezados, párrafos, navegación, controles, campos, acciones, metadatos, etiquetas y textos auxiliares;
+200. herencia tipográfica de los controles nativos de formulario;
+201. utilización de dimensiones mínimas en los componentes textuales cuya presentación normal dispone de una altura definida;
+202. crecimiento obligatorio de los contenedores cuando el texto redimensionado necesita más espacio;
+203. ausencia de recorte, truncamiento, ocultación y superposición como solución al crecimiento del texto;
+204. cumplimiento de `1.4.4 Redimensionamiento del texto`, nivel AA, mediante soporte hasta `200%`;
+205. ausencia de restricciones sobre la ampliación normal del navegador;
+206. utilización de una configuración de ventana gráfica compatible con zoom;
+207. ausencia de `user-scalable=no`, `maximum-scale=1` o restricciones equivalentes;
+208. reutilización de las mismas reglas responsive cuando el zoom reduce el ancho CSS disponible;
+209. cumplimiento de `1.4.10 Reflujo`, nivel AA, para contenido de desplazamiento vertical hasta `320px CSS`;
+210. ausencia de desplazamiento horizontal de la página para contenido normal durante el reflujo;
+211. reducción natural de las rejillas hasta una tarjeta por fila cuando corresponde;
+212. reorganización de los componentes horizontales cuando dejan de caber correctamente;
+213. limitación del desplazamiento horizontal propio a contenido cuya estructura bidimensional necesita conservarse;
+214. aplicación de la excepción de desplazamiento horizontal según la necesidad real del contenido y no según su categoría;
+215. adaptación de cadenas extensas dentro de sus contenedores cuando su división conserva el significado;
+216. cumplimiento de `1.4.12 Espaciado del texto`, nivel AA;
+217. soporte de interlineado equivalente a `1.5` veces el tamaño de fuente sin pérdida;
+218. soporte de espacio posterior a párrafos equivalente a `2` veces el tamaño de fuente sin pérdida;
+219. soporte de espaciado entre letras equivalente a `0.12` veces el tamaño de fuente sin pérdida;
+220. soporte de espaciado entre palabras equivalente a `0.16` veces el tamaño de fuente sin pérdida;
+221. conservación del contenido y la funcionalidad cuando los valores de espaciado se aplican simultáneamente;
+222. cumplimiento de `1.3.4 Orientación`, nivel AA, sin exigir una orientación concreta;
+223. funcionamiento completo del sitio en orientación vertical;
+224. funcionamiento completo del sitio en orientación horizontal;
+225. aplicación de las reglas responsive según las dimensiones resultantes después de un cambio de orientación;
+226. ausencia de bloqueo de orientación, exigencia de rotación o funciones exclusivas de una orientación;
+227. ausencia de una excepción funcional que requiera orientación específica;
+228. relación con `1.4.8 Presentación visual`, nivel AAA, sin declarar su cumplimiento completo únicamente por las decisiones de redimensionamiento y reflujo.
 
 Los modelos visuales deben utilizar los iconos concretos establecidos en el mapeo de esta especificación.
 
@@ -8099,6 +9147,8 @@ La semántica accesible del estado de envío en curso del formulario queda cerra
 Las alternativas textuales de las imágenes de contenido quedan cerradas mediante la clasificación funcional correspondiente a cada representación, la responsabilidad de `sitio-api` sobre el valor final de `alt`, la representación directa de ese valor por `sitio`, las reglas concretas para `Sobre mí`, proyectos, artículos, certificados y certificaciones, y la utilización exclusiva de iconos en las tarjetas de Contactos.
 
 El idioma semántico queda cerrado mediante la declaración del idioma activo del sistema en el documento, la declaración del idioma real de las partes que difieren de él, la conservación del idioma de las variantes presentadas mediante respaldo, la separación entre contenido e interfaz dentro de unidades multilingües y la conservación de los cambios lingüísticos definidos editorialmente dentro del contenido.
+
+El redimensionamiento, el reflujo, el espaciado del texto y la orientación quedan cerrados mediante la escala tipográfica relativa, el soporte del aumento del texto hasta `200%`, la conservación del zoom del navegador, el reflujo hasta `320px CSS`, el crecimiento obligatorio de los contenedores textuales, la limitación del desplazamiento horizontal a contenido bidimensional necesario, el soporte de los valores de espaciado definidos por WCAG y el funcionamiento completo en ambas orientaciones.
 
 La definición de accesibilidad continúa para los aspectos todavía pendientes antes de considerar completa la etapa de responsive y accesibilidad de `sitio`.
 
