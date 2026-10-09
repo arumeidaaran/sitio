@@ -3029,15 +3029,15 @@ El nombre del sitio identifica el portafolio y utiliza la representación locali
 
 Cuando cambia el idioma, cambia también el título completo de acuerdo con esa localización.
 
-### Cambio de vista y foco
+### Cambio de página y foco
 
 La carga inicial del sitio conserva el comportamiento normal de foco del navegador.
 
 La existencia de una región principal o de un encabezado no provoca por sí sola un desplazamiento programático del foco.
 
-Cuando la navegación interna sustituye la vista actual por otra vista conceptual, el cambio debe proporcionar contexto equivalente al comienzo de una nueva página.
+Cuando la navegación interna sustituye la página actual por otra página conceptual, el cambio debe proporcionar contexto equivalente al comienzo de una nueva página.
 
-Después de que la nueva vista haya sido representada, el foco pasa a su encabezado principal.
+Después de que la nueva página haya sido representada, el foco pasa a su encabezado principal.
 
 Conceptualmente:
 
@@ -3045,43 +3045,43 @@ Conceptualmente:
 Carga inicial
 => conservar comportamiento normal de foco
 
-Navegación interna hacia una nueva vista
+Navegación interna hacia una nueva página
 => actualizar contexto del documento
-=> representar la nueva vista
+=> representar la nueva página
 => situar el foco en su encabezado principal
 ```
 
 El encabezado principal debe admitir foco programático sin convertirse por ello en una parada adicional dentro del recorrido normal mediante teclado.
 
-Después de recibir el foco como consecuencia de una navegación, el recorrido posterior continúa según el orden natural de los elementos interactivos de la nueva vista.
+Después de recibir el foco como consecuencia de una navegación, el recorrido posterior continúa según el orden natural de los elementos interactivos de la nueva página.
 
-El movimiento de foco se encuentra vinculado al cambio completo de vista y no a cualquier actualización de la interfaz.
+El movimiento de foco se encuentra vinculado al cambio completo de página y no a cualquier actualización de la interfaz.
 
 No desplazan automáticamente el foco:
 
 ```text
-Carga o sustitución de datos dentro de la misma vista
+Carga o sustitución de datos dentro de la misma página
 Finalización de un estado de carga
 Aparición de un estado vacío dentro de una unidad
 Aparición de un error dentro de una unidad
 Apertura o cierre de un grupo expandible
 Cambio de tema
-Cambios de dirección que no sustituyen la vista conceptual
+Cambios de dirección que no sustituyen la página conceptual
 ```
 
 En estos casos, el foco permanece en el elemento correspondiente a la interacción actual o conserva su posición cuando no existe una acción que justifique cambiarla.
 
-La región principal continúa cumpliendo una función semántica y no se convierte en destino de foco solamente porque cambie la vista.
+La región principal continúa cumpliendo una función semántica y no se convierte en destino de foco solamente porque cambie la página.
 
-El encabezado principal proporciona el contexto inmediato de la nueva vista.
+El encabezado principal proporciona el contexto inmediato de la nueva página.
 
-El título del documento proporciona el contexto general correspondiente a esa misma vista.
+El título del documento proporciona el contexto general correspondiente a esa misma página.
 
 Conceptualmente:
 
 ```text
 Título del documento
-=> identifica la vista
+=> identifica la página
 
 Encabezado principal enfocado
 => identifica el nuevo contenido
@@ -3092,11 +3092,11 @@ Región principal
 
 No se añade un anuncio independiente que repita el cambio de página cuando el título del documento y el encabezado principal ya proporcionan el contexto necesario.
 
-Una vista de contenido no encontrado se considera igualmente una vista resultante de la navegación.
+Una página de contenido no encontrado se considera igualmente una página resultante de la navegación.
 
-Cuando se alcanza mediante navegación interna, su encabezado principal recibe el foco después de que la vista haya sido representada.
+Cuando se alcanza mediante navegación interna, su encabezado principal recibe el foco después de que la página haya sido representada.
 
-En las composiciones donde la navegación se encuentra temporalmente expandida, la selección de un destino completa primero la transición de navegación correspondiente y después sitúa el foco en el encabezado principal de la nueva vista.
+En las composiciones donde la navegación se encuentra temporalmente expandida, la selección de un destino completa primero la transición de navegación correspondiente y después sitúa el foco en el encabezado principal de la nueva página.
 
 De esta manera, el foco no permanece asociado a un control perteneciente a una representación de navegación que dejó de estar disponible después del cambio.
 
@@ -4927,7 +4927,7 @@ La batería automatizada debe cubrir las reglas de accesibilidad correspondiente
 La cobertura se organiza por:
 
 ```text
-Tipo de vista
+Tipo de página
 Estructura
 Componente
 Estado
@@ -4939,9 +4939,9 @@ Forma de interacción
 
 No es necesario repetir una prueba completa para cada elemento editorial individual cuando varios elementos utilizan exactamente la misma estructura y comportamiento.
 
-Cada tipo conceptual de vista debe disponer de cobertura.
+Cada tipo conceptual de página debe disponer de cobertura.
 
-Esto comprende las vistas iniciales, las páginas generales, los listados, los diferentes tipos de detalle, los formularios y los estados de contenido no encontrado.
+Esto comprende las páginas iniciales, las páginas generales, los listados, los diferentes tipos de detalle, los formularios y los estados de contenido no encontrado.
 
 Los estados que cambian la estructura o la semántica deben comprobarse también en su propia condición.
 
@@ -4977,7 +4977,7 @@ Estados accesibles
 Elementos ocultos
 Orden y comportamiento de foco
 Navegación mediante teclado
-Cambios de vista
+Cambios de página
 Idioma semántico
 Contenido con idioma diferente al sistema
 Cambios lingüísticos internos
@@ -5023,7 +5023,7 @@ Uso real mediante puntero y tacto
 Cancelación práctica de interacciones
 Comunicación mediante tecnologías de asistencia
 Navegación mediante tecnologías de asistencia
-Comunicación de cambios de vista
+Comunicación de cambios de página
 Comunicación de estados del formulario
 Comunicación de carga, resultados y errores
 ```
@@ -5067,7 +5067,7 @@ Regiones
 Encabezados
 Nombres
 Estados
-Cambios de vista
+Cambios de página
 Idiomas
 Alternativas
 Formularios

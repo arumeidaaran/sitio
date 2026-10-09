@@ -1554,7 +1554,7 @@ Menú
 
 El menú no permanece abierto después de completar la selección del destino.
 
-Cuando la selección produce una nueva vista mediante navegación interna, después de completar el cierre del menú y representar el destino se aplica la gestión de foco definida en `26.35. Cambio de vista y foco`.
+Cuando la selección produce una nueva página mediante navegación interna, después de completar el cierre del menú y representar el destino se aplica la gestión de foco definida en `26.35. Cambio de página y foco`.
 
 La barra:
 
@@ -5244,9 +5244,9 @@ Menú
 
 La navegación expandida no permanece ocupando espacio después de seleccionar el destino.
 
-Cuando la navegación produce una nueva vista, el cierre del menú y del grupo precede al foco programático sobre el encabezado principal de la vista de destino.
+Cuando la navegación produce una nueva página, el cierre del menú y del grupo precede al foco programático sobre el encabezado principal de la página de destino.
 
-El comportamiento de foco se encuentra definido en `26.35. Cambio de vista y foco`.
+El comportamiento de foco se encuentra definido en `26.35. Cambio de página y foco`.
 
 ---
 
@@ -5799,7 +5799,7 @@ tabindex="-1"
 
 solamente debe utilizarse para permitir que un elemento reciba foco programáticamente sin incorporarlo al recorrido secuencial mediante `Tab`.
 
-Este comportamiento se utiliza en el encabezado principal de una nueva vista según `26.35. Cambio de vista y foco`.
+Este comportamiento se utiliza en el encabezado principal de una nueva página según `26.35. Cambio de página y foco`.
 
 Un elemento gráfico que forma parte de un control no constituye un segundo objetivo de foco cuando no dispone de una acción propia.
 
@@ -5843,7 +5843,7 @@ La carga inicial de una página no mueve automáticamente el foco hacia `main` n
 
 Esta regla corresponde a la carga inicial del sitio.
 
-El cambio de una vista por otra mediante navegación interna utiliza el comportamiento específico definido en `26.35. Cambio de vista y foco`.
+El cambio de una página por otra mediante navegación interna utiliza el comportamiento específico definido en `26.35. Cambio de página y foco`.
 
 La aplicación no incorpora un enlace adicional de salto al contenido principal.
 
@@ -7848,11 +7848,11 @@ El separador forma parte de la convención definida para el sitio y no cambia la
 
 ---
 
-## 26.35. Cambio de vista y foco
+## 26.35. Cambio de página y foco
 
-La carga inicial del sitio y la navegación interna entre vistas utilizan comportamientos de foco diferentes.
+La carga inicial del sitio y la navegación interna entre páginas utilizan comportamientos de foco diferentes.
 
-La aplicación no desplaza el foco solamente porque Angular haya creado una región, actualizado un componente o terminado una operación de carga. El movimiento programático se utiliza específicamente cuando una navegación interna sustituye una vista conceptual por otra.
+La aplicación no desplaza el foco solamente porque Angular haya creado una región, actualizado un componente o terminado una operación de carga. El movimiento programático se utiliza específicamente cuando una navegación interna sustituye una página conceptual por otra.
 
 ### Carga inicial
 
@@ -7880,13 +7880,13 @@ no produce por sí misma un movimiento de foco.
 
 La carga inicial no intenta reproducir programáticamente un comportamiento que ya corresponde al inicio normal de un documento.
 
-### Navegación interna hacia una nueva vista
+### Navegación interna hacia una nueva página
 
-Una navegación interna constituye un cambio de vista cuando el enrutamiento sustituye el contenido principal actual por otra página conceptual de la aplicación.
+Una navegación interna constituye un cambio de página cuando el enrutamiento sustituye el contenido principal actual por otra página conceptual de la aplicación.
 
 El cambio de la dirección por sí solo no determina esta condición.
 
-Una cambio que conserva la misma vista conceptual no debe provocar el movimiento definido para una nueva página.
+Una cambio que conserva la misma página conceptual no debe provocar el movimiento definido para una nueva página.
 
 La secuencia general es:
 
@@ -7897,11 +7897,11 @@ Activar un destino interno
 Navegación de Angular
         |
         V
-Nueva vista confirmada
+Nueva página confirmada
         |
         +-- actualizar <title>
         |
-        +-- representar la nueva vista
+        +-- representar la nueva página
         |
         +-- disponer del H1 correspondiente
         |
@@ -7909,7 +7909,7 @@ Nueva vista confirmada
 Mover foco al H1
 ```
 
-El foco solamente se desplaza cuando el encabezado principal de la nueva vista ya existe y representa correctamente el destino alcanzado.
+El foco solamente se desplaza cuando el encabezado principal de la nueva página ya existe y representa correctamente el destino alcanzado.
 
 No se mueve el foco hacia un skeleton que represente provisionalmente un encabezado todavía no disponible.
 
@@ -7919,7 +7919,7 @@ Cuando ese encabezado pertenece a una variante presentada mediante un idioma de 
 
 ### Encabezado principal enfocable
 
-El encabezado principal de una vista utiliza:
+El encabezado principal de una página utiliza:
 
 ```html
 <h1 tabindex="-1">...</h1>
@@ -7961,50 +7961,50 @@ La relación es:
 
 ```text
 <title>
-=> identifica el documento o vista
+=> identifica el documento o página
 
 H1
-=> identifica el contenido principal de la vista
-=> recibe foco después del cambio interno de vista
+=> identifica el contenido principal de la página
+=> recibe foco después del cambio interno de página
 
 main
 => delimita la región principal
 => no constituye el destino automático de foco
 ```
 
-### Actualizaciones dentro de una misma vista
+### Actualizaciones dentro de una misma página
 
 No producen un movimiento programático al `H1`:
 
 ```text
-Carga o sustitución de datos dentro de la vista actual
+Carga o sustitución de datos dentro de la página actual
 Finalización de un skeleton
 Aparición de un estado vacío dentro de una unidad
 Aparición de un error dentro de una unidad
 Apertura de un grupo expandible
 Cierre de un grupo expandible
 Cambio de tema
-Cambio de dirección que no sustituye la vista conceptual
+Cambio de dirección que no sustituye la página conceptual
 ```
 
 Los estados del formulario mantienen las reglas específicas definidas para sus mensajes y validación.
 
-La actualización de una unidad independiente no convierte la operación en una nueva vista.
+La actualización de una unidad independiente no convierte la operación en una nueva página.
 
 Conceptualmente:
 
 ```text
-Misma vista
+Misma página
 + contenido actualizado
 => conservar foco
 
-Nueva vista
+Nueva página
 => foco en H1
 ```
 
 ### Contenido no encontrado
 
-Un resultado de contenido no encontrado constituye una vista cuando es el destino final de una navegación.
+Un resultado de contenido no encontrado constituye una página cuando es el destino final de una navegación.
 
 Cuando se alcanza mediante navegación interna, su encabezado principal recibe el mismo tratamiento.
 
@@ -8014,14 +8014,14 @@ Conceptualmente:
 Navegación interna
         |
         V
-Vista no encontrada
+Página no encontrada
         |
         V
-H1 de la vista
+H1 de la página
 => foco
 ```
 
-No se mantiene el foco en el enlace o control que pertenecía a la vista anterior.
+No se mantiene el foco en el enlace o control que pertenecía a la página anterior.
 
 ### Navegación en pantallas estrechas
 
@@ -8038,13 +8038,13 @@ Navegar
         +-- cerrar Menú
         |
         V
-Representar nueva vista
+Representar nueva página
         |
         V
 Mover foco al H1
 ```
 
-El cierre de la navegación expandida ocurre antes de situar el foco en la nueva vista.
+El cierre de la navegación expandida ocurre antes de situar el foco en la nueva página.
 
 De esta manera, el foco no permanece asociado a un control perteneciente a una representación del menú que dejó de estar disponible.
 
@@ -8068,13 +8068,13 @@ El contexto se proporciona mediante:
 
 ```text
 <title>
-=> identificación general de la vista
+=> identificación general de la página
 
 H1 enfocado
 => contexto inmediato del contenido representado
 ```
 
-El encabezado principal localizado proporciona a las tecnologías de asistencia el nombre de la nueva vista cuando recibe el foco.
+El encabezado principal localizado proporciona a las tecnologías de asistencia el nombre de la nueva página cuando recibe el foco.
 
 No se repite esta información mediante una segunda región de anuncios cuando el cambio ya queda comunicado por el propio destino del foco.
 
@@ -9189,11 +9189,11 @@ Porcentaje real de pruebas automatizadas aprobadas
 => debe ser 100%
 ```
 
-### Alcance por vistas
+### Alcance por páginas
 
 La auditoría no se limita a Inicio.
 
-Cada tipo conceptual de vista debe disponer de cobertura automatizada de accesibilidad.
+Cada tipo conceptual de página debe disponer de cobertura automatizada de accesibilidad.
 
 El alcance incluye:
 
@@ -9216,7 +9216,7 @@ No es necesario ejecutar una batería independiente para cada recurso editorial 
 La cobertura se establece por:
 
 ```text
-Tipo de vista
+Tipo de página
 Tipo de representación
 Estado
 Composición
@@ -9323,7 +9323,7 @@ Apertura y cierre del menú estrecho
 Activación de enlaces
 Activación de botones
 Uso del formulario
-Cambio de vista
+Cambio de página
 ```
 
 Las pruebas deben comprobar que:
@@ -9369,10 +9369,10 @@ La cobertura incluye:
 Carga inicial
 => sin movimiento programático
 
-Navegación interna hacia nueva vista
+Navegación interna hacia nueva página
 => H1 correspondiente
 
-Actualización dentro de misma vista
+Actualización dentro de misma página
 => conservar foco
 
 Menú estrecho durante navegación
@@ -9425,7 +9425,7 @@ Esta comprobación no impide el flujo automatizado de la promoción.
 
 ### Estructura semántica
 
-Las pruebas automatizadas deben comprobar la estructura semántica definida para cada vista.
+Las pruebas automatizadas deben comprobar la estructura semántica definida para cada página.
 
 Esto incluye:
 
@@ -9984,7 +9984,7 @@ Las unidades independientes deben mantener estados independientes.
 
 La prueba no debe considerar toda la página ocupada solamente porque una unidad continúa pendiente.
 
-### Cambio de vista
+### Cambio de página
 
 Las pruebas automatizadas deben comprobar conjuntamente:
 
@@ -9996,7 +9996,7 @@ Menú
 Grupo expandible
 ```
 
-Durante una navegación interna hacia una nueva vista:
+Durante una navegación interna hacia una nueva página:
 
 ```text
 Actualizar <title>
@@ -10016,7 +10016,7 @@ sin incorporarse al recorrido normal mediante `Tab`.
 
 La carga inicial no debe mover programáticamente el foco.
 
-Una actualización dentro de la misma vista tampoco debe moverlo al `H1`.
+Una actualización dentro de la misma página tampoco debe moverlo al `H1`.
 
 La comprobación manual mediante tecnología de asistencia debe confirmar que el título del documento y el encabezado principal enfocado proporcionan contexto suficiente sin una región adicional de anuncio de ruta. Esta comprobación no impide el flujo automatizado de la promoción. 
 
@@ -10044,7 +10044,7 @@ Confirmación
 Límite de envíos
 Errores
 Estados de carga
-Cambio de vista
+Cambio de página
 ```
 
 ### Capturas y comparación visual
@@ -10633,10 +10633,10 @@ Foco durante envío             => conservar en el control de origen
 Resultado no urgente           => role="status"
 Fallo de envío                 => role="alert"
 Carga inicial                  => sin movimiento programático de foco
-Cambio interno de vista        => foco en H1
-H1 de una nueva vista          => tabindex="-1"
-main                           => no recibe foco por el cambio de vista
-Cambio dentro de misma vista   => conservar foco
+Cambio interno de página        => foco en H1
+H1 de una nueva página          => tabindex="-1"
+main                           => no recibe foco por el cambio de página
+Cambio dentro de misma página   => conservar foco
 Anuncio adicional de ruta      => no utilizar aria-live
 Imagen de contenido            => src y alt obligatorios
 alt                            => texto o cadena vacía
@@ -10875,14 +10875,14 @@ Los siguientes elementos de identidad visual quedan definidos:
 134. garantía de contraste de la cabecera frente al caso de máxima luminosidad de la fotografía;
 135. conservación de la capa mínima detrás de toda la región textual de la cabecera;
 136. independencia entre la garantía de contraste de la cabecera y la fotografía concreta utilizada;
-137. distinción entre carga inicial y cambio interno de vista para la gestión de foco;
+137. distinción entre carga inicial y cambio interno de página para la gestión de foco;
 138. ausencia de movimiento programático de foco durante la carga inicial;
-139. foco programático en el encabezado principal después de una navegación interna hacia una nueva vista;
+139. foco programático en el encabezado principal después de una navegación interna hacia una nueva página;
 140. uso de `tabindex="-1"` en el encabezado principal para permitir foco programático sin cambiar el recorrido normal mediante teclado;
 141. conservación de `main` como región semántica sin convertirla en destino automático de foco;
-142. conservación del foco durante actualizaciones que permanecen dentro de la misma vista;
-143. tratamiento de las vistas de contenido no encontrado como destinos completos de navegación;
-144. cierre del menú de navegación estrecho antes de trasladar el foco al encabezado principal de la nueva vista;
+142. conservación del foco durante actualizaciones que permanecen dentro de la misma página;
+143. tratamiento de las páginas de contenido no encontrado como destinos completos de navegación;
+144. cierre del menú de navegación estrecho antes de trasladar el foco al encabezado principal de la nueva página;
 145. comunicación del cambio de contexto mediante el título del documento y el encabezado principal sin una región `aria-live` adicional;
 146. estado ocupado del formulario durante el envío mediante `aria-busy`;
 147. estado temporal de solo lectura de los campos mediante `readonly`;
@@ -11011,7 +11011,7 @@ Los siguientes elementos de identidad visual quedan definidos:
 270. exigencia de `100%` de aprobación de todas las pruebas automatizadas ejecutadas;
 271. bloqueo de la promoción hacia `main` cuando una sola prueba automatizada falla;
 272. utilización del porcentaje real de pruebas aprobadas en lugar de una puntuación estimativa de accesibilidad;
-273. cobertura de accesibilidad para cada tipo conceptual de vista;
+273. cobertura de accesibilidad para cada tipo conceptual de página;
 274. cobertura independiente de los estados que cambian estructura, semántica o comportamiento;
 275. comprobación de las representaciones visuales dependientes del tema en claro y oscuro;
 276. cobertura de contenido en el idioma del sistema, contenido mediante respaldo, colecciones multilingües y cambios lingüísticos internos;
@@ -11040,7 +11040,7 @@ Los siguientes elementos de identidad visual quedan definidos:
 299. comprobación de ausencia de arrastre obligatorio;
 300. comprobación automatizada de todos los estados semánticos del formulario;
 301. comprobación automatizada de `aria-busy`, `aria-hidden` y exclusión del foco durante los estados de carga;
-302. comprobación conjunta de `<title>`, `H1`, foco y cierre de navegación durante los cambios internos de vista;
+302. comprobación conjunta de `<title>`, `H1`, foco y cierre de navegación durante los cambios internos de página;
 303. obligación de comprobar manualmente el comportamiento real mediante lector de pantalla;
 304. exclusión de la comparación píxel a píxel como criterio suficiente de conformidad de accesibilidad;
 305. integración de las pruebas automatizadas de accesibilidad dentro de la validación anterior a la promoción hacia `main`;
@@ -11058,7 +11058,7 @@ Las decisiones de accesibilidad incluidas en esta especificación forman parte d
 
 La auditoría de contraste queda cerrada para los temas claro y oscuro dentro de los usos permitidos definidos por esta especificación.
 
-La gestión de contexto y foco durante los cambios de vista queda cerrada para la navegación interna de la aplicación.
+La gestión de contexto y foco durante los cambios de página queda cerrada para la navegación interna de la aplicación.
 
 La semántica accesible del estado de envío en curso del formulario queda cerrada mediante el estado ocupado del formulario, los campos temporalmente de solo lectura, la indisponibilidad semántica y funcional del control de envío, la comunicación no interruptiva del progreso y la conservación del foco.
 
@@ -11070,7 +11070,7 @@ El redimensionamiento, el reflujo, el espaciado del texto y la orientación qued
 
 La interacción por puntero y tacto queda cerrada mediante objetivos interactivos independientes de al menos `48px x 48px CSS`, la ampliación de los subelementos de navegación a `48px` de altura mínima, la independencia funcional respecto de `hover`, la activación sencilla mediante ratón, tacto y lápiz, la cancelación antes de completar una activación, la ausencia de arrastre y gestos complejos obligatorios, la conservación de los mecanismos de entrada concurrentes, la correspondencia entre etiqueta visible y nombre accesible y la ausencia de actuación funcional mediante movimiento físico.
 
-Las pruebas de accesibilidad quedan cerradas mediante la integración de `@axe-core/playwright`, la exigencia de `0` violaciones automatizadas dentro del alcance configurado, la aprobación obligatoria del `100%` de la suite automatizada, la cobertura por vistas, estados, temas, contextos lingüísticos y mecanismos de interacción, y la conservación de comprobaciones manuales para los aspectos que requieren evaluación humana o tecnologías de asistencia reales.
+Las pruebas de accesibilidad quedan cerradas mediante la integración de `@axe-core/playwright`, la exigencia de `0` violaciones automatizadas dentro del alcance configurado, la aprobación obligatoria del `100%` de la suite automatizada, la cobertura por páginas, estados, temas, contextos lingüísticos y mecanismos de interacción, y la conservación de comprobaciones manuales para los aspectos que requieren evaluación humana o tecnologías de asistencia reales.
 
 Ninguna prueba manual impide el flujo automatizado de la promoción. Las pruebas manuales sinven de comprobación humana, por lo que no es posible formar parte del flujo automatizado de la promoción.
 
