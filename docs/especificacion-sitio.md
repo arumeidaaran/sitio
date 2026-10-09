@@ -3547,7 +3547,7 @@ La fecha de publicación corresponde a la publicación inicial.
 
 La fecha de actualización corresponde a la última versión publicada.
 
-Cuando todavía no existe una cambio posterior:
+Cuando todavía no existe un cambio posterior:
 
 ```text
 Fecha de publicación
@@ -7886,7 +7886,7 @@ Una navegación interna constituye un cambio de página cuando el enrutamiento s
 
 El cambio de la dirección por sí solo no determina esta condición.
 
-Una cambio que conserva la misma página conceptual no debe provocar el movimiento definido para una nueva página.
+Un cambio que conserva la misma página conceptual no debe provocar el movimiento definido para una nueva página.
 
 La secuencia general es:
 

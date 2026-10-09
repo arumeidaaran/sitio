@@ -1017,7 +1017,7 @@ Todas las tarjetas mantienen ambos espacios de fecha.
 
 `update_date` representa la fecha de la última versión publicada.
 
-Cuando un artículo todavía no ha recibido una cambio posterior:
+Cuando un artículo todavía no ha recibido un cambio posterior:
 
 ```text
 publication_date
