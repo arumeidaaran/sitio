@@ -63,6 +63,10 @@ La interacción debe conservar la misma funcionalidad mediante teclado, ratón, 
 
 Las funciones propias de la aplicación no deben depender exclusivamente del paso del puntero, de gestos complejos, de movimientos de arrastre ni de movimientos físicos del dispositivo.
 
+La accesibilidad debe validarse mediante una combinación de pruebas automatizadas y comprobaciones manuales. La comprobación manual no impide el flujo automatizado de la promoción. 
+
+La totalidad de las pruebas automatizadas ejecutadas debe aprobarse antes de promover un cambio hacia la rama principal.
+
 ---
 
 # 1. Tipografía
@@ -9007,6 +9011,1112 @@ No existe una función que dependa de sensores de movimiento para su operación 
 
 ---
 
+## 26.38. Pruebas de accesibilidad
+
+La validación de accesibilidad combina obligatoriamente pruebas automatizadas y comprobaciones manuales. La comprobación manual no impide el flujo automatizado de la promoción. 
+
+La automatización verifica las condiciones que deben determinarse de forma objetiva mediante el DOM, los estilos calculados, el comportamiento programático y la representación producida por el navegador.
+
+La comprobación manual verifica las condiciones cuya corrección depende además de la percepción, del significado, del orden comprensible de la interacción o del comportamiento real de tecnologías de asistencia. Esta comprobación no impide el flujo automatizado de la promoción. 
+
+Conceptualmente:
+
+```text
+Pruebas automatizadas
++ comprobaciones manuales aplicables
+=> validación de accesibilidad
+```
+
+Una auditoría automática sin violaciones no constituye por sí sola una declaración completa de conformidad WCAG.
+
+### Herramientas
+
+Las pruebas de accesibilidad ejecutadas mediante navegador utilizan:
+
+```text
+Playwright
+@axe-core/playwright
+axe-core
+```
+
+`@axe-core/playwright` se integra dentro de las pruebas ya ejecutadas mediante Playwright.
+
+No se incorpora un segundo sistema completo de auditoría mediante:
+
+```text
+Lighthouse
+Pa11y
+```
+
+como requisito de aceptación del proyecto.
+
+Las pruebas unitarias y de componentes siguen utilizando:
+
+```text
+Vitest
+Herramientas de pruebas de Angular
+```
+
+La batería automatizada del proyecto queda formada conceptualmente por:
+
+```text
+Vitest
+Pruebas de Angular
+Playwright
+Comprobaciones de accesibilidad mediante axe-core
+Comprobaciones automatizadas propias de accesibilidad
+```
+
+### Configuración de axe-core
+
+Los análisis correspondientes al nivel general del proyecto utilizan las etiquetas:
+
+```text
+wcag2a
+wcag2aa
+wcag21a
+wcag21aa
+wcag22aa
+```
+
+Conceptualmente:
+
+```typescript
+new AxeBuilder({ page })
+    .withTags([
+        'wcag2a',
+        'wcag2aa',
+        'wcag21a',
+        'wcag21aa',
+        'wcag22aa',
+    ])
+    .analyze();
+```
+
+La condición automatizada de aceptación de un análisis es:
+
+```text
+violations.length
+=> 0
+```
+
+Por lo tanto:
+
+```text
+0 violaciones
+=> comprobación automática aprobada
+
+1 o más violaciones
+=> comprobación automática fallida
+```
+
+Un resultado que `axe-core` clasifica como no determinable automáticamente no se considera una demostración de conformidad.
+
+Los resultados que necesitan revisión permanecen sujetos a comprobación manual.
+
+Conceptualmente:
+
+```text
+Violación
+=> fallo automático
+
+Resultado no determinable automáticamente
+=> revisión manual
+
+Ausencia de violaciones
+=> parte automatizable aprobada
+=> no sustituye la revisión manual aplicable
+```
+
+### Porcentaje de aceptación
+
+La suite automatizada del proyecto exige:
+
+```text
+Pruebas automatizadas aprobadas
+-------------------------------- x 100
+Pruebas automatizadas ejecutadas
+
+=> 100%
+```
+
+La condición obligatoria es:
+
+```text
+Aceptación automatizada
+=> 100%
+```
+
+Por lo tanto:
+
+```text
+100% de las pruebas aprobadas
+=> validación automatizada aprobada
+
+Resultado menor que 100%
+=> validación automatizada fallida
+=> no promover hacia main
+```
+
+Una prueba automatizada fallida no se compensa mediante otras pruebas aprobadas.
+
+La prueba manual no impide el flujo automatizado de la promoción. 
+
+La misma regla se aplica a las pruebas de accesibilidad.
+
+Conceptualmente:
+
+```text
+Pruebas automatizadas de accesibilidad
+=> 100% aprobadas
+
+Violaciones detectadas por axe-core
+=> 0
+
+Comprobaciones automatizadas propias
+=> 100% aprobadas
+```
+
+No se utiliza una puntuación estimativa producida por una herramienta como sustitución del porcentaje real de pruebas aprobadas.
+
+Conceptualmente:
+
+```text
+Puntuación estimativa de accesibilidad
+=> no constituye criterio de aceptación
+
+Porcentaje real de pruebas automatizadas aprobadas
+=> debe ser 100%
+```
+
+### Alcance por vistas
+
+La auditoría no se limita a Inicio.
+
+Cada tipo conceptual de vista debe disponer de cobertura automatizada de accesibilidad.
+
+El alcance incluye:
+
+```text
+Inicio
+Sobre mí
+Contactos
+Listado de Certificaciones
+Detalle de Certificado
+Detalle de Certificación
+Listado de Proyectos
+Detalle de Proyecto
+Listado de Artículos
+Detalle de Artículo
+Contenido no encontrado
+```
+
+No es necesario ejecutar una batería independiente para cada recurso editorial cuando diferentes recursos utilizan exactamente la misma estructura y comportamiento.
+
+La cobertura se establece por:
+
+```text
+Tipo de vista
+Tipo de representación
+Estado
+Composición
+Tema
+Contexto lingüístico
+Forma de interacción
+```
+
+### Estados
+
+Los estados que cambian la estructura, la semántica o el comportamiento deben disponer de cobertura propia.
+
+Esto comprende:
+
+```text
+Carga
+Contenido disponible
+Contenido vacío
+Error de carga
+Contenido no encontrado
+
+Menú cerrado
+Menú abierto
+Grupo expandible cerrado
+Grupo expandible abierto
+
+Formulario normal
+Envío en curso
+Validación
+Envío satisfactorio
+Límite de envíos
+Fallo de envío
+```
+
+Una página que supera la auditoría en su estado normal no demuestra por sí sola que sus demás estados mantienen la misma accesibilidad.
+
+### Temas
+
+Las comprobaciones cuya respuesta depende de la representación visual deben ejecutarse en Tema claro y Tema oscuro. Esto se aplica especialmente a:
+
+```text
+Contraste
+Foco visible
+Bordes funcionales
+Estados semánticos
+Enlaces
+Botones
+Placeholder
+Cabecera
+```
+
+La igualdad estructural entre temas no permite omitir una comprobación visual cuya combinación cromática cambia.
+
+### Contextos lingüísticos
+
+Las pruebas deben cubrir:
+
+```text
+Contenido en el mismo idioma del sistema
+Contenido presentado mediante idioma de respaldo
+Colección con unidades en idiomas diferentes
+Cambio manual de idioma
+Navegación interna conservando idioma
+Cambio lingüístico interno dentro del contenido
+```
+
+La automatización debe comprobar el valor de `lang` correspondiente.
+
+La comprobación manual debe confirmar que el idioma declarado corresponde realmente al contenido presentado y que el cambio lingüístico se aplica a la región semántica adecuada. Esta comprobación no impide el flujo automatizado de la promoción. 
+
+### Datos de prueba
+
+Los datos controlados utilizados por las pruebas deben permitir representar las condiciones necesarias para comprobar:
+
+```text
+Cadenas extensas
+Contenido con idioma de respaldo
+Colecciones multilingües
+Alternativas vacías
+Alternativas informativas
+Imágenes funcionales cuando correspondan
+Estados vacíos
+Errores
+Unidades incompletas
+Contenido ancho
+Estados del formulario
+```
+
+No se utiliza solamente contenido corto y favorable para las pruebas responsive y de accesibilidad.
+
+### Navegación mediante teclado
+
+Playwright debe comprobar automáticamente el comportamiento reproducible mediante teclado.
+
+La cobertura incluye:
+
+```text
+Recorrido mediante Tab
+Recorrido mediante Shift + Tab cuando corresponde
+Activación mediante Enter
+Activación mediante Space cuando corresponde al control nativo
+Apertura y cierre de grupos
+Apertura y cierre del menú estrecho
+Activación de enlaces
+Activación de botones
+Uso del formulario
+Cambio de vista
+```
+
+Las pruebas deben comprobar que:
+
+```text
+Contenido oculto
+=> no recibe foco
+
+Control visible e interactivo
+=> participa en el recorrido correspondiente
+
+Grupo cerrado
+=> subelementos fuera del recorrido
+
+Grupo abierto
+=> subelementos disponibles
+
+Menú cerrado
+=> navegación oculta fuera del recorrido
+
+Menú abierto
+=> navegación disponible
+```
+
+La comprobación manual debe recorrer también la aplicación utilizando únicamente teclado. Esta comprobación no impide el flujo automatizado de la promoción. 
+
+La revisión manual debe confirmar que el orden resulta lógico y comprensible y que ninguna función queda inaccesible aunque el recorrido programático produzca los elementos esperados. Esta comprobación no impide el flujo automatizado de la promoción. 
+
+### Foco
+
+Las pruebas automatizadas utilizan el elemento activo del documento para comprobar la gestión programática del foco.
+
+Conceptualmente:
+
+```text
+document.activeElement
+=> elemento esperado
+```
+
+La cobertura incluye:
+
+```text
+Carga inicial
+=> sin movimiento programático
+
+Navegación interna hacia nueva vista
+=> H1 correspondiente
+
+Actualización dentro de misma vista
+=> conservar foco
+
+Menú estrecho durante navegación
+=> cerrar menú
+=> cerrar grupo cuando corresponda
+=> foco en H1 del destino
+
+Envío del formulario desde botón
+=> conservar foco en botón
+
+Envío mediante teclado desde campo
+=> conservar foco en campo
+```
+
+También debe comprobarse que el `H1` enfocado programáticamente utiliza:
+
+```text
+tabindex="-1"
+```
+
+y no forma parte del recorrido secuencial normal.
+
+El estilo calculado del indicador de foco debe corresponder a:
+
+```text
+outline-width  => 2px
+outline-offset => 2px
+```
+
+con el color correspondiente al tema:
+
+```text
+Tema claro
+=> #141414
+
+Tema oscuro
+=> #E2484D
+```
+
+La comprobación manual debe confirmar además que el foco:
+
+```text
+es claramente perceptible
+no queda cubierto por regiones persistentes
+no se confunde con otro estado visual
+mantiene un recorrido comprensible
+```
+
+Esta comprobación no impide el flujo automatizado de la promoción. 
+
+### Estructura semántica
+
+Las pruebas automatizadas deben comprobar la estructura semántica definida para cada vista.
+
+Esto incluye:
+
+```text
+header
+nav
+main
+H1
+Jerarquía de encabezados
+Botones nativos
+Enlaces nativos
+Campos
+Etiquetas
+Relaciones entre controles y contenido
+```
+
+También deben comprobar los estados y relaciones accesibles definidos en esta especificación:
+
+```text
+aria-expanded
+aria-controls
+aria-hidden
+aria-busy
+aria-invalid
+aria-describedby
+aria-disabled
+readonly
+role="status"
+role="alert"
+tabindex="-1"
+```
+
+La presencia de un atributo no constituye por sí sola una prueba suficiente cuando su valor necesita corresponder al estado real del componente.
+
+La prueba debe comprobar la relación entre:
+
+```text
+Estado funcional
+Estado visual
+Estado semántico
+```
+
+### Nombres accesibles
+
+La automatización debe comprobar que todo control dispone del nombre accesible correspondiente.
+
+Cuando existe texto visible:
+
+```text
+Texto visible
+=> debe formar parte del nombre accesible
+```
+
+Los controles exclusivamente iconográficos deben disponer de un nombre accesible localizado.
+
+La comprobación manual debe confirmar además que el nombre comunica correctamente la función real del control. Esta comprobación no impide el flujo automatizado de la promoción. 
+
+### Idioma semántico
+
+Las pruebas automatizadas deben comprobar:
+
+```text
+lang del documento
+Actualización de lang al cambiar idioma
+Conservación de lang durante navegación interna
+Herencia cuando contenido e interfaz utilizan el mismo idioma
+lang propio cuando una variante presentada utiliza otro idioma
+lang independiente por unidad en colecciones multilingües
+Conservación del idioma de la interfaz alrededor del contenido de respaldo
+lang de encabezados pertenecientes a contenido localizado
+Contexto lingüístico de alternativas textuales
+Cambios lingüísticos internos
+Ausencia de lang="" cuando el idioma es conocido
+```
+
+Los valores deben corresponder a etiquetas BCP 47 válidas.
+
+La prueba automatizada no intenta determinar el idioma mediante análisis del texto.
+
+La comprobación manual debe comparar la declaración semántica con el idioma realmente presentado. Esta comprobación no impide el flujo automatizado de la promoción. 
+
+### Alternativas textuales
+
+Las pruebas automatizadas deben comprobar que toda imagen de contenido dispone de:
+
+```text
+src
+alt
+```
+
+Debe comprobarse que:
+
+```text
+alt
+=> existe
+
+alt
+=> cadena textual o cadena vacía
+
+alt
+=> nunca null
+```
+
+La representación debe conservar exactamente el valor recibido desde `sitio-api`.
+
+Los casos de prueba deben incluir:
+
+```text
+Proyecto resumido
+=> alt=""
+
+Proyecto en detalle
+=> alt informativo
+
+Artículo resumido
+=> alt=""
+
+Artículo en detalle
+=> valor según función editorial
+
+Imagen de artículo
+=> valor según función individual
+
+Certificado resumido
+=> alt=""
+
+Certificación resumida
+=> alt=""
+
+Certificado en detalle
+=> alt informativo
+
+Certificación en detalle
+=> alt informativo
+```
+
+La comprobación manual debe determinar si la alternativa informativa transmite correctamente la función real de la imagen y si una alternativa vacía corresponde efectivamente a una representación redundante o decorativa. Esta comprobación no impide el flujo automatizado de la promoción. 
+
+### Contraste
+
+Las pruebas automatizadas propias deben reproducir el cálculo definido en `26.21. Método de cálculo de contraste`.
+
+Los tokens implementados deben comprobarse frente a todas las superficies permitidas para su función.
+
+Los umbrales utilizados son:
+
+```text
+Texto normal AA
+=> >= 4.5:1
+
+Texto grande AA
+=> >= 3:1
+
+Texto normal AAA
+=> >= 7:1
+
+Texto grande AAA
+=> >= 4.5:1
+
+Información no textual necesaria
+=> >= 3:1
+```
+
+Las pruebas deben utilizar el valor completo del contraste.
+
+No deben redondear un valor inferior hasta convertirlo en conforme.
+
+Las combinaciones del tema claro deben conservar como mínimo los resultados registrados en `26.24. Auditoría de contraste del tema claro`.
+
+Las combinaciones del tema oscuro deben conservar como mínimo los resultados registrados en `26.27. Auditoría de contraste del tema oscuro`.
+
+Un cambio de un token que haga fallar una combinación permitida debe producir una prueba fallida.
+
+La auditoría mediante `axe-core` complementa estas pruebas, pero no sustituye la comprobación matemática de los tokens.
+
+### Cabecera y fondos variables
+
+La prueba automática debe conservar la condición:
+
+```text
+Capa negra mínima
+=> 60%
+
+Texto
+=> #F2F1EE
+
+Peor fondo efectivo
+=> #666666
+
+Contraste mínimo calculado
+=> 5.0834876786:1
+```
+
+La comprobación manual debe confirmar que la capa de al menos `60%` cubre realmente toda la región ocupada por:
+
+```text
+Nombre
+Descripción breve
+```
+
+en cada composición donde esos textos aparecen sobre la fotografía.
+
+También debe verificarse que el crecimiento del bloque textual por redimensionamiento o espaciado amplía la región protegida.
+
+Esta comprobación manual no impide el flujo automatizado de la promoción. 
+
+### Uso del color
+
+La automatización debe comprobar la presencia de texto, semántica o señal visual adicional en los estados cuyo significado no debe depender exclusivamente del color.
+
+La comprobación manual debe confirmar que:
+
+```text
+Éxito
+Advertencia
+Error
+Información
+Estados interactivos
+Enlaces dentro de texto
+```
+
+siguen siendo comprensibles cuando la distinción cromática no se utiliza como única fuente de información.
+
+### Redimensionamiento del texto
+
+La prueba automatizada debe representar el texto con:
+
+```text
+200%
+```
+
+del tamaño de referencia y comprobar que:
+
+```text
+Contenido
+=> permanece presente
+
+Controles
+=> permanecen presentes
+
+Acciones
+=> permanecen disponibles
+
+Texto necesario
+=> no queda recortado ni truncado
+
+Contenedores
+=> crecen o se reorganizan
+```
+
+La prueba debe incluir todos los niveles de la escala tipográfica definidos en `2. Escala tipográfica`.
+
+La comprobación manual debe confirmar visualmente la ausencia de:
+
+```text
+Recorte
+Superposición
+Ocultación
+Truncamiento
+Pérdida de legibilidad
+```
+
+Esta comprobación manual no impide el flujo automatizado de la promoción. 
+
+### Reflujo
+
+Playwright debe ejecutar la composición con:
+
+```text
+ancho => 320px CSS
+```
+
+Para el contenido normal debe cumplirse:
+
+```text
+document.documentElement.scrollWidth
+<=
+document.documentElement.clientWidth
+```
+
+Los componentes que utilizan legítimamente desplazamiento horizontal propio no deben ampliar el ancho horizontal de la página completa.
+
+La prueba debe comprobar además que:
+
+```text
+Contenido
+Controles
+Navegación
+Estados
+Acciones
+```
+
+permanecen disponibles.
+
+La comprobación manual debe incluir también el caso equivalente mediante zoom real del navegador:
+
+```text
+1280px CSS
++ zoom del 400%
+=> 320px CSS disponibles
+```
+
+La prueba manual debe confirmar que la reorganización continúa siendo utilizable y que los componentes con desplazamiento propio se encuentran limitados a su región. Esta comprobación no impide el flujo automatizado de la promoción. 
+
+### Espaciado del texto
+
+Las pruebas automatizadas deben aplicar simultáneamente:
+
+```text
+line-height
+=> 1.5 veces el tamaño de fuente
+
+espacio posterior a párrafos
+=> 2 veces el tamaño de fuente
+
+letter-spacing
+=> 0.12 veces el tamaño de fuente
+
+word-spacing
+=> 0.16 veces el tamaño de fuente
+```
+
+Con estos valores activos debe conservarse:
+
+```text
+Contenido
+Funcionalidad
+Controles
+Etiquetas
+Mensajes
+Acciones
+```
+
+La comprobación manual debe confirmar que la representación resultante continúa siendo legible y que no existe superposición ni pérdida visual. Esta comprobación no impide el flujo automatizado de la promoción. 
+
+### Orientación
+
+Las pruebas automatizadas deben utilizar composiciones equivalentes con dimensiones intercambiadas para verificar:
+
+```text
+Orientación vertical
+Orientación horizontal
+```
+
+El cambio debe conservar el mismo contenido y las mismas funciones y debe seleccionar la composición responsive correspondiente a las dimensiones resultantes.
+
+La comprobación manual mediante un dispositivo que permita cambio real de orientación debe confirmar el mismo comportamiento. Esta comprobación no impide el flujo automatizado de la promoción. 
+
+### Objetivos interactivos
+
+Los objetivos interactivos independientes propios de `sitio` se miden sobre la geometría final producida por el navegador.
+
+La comprobación utiliza:
+
+```text
+getBoundingClientRect()
+```
+
+y exige:
+
+```text
+width  >= 48px
+height >= 48px
+```
+
+para los objetivos independientes a los que se aplica la regla general.
+
+La medición corresponde al elemento que recibe realmente la interacción.
+
+No se mide solamente:
+
+```text
+SVG
+Icono
+Texto interior
+```
+
+cuando estos elementos pertenecen a un control mayor.
+
+Los enlaces integrados dentro del texto quedan fuera de esta exigencia de `48px x 48px CSS` según la excepción ya definida.
+
+La comprobación manual debe confirmar que el área percibida e interactiva coincide realmente con el control que la interfaz presenta. Esta comprobación no impide el flujo automatizado de la promoción. 
+
+### Puntero, tacto y teclado
+
+Las funciones deben comprobarse mediante:
+
+```text
+Ratón
+Tacto emulado
+Teclado
+```
+
+cuando la automatización de Playwright permite reproducir la interacción correspondiente.
+
+Las mismas acciones deben producir el mismo resultado funcional.
+
+Debe comprobarse especialmente:
+
+```text
+Navegación
+Grupos expandibles
+Menú
+Cambio de idioma
+Cambio de tema
+Acciones de tarjetas
+Formulario
+```
+
+La existencia de un contexto táctil no debe retirar la funcionalidad disponible mediante los demás mecanismos.
+
+La comprobación manual debe confirmar además el uso mediante tacto real cuando se disponga del dispositivo correspondiente. Esta comprobación no impide el flujo automatizado de la promoción. 
+
+### Dependencia de hover
+
+Las pruebas deben comprobar que las funciones necesarias siguen disponibles en un contexto sin `hover`.
+
+Conceptualmente:
+
+```text
+hover ausente
+=> contenido necesario disponible
+=> funciones disponibles
+=> controles disponibles
+=> estados alcanzables mediante activación
+```
+
+Los grupos expandibles deben conservar la activación explícita.
+
+Las acciones de las tarjetas deben permanecer visibles y utilizables.
+
+### Cancelación del puntero
+
+Cuando una interacción de puntero se inicia y se cancela antes de completar la activación normal:
+
+```text
+Acción
+=> no ejecutada
+```
+
+Las pruebas deben comprobar que las acciones definitivas no ocurren solamente por:
+
+```text
+pointerdown
+mousedown
+touchstart
+```
+
+Los controles nativos deben mantener su semántica normal de activación.
+
+La comprobación manual debe confirmar que una interacción iniciada accidentalmente puede abandonarse antes de completar la acción. Esta comprobación no impide el flujo automatizado de la promoción. 
+
+### Arrastre
+
+Las pruebas deben comprobar que ninguna función propia del sitio exige un arrastre como único mecanismo.
+
+Cuando exista una representación visual que admita arrastre en el futuro, deberá existir también una operación sencilla equivalente sin arrastre.
+
+El desplazamiento normal de contenido administrado por el navegador no se considera una operación de arrastre funcional propia de `sitio`.
+
+### Formulario
+
+Las pruebas automatizadas deben comprobar todos los estados semánticos del formulario.
+
+Durante el envío:
+
+```text
+form
+=> aria-busy="true"
+
+Campos textuales
+=> readonly
+
+Campos
+=> no disabled
+
+Botón
+=> aria-disabled="true"
+
+Botón
+=> no disabled
+
+Texto del botón
+=> enviando...
+
+role="status"
+=> fuera del formulario ocupado
+
+Foco
+=> permanece en el control de origen
+```
+
+Una nueva activación durante la operación no debe iniciar una segunda solicitud.
+
+Al finalizar:
+
+```text
+aria-busy
+=> deja de indicar operación pendiente
+
+readonly
+=> retirado
+
+aria-disabled
+=> retirado
+
+Botón
+=> Enviar
+
+Región de progreso
+=> deja de anunciar enviando...
+```
+
+Después se comprueba el resultado correspondiente:
+
+```text
+Éxito
+=> role="status"
+
+Límite
+=> role="status"
+
+Fallo
+=> role="alert"
+
+Validación de campo
+=> aria-invalid
+=> aria-describedby
+```
+
+La comprobación manual mediante tecnología de asistencia debe confirmar que progreso, éxito, límite, validación y fallo se comunican de acuerdo con su significado. Esta comprobación no impide el flujo automatizado de la promoción. 
+
+### Estados de carga
+
+Las pruebas automatizadas deben comprobar:
+
+```text
+Unidad pendiente
+=> aria-busy="true"
+
+Skeleton
+=> aria-hidden="true"
+
+Skeleton
+=> sin foco
+
+Skeleton
+=> sin controles ficticios
+
+Finalización
+=> retirar estado pendiente
+=> representar contenido, vacío o error correspondiente
+```
+
+Las unidades independientes deben mantener estados independientes.
+
+La prueba no debe considerar toda la página ocupada solamente porque una unidad continúa pendiente.
+
+### Cambio de vista
+
+Las pruebas automatizadas deben comprobar conjuntamente:
+
+```text
+<title>
+H1
+Foco
+Menú
+Grupo expandible
+```
+
+Durante una navegación interna hacia una nueva vista:
+
+```text
+Actualizar <title>
+Representar H1
+Cerrar Menú cuando corresponda
+Cerrar grupo cuando corresponda
+Mover foco al H1
+```
+
+El `H1` debe utilizar:
+
+```text
+tabindex="-1"
+```
+
+sin incorporarse al recorrido normal mediante `Tab`.
+
+La carga inicial no debe mover programáticamente el foco.
+
+Una actualización dentro de la misma vista tampoco debe moverlo al `H1`.
+
+La comprobación manual mediante tecnología de asistencia debe confirmar que el título del documento y el encabezado principal enfocado proporcionan contexto suficiente sin una región adicional de anuncio de ruta. Esta comprobación no impide el flujo automatizado de la promoción. 
+
+### Tecnologías de asistencia
+
+La prueba real mediante lector de pantalla es obligatoriamente manual.
+
+La automatización debe comprobar la semántica que utilizará la tecnología de asistencia, pero no debe inferir a partir del DOM que el anuncio real ya fue validado.
+
+La comprobación manual debe cubrir como mínimo:
+
+```text
+Regiones
+Jerarquía de encabezados
+Navegación
+Nombres de controles
+Grupos expandibles
+Idioma del documento
+Cambios de idioma
+Alternativas textuales
+Formulario
+Validaciones
+Envío en curso
+Confirmación
+Límite de envíos
+Errores
+Estados de carga
+Cambio de vista
+```
+
+### Capturas y comparación visual
+
+Las capturas no deben utilizarse como apoyo para revisar una representación concreta, las pruebas son hechas mediante:
+
+```text
+Pruebas funcionales
+Comprobaciones semánticas
+Cálculos de contraste
+Revisión mediante teclado
+Revisión mediante tecnologías de asistencia
+Comprobación manual
+```
+
+### Integración y promoción
+
+Las pruebas automatizadas de accesibilidad forman parte de la validación obligatoria anterior a la promoción hacia `main`.
+
+Conceptualmente:
+
+```text
+Rama de trabajo
+        |
+        V
+dev
+        |
+        V
+Suite automatizada
+        |
+        +-- pruebas unitarias
+        +-- pruebas de componentes
+        +-- pruebas mediante navegador
+        +-- auditoría automatizada de accesibilidad
+        +-- comprobaciones automatizadas propias
+        |
+        V
+100% aprobadas
+        |
+        V
+Comprobaciones manuales aplicables
+        |
+        V
+main
+```
+
+Una violación de `axe-core` o cualquier otra prueba automatizada fallida impide la promoción.
+
+Las comprobaciones manuales aplicables deben completarse antes de promover cambios que modifiquen:
+
+```text
+Estructura semántica
+Navegación
+Foco
+Interacción
+Estados
+Formulario
+Representación visual accesible
+Contraste
+Tipografía
+Responsive
+Reflujo
+Objetivos interactivos
+Idioma semántico
+Alternativas textuales
+Contenido cuya accesibilidad depende de una decisión editorial
+```
+
+Un resultado automatizado correcto no exime la comprobación manual cuando el aspecto cambiado pertenece a una condición que necesita evaluación humana.
+
+---
+
 # Relación entre tema claro y tema oscuro
 
 Los dos temas representan exactamente el mismo sitio.
@@ -9053,7 +10163,10 @@ Para un mismo ancho disponible deben compartir exactamente:
 - ausencia de dependencia funcional de `hover`;
 - reglas de cancelación del puntero;
 - ausencia de arrastre obligatorio;
-- comportamiento de etiquetas visibles y nombres accesibles.
+- comportamiento de etiquetas visibles y nombres accesibles;
+- reglas de pruebas funcionales de accesibilidad;
+- porcentaje obligatorio de aprobación de las pruebas automatizadas;
+- criterios de comprobación manual aplicables.
 
 Conceptualmente:
 
@@ -9071,6 +10184,7 @@ Tema claro
 +-- mismos objetivos interactivos
 +-- mismos mecanismos de entrada
 +-- misma interacción funcional
++-- misma estrategia de validación de accesibilidad
 
 Tema oscuro
 |
@@ -9085,6 +10199,7 @@ Tema oscuro
 +-- mismos objetivos interactivos
 +-- mismos mecanismos de entrada
 +-- misma interacción funcional
++-- misma estrategia de validación de accesibilidad
 ```
 
 Solamente deben variar los valores visuales necesarios para adaptar:
@@ -9134,6 +10249,8 @@ Introducir dependencia funcional de hover
 Cambiar las reglas de cancelación del puntero
 Introducir arrastre obligatorio
 Cambiar la relación entre etiqueta visible y nombre accesible
+Cambiar el criterio de aceptación automatizada
+Eliminar comprobaciones manuales aplicables
 ```
 
 El tema oscuro no debe ser considerado un diseño independiente.
@@ -9597,6 +10714,23 @@ Lápiz                          => conservar disponible
 Teclado                        => conservar disponible
 Movimiento físico              => no utilizar para activar funciones
 Gestos normales del navegador  => conservar
+Pruebas de navegador           => Playwright
+Auditoría automática           => @axe-core/playwright
+Motor de auditoría             => axe-core
+Etiquetas de auditoría         => wcag2a, wcag2aa, wcag21a, wcag21aa, wcag22aa
+Violaciones automáticas        => 0
+Aceptación automatizada        => 100%
+Resultado no determinable      => revisión manual
+Pruebas de teclado             => automáticas y manuales
+Pruebas de foco                => automáticas y manuales
+Pruebas de lector de pantalla  => manuales
+Contraste                      => cálculo automático + comprobación manual cuando corresponda
+Texto de prueba                => hasta 200%
+Reflujo de prueba              => 320px CSS
+Zoom manual equivalente        => 400% sobre 1280px CSS
+Objetivo medido                => mínimo 48px x 48px CSS
+Espaciado de prueba            => 1.5 / 2 / 0.12 / 0.16
+Captura píxel a píxel          => no constituye criterio de conformidad
 ```
 
 ---
@@ -9867,7 +11001,50 @@ Los siguientes elementos de identidad visual quedan definidos:
 260. ausencia de desactivación de un mecanismo de entrada debido a la detección o utilización de otro;
 261. ausencia de funciones activadas mediante sacudidas, inclinación u otros movimientos físicos;
 262. tratamiento del cambio de orientación exclusivamente como cambio del espacio disponible y no como orden funcional;
-263. conservación de las mismas reglas de interacción por puntero y tacto en los temas claro y oscuro.
+263. conservación de las mismas reglas de interacción por puntero y tacto en los temas claro y oscuro;
+264. integración de `@axe-core/playwright` con las pruebas ejecutadas mediante Playwright;
+265. utilización de `axe-core` como motor de auditoría automática de accesibilidad;
+266. configuración de la auditoría mediante las etiquetas `wcag2a`, `wcag2aa`, `wcag21a`, `wcag21aa` y `wcag22aa`;
+267. exigencia de `0` violaciones en cada análisis automático de `axe-core`;
+268. envío de los resultados no determinables automáticamente a comprobación manual;
+269. conservación de la comprobación manual aunque la auditoría automática no informe violaciones;
+270. exigencia de `100%` de aprobación de todas las pruebas automatizadas ejecutadas;
+271. bloqueo de la promoción hacia `main` cuando una sola prueba automatizada falla;
+272. utilización del porcentaje real de pruebas aprobadas en lugar de una puntuación estimativa de accesibilidad;
+273. cobertura de accesibilidad para cada tipo conceptual de vista;
+274. cobertura independiente de los estados que cambian estructura, semántica o comportamiento;
+275. comprobación de las representaciones visuales dependientes del tema en claro y oscuro;
+276. cobertura de contenido en el idioma del sistema, contenido mediante respaldo, colecciones multilingües y cambios lingüísticos internos;
+277. utilización de datos de prueba con cadenas extensas, contenido ancho y demás condiciones necesarias para ejercitar los límites de la interfaz;
+278. comprobación automática y manual de la navegación mediante teclado;
+279. comprobación automática de la gestión del foco mediante `document.activeElement`;
+280. comprobación manual de la perceptibilidad, claridad y ausencia de ocultación del indicador de foco;
+281. comprobación automática de la estructura semántica, relaciones y estados ARIA;
+282. comprobación automática y manual de los nombres accesibles;
+283. comprobación automática de `lang` y revisión manual de su correspondencia con el idioma real del contenido;
+284. comprobación automática de la presencia y conservación de `alt` y revisión manual de la adecuación de las alternativas;
+285. reproducción automática de la fórmula de contraste definida por la especificación;
+286. fallo automático cuando una combinación cromática permitida queda por debajo del umbral correspondiente;
+287. conservación de la comprobación manual para fondos variables y para la cobertura real de la capa de contraste de la cabecera;
+288. comprobación automática del redimensionamiento del texto hasta `200%`;
+289. comprobación automática del reflujo a `320px CSS`;
+290. comprobación manual del caso equivalente de `1280px CSS` con ampliación del navegador al `400%`;
+291. aplicación simultánea de los valores `1.5`, `2`, `0.12` y `0.16` durante las pruebas de espaciado textual;
+292. comprobación de funcionamiento en orientación vertical y horizontal;
+293. medición automática mediante `getBoundingClientRect()` de objetivos interactivos independientes de al menos `48px x 48px CSS`;
+294. exclusión de los enlaces integrados dentro del texto de la exigencia general de `48px x 48px CSS`;
+295. comprobación de los mismos flujos mediante ratón, tacto emulado y teclado cuando la automatización permite reproducirlos;
+296. comprobación de la disponibilidad funcional en ausencia de `hover`;
+297. comprobación de que las acciones definitivas no se ejecutan únicamente mediante `pointerdown`, `mousedown` o `touchstart`;
+298. comprobación de la posibilidad de cancelar una interacción de puntero antes de completar la activación;
+299. comprobación de ausencia de arrastre obligatorio;
+300. comprobación automatizada de todos los estados semánticos del formulario;
+301. comprobación automatizada de `aria-busy`, `aria-hidden` y exclusión del foco durante los estados de carga;
+302. comprobación conjunta de `<title>`, `H1`, foco y cierre de navegación durante los cambios internos de vista;
+303. obligación de comprobar manualmente el comportamiento real mediante lector de pantalla;
+304. exclusión de la comparación píxel a píxel como criterio suficiente de conformidad de accesibilidad;
+305. integración de las pruebas automatizadas de accesibilidad dentro de la validación anterior a la promoción hacia `main`;
+306. obligación de completar las comprobaciones manuales aplicables antes de promover cambios que afecten estructura, semántica, interacción, navegación, estados, presentación accesible o contenido editorial relacionado con accesibilidad.
 
 Los modelos visuales deben utilizar los iconos concretos establecidos en el mapeo de esta especificación.
 
@@ -9877,7 +11054,7 @@ Los estados comunes definidos forman parte de la referencia de comportamiento vi
 
 La adaptación responsive definida en esta especificación forma parte de la referencia cerrada de diseño.
 
-Las decisiones de accesibilidad incluidas en esta especificación forman parte de la referencia cerrada de la etapa de accesibilidad hasta el punto actualmente definido.
+Las decisiones de accesibilidad incluidas en esta especificación forman parte de la referencia cerrada de la etapa de accesibilidad.
 
 La auditoría de contraste queda cerrada para los temas claro y oscuro dentro de los usos permitidos definidos por esta especificación.
 
@@ -9893,6 +11070,10 @@ El redimensionamiento, el reflujo, el espaciado del texto y la orientación qued
 
 La interacción por puntero y tacto queda cerrada mediante objetivos interactivos independientes de al menos `48px x 48px CSS`, la ampliación de los subelementos de navegación a `48px` de altura mínima, la independencia funcional respecto de `hover`, la activación sencilla mediante ratón, tacto y lápiz, la cancelación antes de completar una activación, la ausencia de arrastre y gestos complejos obligatorios, la conservación de los mecanismos de entrada concurrentes, la correspondencia entre etiqueta visible y nombre accesible y la ausencia de actuación funcional mediante movimiento físico.
 
-La definición de accesibilidad sigue para los aspectos todavía pendientes antes de considerar completa la etapa de responsive y accesibilidad de `sitio`.
+Las pruebas de accesibilidad quedan cerradas mediante la integración de `@axe-core/playwright`, la exigencia de `0` violaciones automatizadas dentro del alcance configurado, la aprobación obligatoria del `100%` de la suite automatizada, la cobertura por vistas, estados, temas, contextos lingüísticos y mecanismos de interacción, y la conservación de comprobaciones manuales para los aspectos que requieren evaluación humana o tecnologías de asistencia reales.
+
+Ninguna prueba manual impide el flujo automatizado de la promoción. Las pruebas manuales sinven de comprobación humana, por lo que no es posible formar parte del flujo automatizado de la promoción.
+
+La etapa de responsive y accesibilidad queda cerrada mediante las reglas de adaptación estructural, contraste, foco, semántica, idioma, alternativas textuales, redimensionamiento, reflujo, orientación, interacción por puntero y tacto y la estrategia de pruebas definida en esta especificación.
 
 Esta especificación constituye la referencia base de identidad visual, responsive, accesibilidad definida y comportamiento visual para las siguientes etapas de diseño e implementación de `sitio`.

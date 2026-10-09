@@ -119,7 +119,11 @@ El estado propio de la aplicación utiliza los recursos proporcionados por Angul
 
 `Node.js` y `npm` proporcionan el entorno y la gestión de dependencias necesarios durante desarrollo, pruebas y construcción.
 
-Las pruebas utilizan `Vitest` para pruebas unitarias, las herramientas de pruebas de Angular para componentes y servicios, y `Playwright` para pruebas completas ejecutadas mediante navegador.
+Las pruebas utilizan `Vitest` para pruebas unitarias, las herramientas de pruebas de Angular para componentes y servicios, y `Playwright` para pruebas completas ejecutadas mediante navegador. Además, `@axe-core/playwright` se integra dentro de las pruebas de accesibilidad.
+
+Las pruebas ejecutadas mediante navegador incorporan una auditoría automática de accesibilidad.
+
+La auditoría automática complementa las comprobaciones manuales de accesibilidad y no las sustituye cuando el aspecto evaluado requiere interpretación humana.
 
 GitHub Actions será utilizado para los procesos automatizados de validación, integración, construcción y publicación.
 
@@ -4570,6 +4574,10 @@ GitHub Pages
 
 La promoción hacia `main` debe ocurrir únicamente después de completar correctamente las validaciones definidas para el proyecto.
 
+Las pruebas automatizadas forman parte de esta validación y deben aprobarse en su totalidad.
+
+Las comprobaciones manuales de accesibilidad que resulten aplicables al cambio también deben completarse antes de la promoción, pero no es un impedimiento de esta promoción.
+
 La publicación del sitio utiliza el contenido aprobado de la rama principal.
 
 ## Validación
@@ -4577,6 +4585,14 @@ La publicación del sitio utiliza el contenido aprobado de la rama principal.
 La aplicación utiliza TypeScript en modo estricto para aumentar la validación estática del código.
 
 Los cambios integradas deben verificar el formato, la calidad del código, las pruebas automatizadas y la construcción de producción antes de ser promovidas.
+
+La aceptación automatizada exige la aprobación de la totalidad de las pruebas ejecutadas.
+
+Una prueba automatizada fallida invalida la validación y evita la promoción del cambio.
+
+La ausencia de fallos en la auditoría automática de accesibilidad no constituye por sí sola una declaración completa de conformidad.
+
+Los aspectos cuya evaluación depende de interpretación humana deben conservar además la comprobación manual correspondiente.
 
 Los idiomas utilizados por la interfaz forman parte de la configuración y los elementos propios de `sitio`.
 
@@ -4729,6 +4745,19 @@ Las herramientas de pruebas de Angular proporcionan el entorno necesario para ve
 
 `Playwright` será utilizado para validar mediante navegador los flujos completos que requieran interacción con la aplicación.
 
+La suite automatizada solamente se considera aprobada cuando todas las pruebas ejecutadas terminan correctamente.
+
+Conceptualmente:
+
+```text
+Pruebas automatizadas aprobadas en su totalidad
+=> validación aprobada
+
+Una o más pruebas automatizadas fallidas
+=> validación fallida
+=> no promover
+```
+
 Las pruebas deben cubrir especialmente:
 
 ```text
@@ -4865,6 +4894,207 @@ Fallo de envío
 ```
 
 También debe verificarse que una variante ausente conserve `original` y `supported`, permitiendo que el frontend determine correctamente la siguiente solicitud.
+
+### Pruebas de accesibilidad
+
+La accesibilidad se valida mediante una combinación obligatoria de pruebas automatizadas y comprobaciones manuales.
+
+La automatización verifica aquello que debe determinarse de forma objetiva mediante la estructura de la aplicación, el comportamiento programático y la representación producida por el navegador.
+
+La comprobación manual se utiliza para los aspectos cuya corrección depende también de la percepción, del significado o de la experiencia real de interacción.
+
+La aprobación de la auditoría automática no sustituye las comprobaciones manuales aplicables.
+
+Conceptualmente:
+
+```text
+Comprobaciones automatizadas
++ comprobaciones manuales aplicables
+=> evaluación de accesibilidad
+
+Solamente comprobaciones automatizadas
+=> evaluación incompleta
+```
+
+La auditoría automatizada se ejecuta mediante las mismas pruebas de navegador utilizadas por los flujos completos de la aplicación.
+
+Una violación detectada por la auditoría automática produce una prueba fallida.
+
+Los resultados que una herramienta no debe determinar de forma concluyente no se consideran automáticamente conformes y permanecen sujetos a comprobación manual.
+
+La batería automatizada debe cubrir las reglas de accesibilidad correspondientes al nivel definido para el proyecto y los requisitos adicionales adoptados expresamente.
+
+La cobertura se organiza por:
+
+```text
+Tipo de vista
+Estructura
+Componente
+Estado
+Composición
+Tema
+Contexto lingüístico
+Forma de interacción
+```
+
+No es necesario repetir una prueba completa para cada elemento editorial individual cuando varios elementos utilizan exactamente la misma estructura y comportamiento.
+
+Cada tipo conceptual de vista debe disponer de cobertura.
+
+Esto comprende las vistas iniciales, las páginas generales, los listados, los diferentes tipos de detalle, los formularios y los estados de contenido no encontrado.
+
+Los estados que cambian la estructura o la semántica deben comprobarse también en su propia condición.
+
+Esto comprende:
+
+```text
+Carga
+Contenido disponible
+Contenido vacío
+Error
+Contenido no encontrado
+Formulario normal
+Envío en curso
+Validación
+Confirmación
+Límite de envíos
+Fallo de envío
+```
+
+Las pruebas de accesibilidad deben contemplar los diferentes temas cuando la comprobación depende de la representación visual.
+
+También deben contemplar las diferentes situaciones lingüísticas cuando la semántica depende del idioma del sistema, del idioma del contenido o de un cambio lingüístico interno.
+
+Las comprobaciones automatizadas deben cubrir, cuando corresponda:
+
+```text
+Estructura semántica
+Jerarquía
+Nombres de controles
+Etiquetas
+Relaciones accesibles
+Estados accesibles
+Elementos ocultos
+Orden y comportamiento de foco
+Navegación mediante teclado
+Cambios de vista
+Idioma semántico
+Contenido con idioma diferente al sistema
+Cambios lingüísticos internos
+Presencia y conservación de alternativas textuales
+Combinaciones de contraste determinables
+Uso complementario del color
+Redimensionamiento del texto
+Reflujo
+Ausencia de desplazamiento horizontal indebido
+Adaptación del espaciado textual
+Orientación
+Tamaño y superficie de objetivos interactivos
+Interacción mediante diferentes mecanismos de entrada
+Ausencia de dependencia funcional del paso del puntero
+Cancelación de acciones de puntero
+Ausencia de arrastre obligatorio
+Estados de carga
+Estados del formulario
+Mensajes de progreso
+Resultados del formulario
+```
+
+Las comprobaciones manuales deben cubrir, cuando corresponda:
+
+```text
+Recorrido completo mediante teclado
+Orden lógico del foco
+Visibilidad y claridad del indicador de foco
+Ausencia de obstáculos sobre el foco
+Coherencia entre estructura visual y estructura semántica
+Adecuación de nombres accesibles
+Correspondencia entre el idioma declarado y el contenido real
+Adecuación de cambios lingüísticos internos
+Calidad de las alternativas textuales
+Clasificación correcta de imágenes según su función
+Contraste en composiciones variables
+Comprensión de estados sin depender solamente del color
+Redimensionamiento visual del texto
+Zoom real del navegador
+Reflujo visual
+Legibilidad con espaciado modificado
+Uso real mediante puntero y tacto
+Cancelación práctica de interacciones
+Comunicación mediante tecnologías de asistencia
+Navegación mediante tecnologías de asistencia
+Comunicación de cambios de vista
+Comunicación de estados del formulario
+Comunicación de carga, resultados y errores
+```
+
+La validación automática del foco debe comprobar qué elemento recibe el foco, cuándo se conserva y cuándo cambia según las reglas de navegación definidas.
+
+La comprobación manual debe confirmar además que el foco resulta perceptible y que su recorrido mantiene un sentido coherente para la persona usuaria. Esta comprobación no impide el flujo automatizado de la promoción. 
+
+La validación automática del idioma debe comprobar que el documento y las regiones correspondientes disponen del contexto lingüístico esperado.
+
+La comprobación manual debe confirmar que la declaración corresponde realmente al contenido presentado y que los cambios internos se encuentran aplicados a la región adecuada. Esta comprobación no impide el flujo automatizado de la promoción. 
+
+La validación automática de las alternativas textuales debe comprobar la presencia de la alternativa, la conservación del valor recibido y las diferencias esperadas entre representaciones.
+
+La comprobación manual debe determinar si la alternativa describe adecuadamente la función real de la imagen. Esta comprobación no impide el flujo automatizado de la promoción. 
+
+El contraste debe comprobarse automáticamente siempre que las combinaciones puedan determinarse de forma objetiva.
+
+Las composiciones cuyo resultado depende de fondos variables, superposiciones u otras condiciones visuales requieren también comprobación manual de la implementación final. Esta comprobación no impide el flujo automatizado de la promoción. 
+
+Las reglas de redimensionamiento, reflujo y espaciado deben comprobarse automáticamente mediante escenarios que alteren el espacio disponible y las condiciones tipográficas.
+
+La comprobación manual debe confirmar además que la representación continúa siendo legible, utilizable y libre de recortes, superposiciones o pérdidas visuales. Esta comprobación no impide el flujo automatizado de la promoción. 
+
+Los objetivos interactivos deben poder medirse automáticamente mediante la representación final producida por el navegador.
+
+La comprobación manual debe confirmar que la superficie percibida y utilizada corresponde realmente al control esperado y que la interacción resulta adecuada mediante tacto y puntero. Esta comprobación no impide el flujo automatizado de la promoción. 
+
+Los comportamientos de teclado, puntero, tacto y demás mecanismos de entrada deben compartir la misma funcionalidad.
+
+La automatización debe comprobar los recorridos y resultados que puedan reproducirse de forma determinista.
+
+La comprobación manual debe confirmar que no existen comportamientos difíciles de descubrir o utilizar que no sean identificados por la prueba programática. Esta comprobación no impide el flujo automatizado de la promoción. 
+
+Las tecnologías de asistencia requieren comprobación manual de la experiencia real. Esta comprobación no impide el flujo automatizado de la promoción. 
+
+La automatización puede validar la semántica que estas tecnologías consumen, pero no sustituye la comprobación de cómo se comunican realmente:
+
+```text
+Regiones
+Encabezados
+Nombres
+Estados
+Cambios de vista
+Idiomas
+Alternativas
+Formularios
+Validaciones
+Progreso
+Confirmaciones
+Advertencias
+Errores
+```
+
+La aceptación automatizada exige que la totalidad de las pruebas automatizadas termine correctamente.
+
+No se utiliza una puntuación aproximada de accesibilidad como sustitución de las pruebas.
+
+El porcentaje de aceptación corresponde a la proporción real de pruebas automatizadas aprobadas y solamente resulta aceptable cuando la suite completa se encuentra aprobada.
+
+Conceptualmente:
+
+```text
+Suite automatizada completa aprobada
+=> aceptación automatizada
+
+Cualquier prueba automatizada fallida
+=> sin aceptación
+```
+
+Las comprobaciones manuales aplicables también deben completarse satisfactoriamente antes de promover un cambio que modifique estructura, semántica, interacción, navegación, estados, representación accesible o contenido cuya accesibilidad dependa de una decisión editorial. Esta comprobación no impide el flujo automatizado de la promoción. 
 
 ## Licencia
 
