@@ -1013,7 +1013,7 @@ Todas las tarjetas mantienen ambos espacios de fecha.
 
 `update_date` representa la fecha de la última versión publicada.
 
-Cuando un artículo todavía no ha recibido un cambio posterior:
+Cuando un artículo todavía no ha recibido una cambio posterior:
 
 ```text
 publication_date
@@ -1456,6 +1456,10 @@ El cambio de ancho no cambia el texto ni el estado representado por el control.
 
 Cuando el redimensionamiento del texto exige más espacio, el control debe crecer o reorganizarse antes de recortar, truncar u ocultar su texto.
 
+El área interactiva pertenece al control completo y no solamente al texto o al icono que contiene.
+
+Los controles independientes mantienen un tamaño suficiente para su utilización mediante puntero y tacto.
+
 ### Formulario de contacto
 
 Los campos del formulario ya utilizan una disposición vertical y aprovechan el ancho disponible de su región.
@@ -1815,7 +1819,7 @@ Formulario
 
 Campos
 => conservan los valores
-=> temporalmente no cambiable
+=> temporalmente no cambiables
 => continúan disponibles para el recorrido de foco
 
 Enviar
@@ -1847,7 +1851,7 @@ Formulario
 => deja de comunicar una operación en curso
 
 Campos
-=> vuelven a estar disponibles para cambio 
+=> vuelven a estar disponibles para cambio
 
 "Enviando..." 
 => Regresa a "enviar"
@@ -2024,6 +2028,8 @@ La fila que identifica el grupo constituye un único control.
 
 El indicador gráfico de apertura o cierre forma parte de ese control y no representa una acción independiente.
 
+La superficie interactiva corresponde al control completo y no solamente al icono o al texto que contiene.
+
 Conceptualmente:
 
 ```text
@@ -2050,6 +2056,8 @@ Todo control interactivo debe disponer de un nombre accesible que comunique su f
 
 Cuando el propio control contiene texto visible suficiente, ese texto constituye su identificación principal.
 
+Cuando existe un nombre accesible definido adicionalmente para un control con texto visible, debe contener ese mismo texto visible y no sustituirlo por una identificación diferente.
+
 Un icono que acompaña un texto con el mismo significado no necesita anunciarse de forma independiente.
 
 Cuando un control utiliza solamente un icono, debe proporcionar un nombre localizado que describa la acción disponible.
@@ -2059,12 +2067,127 @@ Conceptualmente:
 ```text
 Control con texto suficiente
 => texto visible identifica la acción
+=> nombre accesible conserva ese texto
 
 Control solamente con icono
 => nombre accesible localizado
 ```
 
 El nombre debe describir la función del control y no limitarse a describir la forma del icono.
+
+### Interacción por puntero y tacto
+
+Los controles interactivos independientes deben disponer de un área de interacción suficiente para su utilización mediante puntero y tacto.
+
+El objetivo interactivo corresponde al control completo.
+
+El tamaño visual de un icono, texto u otro contenido interior no determina por sí mismo el tamaño del objetivo.
+
+Conceptualmente:
+
+```text
+Control
+=> objetivo interactivo completo
+
+Icono o texto interior
+=> contenido del control
+=> no objetivo independiente
+```
+
+La navegación, los grupos expandibles, los selectores, los botones, los campos, las acciones explícitas de las tarjetas y los demás controles independientes aplican esta misma regla.
+
+Los subelementos de navegación utilizan el mismo tamaño mínimo general de interacción definido para los demás controles independientes.
+
+Los enlaces integrados dentro de párrafos u otros bloques de texto conservan su naturaleza textual.
+
+No se convierten artificialmente en controles de mayor tamaño únicamente para igualar la geometría de los objetivos independientes.
+
+La misma funcionalidad debe permanecer disponible mediante los mecanismos de entrada compatibles con el dispositivo.
+
+Conceptualmente:
+
+```text
+Ratón
+Tacto
+Lápiz
+Teclado
+=> mismos controles
+=> mismas funciones
+```
+
+La disponibilidad de un mecanismo de entrada no debe provocar la desactivación de otro mecanismo también disponible.
+
+La interfaz no mantiene versiones funcionales diferentes para dispositivos de puntero distintos.
+
+El paso del puntero sobre un elemento debe utilizarse solamente como retroalimentación visual adicional.
+
+Ningún contenido, estado, destino ni función necesarios deben depender exclusivamente de que el puntero permanezca sobre un elemento.
+
+Conceptualmente:
+
+```text
+Pasar el puntero
+=> refuerzo visual
+
+Activación
+=> acceso a la función
+```
+
+Los grupos de navegación deben continuar abriéndose mediante una activación explícita.
+
+No deben abrirse únicamente como consecuencia de pasar el puntero.
+
+La aplicación no utiliza contenido necesario que aparezca exclusivamente al pasar el puntero o al recibir foco.
+
+Cuando una interfaz incorpore contenido adicional asociado a estos estados, ese contenido debe permitir ser descartado cuando corresponda, debe permanecer accesible al desplazar el puntero hacia él y debe continuar visible mientras persista la condición que justifica su presencia.
+
+Las funciones propias de la aplicación deben utilizar una activación sencilla.
+
+No deben depender de:
+
+```text
+Gestos con múltiples puntos
+Recorridos específicos del puntero
+Pulsaciones prolongadas
+Combinaciones gestuales
+```
+
+cuando una activación sencilla debe realizar la misma función.
+
+La aplicación no utiliza el arrastre como requisito para realizar una función.
+
+Si un componente incorpora una interacción visual mediante arrastre, la misma operación debe disponer también de una forma equivalente que no requiera arrastrar.
+
+El desplazamiento normal de la página y de los componentes cuyo contenido necesita desplazamiento propio continúa perteneciendo al comportamiento de navegación y no constituye una operación de arrastre de un elemento de interfaz.
+
+Las acciones mediante puntero deben completarse con la activación normal del control.
+
+La presión inicial no debe ejecutar por sí sola una acción definitiva.
+
+Conceptualmente:
+
+```text
+Iniciar presión
+=> no completar acción
+
+Cancelar antes de completar
+=> no ejecutar
+
+Completar activación
+=> ejecutar acción
+```
+
+Esta regla se aplica a navegación, controles globales, grupos expandibles, acciones de tarjetas, enlaces y controles del formulario.
+
+Los controles deben utilizar su comportamiento normal de activación para permitir cancelar una interacción iniciada accidentalmente antes de completarla.
+
+La aplicación no utiliza movimientos físicos del dispositivo o del usuario para activar funciones.
+
+Los cambios de orientación no constituyen una acción funcional.
+
+Solamente cambian el espacio disponible y aplican las reglas responsive correspondientes.
+
+Los gestos normales administrados por el navegador para desplazamiento, ampliación u otras funciones propias del agente de usuario no deben bloquearse ni sustituirse por gestos personalizados de la aplicación.
 
 ### Formulario
 
@@ -2113,13 +2236,13 @@ Conceptualmente:
 ```text
 Campo durante el envío
 => conserva su valor
-=> no permite cambio 
+=> no permite cambio
 => permanece disponible para el foco
 ```
 
 El control de envío permanece presente y conserva su posición en el recorrido mediante teclado.
 
-Durante la operación comunica que temporalmente no puede iniciar otra solicitud.
+Durante la operación comunica que temporalmente no debe iniciar otra solicitud.
 
 El cambio visible de:
 
@@ -2142,7 +2265,7 @@ Operación pendiente
 => nueva activación no inicia otra solicitud
 ```
 
-El backend debe bloquear otras solicitudes para el mismo host mientras una esté en transito. 
+El backend debe bloquear otras solicitudes para el mismo host mientras una esté en transito.
 
 El estado de progreso se comunica además mediante un anuncio no interruptivo.
 
@@ -2198,7 +2321,7 @@ Formulario
 => deja de comunicar operación pendiente
 
 Campos
-=> vuelven a permitir cambio 
+=> vuelven a permitir cambio
 
 Control
 => vuelve a estar disponible
@@ -2816,6 +2939,8 @@ Los enlaces que aparecen como acciones aisladas no deben ser identificados media
 
 Los diferentes estados de un enlace, incluido el estado visitado, mantienen los requisitos de contraste correspondientes a los contextos en los que deben aparecer.
 
+Los enlaces integrados dentro de texto conservan su forma textual y no adoptan artificialmente la geometría de los controles independientes.
+
 ### Colores efectivos
 
 La validación de un color corresponde al resultado visual realmente presentado.
@@ -2825,7 +2950,7 @@ La aplicación de transparencia, superposición, gradiente u otro tratamiento qu
 Conceptualmente:
 
 ```text
-Color validado sin cambio 
+Color validado sin cambio
 => conserva la combinación prevista
 
 Color visualmente cambiado
@@ -3041,13 +3166,13 @@ Las etiquetas utilizadas siguen el formato BCP 47.
 
 El idioma activo del sistema determina también el idioma semántico principal del documento.
 
-Cuando una variante de contenido utiliza el mismo idioma, puede utilizar el contexto lingüístico ya establecido.
+Cuando una variante de contenido utiliza el mismo idioma, debe utilizar el contexto lingüístico ya establecido.
 
 Cuando una variante se presenta en otro idioma mediante las reglas de respaldo, solamente el contenido correspondiente adopta semánticamente ese idioma.
 
 La interfaz continúa utilizando el idioma activo.
 
-En una colección, cada unidad puede utilizar el idioma de su propia variante sin obligar a que todas las demás unidades adopten el mismo contexto lingüístico.
+En una colección, cada unidad debe utilizar el idioma de su propia variante sin obligar a que todas las demás unidades adopten el mismo contexto lingüístico.
 
 Los cambios de idioma que formen parte del propio contenido deben conservarse y declararse en la parte correspondiente.
 
@@ -4501,6 +4626,30 @@ La aplicación debe conservar todo el contenido y toda la funcionalidad en las d
 
 El cambio de orientación debe reutilizar las reglas responsive correspondientes al espacio disponible resultante.
 
+Los controles interactivos independientes deben mantener un área de interacción suficiente y coherente con el tamaño general definido para los controles del sitio.
+
+La superficie interactiva debe corresponder al control completo y no solamente a su contenido visual interior.
+
+Los enlaces integrados en texto deben conservar su presentación textual.
+
+La aplicación debe mantener disponibles simultáneamente los mecanismos de entrada compatibles con el dispositivo.
+
+El uso de ratón, tacto, lápiz o teclado no debe provocar las mismas acciones.
+
+Ninguna función necesaria debe depender exclusivamente de pasar el puntero sobre un elemento.
+
+Los estados de puntero deben funcionar como retroalimentación visual adicional y no como condición necesaria para acceder a contenido o funcionalidad.
+
+Las funciones propias de la aplicación no deben depender de gestos complejos, recorridos específicos ni movimientos físicos del dispositivo.
+
+El arrastre no debe constituir el único mecanismo para realizar una operación.
+
+Las acciones mediante puntero deben ejecutarse al completar la activación normal y deben permitir cancelar una interacción iniciada antes de completarla.
+
+Cuando un control dispone de texto visible, su nombre accesible debe conservar ese texto.
+
+Los gestos normales del navegador para desplazamiento, ampliación y demás funciones propias del agente de usuario no deben ser bloqueados por la aplicación.
+
 Los bloques visuales de `Sobre mí` deben respetar los contratos correspondientes a su discriminador:
 
 ```text
@@ -4543,6 +4692,18 @@ Reflujo
 Adaptación de contenedores textuales
 Espaciado del texto
 Orientación
+Tamaño de objetivos interactivos
+Superficie interactiva de los controles
+Interacción por ratón
+Interacción táctil
+Interacción mediante lápiz
+Conservación simultánea de mecanismos de entrada
+Dependencia del paso del puntero
+Gestos de puntero
+Arrastre
+Cancelación de acciones de puntero
+Nombres accesibles de controles con texto visible
+Actuación mediante movimiento
 Slug localizado
 Elementos de interfaz
 Selección de destacados
@@ -4652,6 +4813,28 @@ Conservación de funcionalidad con espaciado cambiado
 Funcionamiento en orientación vertical
 Funcionamiento en orientación horizontal
 Cambio de orientación
+Tamaño suficiente de objetivos interactivos independientes
+Superficie interactiva correspondiente al control completo
+Tamaño de objetivos de subelementos de navegación
+Enlaces integrados dentro de texto
+Interacción mediante ratón
+Interacción mediante tacto
+Interacción mediante lápiz
+Conservación de la interacción mediante teclado junto con otros mecanismos
+Conservación simultánea de mecanismos de entrada disponibles
+Funcionamiento completo sin depender de pasar el puntero
+Estados visuales de puntero como información adicional
+Activación explícita de grupos de navegación
+Ausencia de gestos complejos como requisito funcional
+Ausencia de gestos multipunto como requisito funcional
+Ausencia de recorridos específicos del puntero como requisito funcional
+Ausencia de arrastre como requisito funcional
+Alternativa mediante activación sencilla cuando exista una interacción de arrastre
+Ejecución de acciones al completar la activación
+Cancelación de una acción de puntero antes de completarla
+Conservación del texto visible dentro del nombre accesible
+Ausencia de actuación mediante movimiento como requisito funcional
+Conservación de los gestos normales del navegador
 Reorganización de componentes internos
 Redimensionamiento proporcional de recursos visuales
 Desplazamiento interno de contenidos anchos cuando sea necesario

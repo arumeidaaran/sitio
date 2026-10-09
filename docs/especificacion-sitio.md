@@ -59,6 +59,10 @@ La adaptación responsive debe conservar el contenido, la jerarquía, la identid
 
 El redimensionamiento del texto, la ampliación, el reflujo y los cambios de orientación deben conservar igualmente el contenido y la funcionalidad de la aplicación.
 
+La interacción debe conservar la misma funcionalidad mediante teclado, ratón, tacto y lápiz cuando esos mecanismos se encuentran disponibles.
+
+Las funciones propias de la aplicación no deben depender exclusivamente del paso del puntero, de gestos complejos, de movimientos de arrastre ni de movimientos físicos del dispositivo.
+
 ---
 
 # 1. Tipografía
@@ -305,7 +309,7 @@ Placeholder
 
 Los tamaños de texto de la interfaz no utilizan unidades dependientes directamente de la ventana para sustituir esta escala.
 
-La modificación del tamaño raíz realizada por el usuario debe modificar proporcionalmente toda la escala tipográfica.
+La cambiación del tamaño raíz realizada por el usuario debe cambiar proporcionalmente toda la escala tipográfica.
 
 ---
 
@@ -876,7 +880,7 @@ Cuando:
 1024px <= ancho < 1360px
 ```
 
-la navegación lateral continúa utilizando:
+la navegación lateral sigue utilizando:
 
 ```text
 224px
@@ -1049,7 +1053,7 @@ Debe ocultar:
 
 `112px` constituye la dimensión normal mínima.
 
-La cabecera debe aumentar su altura cuando el nombre requiere más espacio después del redimensionamiento o modificación del espaciado textual.
+La cabecera debe aumentar su altura cuando el nombre requiere más espacio después del redimensionamiento o cambiación del espaciado textual.
 
 ---
 
@@ -1209,19 +1213,21 @@ altura mínima de ítem principal => 48px
 padding horizontal de ítem      => 16px
 gap icono / texto               => 12px
 sangría de subítems             => 32px
-altura mínima de subítem        => 36px
+altura mínima de subítem        => 48px
 gap entre subítems              => 8px
 altura máxima visible           => 100vh
 overflow vertical               => auto
 ```
 
-El ancho de `224px` permanece fijo mientras la navegación lateral continúa activa.
+El ancho de `224px` permanece fijo mientras la navegación lateral sigue activa.
 
-Los valores de `48px` y `36px` son alturas mínimas.
+Los valores de `48px` son alturas mínimas.
 
 Cada elemento debe aumentar verticalmente cuando su texto necesita más de una línea debido al tamaño efectivo, al espaciado o a la longitud del contenido.
 
 La navegación no recorta ni trunca el texto para conservar estas alturas mínimas.
+
+El área interactiva corresponde a toda la fila del elemento y no solamente al texto o al icono que contiene.
 
 ---
 
@@ -1342,6 +1348,8 @@ No debe utilizarse como justificación para insertar listas ilimitadas.
 
 El crecimiento vertical producido por texto redimensionado o por un mayor espaciado textual debe seguir utilizando este desplazamiento vertical interno cuando la navegación supera la altura visible.
 
+El desplazamiento corresponde al comportamiento normal de la región y no introduce una función personalizada basada en arrastre.
+
 ---
 
 ## 13.6. Posicionamiento
@@ -1448,6 +1456,8 @@ La barra debe reorganizar sus controles cuando el ancho disponible o el tamaño 
 
 No debe recortar texto ni producir desplazamiento horizontal de la página para conservar artificialmente la disposición horizontal.
 
+Cada control independiente de la barra mantiene un objetivo interactivo mínimo de `48px x 48px CSS`.
+
 ---
 
 ## 13.9. Estructura del menú en pantallas estrechas
@@ -1506,6 +1516,10 @@ La misma regla se aplica a cualquier sección de navegación que utilice estados
 
 Los iconos `IconChevronDown` y `IconChevronUp` forman parte del control de la sección, no constituyen controles independientes.
 
+La apertura y el cierre ocurren mediante una activación explícita.
+
+Pasar el puntero sobre el grupo no cambia por sí mismo su estado abierto o cerrado.
+
 ---
 
 ## 13.10. Navegación desde el menú estrecho
@@ -1544,7 +1558,7 @@ La barra:
 Menú | Idioma | Tema
 ```
 
-continúa disponible durante el desplazamiento junto con la cabecera compacta.
+sigue disponible durante el desplazamiento junto con la cabecera compacta.
 
 ---
 
@@ -1586,7 +1600,7 @@ El crecimiento vertical de la cabecera provocado por el texto no exige aumentar 
 
 La fotografía permanece visible.
 
-El crecimiento vertical necesario para acomodar el nombre no modifica automáticamente esta dimensión.
+El crecimiento vertical necesario para acomodar el nombre no cambia automáticamente esta dimensión.
 
 ---
 
@@ -1598,7 +1612,7 @@ Por debajo de:
 1024px
 ```
 
-la fotografía continúa integrada en `Fondo visual y foto juntos`.
+la fotografía sigue integrada en `Fondo visual y foto juntos`.
 
 Debe adaptarse proporcionalmente al ancho disponible y a la geometría resultante de la cabecera.
 
@@ -1819,7 +1833,9 @@ No sustituyen el texto cuando el significado pueda resultar ambiguo.
 
 Los tamaños definidos no cambian el icono seleccionado por el mapeo.
 
-El redimensionamiento del texto no obliga a redimensionar estos iconos cuando su función continúa correctamente representada junto al texto correspondiente.
+El redimensionamiento del texto no obliga a redimensionar estos iconos cuando su función sigue correctamente representada junto al texto correspondiente.
+
+El tamaño del icono no determina el tamaño del objetivo interactivo que lo contiene.
 
 ---
 
@@ -1846,13 +1862,19 @@ Cuando el texto necesita más espacio debido al idioma, al redimensionamiento o 
 
 No debe recortar ni truncar el texto para conservar `104px`.
 
-En pantallas estrechas continúa directamente disponible dentro de:
+En pantallas estrechas sigue directamente disponible dentro de:
 
 ```text
 Menú | Idioma | Tema
 ```
 
 No se traslada al interior de `Menú`.
+
+El objetivo interactivo mantiene como mínimo:
+
+```text
+48px x 48px CSS
+```
 
 ---
 
@@ -1877,9 +1899,13 @@ Su geometría de:
 48px x 48px
 ```
 
-permanece fija mientras su contenido visible continúa siendo exclusivamente iconográfico.
+permanece fija mientras su contenido visible sigue siendo exclusivamente iconográfico.
 
-En pantallas estrechas continúa directamente disponible dentro de:
+El icono interior debe mantener el tamaño definido en `15.8. Tamaños`.
+
+La superficie interactiva corresponde a todo el control de `48px x 48px`.
+
+En pantallas estrechas sigue directamente disponible dentro de:
 
 ```text
 Menú | Idioma | Tema
@@ -1953,6 +1979,12 @@ El botón debe aumentar su altura cuando el texto redimensionado, el texto local
 
 No debe recortar, ocultar ni truncar el texto para conservar una altura exacta de `48px`.
 
+El objetivo interactivo completo debe disponer como mínimo de:
+
+```text
+48px x 48px CSS
+```
+
 ---
 
 ## 15.12. Botón secundario
@@ -1970,6 +2002,71 @@ border-radius      => 0
 Las reglas responsive de ancho siguen la composición de la acción correspondiente.
 
 El botón debe aumentar su altura cuando el contenido textual necesita más espacio.
+
+El objetivo interactivo completo debe disponer como mínimo de:
+
+```text
+48px x 48px CSS
+```
+
+---
+
+## 15.13. Objetivos interactivos
+
+Los objetivos interactivos independientes propios de la aplicación utilizan como tamaño mínimo:
+
+```text
+48px x 48px CSS
+```
+
+La medida corresponde al área que acepta la interacción y no al tamaño visual del texto, icono u otro contenido situado dentro del control.
+
+Conceptualmente:
+
+```text
+Control
+=> mínimo 48px x 48px CSS
+
+Icono interior
+=> debe ser menor
+=> pertenece al mismo objetivo
+```
+
+Esta regla se aplica a:
+
+```text
+Ítems principales de navegación
+Subelementos de navegación
+Controles de grupos expandibles
+Menú
+Selector de idioma
+Selector de tema
+Botones
+Campos de formulario
+Acciones explícitas de tarjetas
+Accesos a listados completos
+Acciones de regreso
+Enlaces de medios de contacto
+Otros controles independientes propios de sitio
+```
+
+Los objetivos independientes no utilizan la excepción de separación entre objetivos como estrategia normal para reducir su tamaño.
+
+Los enlaces incluidos dentro de párrafos u otros bloques de texto permanecen integrados en el flujo textual.
+
+No se transforman en controles de `48px` de altura cuando su función pertenece directamente al texto en el que aparecen.
+
+La regla de `48px x 48px CSS` supera:
+
+```text
+24px x 24px CSS
+=> mínimo de 2.5.8 Tamaño del objetivo (mínimo), nivel AA
+
+44px x 44px CSS
+=> mínimo de 2.5.5 Tamaño del objetivo (mejorado), nivel AAA
+```
+
+para los objetivos independientes a los que se aplica.
 
 ---
 
@@ -2064,6 +2161,8 @@ Sección destacada
 El acceso debe indicar explícitamente su destino.
 
 Las tarjetas de contenido destacado utilizan la misma regla de rejilla adaptable establecida en `20.3. Rejilla`.
+
+El acceso al listado completo constituye un objetivo interactivo independiente y aplica el mínimo definido en `15.13. Objetivos interactivos`.
 
 ---
 
@@ -2253,6 +2352,8 @@ Certificación
 
 La tarjeta completa de actualización no constituye implícitamente un enlace.
 
+La acción explícita constituye el objetivo interactivo y aplica el tamaño mínimo definido para controles independientes.
+
 ---
 
 ## 16.9. Relación entre contenido principal y exposición
@@ -2335,7 +2436,7 @@ El orden editorial de las secciones se conserva.
 
 Actualizaciones no utiliza una columna lateral.
 
-Las rejillas internas continúan presentando tantas tarjetas completas como permita el ancho disponible.
+Las rejillas internas siguen presentando tantas tarjetas completas como permita el ancho disponible.
 
 La composición debe continuar funcionando sin pérdida de contenido ni funcionalidad hasta un ancho de `320px CSS`.
 
@@ -2502,7 +2603,7 @@ Cuando un componente supera el espacio disponible, la prioridad es:
 
 La reorganización se utiliza cuando debe cambiarse la disposición sin perder información o significado.
 
-El redimensionamiento se utiliza para elementos que continúan siendo legibles después de reducirse.
+El redimensionamiento se utiliza para elementos que siguen siendo legibles después de reducirse.
 
 La adaptación interna debe cambiar la representación del componente.
 
@@ -2537,6 +2638,8 @@ Página completa
 ```
 
 La pertenencia a una categoría concreta, como tabla, código o diagrama, no constituye por sí sola una excepción al reflujo.
+
+El desplazamiento propio utiliza el mecanismo normal proporcionado por el navegador y no depende de una implementación personalizada que requiera arrastrar un elemento de interfaz.
 
 ---
 
@@ -2676,6 +2779,8 @@ alt = ""
 
 El valor de `alt` no utiliza `null`.
 
+Cuando `href` convierte la imagen en un objetivo interactivo independiente, el enlace aplica el tamaño mínimo general establecido para los objetivos interactivos.
+
 ---
 
 ## 18.5. Adaptación responsive
@@ -2742,6 +2847,14 @@ Las tarjetas de Contactos no utilizan imágenes de contenido como representació
 
 El propio enlace del medio es un vínculo que lleva hacia el medio directamente.
 
+Cada enlace constituye un objetivo interactivo independiente y dispone como mínimo de un área interactiva de:
+
+```text
+48px x 48px CSS
+```
+
+La tarjeta completa no se convierte en un segundo objetivo interactivo si la acción ya corresponde al enlace explícito.
+
 ---
 
 ## 19.2. Rejilla de contactos
@@ -2750,7 +2863,7 @@ Las tarjetas se organizan horizontalmente mientras exista espacio disponible.
 
 La cantidad de columnas depende del ancho disponible.
 
-Cuando una nueva tarjeta ya no cabe correctamente en la fila actual, continúa en la siguiente.
+Cuando una nueva tarjeta ya no cabe correctamente en la fila actual, sigue en la siguiente.
 
 Los medios presentes dependen de los datos disponibles.
 
@@ -2815,6 +2928,20 @@ Todos los campos son obligatorios.
 `Mensaje` utiliza un campo de varias líneas.
 
 `Motivo del contacto` utiliza un campo de una línea.
+
+Los campos de una línea utilizan como mínimo:
+
+```text
+altura => 48px
+```
+
+El campo de varias líneas utiliza una altura superior a ese mínimo de acuerdo con su función.
+
+Todos los campos conservan un área interactiva mínima compatible con:
+
+```text
+48px x 48px CSS
+```
 
 El control de envío utiliza el tratamiento definido para los botones principales.
 
@@ -2893,6 +3020,8 @@ La misma regla se aplica durante `enviando...`.
 La adaptación no cambia los estados ni el contenido del formulario.
 
 Los campos, etiquetas, placeholders, mensajes de validación y controles deben crecer o reorganizarse cuando el redimensionamiento o el espaciado del texto requieren más espacio.
+
+La capacidad de interacción mediante tacto, ratón o lápiz no cambia entre las composiciones responsive.
 
 ---
 
@@ -3002,7 +3131,7 @@ Tarjetas que caben correctamente
 => permanecen en la fila actual
 
 Siguiente tarjeta ya no cabe correctamente
-=> continúa en la fila siguiente
+=> sigue en la fila siguiente
 ```
 
 La cantidad de columnas constituye una consecuencia del espacio disponible y del tamaño efectivo del contenido.
@@ -3053,11 +3182,23 @@ La tarjeta completa nunca debe convertirse implícitamente en enlace, siempre ha
 
 En Contactos, el propio valor del medio constituye el enlace y no se añade una segunda acción redundante.
 
+Cada acción independiente dentro de una tarjeta utiliza como mínimo:
+
+```text
+48px x 48px CSS
+```
+
+de área interactiva.
+
+La superficie interactiva corresponde al enlace o control explícito y no se extiende artificialmente a toda la tarjeta.
+
+El paso del puntero cambia el tratamiento visual del control o de la tarjeta como retroalimentación, pero no revela una función que no esté disponible sin ese estado.
+
 ---
 
 # 21. Certificaciones
 
-La sección visible continúa denominándose:
+La sección visible sigue denominándose:
 
 ```text
 Certificaciones
@@ -3222,6 +3363,8 @@ Credencial no disponible
 
 Un certificado utiliza la misma lógica responsive, pero no incorpora campos propios de una certificación que no pertenezcan a su tipo.
 
+Las acciones de verificación y regreso que constituyen objetivos independientes aplican el tamaño mínimo general de interacción.
+
 ---
 
 # 22. Proyectos
@@ -3308,6 +3451,8 @@ El regreso al listado utiliza una acción explícita equivalente a:
 ```text
 Volver a proyectos
 ```
+
+Las acciones explícitas constituyen objetivos independientes y aplican el tamaño mínimo general definido para interacción.
 
 ---
 
@@ -3461,6 +3606,8 @@ El procesamiento de Markdown debe conservar la información necesaria para que e
 
 El frontend no analiza automáticamente el texto para inferir el idioma de un fragmento.
 
+Los enlaces integrados dentro del contenido textual siguen siendo enlaces de texto y utilizan las excepciones normativas correspondientes a objetivos incluidos dentro de un bloque textual.
+
 ---
 
 ## 23.4. Lectura
@@ -3499,7 +3646,7 @@ ancho < 1024px
 el artículo utiliza el ancho disponible dentro del contenedor y respeta:
 
 ```text
-padding horizontal general => 16px
+padding horizontal => 16px
 ```
 
 La jerarquía y el orden del contenido Markdown no cambian.
@@ -3519,7 +3666,7 @@ Grafos
 Videos
 ```
 
-Las imágenes y demás elementos visuales se redimensionan proporcionalmente cuando continúan siendo legibles.
+Las imágenes y demás elementos visuales se redimensionan proporcionalmente cuando siguen siendo legibles.
 
 Para contenidos anchos se utiliza la prioridad:
 
@@ -3537,6 +3684,8 @@ Una tabla debe adaptarse cuando la reorganización conserva correctamente su inf
 Un bloque de código debe ajustarse cuando la división de líneas no altera su significado.
 
 Cuando la relación espacial, la indentación o la estructura bidimensional resultan necesarias para conservar el significado, el componente utiliza desplazamiento horizontal propio.
+
+El desplazamiento utiliza el comportamiento normal disponible para el navegador y no introduce una función personalizada de arrastre obligatoria.
 
 ---
 
@@ -3921,7 +4070,7 @@ No constituyen estados vacíos.
 
 Los errores de carga utilizan el color semántico de error correspondiente al tema activo.
 
-La representación continúa utilizando:
+La representación sigue utilizando:
 
 ```text
 tipografía del sitio
@@ -4010,7 +4159,7 @@ Un elemento visual puramente opcional o decorativo debe seguir sus propias regla
 
 La estructura principal de navegación permanece disponible aunque falle la obtención de elementos subordinados.
 
-Continúan disponibles:
+Siguen disponibles:
 
 ```text
 Inicio
@@ -4060,7 +4209,7 @@ Artículos
 
 ### Error de elementos subordinados
 
-Si falla la obtención de los elementos subordinados, la sección principal continúa disponible.
+Si falla la obtención de los elementos subordinados, la sección principal sigue disponible.
 
 El acceso al listado completo también permanece disponible.
 
@@ -4170,7 +4319,7 @@ Nombre
 
 La cabecera no se presenta parcialmente.
 
-Si una parte obligatoria todavía se encuentra pendiente, la unidad continúa en estado de carga.
+Si una parte obligatoria todavía se encuentra pendiente, la unidad sigue en estado de carga.
 
 ### Error
 
@@ -4260,6 +4409,8 @@ Ver todas las certificaciones
 
 Los estados no encontrados no incorporan una indicación de actualizar la página.
 
+Las acciones de navegación de estos estados aplican el tamaño mínimo general de los objetivos interactivos independientes.
+
 ---
 
 ## 24.8. Estados del formulario de contacto
@@ -4296,12 +4447,12 @@ Durante la operación:
 Campos
 => conservan valores
 => temporalmente no cambiables
-=> continúan disponibles para el recorrido de foco
+=> siguen disponibles para el recorrido de foco
 
 Botón
 => enviando...
 => no permite iniciar un segundo envío simultáneo
-=> continúa disponible para el recorrido de foco
+=> sigue disponible para el recorrido de foco
 ```
 
 No se utiliza:
@@ -4322,7 +4473,7 @@ Cuando la operación se inicia desde el botón de envío, el foco permanece en e
 
 Cuando el envío se inicia mediante teclado desde otro campo, el foco permanece en ese campo.
 
-Mientras la operación continúa pendiente, cualquier nueva tentativa de envío por el host debe ser ignorada por el backend antes de generar una segunda solicitud, independientemente de si procede de una activación del botón o de otra forma de envío del formulario.
+Mientras la operación sigue pendiente, cualquier nueva tentativa de envío por el host debe ser ignorada por el backend antes de generar una segunda solicitud, independientemente de si procede de una activación del botón o de otra forma de envío del formulario.
 
 Cuando la operación termina, los campos vuelven a quedar disponibles para edición y el control vuelve a:
 
@@ -4337,6 +4488,10 @@ El frontend no conserva una condición local que impida futuros intentos basánd
 El ancho del botón durante el envío conserva las reglas responsive definidas para el estado normal.
 
 El tamaño y el espaciado del texto durante este estado deben seguir las mismas reglas de crecimiento del control que en el estado normal.
+
+La interacción mediante puntero conserva la misma semántica de activación que el estado normal.
+
+La indisponibilidad temporal durante el envío no introduce una activación diferente basada en presión, gesto o dispositivo.
 
 La semántica accesible concreta de este estado se define en `26.8. Mensajes generales del formulario`.
 
@@ -4607,13 +4762,15 @@ Estado vacío de medios de contacto
 
 La aplicación debe informar el estado allí donde afecta a la representación.
 
-No debe convertir un fallo localizado en una pantalla global de error cuando las demás regiones continúan utilizables.
+No debe convertir un fallo localizado en una pantalla global de error cuando las demás regiones siguen utilizables.
 
-Las reglas responsive continúan aplicándose a los estados.
+Las reglas responsive siguen aplicándose a los estados.
 
 Un skeleton, error, estado vacío o contenido no encontrado utiliza la geometría correspondiente al ancho disponible y no fuerza la composición de escritorio.
 
 El redimensionamiento y el espaciado del texto se aplican igualmente a los estados comunes y sus mensajes.
+
+Las acciones presentes dentro de un estado mantienen las mismas reglas de objetivo interactivo y de activación mediante puntero que sus equivalentes en contenido normal.
 
 ---
 
@@ -4742,7 +4899,7 @@ No se utiliza `8px` como padding horizontal general de la aplicación.
 
 Los valores anteriores corresponden a la presentación normal.
 
-Cuando el usuario modifica el espaciado textual, los contenedores deben crecer o reorganizarse para conservar el contenido.
+Cuando el usuario cambia el espaciado textual, los contenedores deben crecer o reorganizarse para conservar el contenido.
 
 ---
 
@@ -4822,13 +4979,13 @@ Cuando:
 1024px <= ancho < 1360px
 ```
 
-la navegación continúa lateral y mantiene:
+la navegación sigue lateral y mantiene:
 
 ```text
 224px
 ```
 
-Las páginas internas continúan utilizando:
+Las páginas internas siguen utilizando:
 
 ```text
 navegación | contenido
@@ -4960,9 +5117,17 @@ Menú | Idioma | Tema
 
 Idioma y Tema no se ocultan dentro de Menú.
 
-La barra continúa disponible durante el desplazamiento junto con la cabecera compacta.
+La barra sigue disponible durante el desplazamiento junto con la cabecera compacta.
 
 Cuando la fila deja de caber correctamente por el ancho o por el tamaño del texto, la barra debe reorganizar sus controles sin ocultarlos.
+
+Cada control independiente mantiene un objetivo interactivo mínimo de:
+
+```text
+48px x 48px CSS
+```
+
+La reorganización no reduce el objetivo para conservar artificialmente una única fila.
 
 ---
 
@@ -4990,6 +5155,8 @@ panel lateral superpuesto
 ```
 
 Al cerrar el menú, el contenido recupera el espacio correspondiente.
+
+La apertura y el cierre requieren una activación explícita y no se producen solamente por pasar el puntero sobre el control.
 
 ---
 
@@ -5037,7 +5204,11 @@ No realiza navegación hacia un elemento.
 
 La regla se aplica a todos los grupos expandibles de la navegación.
 
-Si se activa más que uno grupo al mismo tiempo, uno no cierra al otro automaticamente.
+Si se activa más que uno grupo al mismo tiempo, uno no cerra al otro automaticamente.
+
+El objetivo interactivo corresponde a toda la fila del grupo.
+
+El icono no constituye un objetivo separado.
 
 ---
 
@@ -5118,7 +5289,7 @@ Horizontal y no cabe correctamente
 => reorganizar verticalmente
 ```
 
-El crecimiento del texto forma parte de la comprobación de si la composición continúa cabiendo correctamente.
+El crecimiento del texto forma parte de la comprobación de si la composición sigue cabiendo correctamente.
 
 ---
 
@@ -5180,6 +5351,8 @@ Página completa
 
 Una tabla, bloque de código, diagrama, gráfico u otro contenido ancho debe utilizar primero las alternativas anteriores cuando estas conservan correctamente su información.
 
+El mecanismo de desplazamiento propio se deja bajo el comportamiento normal del navegador y no se convierte en una función personalizada cuyo único acceso requiera arrastre.
+
 ---
 
 ## 25.17. elementos visuales
@@ -5195,7 +5368,7 @@ ancho necesario menor
 
 mientras el elemento continúe siendo legible.
 
-Un elemento necesario no desaparece automáticamente por utilizar una pantalla estrecha, ni por ampliación y ni por cambio de orientación.
+Un elemento necesario no desaparece automáticamente por utilizar una pantalla estrecha, por ampliación ni por cambio de orientación.
 
 ---
 
@@ -5231,6 +5404,14 @@ Cuando deja de caber, la composición debe reorganizarse.
 
 Los controles no se recortan para conservar artificialmente una sola fila.
 
+Todo botón independiente mantiene como mínimo:
+
+```text
+48px x 48px CSS
+```
+
+de objetivo interactivo.
+
 ---
 
 ## 25.19. Formulario
@@ -5255,6 +5436,14 @@ ancho < 1024px
 Durante `enviando...`, se conserva la misma regla de ancho y altura mínima.
 
 Los campos y controles deben crecer cuando el texto o su espaciado necesitan más espacio.
+
+Los campos de una línea mantienen como mínimo:
+
+```text
+altura => 48px
+```
+
+y todos los controles interactivos independientes del formulario mantienen el mínimo general de objetivo.
 
 ---
 
@@ -5345,7 +5534,7 @@ El crecimiento del texto debe provocar esta reorganización antes de producir re
 
 ## 25.23. Artículo
 
-En escritorio, se conserva el ancho de lectura definido mientras ese ancho sigue siendo compatible con el espacio disponible.
+En escritorio conserva el ancho de lectura definido mientras ese ancho sigue siendo compatible con el espacio disponible.
 
 En composición estrecha utiliza el ancho disponible y:
 
@@ -5537,6 +5726,8 @@ Función disponible solamente en orientación horizontal
 
 No existe una excepción funcional del sitio que requiera una orientación específica.
 
+El cambio de orientación no constituye por sí mismo una orden para ejecutar una función distinta de la reorganización de la interfaz.
+
 ---
 
 # 26. Accesibilidad
@@ -5564,7 +5755,7 @@ Alcanzar un requisito AAA concreto no convierte AAA en el nivel general de confo
 
 Una combinación o comportamiento que no alcance AAA debe permanecer cuando cumple el requisito AA correspondiente.
 
-Los criterios de nivel A continúan siendo obligatorios para la conformidad AA cuando no existe un criterio AA equivalente que sustituya la misma exigencia.
+Los criterios de nivel A siguen siendo obligatorios para la conformidad AA cuando no existe un criterio AA equivalente que sustituya la misma exigencia.
 
 El nivel propio de un criterio de WCAG no se cambia para adaptarlo al nivel general del proyecto.
 
@@ -5702,6 +5893,14 @@ Cuando el menú está cerrado, sus elementos ocultos tampoco forman parte del re
 
 El objetivo interactivo y el objetivo utilizado por las pruebas corresponde al control completo y no al elemento SVG interno.
 
+El control completo mantiene el mínimo de:
+
+```text
+48px x 48px CSS
+```
+
+y su apertura o cierre requiere una activación explícita.
+
 ---
 
 ## 26.5. Nombres accesibles de controles
@@ -5714,6 +5913,10 @@ Cuando existe texto visible suficiente:
 texto visible
 => nombre del control
 ```
+
+Si el control dispone además de una fuente explícita de nombre accesible, el nombre resultante debe contener el texto visible del control.
+
+No se sustituye una etiqueta visible por un nombre accesible que utilice un texto diferente y deje de contener la información presentada visualmente.
 
 El icono que acompaña a ese texto no se anuncia de forma independiente.
 
@@ -5832,7 +6035,7 @@ Cuando el error desaparece, el estado inválido y las relaciones asociadas se ac
 
 ## 26.8. Mensajes generales del formulario
 
-Los mensajes generales permanecen visibles mientras continúan siendo pertinentes.
+Los mensajes generales permanecen visibles mientras siguen siendo pertinentes.
 
 No desaparecen automáticamente después de un período breve.
 
@@ -5881,7 +6084,7 @@ disabled
 
 durante el envío.
 
-Los campos continúan formando parte del recorrido normal de foco y sus valores permanecen disponibles para las tecnologías de asistencia.
+Los campos siguen formando parte del recorrido normal de foco y sus valores permanecen disponibles para las tecnologías de asistencia.
 
 No se añade:
 
@@ -5983,7 +6186,7 @@ Conceptualmente:
 </div>
 ```
 
-Esta separación permite que el progreso se comunique mientras el formulario continúa marcado como ocupado.
+Esta separación permite que el progreso se comunique mientras el formulario sigue marcado como ocupado.
 
 La región de estado no introduce una segunda representación visual de `enviando...` mientras el texto ya se encuentra visible en el botón.
 
@@ -6157,7 +6360,7 @@ No contienen controles ficticios.
 
 No se añade un texto oculto equivalente a `Cargando...` solamente para crear una representación adicional destinada a tecnologías de asistencia.
 
-La animación visual del skeleton permanece mientras la operación continúa pendiente.
+La animación visual del skeleton permanece mientras la operación sigue pendiente.
 
 Cuando la carga termina con contenido, vacío o error, el skeleton desaparece y la unidad adopta el estado correspondiente.
 
@@ -6260,7 +6463,7 @@ alt
 => función o destino correspondiente
 ```
 
-Cuando la imagen se encuentra dentro de un enlace que ya dispone de otro contenido suficiente para identificar su destino, la alternativa continúa correspondiendo a la función propia de la imagen.
+Cuando la imagen se encuentra dentro de un enlace que ya dispone de otro contenido suficiente para identificar su destino, la alternativa sigue correspondiendo a la función propia de la imagen.
 
 Cuando la imagen no aporta información adicional, el valor de `alt` es vacío.
 
@@ -6291,7 +6494,7 @@ Proyecto en representación resumida
 
 En el detalle, la imagen principal constituye información propia del proyecto.
 
-Puede representar, según el contenido:
+Debe representar, según el contenido:
 
 ```text
 Interfaz
@@ -6514,6 +6717,8 @@ Los iconos utilizados en las tarjetas de Contactos siguen estas mismas reglas.
 
 Cuando el tipo de medio ya se encuentra identificado mediante texto visible suficiente, el icono funciona como apoyo visual y no se anuncia de forma independiente.
 
+Cuando el icono pertenece a un control, su tamaño visual no limita la superficie interactiva del control.
+
 ---
 
 ## 26.18. Fotografía de la cabecera
@@ -6681,7 +6886,7 @@ No se añaden declaraciones redundantes en cada elemento únicamente para repeti
 
 ### Contenido presentado mediante un idioma de respaldo
 
-Cuando el idioma activo no está disponible para un contenido y la aplicación utiliza el idioma por defecto o el idioma original como respaldo, el idioma principal del documento continúa correspondiendo al idioma activo del sistema.
+Cuando el idioma activo no está disponible para un contenido y la aplicación utiliza el idioma por defecto o el idioma original como respaldo, el idioma principal del documento sigue correspondiendo al idioma activo del sistema.
 
 La región que pertenece a la variante efectivamente presentada utiliza su idioma real.
 
@@ -6731,7 +6936,7 @@ lang del documento
 
 ### Unidades de contenido dentro de colecciones
 
-Una colección puede contener simultáneamente recursos cuyas variantes efectivamente presentadas utilicen idiomas diferentes.
+Una colección debe contener simultáneamente recursos cuyas variantes efectivamente presentadas utilicen idiomas diferentes.
 
 Cada unidad debe declarar su propio idioma cuando difiere del idioma heredado.
 
@@ -6755,7 +6960,7 @@ Colección
 
 No se asigna a toda la colección el idioma de una de sus unidades cuando esto produciría una declaración incorrecta para las demás.
 
-Una tarjeta puede contener simultáneamente:
+Una tarjeta debe contener simultáneamente:
 
 ```text
 Contenido del recurso
@@ -6777,7 +6982,7 @@ Conceptualmente:
 </article>
 ```
 
-La estructura exacta puede variar según el componente, pero la separación lingüística debe conservar el mismo resultado semántico.
+La estructura exacta debe variar según el componente, pero la separación lingüística debe conservar el mismo resultado semántico.
 
 ### Encabezados y alternativas textuales
 
@@ -6810,7 +7015,7 @@ Se conserva la alternativa proporcionada por la variante correspondiente.
 
 ### Cambios de idioma dentro del contenido
 
-Una variante puede contener deliberadamente una parte escrita en otro idioma.
+Una variante debe contener deliberadamente una parte escrita en otro idioma.
 
 Cuando el idioma de una parte difiere del idioma heredado y el cambio debe determinarse programáticamente, el elemento correspondiente declara su propio idioma.
 
@@ -7257,30 +7462,30 @@ Los colores del tema oscuro fueron comprobados según sus funciones y frente a t
 
 Cuando un color debe aparecer en múltiples superficies, la tabla utiliza la combinación con menor contraste.
 
-| Elemento                                    | Peor caso comprobado                                                   | Contraste        | AA      | AAA                      |
-| ------------------------------------------- | ---------------------------------------------------------------------- | ---------------: | ------- | ------------------------ |
-| Fondo principal `#0F141B`                   | Texto tenue `#8E97A3`                                                  | `6.2538873158:1` | Cumple  | No cumple                |
-| Superficie primaria `#141B24`               | Texto tenue `#8E97A3`                                                  | `5.8627986079:1` | Cumple  | No cumple                |
-| Superficie secundaria `#18212C`             | Texto tenue `#8E97A3`                                                  | `5.4965511091:1` | Cumple  | No cumple                |
-| Texto principal `#F2F1EE`                   | sobre `#173328`                                                        | `12.0681208570:1`| Cumple  | Cumple                   |
-| Texto secundario `#B8BDC6`                  | sobre `#173328`                                                        | `7.2261022755:1` | Cumple  | Cumple                   |
-| Texto tenue `#8E97A3`                       | sobre `#173328`                                                        | `4.6122661865:1` | Cumple  | No cumple                |
-| Borde funcional `#737B8B`                   | sobre `#173328`                                                        | `3.2032708892:1` | Cumple  | Cumple*                  |
-| Rojo interactivo `#FE6162`                  | sobre `#173328`                                                        | `4.6088541127:1` | Cumple  | No cumple                |
-| Rojo interactivo hover `#FE686A`            | sobre `#173328`                                                        | `4.8048821419:1` | Cumple  | No cumple                |
-| Verde principal `#58B28D`                   | sobre `#173328`                                                        | `5.3016380075:1` | Cumple  | No cumple                |
-| Verde hover `#4FA683`                       | sobre `#173328`                                                        | `4.6181145990:1` | Cumple  | No cumple                |
-| Advertencia `#D6A34A`                       | sobre `#173328`                                                        | `5.9697345002:1` | Cumple  | No cumple                |
-| Información `#6FA8FF`                       | sobre `#173328`                                                        | `5.6607425863:1` | Cumple  | No cumple                |
-| Foco `#E2484D`                              | sobre `#173328`                                                        | `3.4193508748:1` | Cumple  | Cumple*                  |
-| Placeholder `#8E97A3`                       | sobre `#173328`                                                        | `4.6122661865:1` | Cumple  | No cumple                |
-| Botón principal normal                      | `#FFFFFF` sobre `#D6363B`                                              | `4.7190498141:1` | Cumple  | No cumple                |
-| Botón principal hover                       | `#FFFFFF` sobre `#C92F35`                                              | `5.3278994839:1` | Cumple  | No cumple                |
-| Botón secundario, texto                     | `#F2F1EE` sobre `#18212C`                                              | `14.3818765872:1`| Cumple  | Cumple                   |
-| Botón secundario, borde                     | `#737B8B` contra `#18212C`                                             | `3.8174167420:1` | Cumple  | Cumple*                  |
-| Enlace visitado `#BB7FD3`                   | sobre `#173328`                                                        | `4.6016656338:1` | Cumple  | No cumple                |
-| Cabecera, nombre `#F2F1EE`                  | fotografía con capa negra mínima del `60%`; peor fondo `#666666`       | `5.0834876786:1` | Cumple  | Cumple*                  |
-| Cabecera, descripción breve `#F2F1EE`       | fotografía con capa negra mínima del `60%`; peor fondo `#666666`       | `5.0834876786:1` | Cumple  | No cumple                |
+| Elemento                                    | Peor caso comprobado                                                   | Contraste         | AA      | AAA       |
+| ------------------------------------------- | ---------------------------------------------------------------------- | ----------------: | ------- | --------- |
+| Fondo principal `#0F141B`                   | Texto tenue `#8E97A3`                                                  | `6.2538873158:1`  | Cumple  | No cumple |
+| Superficie primaria `#141B24`               | Texto tenue `#8E97A3`                                                  | `5.8627986079:1`  | Cumple  | No cumple |
+| Superficie secundaria `#18212C`             | Texto tenue `#8E97A3`                                                  | `5.4965511091:1`  | Cumple  | No cumple |
+| Texto principal `#F2F1EE`                   | sobre `#173328`                                                        | `12.0681208570:1` | Cumple  | Cumple    |
+| Texto secundario `#B8BDC6`                  | sobre `#173328`                                                        | `7.2261022755:1`  | Cumple  | Cumple    |
+| Texto tenue `#8E97A3`                       | sobre `#173328`                                                        | `4.6122661865:1`  | Cumple  | No cumple |
+| Borde funcional `#737B8B`                   | sobre `#173328`                                                        | `3.2032708892:1`  | Cumple  | Cumple*   |
+| Rojo interactivo `#FE6162`                  | sobre `#173328`                                                        | `4.6088541127:1`  | Cumple  | No cumple |
+| Rojo interactivo hover `#FE686A`            | sobre `#173328`                                                        | `4.8048821419:1`  | Cumple  | No cumple |
+| Verde principal `#58B28D`                   | sobre `#173328`                                                        | `5.3016380075:1`  | Cumple  | No cumple |
+| Verde hover `#4FA683`                       | sobre `#173328`                                                        | `4.6181145990:1`  | Cumple  | No cumple |
+| Advertencia `#D6A34A`                       | sobre `#173328`                                                        | `5.9697345002:1`  | Cumple  | No cumple |
+| Información `#6FA8FF`                       | sobre `#173328`                                                        | `5.6607425863:1`  | Cumple  | No cumple |
+| Foco `#E2484D`                              | sobre `#173328`                                                        | `3.4193508748:1`  | Cumple  | Cumple*   |
+| Placeholder `#8E97A3`                       | sobre `#173328`                                                        | `4.6122661865:1`  | Cumple  | No cumple |
+| Botón principal normal                      | `#FFFFFF` sobre `#D6363B`                                              | `4.7190498141:1`  | Cumple  | No cumple |
+| Botón principal hover                       | `#FFFFFF` sobre `#C92F35`                                              | `5.3278994839:1`  | Cumple  | No cumple |
+| Botón secundario, texto                     | `#F2F1EE` sobre `#18212C`                                              | `14.3818765872:1` | Cumple  | Cumple    |
+| Botón secundario, borde                     | `#737B8B` contra `#18212C`                                             | `3.8174167420:1`  | Cumple  | Cumple*   |
+| Enlace visitado `#BB7FD3`                   | sobre `#173328`                                                        | `4.6016656338:1`  | Cumple  | No cumple |
+| Cabecera, nombre `#F2F1EE`                  | fotografía con capa negra mínima del `60%`; peor fondo `#666666`       | `5.0834876786:1`  | Cumple  | Cumple*   |
+| Cabecera, descripción breve `#F2F1EE`       | fotografía con capa negra mínima del `60%`; peor fondo `#666666`       | `5.0834876786:1`  | Cumple  | No cumple |
 
 `Cumple*` indica que el elemento no textual satisface el requisito de contraste no textual aplicable.
 
@@ -7383,7 +7588,7 @@ Separador
 
 cuando esas líneas necesitan ser perceptibles.
 
-El grosor continúa dependiendo de la función visual definida en `9. Bordes`.
+El grosor sigue dependiendo de la función visual definida en `9. Bordes`.
 
 El tema oscuro utiliza:
 
@@ -7466,7 +7671,7 @@ sin sustituir el significado propio de esos estados.
 
 El foco identifica qué control se encuentra actualmente enfocado.
 
-Los demás estados continúan comunicando su propio significado.
+Los demás estados siguen comunicando su propio significado.
 
 ---
 
@@ -7551,6 +7756,14 @@ focus
 ```
 
 deben conservar el contraste correspondiente en las combinaciones permitidas.
+
+El estado `hover` solamente constituye retroalimentación visual.
+
+El enlace sigue siendo reconocible y utilizable sin que ese estado exista.
+
+Un enlace que constituye una acción independiente utiliza el objetivo mínimo definido en `15.13. Objetivos interactivos`.
+
+Un enlace situado dentro de un bloque de texto conserva su presentación textual y utiliza la excepción normativa aplicable a objetivos integrados en texto.
 
 ---
 
@@ -7722,9 +7935,9 @@ Recorrido normal mediante Tab
 
 El encabezado no se transforma en un control interactivo.
 
-Su función continúa siendo representar semánticamente el encabezado principal de la página.
+Su función sigue siendo representar semánticamente el encabezado principal de la página.
 
-Después de recibir el foco, la navegación secuencial posterior continúa mediante los elementos interactivos siguientes de acuerdo con el orden normal del documento.
+Después de recibir el foco, la navegación secuencial posterior sigue mediante los elementos interactivos siguientes de acuerdo con el orden normal del documento.
 
 No se utilizan valores positivos de `tabindex` para colocar el encabezado dentro de una posición artificial de la secuencia.
 
@@ -7736,7 +7949,7 @@ La región:
 <main>
 ```
 
-continúa delimitando semánticamente el contenido principal.
+sigue delimitando semánticamente el contenido principal.
 
 No recibe foco únicamente como consecuencia de una navegación interna.
 
@@ -7865,7 +8078,7 @@ No se repite esta información mediante una segunda región de anuncios cuando e
 
 ## 26.36. Redimensionamiento, reflujo, espaciado y orientación
 
-La aplicación debe conservar contenido, información y funcionalidad durante el redimensionamiento del texto, la ampliación del navegador, el reflujo, la modificación del espaciado textual y los cambios de orientación.
+La aplicación debe conservar contenido, información y funcionalidad durante el redimensionamiento del texto, la ampliación del navegador, el reflujo, la cambiación del espaciado textual y los cambios de orientación.
 
 ### Criterios de conformidad
 
@@ -7879,14 +8092,13 @@ Las decisiones de esta sección corresponden a los siguientes criterios de WCAG 
 | Espaciado del texto          | `1.4.12 Espaciado del texto`           | Cumple | No Cumple |
 | Presentación visual          | `1.4.8 Presentación visual`            | Cumple | Cumple    |
 
-
 Todo el sitio funciona sin exigir una orientación concreta.
 
 El texto aumenta hasta `200%` sin pérdida de contenido ni funcionalidad.
 
 El contenido de desplazamiento vertical funciona a `320px CSS` sin desplazamiento horizontal de página.
 
-Los valores exigidos pueden aplicarse sin pérdida de contenido ni funcionalidad.
+Los valores exigidos deben aplicarse sin pérdida de contenido ni funcionalidad.
 
 Presentación visual relacionado; no se declara cumplimiento completo mediante las decisiones de esta sección.
 
@@ -7994,7 +8206,7 @@ Conceptualmente:
 => min-height: 48px
 
 Subítem de navegación
-=> min-height: 36px
+=> min-height: 48px
 
 Botón principal
 => min-height: 48px
@@ -8196,7 +8408,7 @@ Código
 => desplazamiento interno cuando la estructura o indentación necesita preservarse
 
 Diagrama o gráfico
-=> redimensionar o adaptar cuando continúa legible
+=> redimensionar o adaptar cuando sigue legible
 => desplazamiento interno cuando necesita preservar su relación espacial
 ```
 
@@ -8262,7 +8474,7 @@ Espaciado entre palabras
 
 Estos valores no sustituyen los valores visuales normales definidos en `3. Alturas de línea` ni en `10. Espaciado`.
 
-Representan modificaciones que la interfaz debe soportar sin pérdida.
+Representan cambios que la interfaz debe soportar sin pérdida.
 
 Cuando se aplican simultáneamente:
 
@@ -8292,7 +8504,7 @@ Pérdida de mensajes
 Pérdida de acciones
 ```
 
-Las alturas mínimas definidas para componentes textuales continúan funcionando como valores mínimos y no como límites máximos.
+Las alturas mínimas definidas para componentes textuales siguen funcionando como valores mínimos y no como límites máximos.
 
 ---
 
@@ -8361,6 +8573,440 @@ La evaluación AAA debe realizarse sobre todas las condiciones del criterio ante
 
 ---
 
+## 26.37. Interacción por puntero y tacto
+
+La interacción mediante puntero forma parte de la misma interfaz utilizada mediante teclado.
+
+La aplicación no mantiene una versión funcional separada para ratón, pantalla táctil o lápiz.
+
+Los controles propios deben conservar la misma función independientemente del mecanismo de entrada compatible utilizado.
+
+### Criterios de conformidad
+
+Las decisiones de esta sección corresponden a los siguientes criterios de WCAG 2.2:
+
+| Aspecto                             | Criterio                                             | A      | AA        | AAA       |
+| ----------------------------------- | ---------------------------------------------------- | ------ | --------- | --------- |
+| Contenido al pasar el puntero o foco| `1.4.13 Contenido señalado con el puntero o en foco` | Cumple | Cumple    | No cumple |
+| Gestos del puntero                  | `2.5.1 Gestos del puntero`                           | Cumple | No cumple | No cumple |
+| Cancelación del puntero             | `2.5.2 Cancelación del puntero`                      | Cumple | No cumple | No cumple |
+| Etiqueta en el nombre               | `2.5.3 Etiqueta en el nombre`                        | Cumple | No Cumple | No cumple |
+| Actuación mediante movimiento       | `2.5.4 Actuación mediante movimiento`                | Cumple | No cumple | No cumple |
+| Tamaño del objetivo mejorado        | `2.5.5 Tamaño del objetivo (mejorado)`               | Cumple | Cumple    | Cumple    |
+| Mecanismos de entrada concurrentes  | `2.5.6 Mecanismos de entrada concurrentes`           | Cumple | Cumple    | Cumple    |
+| Movimientos de arrastre             | `2.5.7 Movimientos de arrastre`                      | Cumple | Cumple    | No cumple |
+| Tamaño mínimo del objetivo          | `2.5.8 Tamaño del objetivo (mínimo)`                 | Cumple | Cumple    | No cumple |
+
+Los criterios:
+
+```text
+2.5.1
+2.5.2
+2.5.3
+2.5.4
+```
+
+conservan formalmente el nivel A porque no existe un criterio AA equivalente que sustituya cada una de estas exigencias. Pero, el cumplimiento del proyecto sigue siendo obligatorio para la conformidad AA general.
+
+Los criterios:
+
+```text
+2.5.5
+2.5.6
+```
+
+pertenecen al nivel AAA. El proyecto cumple estas decisiones adicionales sin convertir AAA en el nivel general de conformidad.
+
+---
+
+### Tamaño de objetivos interactivos
+
+Todo objetivo interactivo independiente propio de `sitio` utiliza como mínimo:
+
+```text
+48px x 48px CSS
+```
+
+Este valor supera:
+
+```text
+2.5.8 nivel AA
+=> 24px x 24px CSS
+
+2.5.5 nivel AAA
+=> 44px x 44px CSS
+```
+
+La superficie interactiva corresponde al control completo.
+
+Conceptualmente:
+
+```text
+Control
+=> 48px x 48px CSS como mínimo
+
+Contenido visual interior
+=> debe utilizar una dimensión menor
+=> no reduce el objetivo
+```
+
+Por ejemplo, un icono con:
+
+```text
+18px
+20px
+22px
+```
+
+sigue perteneciendo a un control cuyo objetivo mide como mínimo:
+
+```text
+48px x 48px CSS
+```
+
+La regla se aplica a:
+
+```text
+Ítems principales de navegación
+Subelementos de navegación
+Grupos expandibles
+Menú
+Selector de idioma
+Selector de tema
+Botones
+Campos de formulario
+Acciones explícitas de tarjetas
+Accesos a listados completos
+Acciones de regreso
+Enlaces de medios de contacto
+Otros controles independientes propios de sitio
+```
+
+Los subelementos de navegación dejan de utilizar:
+
+```text
+min-height: 36px
+```
+
+y utilizan:
+
+```text
+min-height: 48px
+```
+
+como el resto de los objetivos independientes.
+
+La aplicación no reduce normalmente un objetivo por debajo de `48px x 48px CSS` utilizando solamente la separación entre objetivos para satisfacer el mínimo AA.
+
+---
+
+### Enlaces integrados dentro del texto
+
+Los enlaces que forman parte de una frase, un párrafo u otro bloque textual conservan su naturaleza de enlace integrado en el texto.
+
+No se transforman en bloques de `48px` de altura únicamente para igualar los controles independientes.
+
+Estos enlaces utilizan la excepción normativa correspondiente a objetivos situados dentro de texto.
+
+Conceptualmente:
+
+```text
+Acción independiente
+=> objetivo mínimo 48px x 48px CSS
+
+Enlace integrado en texto
+=> conservar flujo textual
+=> aplicar excepción normativa correspondiente
+```
+
+La excepción no se utiliza para acciones visualmente independientes que deben aplicar el mínimo general del proyecto.
+
+---
+
+### Paso del puntero
+
+El estado `hover` funciona exclusivamente como retroalimentación visual adicional.
+
+No constituye una condición necesaria para:
+
+```text
+Acceder a una función
+Descubrir una acción
+Leer información necesaria
+Abrir una sección
+Cambiar un estado
+Navegar
+Completar un formulario
+```
+
+Conceptualmente:
+
+```text
+Sin hover
+=> toda la funcionalidad permanece disponible
+
+Con hover
+=> retroalimentación visual adicional
+```
+
+Los grupos expandibles no se abren ni se cierran solamente al pasar el puntero.
+
+Requieren una activación explícita.
+
+Las acciones de una tarjeta permanecen visibles y disponibles sin depender del paso del puntero.
+
+La existencia de los estados cromáticos `hover` definidos para enlaces y botones no crea una función exclusiva de ese estado.
+
+---
+
+### Contenido adicional al pasar el puntero o recibir foco
+
+La interfaz actual no utiliza contenido necesario que aparezca exclusivamente al pasar el puntero o al recibir foco.
+
+No se incorpora una segunda capa de información cuya consulta dependa de estos estados.
+
+Si posteriormente se introduce contenido adicional activado al pasar el puntero o recibir foco, deberá cumplir simultáneamente:
+
+```text
+Descartable
+=> debe poder cerrarse sin mover necesariamente el puntero o el foco
+
+Apuntable
+=> el puntero debe poder desplazarse hacia el contenido adicional sin provocar su desaparición
+
+Persistente
+=> debe permanecer visible mientras continúe la condición correspondiente
+   o hasta que el usuario lo descarte
+   o hasta que su información deje de ser válida
+```
+
+La introducción futura de este tipo de contenido no debe cambiar estas condiciones sin una nueva revisión de accesibilidad.
+
+---
+
+### Activación sencilla
+
+Las funciones propias de `sitio` deben poder realizarse mediante una activación sencilla cuando se utilizan dispositivos de puntero.
+
+Conceptualmente:
+
+```text
+Ratón
+=> activación sencilla
+
+Tacto
+=> toque
+
+Lápiz
+=> activación sencilla
+```
+
+La aplicación no exige para sus funciones:
+
+```text
+Gestos multipunto
+Recorridos específicos
+Formas dibujadas
+Pulsaciones prolongadas
+Secuencias gestuales
+```
+
+cuando la misma función debe resolverse mediante una activación sencilla.
+
+No se crea una función exclusiva para tacto que carezca de operación equivalente mediante los demás mecanismos disponibles.
+
+---
+
+### Gestos administrados por el navegador
+
+Los gestos normales proporcionados por el navegador permanecen disponibles.
+
+Esto comprende las capacidades normales relacionadas con:
+
+```text
+Desplazamiento
+Ampliación
+Navegación del contenido
+Interacción propia del agente de usuario
+```
+
+La aplicación no sustituye estas capacidades por gestos propios obligatorios.
+
+Los componentes cuyo contenido necesita desplazamiento horizontal según `25.16. Contenido ancho` utilizan el comportamiento normal de desplazamiento del navegador.
+
+No se implementa sobre ellos una operación personalizada cuyo único mecanismo sea arrastrar el contenido mediante un recorrido específico.
+
+---
+
+### Cancelación del puntero
+
+Las acciones definitivas no se ejecutan al comenzar la presión del puntero.
+
+La secuencia general utiliza:
+
+```text
+Presión inicial
+=> no completar acción
+
+Activación cancelada antes de completarse
+=> no ejecutar acción
+
+Activación completada
+=> ejecutar acción
+```
+
+Los controles nativos deben conservar su comportamiento normal de activación.
+
+No se utiliza como mecanismo general:
+
+```text
+pointerdown
+mousedown
+touchstart
+```
+
+para completar inmediatamente:
+
+```text
+Navegación
+Envío
+Cambio de tema
+Cambio de idioma
+Apertura o cierre de grupos
+Acciones de tarjetas
+```
+
+La acción se produce mediante la activación normal completada del control. Esto permite abandonar una interacción iniciada accidentalmente antes de completarla.
+
+---
+
+### Movimientos de arrastre
+
+Ninguna función propia de `sitio` requiere arrastrar un objeto de un punto hacia otro.
+
+No se utiliza el arrastre como mecanismo único para:
+
+```text
+Reordenar contenido
+Cambiar un estado
+Navegar
+Activar un control
+Seleccionar una opción
+Completar una operación
+```
+
+Si en el futuro un componente incorpora una interacción de arrastre, la misma función deberá poder realizarse mediante una operación de puntero sencilla que no requiera el movimiento de arrastre, salvo una excepción normativa aplicable.
+
+Conceptualmente:
+
+```text
+Arrastre disponible
+=> debe existir como mecanismo adicional
+
+Misma función
+=> debe disponer de operación sin arrastre
+```
+
+El desplazamiento normal proporcionado por el navegador no se transforma en una función personalizada de arrastre.
+
+---
+
+### Etiqueta visible y nombre accesible
+
+Cuando un control presenta texto visible, su nombre accesible contiene ese texto.
+
+Conceptualmente:
+
+```text
+Texto visible
+=> incluido en el nombre accesible
+```
+
+Si el nombre accesible necesita información adicional:
+
+```text
+Nombre accesible
+=> conserva el texto visible
+=> debe añadir información cuando resulta necesaria
+```
+
+No se utiliza un nombre accesible que contradiga o sustituya completamente el texto presentado visualmente.
+
+Los controles formados solamente por iconos siguen utilizando el nombre accesible localizado definido en `26.5. Nombres accesibles de controles`.
+
+La ausencia de texto visible en un control iconográfico no introduce un texto visual artificial únicamente para este criterio.
+
+---
+
+### Mecanismos de entrada concurrentes
+
+La aplicación no restringe un mecanismo de entrada por detectar o utilizar otro.
+
+Conceptualmente:
+
+```text
+Ratón disponible
+=> permanece utilizable
+
+Tacto disponible
+=> permanece utilizable
+
+Lápiz disponible
+=> permanece utilizable
+
+Teclado disponible
+=> permanece utilizable
+```
+
+Un dispositivo que ofrece simultáneamente varios mecanismos debe conservarlos disponibles.
+
+No se utiliza:
+
+```text
+Detección de tacto
+=> desactivar ratón
+
+Detección de ratón
+=> desactivar tacto
+
+Uso de puntero
+=> desactivar teclado
+```
+
+La presentación debe ajustar retroalimentaciones visuales que dependen de capacidades reales del dispositivo, pero no debe retirar contenido ni funcionalidad por ese motivo.
+
+---
+
+### Actuación mediante movimiento
+
+`Sitio` no utiliza movimientos físicos del dispositivo o del usuario para activar funciones.
+
+No se utiliza:
+
+```text
+Sacudir
+Inclinar
+Rotar como orden funcional
+Movimiento detectado
+```
+
+para ejecutar una acción de la aplicación.
+
+El cambio entre orientación vertical y horizontal definido en `25.27. Orientación` no constituye actuación mediante movimiento.
+
+Conceptualmente:
+
+```text
+Cambio de orientación
+=> cambia el espacio disponible
+=> aplica reglas responsive mediante el tamaño de la pantalla
+=> no ejecuta una función adicional
+```
+
+No existe una función que dependa de sensores de movimiento para su operación normal.
+
+---
+
 # Relación entre tema claro y tema oscuro
 
 Los dos temas representan exactamente el mismo sitio.
@@ -8399,7 +9045,15 @@ Para un mismo ancho disponible deben compartir exactamente:
 - reglas de redimensionamiento del texto;
 - reglas de reflujo;
 - reglas de espaciado del texto;
-- comportamiento entre orientaciones.
+- comportamiento entre orientaciones;
+- tamaños mínimos de objetivos interactivos;
+- mecanismos de entrada disponibles;
+- comportamiento de activación mediante puntero;
+- reglas de interacción mediante tacto;
+- ausencia de dependencia funcional de `hover`;
+- reglas de cancelación del puntero;
+- ausencia de arrastre obligatorio;
+- comportamiento de etiquetas visibles y nombres accesibles.
 
 Conceptualmente:
 
@@ -8414,6 +9068,9 @@ Tema claro
 +-- misma disposición para el mismo ancho
 +-- mismos estados
 +-- mismas reglas de redimensionamiento y reflujo
++-- mismos objetivos interactivos
++-- mismos mecanismos de entrada
++-- misma interacción funcional
 
 Tema oscuro
 |
@@ -8425,6 +9082,9 @@ Tema oscuro
 +-- misma disposición para el mismo ancho
 +-- mismos estados
 +-- mismas reglas de redimensionamiento y reflujo
++-- mismos objetivos interactivos
++-- mismos mecanismos de entrada
++-- misma interacción funcional
 ```
 
 Solamente deben variar los valores visuales necesarios para adaptar:
@@ -8467,6 +9127,13 @@ Cambiar las reglas de redimensionamiento
 Cambiar las reglas de reflujo
 Cambiar las reglas de espaciado del texto
 Cambiar el comportamiento entre orientaciones
+Cambiar el tamaño mínimo de los objetivos interactivos
+Cambiar los mecanismos de entrada admitidos
+Cambiar la activación mediante puntero
+Introducir dependencia funcional de hover
+Cambiar las reglas de cancelación del puntero
+Introducir arrastre obligatorio
+Cambiar la relación entre etiqueta visible y nombre accesible
 ```
 
 El tema oscuro no debe ser considerado un diseño independiente.
@@ -8709,14 +9376,25 @@ Pantallas estrechas  => altura derivada del contenido
 ## Controles
 
 ```text
-Altura mínima textual => 48px
-Icono navegación      => 22px
-Icono controles       => 20px
-Border radius         => 0
+Altura mínima textual       => 48px
+Objetivo interactivo propio => mínimo 48px x 48px CSS
+Subítem de navegación       => min-height 48px
+Campo de una línea          => min-height 48px
+Icono navegación            => 22px
+Icono controles             => 20px
+Border radius               => 0
 
 Selector de tema
 => 48px x 48px
 => control iconográfico
+
+Icono dentro de control
+=> debe ser menor que 48px
+=> superficie interactiva permanece en el control completo
+
+Enlace integrado en texto
+=> conserva flujo textual
+=> excepción normativa correspondiente
 ```
 
 ---
@@ -8888,9 +9566,37 @@ Zoom                           => no restringir
 Reflujo                        => 320px CSS
 Página durante reflujo         => sin desplazamiento horizontal normal
 Contenido bidimensional        => desplazamiento horizontal propio cuando sea necesario
-Espaciado modificado           => conservar contenido y funcionalidad
+Espaciado cambiado             => conservar contenido y funcionalidad
 Orientación vertical           => funcionamiento completo
 Orientación horizontal         => funcionamiento completo
+Contenido en hover o foco WCAG => 1.4.13 nivel AA
+Gestos del puntero WCAG        => 2.5.1 nivel A
+Cancelación del puntero WCAG   => 2.5.2 nivel A
+Etiqueta en el nombre WCAG     => 2.5.3 nivel A
+Actuación por movimiento WCAG  => 2.5.4 nivel A
+Tamaño mejorado WCAG           => 2.5.5 nivel AAA
+Entrada concurrente WCAG       => 2.5.6 nivel AAA
+Arrastre WCAG                  => 2.5.7 nivel AA
+Tamaño mínimo WCAG             => 2.5.8 nivel AA
+Objetivo propio independiente  => mínimo 48px x 48px CSS
+Objetivo AA WCAG               => mínimo normativo 24px x 24px CSS
+Objetivo AAA WCAG              => mínimo normativo 44px x 44px CSS
+Enlace integrado en texto      => excepción normativa correspondiente
+hover                          => retroalimentación visual adicional
+Función dependiente de hover   => no utilizar
+Apertura de grupos por hover   => no utilizar
+Gestos multipunto obligatorios => no utilizar
+Recorridos obligatorios        => no utilizar
+Arrastre obligatorio           => no utilizar
+Acción definitiva al presionar => no utilizar
+Activación completada          => ejecutar acción
+Nombre accesible con texto     => contiene el texto visible
+Ratón                          => conservar disponible
+Tacto                          => conservar disponible
+Lápiz                          => conservar disponible
+Teclado                        => conservar disponible
+Movimiento físico              => no utilizar para activar funciones
+Gestos normales del navegador  => conservar
 ```
 
 ---
@@ -9126,11 +9832,46 @@ Los siguientes elementos de identidad visual quedan definidos:
 225. aplicación de las reglas responsive según las dimensiones resultantes después de un cambio de orientación;
 226. ausencia de bloqueo de orientación, exigencia de rotación o funciones exclusivas de una orientación;
 227. ausencia de una excepción funcional que requiera orientación específica;
-228. relación con `1.4.8 Presentación visual`, nivel AAA, sin declarar su cumplimiento completo únicamente por las decisiones de redimensionamiento y reflujo.
+228. relación con `1.4.8 Presentación visual`, nivel AAA, sin declarar su cumplimiento completo únicamente por las decisiones de redimensionamiento y reflujo;
+229. cumplimiento de `1.4.13 Contenido señalado con el puntero o en foco`, nivel AA, sin depender actualmente de contenido adicional activado por estos estados;
+230. obligación de que cualquier contenido adicional futuro activado mediante puntero o foco sea descartable, apuntable y persistente;
+231. cumplimiento de `2.5.1 Gestos del puntero`, nivel A, al no exigir gestos multipunto ni recorridos específicos para utilizar funciones propias del sitio;
+232. conservación formal del nivel A de `2.5.1` al no existir un criterio AA equivalente que sustituya esa exigencia;
+233. cumplimiento de `2.5.2 Cancelación del puntero`, nivel A, mediante acciones completadas por la activación normal y no por la presión inicial;
+234. conservación formal del nivel A de `2.5.2` al no existir un criterio AA equivalente que sustituya esa exigencia;
+235. cumplimiento de `2.5.3 Etiqueta en el nombre`, nivel A, mediante inclusión del texto visible dentro del nombre accesible;
+236. conservación formal del nivel A de `2.5.3` al no existir un criterio AA equivalente que sustituya esa exigencia;
+237. cumplimiento de `2.5.4 Actuación mediante movimiento`, nivel A, mediante ausencia de funciones activadas por movimientos físicos del dispositivo o del usuario;
+238. conservación formal del nivel A de `2.5.4` al no existir un criterio AA equivalente que sustituya esa exigencia;
+239. cumplimiento de `2.5.7 Movimientos de arrastre`, nivel AA, mediante ausencia de funciones que requieran arrastre como único mecanismo;
+240. obligación de proporcionar una operación equivalente sin arrastre si una interacción de arrastre se incorpora posteriormente;
+241. cumplimiento de `2.5.8 Tamaño del objetivo (mínimo)`, nivel AA;
+242. adopción de `48px x 48px CSS` como mínimo general para los objetivos interactivos independientes propios de `sitio`;
+243. superación del mínimo normativo de `24px x 24px CSS` establecido por `2.5.8`;
+244. cambio de los subelementos de navegación desde `36px` hasta `48px` de altura mínima;
+245. utilización del control completo como superficie interactiva en lugar de limitar el objetivo al texto, icono o elemento SVG interior;
+246. aplicación del mínimo de `48px x 48px CSS` a navegación, grupos expandibles, controles globales, botones, campos, acciones de tarjetas, accesos de listado, acciones de regreso y enlaces independientes de Contactos;
+247. conservación de los enlaces integrados dentro de texto como objetivos textuales mediante la excepción normativa correspondiente;
+248. cumplimiento adicional de `2.5.5 Tamaño del objetivo (mejorado)`, nivel AAA, mediante objetivos independientes de `48px x 48px CSS`, respetando las excepciones normativas;
+249. utilización del estado `hover` exclusivamente como retroalimentación visual adicional;
+250. ausencia de funciones, contenido necesario o cambios de estado disponibles exclusivamente mediante `hover`;
+251. apertura y cierre de grupos expandibles solamente mediante activación explícita;
+252. utilización de una activación sencilla equivalente mediante ratón, tacto y lápiz;
+253. ausencia de funciones propias que requieran gestos multipunto, recorridos específicos, formas dibujadas o pulsaciones prolongadas;
+254. conservación de los gestos normales del navegador para desplazamiento, ampliación y demás funciones propias del agente de usuario;
+255. ausencia de acciones definitivas ejecutadas mediante `pointerdown`, `mousedown` o `touchstart` como mecanismo general;
+256. posibilidad de cancelar una interacción de puntero antes de completar la activación normal del control;
+257. ausencia de arrastre obligatorio para reordenar, navegar, cambiar estados, seleccionar opciones o completar operaciones;
+258. cumplimiento adicional de `2.5.6 Mecanismos de entrada concurrentes`, nivel AAA;
+259. conservación simultánea de ratón, tacto, lápiz y teclado cuando los mecanismos se encuentran disponibles;
+260. ausencia de desactivación de un mecanismo de entrada debido a la detección o utilización de otro;
+261. ausencia de funciones activadas mediante sacudidas, inclinación u otros movimientos físicos;
+262. tratamiento del cambio de orientación exclusivamente como cambio del espacio disponible y no como orden funcional;
+263. conservación de las mismas reglas de interacción por puntero y tacto en los temas claro y oscuro.
 
 Los modelos visuales deben utilizar los iconos concretos establecidos en el mapeo de esta especificación.
 
-Las representaciones visuales finales de escritorio continúan constituyendo la referencia de identidad y composición para las páginas definidas, complementadas por las reglas responsive establecidas para escritorio intermedio y pantallas estrechas.
+Las representaciones visuales finales de escritorio siguen constituyendo la referencia de identidad y composición para las páginas definidas, complementadas por las reglas responsive establecidas para escritorio intermedio y pantallas estrechas.
 
 Los estados comunes definidos forman parte de la referencia de comportamiento visual para todas las páginas y regiones correspondientes.
 
@@ -9150,6 +9891,8 @@ El idioma semántico queda cerrado mediante la declaración del idioma activo de
 
 El redimensionamiento, el reflujo, el espaciado del texto y la orientación quedan cerrados mediante la escala tipográfica relativa, el soporte del aumento del texto hasta `200%`, la conservación del zoom del navegador, el reflujo hasta `320px CSS`, el crecimiento obligatorio de los contenedores textuales, la limitación del desplazamiento horizontal a contenido bidimensional necesario, el soporte de los valores de espaciado definidos por WCAG y el funcionamiento completo en ambas orientaciones.
 
-La definición de accesibilidad continúa para los aspectos todavía pendientes antes de considerar completa la etapa de responsive y accesibilidad de `sitio`.
+La interacción por puntero y tacto queda cerrada mediante objetivos interactivos independientes de al menos `48px x 48px CSS`, la ampliación de los subelementos de navegación a `48px` de altura mínima, la independencia funcional respecto de `hover`, la activación sencilla mediante ratón, tacto y lápiz, la cancelación antes de completar una activación, la ausencia de arrastre y gestos complejos obligatorios, la conservación de los mecanismos de entrada concurrentes, la correspondencia entre etiqueta visible y nombre accesible y la ausencia de actuación funcional mediante movimiento físico.
+
+La definición de accesibilidad sigue para los aspectos todavía pendientes antes de considerar completa la etapa de responsive y accesibilidad de `sitio`.
 
 Esta especificación constituye la referencia base de identidad visual, responsive, accesibilidad definida y comportamiento visual para las siguientes etapas de diseño e implementación de `sitio`.
