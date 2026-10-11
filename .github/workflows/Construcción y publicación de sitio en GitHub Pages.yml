@@ -1,17 +1,19 @@
 name: Construcción y publicación de sitio en GitHub Pages
+run-name: Construcción y publicación de sitio en GitHub Pages
 
 on:
   push:
     branches:
       - main
     paths:
-      - 'public/version.json'
+      - "public/version.json"
 
 permissions:
   contents: read
 
 jobs:
   construccion:
+    name: Construir aplicación
     runs-on: ubuntu-latest
 
     steps:
@@ -21,7 +23,7 @@ jobs:
       - name: Configurar Node.js
         uses: actions/setup-node@v6
         with:
-          node-version: '24'
+          node-version: "24"
           cache: npm
 
       - name: Instalar dependencias
@@ -39,6 +41,7 @@ jobs:
           path: dist/sitio/browser
 
   publicacion:
+    name: Publicar aplicación
     needs: construccion
     runs-on: ubuntu-latest
 

@@ -1,61 +1,27 @@
 name: Promoción de sitio desde dev hacia main
+run-name: Promoción de sitio desde dev hacia main
 
 on:
-  pull_request:
-    branches:
-      - main
+  workflow_run:
+    workflows:
+      - Integración y validación de sitio desde dev
     types:
-      - opened
-      - reopened
-      - ready_for_review
-      - synchronize
+      - completed
+    branches:
+      - dev
 
 permissions:
   contents: read
 
 jobs:
-  validacion:
-    if: >-
-      github.event.pull_request.head.ref == 'dev' &&
-      github.event.pull_request.base.ref == 'main' &&
-      github.event.pull_request.head.repo.full_name == github.repository &&
-      github.event.pull_request.draft == false
-
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Obtener repositorio
-        uses: actions/checkout@v6
-
-      - name: Configurar Node.js
-        uses: actions/setup-node@v6
-        with:
-          node-version: '24'
-          cache: npm
-
-      - name: Instalar dependencias
-        run: npm ci
-
-      - name: Validar formato
-        run: npm exec -- prettier --check src e2e eslint.config.js playwright.config.ts
-
-      - name: Validar código
-        run: npm exec -- ng lint
-
-      - name: Ejecutar pruebas unitarias y cobertura
-        run: npm exec -- ng test --watch=false --coverage
-
-      - name: Instalar navegadores
-        run: npm exec -- playwright install --with-deps
-
-      - name: Ejecutar pruebas de navegador
-        run: npm exec -- ng e2e
-
-      - name: Validar construcción
-        run: npm exec -- ng build --base-href /sitio/
-
   promocion:
-    needs: validacion
+    name: Promover commit validado
+    if: >-
+      github.event.workflow_run.conclusion == 'success' &&
+      github.event.workflow_run.event == 'push' &&
+      github.event.workflow_run.head_branch == 'dev' &&
+      github.event.workflow_run.head_repository.full_name == github.repository
+
     runs-on: ubuntu-latest
 
     concurrency:
@@ -76,11 +42,11 @@ jobs:
       - name: Promover commit validado hacia main
         env:
           GH_TOKEN: ${{ steps.app-token.outputs.token }}
-          COMMIT_VALIDADO: ${{ github.event.pull_request.head.sha }}
+          COMMIT_VALIDADO: ${{ github.event.workflow_run.head_sha }}
         run: |
           cuerpo=$(jq -nc \
             --arg sha "$COMMIT_VALIDADO" \
-            '{base:"main",head:$sha,commit_message:"Promoción automática de dev hacia main"}')
+            '{base:"main",head:$sha,commit_message:"Integrar cambios validados de dev en main"}')
 
           curl \
             --fail-with-body \
