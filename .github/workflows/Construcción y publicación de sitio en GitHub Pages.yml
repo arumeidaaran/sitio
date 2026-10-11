@@ -1,0 +1,56 @@
+name: Construcción y publicación de sitio en GitHub Pages
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'public/version.json'
+
+permissions:
+  contents: read
+
+jobs:
+  construccion:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Obtener repositorio
+        uses: actions/checkout@v6
+
+      - name: Configurar Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: '24'
+          cache: npm
+
+      - name: Instalar dependencias
+        run: npm ci
+
+      - name: Construir aplicación
+        run: npm exec -- ng build --base-href /sitio/
+
+      - name: Configurar GitHub Pages
+        uses: actions/configure-pages@v5
+
+      - name: Cargar archivos de publicación
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: dist/sitio/browser
+
+  publicacion:
+    needs: construccion
+    runs-on: ubuntu-latest
+
+    permissions:
+      pages: write
+      id-token: write
+
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
+      - name: Publicar en GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

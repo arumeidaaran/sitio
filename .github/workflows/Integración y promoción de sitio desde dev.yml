@@ -1,0 +1,86 @@
+name: Integración y promoción de sitio desde dev
+
+on:
+  pull_request:
+    branches:
+      - dev
+  push:
+    branches:
+      - dev
+
+permissions:
+  contents: read
+
+jobs:
+  validacion:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Obtener repositorio
+        uses: actions/checkout@v6
+
+      - name: Configurar Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: '24'
+          cache: npm
+
+      - name: Instalar dependencias
+        run: npm ci
+
+      - name: Validar formato
+        run: npm exec -- prettier --check src e2e eslint.config.js playwright.config.ts
+
+      - name: Validar código
+        run: npm exec -- ng lint
+
+      - name: Ejecutar pruebas unitarias y cobertura
+        run: npm exec -- ng test --watch=false --coverage
+
+      - name: Instalar navegadores
+        run: npm exec -- playwright install --with-deps
+
+      - name: Ejecutar pruebas de navegador
+        run: npm exec -- ng e2e
+
+      - name: Validar construcción
+        run: npm exec -- ng build --base-href /sitio/
+
+  promocion:
+    if: github.event_name == 'push'
+    needs: validacion
+    runs-on: ubuntu-latest
+
+    concurrency:
+      group: sitio-promocion-main
+      cancel-in-progress: false
+      queue: max
+
+    steps:
+      - name: Generar token de promoción
+        id: app-token
+        uses: actions/create-github-app-token@v3
+        with:
+          client-id: ${{ vars.APP_CLIENT_ID }}
+          private-key: ${{ secrets.APP_PRIVATE_KEY }}
+          permission-contents: write
+          permission-workflows: write
+
+      - name: Promover commit validado hacia main
+        env:
+          GH_TOKEN: ${{ steps.app-token.outputs.token }}
+        run: |
+          cuerpo=$(jq -nc \
+            --arg sha "$GITHUB_SHA" \
+            '{base:"main",head:$sha,commit_message:"Promoción automática de dev hacia main"}')
+
+          curl \
+            --fail-with-body \
+            --silent \
+            --show-error \
+            --request POST \
+            --header 'Accept: application/vnd.github+json' \
+            --header "Authorization: Bearer ${GH_TOKEN}" \
+            --header 'Content-Type: application/json' \
+            --data "$cuerpo" \
+            "https://api.github.com/repos/${GITHUB_REPOSITORY}/merges"
