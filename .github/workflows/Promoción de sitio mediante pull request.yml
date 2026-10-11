@@ -1,0 +1,123 @@
+name: Promoción de sitio mediante pull request
+run-name: Promoción de sitio mediante pull request
+
+on:
+  pull_request:
+    branches:
+      - main
+    types:
+      - opened
+      - reopened
+      - ready_for_review
+      - synchronize
+
+permissions:
+  contents: read
+
+jobs:
+  validacion:
+    name: Validar pull request
+    if: >-
+      github.event.pull_request.head.ref == 'dev' &&
+      github.event.pull_request.base.ref == 'main' &&
+      github.event.pull_request.head.repo.full_name == github.repository &&
+      github.event.pull_request.draft == false
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Obtener repositorio
+        uses: actions/checkout@v6
+
+      - name: Configurar Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: "24"
+          cache: npm
+
+      - name: Instalar dependencias
+        run: npm ci
+
+      - name: Validar formato
+        run: npm exec -- prettier --check src e2e eslint.config.js playwright.config.ts
+
+      - name: Validar código
+        run: npm exec -- ng lint
+
+      - name: Ejecutar pruebas unitarias y cobertura
+        run: npm exec -- ng test --watch=false --coverage
+
+      - name: Instalar navegadores
+        run: npm exec -- playwright install --with-deps
+
+      - name: Ejecutar pruebas de navegador
+        run: npm exec -- ng e2e
+
+      - name: Validar construcción
+        run: npm exec -- ng build --base-href /sitio/
+
+  promocion:
+    name: Integrar pull request validado
+    needs: validacion
+    runs-on: ubuntu-latest
+
+    concurrency:
+      group: sitio-promocion-main
+      cancel-in-progress: false
+      queue: max
+
+    steps:
+      - name: Generar token de promoción
+        id: app-token
+        uses: actions/create-github-app-token@v3
+        with:
+          client-id: ${{ vars.APP_CLIENT_ID }}
+          private-key: ${{ secrets.APP_PRIVATE_KEY }}
+          permission-contents: write
+          permission-workflows: write
+
+      - name: Comprobar cambios pendientes
+        id: cambios
+        env:
+          GH_TOKEN: ${{ steps.app-token.outputs.token }}
+          COMMIT_VALIDADO: ${{ github.event.pull_request.head.sha }}
+        run: |
+          comparacion=$(curl \
+            --fail-with-body \
+            --silent \
+            --show-error \
+            --header 'Accept: application/vnd.github+json' \
+            --header "Authorization: Bearer ${GH_TOKEN}" \
+            "https://api.github.com/repos/${GITHUB_REPOSITORY}/compare/main...${COMMIT_VALIDADO}")
+
+          pendientes=$(printf '%s' "$comparacion" | jq -r '.ahead_by')
+
+          if [ "$pendientes" -eq 0 ]; then
+            echo "El commit ya está integrado en main."
+            echo "promover=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "promover=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Integrar pull request en main
+        if: steps.cambios.outputs.promover == 'true'
+        env:
+          GH_TOKEN: ${{ steps.app-token.outputs.token }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+          COMMIT_VALIDADO: ${{ github.event.pull_request.head.sha }}
+        run: |
+          cuerpo=$(jq -nc \
+            --arg sha "$COMMIT_VALIDADO" \
+            --arg titulo "Integrar pull request #${PR_NUMBER} de dev hacia main" \
+            '{merge_method:"merge",sha:$sha,commit_title:$titulo}')
+
+          curl \
+            --fail-with-body \
+            --silent \
+            --show-error \
+            --request PUT \
+            --header 'Accept: application/vnd.github+json' \
+            --header "Authorization: Bearer ${GH_TOKEN}" \
+            --header 'Content-Type: application/json' \
+            --data "$cuerpo" \
+            "https://api.github.com/repos/${GITHUB_REPOSITORY}/pulls/${PR_NUMBER}/merge"
