@@ -1,4 +1,4 @@
-# Sitio
+# 18. Ejecutar
 
 Este proyecto utiliza [Angular CLI](https://github.com/angular/angular-cli) versión 22.2.2.
 
@@ -27,7 +27,7 @@ Para obtener una lista completa de los esquemas disponibles (como `componentes`,
 ng generate --help
 ```
 
-## Ejecutando
+## Construcción del proyecto
 
 Para crear la ejecución del proyecto:
 
@@ -37,7 +37,7 @@ ng build
 
 Esto compilará tu proyecto y almacenará los artefactos de construcción en el directorio `dist/`. Por defecto, la compilación de producción optimiza tu aplicación para el rendimiento y la velocidad.
 
-## Realizando pruebas unitarias
+## Pruebas unitarias
 
 Para ejecutar pruebas unitarias con el corredor de pruebas [Vitest](https://vitest.dev/), utilice el siguiente comando:
 
@@ -45,7 +45,7 @@ Para ejecutar pruebas unitarias con el corredor de pruebas [Vitest](https://vite
 ng test
 ```
 
-## Realizando pruebas de extremo a extremo
+## Pruebas de extremo a extremo
 
 Para pruebas de extremo a extremo (e2e), ejecute:
 
