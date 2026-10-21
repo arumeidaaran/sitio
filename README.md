@@ -2,10 +2,10 @@
 
 La documentación del proyecto está disponible en los siguientes idiomas:
 
-- [Español](./camino_de_la_documentacion/archivo.md)
-- [English](./camino_de_la_documentacion/archivo.md)
-- [Português](./camino_de_la_documentacion/archivo.md)
-- [日本語](./camino_de_la_documentacion/archivo.md)
+- [Español](docs/es-co/README.md)
+- [English](docs/en-us/README.md)
+- [Português](docs/pt-br/README.md)
+- [日本語](docs/ja-jp/README.md)
 
 La ruta `camino_de_la_documentacion` corresponde a la siguiente estructura de directorios y archivos:
 
@@ -14,15 +14,15 @@ La ruta `camino_de_la_documentacion` corresponde a la siguiente estructura de di
 |----|docs/
 |    |----<idioma>/
 |    |    |----especificacion-funcional/
-|    |    |    |----archivo1.md
-|    |    |    |----archivo2.md
-|    |    |    |----archivo3.md
-|    |    |    |----archivo4.md
+|    |    |    |----01-archivo1.md
+|    |    |    |----02-archivo2.md
+|    |    |    |----03-archivo3.md
+|    |    |    |----04-archivo4.md
 |    |    |----especificacion-tecnica/
-|    |    |    |----archivo1.md
-|    |    |    |----archivo2.md
-|    |    |    |----archivo3.md
-|    |    |    |----archivo4.md
+|    |    |    |----01-archivo1.md
+|    |    |    |----02-archivo2.md
+|    |    |    |----03-archivo3.md
+|    |    |    |----04-archivo4.md
 |    |    |----archivo.md
 |----README.md
 ```
@@ -34,9 +34,9 @@ Los elementos de esta estructura se definen de la siguiente manera:
 Español: es-co  
 English: en-us  
 Português: pt-br  
-日本語: ja-jp
+日本語: ja-jp  
 
-**`archivo<número>.md`:** Archivo cuyo nombre se determina a partir del título principal de la sección correspondiente de la especificación. Se omite la numeración del título y se sustituyen los espacios por guiones.
+**`<número>-archivo.md`:** Archivo cuyo nombre se determina a partir del título principal de la sección correspondiente de la especificación. Se omite la numeración del título si ese existe y se sustituyen los espacios por guiones. También se quita los tildes. `<número>` representa el número del archivo en el orden de los archivos en la carpeta.
 
 Por ejemplo, para el siguiente encabezado:
 
@@ -48,7 +48,7 @@ Por ejemplo, para el siguiente encabezado:
 
 El nombre del archivo correspondiente será:
 
-> especificación-técnica-de-identidad-visual.md
+> \<numero-del-orden\>-especificación-técnica-de-identidad-visual.md
 
 Para el siguiente encabezado:
 
@@ -60,7 +60,7 @@ Para el siguiente encabezado:
 
 El nombre del archivo correspondiente será:
 
-> tipografía.md
+> \<numero-del-orden\>-tipografía.md
 
 Este criterio de denominación se aplica a los demás archivos de las especificaciones.
 
