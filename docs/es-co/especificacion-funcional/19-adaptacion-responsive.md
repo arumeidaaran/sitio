@@ -1,5 +1,7 @@
 # 19. Adaptación responsive
 
+Volver al índice [aquí](../README.md#índice).
+
 La presentación se adapta al espacio disponible sin reducir la interfaz de escritorio de forma proporcional ni eliminar contenido para hacerla caber.
 
 La adaptación conserva:
@@ -321,3 +323,4 @@ El desplazamiento horizontal propio solamente debe utilizarse cuando la estructu
 
 La adaptación responsive no cambia el contenido editorial del artículo.
 
+Volver al índice [aquí](../README.md#índice).

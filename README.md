@@ -31,10 +31,10 @@ Los elementos de esta estructura se definen de la siguiente manera:
 
 **`<idioma>`:** Directorio identificado mediante una etiqueta de idioma conforme al estándar BCP 47, utilizando los siguientes valores:
 
-Español: es-co  
-English: en-us  
-Português: pt-br  
-日本語: ja-jp  
+Español: es-co
+English: en-us
+Português: pt-br
+日本語: ja-jp
 
 **`<número>-archivo.md`:** Archivo cuyo nombre se determina a partir del título principal de la sección correspondiente de la especificación. Se omite la numeración del título si ese existe y se sustituyen los espacios por guiones. También se quita los tildes. `<número>` representa el número del archivo en el orden de los archivos en la carpeta.
 
@@ -71,3 +71,11 @@ Este criterio de denominación se aplica a los demás archivos de las especifica
 Esta estructura establece una organización uniforme para todas las versiones localizadas de la documentación, manteniendo independientes sus respectivos contenidos y facilitando su mantenimiento y actualización.
 
 Para consultar la documentación del proyecto, acceda a la versión correspondiente mediante los vínculos de idioma disponibles al inicio de este documento.
+
+## Historial de cambios
+
+Consulte el [Changelog](./CHANGELOG.md) para conocer los cambios destacados del proyecto.
+
+## Licencia
+
+Este proyecto está licenciado bajo [GNU General Public License v3.0](./LICENSE).

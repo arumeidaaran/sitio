@@ -1,5 +1,7 @@
 # 20. Estado de la especificación
 
+Volver al índice [aquí](../README.md#índice-1).
+
 ## Alcance de la especificación
 
 ## Origen y propósito
@@ -380,3 +382,5 @@ La publicación de GitHub Pages depende de una modificación de `public/version.
 La base tecnológica de la etapa 7 queda cerrada. La aplicación inicial dispone de construcción y pruebas satisfactorias, y la integración, la promoción mediante pull request y la publicación cuentan con ejecuciones comprobadas. La activación del workflow independiente de promoción mediante `workflow_run` permanece pendiente de verificación funcional.
 
 Esta especificación constituye la referencia base de identidad visual, responsive, accesibilidad definida y comportamiento visual para las siguientes etapas de diseño e implementación de `sitio`.
+
+Volver al índice [aquí](../README.md#índice-1).

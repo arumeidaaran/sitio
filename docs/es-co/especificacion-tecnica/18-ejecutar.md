@@ -1,5 +1,7 @@
 # 18. Ejecutar
 
+Volver al índice [aquí](../README.md#índice-1).
+
 Este proyecto utiliza [Angular CLI](https://github.com/angular/angular-cli) versión 22.2.2.
 
 
@@ -58,3 +60,5 @@ Angular CLI no viene con un marco de pruebas de extremo a extremo por defecto. P
 ## Recursos adicionales
 
 Para obtener más información sobre el uso de la CLI angular, incluidas referencias detalladas de comandos, visite la página [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli).
+
+Volver al índice [aquí](../README.md#índice-1).

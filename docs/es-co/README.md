@@ -94,3 +94,5 @@ Los ajustes posteriores deben responder a necesidades reales detectadas durante 
 ---
 
 Este proyecto está licenciado bajo GNU General Public License v3.0.
+
+Volver al menú de idiomas [aquí](../../README.md).

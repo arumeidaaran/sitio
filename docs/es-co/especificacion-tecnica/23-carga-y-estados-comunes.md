@@ -1,5 +1,7 @@
 # 23. Carga y estados comunes
 
+Volver al índice [aquí](../README.md#índice-1).
+
 ## Estados visuales
 
 ### Tema claro
@@ -740,3 +742,4 @@ Las acciones presentes dentro de un estado mantienen las mismas reglas de objeti
 
 ---
 
+Volver al índice [aquí](../README.md#índice-1).

@@ -1,5 +1,7 @@
 # 22. Carga y estados comunes
 
+Volver al índice [aquí](../README.md#índice).
+
 ## Estados comunes
 
 La aplicación representa de forma explícita los estados que afectan a la disponibilidad y a la interacción con el contenido.
@@ -220,3 +222,4 @@ La acción presentada constituye navegación normal hacia una región existente.
 
 No se utiliza una instrucción de actualización para un elemento que ya fue determinado como inexistente.
 
+Volver al índice [aquí](../README.md#índice).

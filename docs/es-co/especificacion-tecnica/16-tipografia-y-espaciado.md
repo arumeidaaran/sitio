@@ -1,5 +1,7 @@
 # 16. Tipografía y espaciado
 
+Volver al índice [aquí](../README.md#índice-1).
+
 ## Tipografía
 
 ### Títulos
@@ -422,3 +424,4 @@ Padding general < 1024px  => 16px
 
 ---
 
+Volver al índice [aquí](../README.md#índice-1).

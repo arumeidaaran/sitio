@@ -1,5 +1,7 @@
 # 21. Layout responsive
 
+Volver al índice [aquí](../README.md#índice-1).
+
 ## Proporciones del layout
 
 La estructura utiliza tres rangos principales:
@@ -1252,3 +1254,4 @@ Estos valores corresponden a la comprobación de adaptación y no sustituyen los
 
 ---
 
+Volver al índice [aquí](../README.md#índice-1).

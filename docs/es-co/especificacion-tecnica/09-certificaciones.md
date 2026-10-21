@@ -1,5 +1,7 @@
 # 09. Certificaciones
 
+Volver al índice [aquí](../README.md#índice-1).
+
 La sección visible sigue denominándose:
 
 ```text
@@ -169,3 +171,4 @@ Las acciones de verificación y regreso que constituyen objetivos independientes
 
 ---
 
+Volver al índice [aquí](../README.md#índice-1).

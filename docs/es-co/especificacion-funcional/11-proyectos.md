@@ -1,5 +1,7 @@
 # 11. Proyectos
 
+Volver al índice [aquí](../README.md#índice).
+
 La página de Proyectos utiliza una rejilla de tarjetas.
 
 Conceptualmente:
@@ -71,3 +73,4 @@ Su contenido viene del backend.
 
 El orden del listado de proyectos constituye una decisión editorial y no depende automáticamente de la última actualización técnica del repositorio.
 
+Volver al índice [aquí](../README.md#índice).

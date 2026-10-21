@@ -1,5 +1,7 @@
 # 07. Sobre mí
 
+Volver al índice [aquí](../README.md#índice-1).
+
 `Sobre mí` combina contenido textual con elementos visuales relacionados directamente con aquello que se está comunicando.
 
 La página no debe convertirse en una sucesión extensa de texto sin pausas visuales.
@@ -160,3 +162,4 @@ La adaptación cambia la disposición necesaria, no el orden editorial.
 
 ---
 
+Volver al índice [aquí](../README.md#índice-1).

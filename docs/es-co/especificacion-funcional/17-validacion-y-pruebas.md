@@ -1,5 +1,7 @@
 # 17. Validación y pruebas
 
+Volver al índice [aquí](../README.md#índice).
+
 ## Validación
 
 La aplicación utiliza TypeScript en modo estricto para aumentar la validación estática del código.
@@ -363,3 +365,4 @@ Fallo de envío
 
 También debe verificarse que una variante ausente conserve `original` y `supported`, permitiendo que el frontend determine correctamente la siguiente solicitud.
 
+Volver al índice [aquí](../README.md#índice).

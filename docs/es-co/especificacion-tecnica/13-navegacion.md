@@ -1,5 +1,7 @@
 # 13. Navegación
 
+Volver al índice [aquí](../README.md#índice-1).
+
 ## Dimensiones de escritorio
 
 Cuando:
@@ -472,3 +474,4 @@ La información de estado vacío pertenece a la región de contenido de la pági
 
 ---
 
+Volver al índice [aquí](../README.md#índice-1).

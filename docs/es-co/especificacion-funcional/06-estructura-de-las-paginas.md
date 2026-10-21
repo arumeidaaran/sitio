@@ -1,5 +1,7 @@
 # 06. Estructura de las páginas
 
+Volver al índice [aquí](../README.md#índice).
+
 Las páginas comparten una estructura general común.
 
 ```text
@@ -159,3 +161,4 @@ Las páginas internas no utilizan el área de exposición de Inicio.
 
 La región `Contenido` debe adoptar una composición propia según la naturaleza de la página sin cambiar la estructura global del sitio.
 
+Volver al índice [aquí](../README.md#índice).

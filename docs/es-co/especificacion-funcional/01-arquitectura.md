@@ -1,5 +1,7 @@
 # 01. Arquitectura
 
+Volver al índice [aquí](../README.md#índice).
+
 ## Presentación del proyecto
 
 Frontend del sitio personal, desarrollado con Angular y orientado a contenido, internacionalización e integración con sitio-api.
@@ -87,8 +89,8 @@ Navegador
 
 Las partes principales relacionadas con el frontend tienen la siguiente disponibilidad:
 
-| Artefactos               | Permiso             |
-| ------------------------ | ------------------- |
+| Artefactos               | Permiso              |
+| ------------------------ | -------------------- |
 | Repositorio del proyecto | Público en GitHub   |
 | Sitio publicado          | Público en Internet |
 | Servicio de sitio-api    | Público en Internet |
@@ -178,3 +180,4 @@ El `slug` pertenece a la variante lingüística y debe ser legible para el públ
 
 No es necesario que diferentes idiomas compartan el mismo `slug`.
 
+Volver al índice [aquí](../README.md#índice).

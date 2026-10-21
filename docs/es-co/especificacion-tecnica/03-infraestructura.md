@@ -1,5 +1,7 @@
 # 03. Infraestructura
 
+Volver al índice [aquí](../README.md#índice-1).
+
 ## Versionado
 
 El frontend mantiene separadas la versión del proyecto y la versión de la aplicación.
@@ -388,3 +390,4 @@ Los mensajes de commits creados por las operaciones de promoción pertenecen al 
 
 La identificación visible de los procesos de validación, promoción y publicación debe permitir distinguir sus responsabilidades.
 
+Volver al índice [aquí](../README.md#índice-1).

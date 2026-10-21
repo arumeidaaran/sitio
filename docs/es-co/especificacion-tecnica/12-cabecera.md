@@ -1,5 +1,7 @@
 # 12. Cabecera
 
+Volver al índice [aquí](../README.md#índice-1).
+
 La cabecera es una única composición visual.
 
 Incluye:
@@ -368,3 +370,4 @@ Pantallas estrechas  => altura derivada del contenido
 
 ---
 
+Volver al índice [aquí](../README.md#índice-1).
