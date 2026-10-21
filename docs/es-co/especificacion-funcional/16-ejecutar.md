@@ -1,5 +1,7 @@
 # 16. Ejecutar
 
+Volver al índice [aquí](../README.md#índice).
+
 ## Propósito funcional
 
 Este documento describe las operaciones de ejecución del proyecto y el resultado esperado de cada una. Los comandos y las instrucciones técnicas correspondientes se encuentran en [Ejecutar de la especificación técnica](../especificacion-tecnica/18-ejecutar.md).
@@ -29,3 +31,5 @@ Permiten comprobar los flujos de la aplicación mediante el entorno de pruebas d
 ## Referencia de comandos
 
 El archivo [ejecutar.md](../../ejecutar.md) conserva los comandos de ejecución del proyecto como referencia independiente.
+
+Volver al índice [aquí](../README.md#índice).

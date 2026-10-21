@@ -1,5 +1,7 @@
 # 04. Integración con la API
 
+Volver al índice [aquí](../README.md#índice).
+
 ## Integración con sitio-api
 
 La comunicación entre el frontend y el backend se realiza mediante HTTPS.
@@ -861,3 +863,4 @@ La selección de las actualizaciones también pertenece a `sitio-api`.
 
 Las actualizaciones son ordenadas mediante la fecha de actividad. No se aplica un período fijo para excluir contenido antiguo.
 
+Volver al índice [aquí](../README.md#índice).

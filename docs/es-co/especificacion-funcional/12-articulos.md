@@ -1,5 +1,7 @@
 # 12. Artículos
 
+Volver al índice [aquí](../README.md#índice).
+
 La página de Artículos utiliza una rejilla de tarjetas.
 
 Cada tarjeta presenta:
@@ -90,3 +92,4 @@ Cuando el contenido editorial incorpora cambios de idioma dentro de un artículo
 
 El frontend no determina el idioma de fragmentos del contenido mediante análisis automático.
 
+Volver al índice [aquí](../README.md#índice).

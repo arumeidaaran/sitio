@@ -1,5 +1,7 @@
 # 13. Cabecera
 
+Volver al índice [aquí](../README.md#índice).
+
 La cabecera constituye una única unidad visual.
 
 Mientras se obtienen sus datos, conserva su espacio estructural y utiliza una representación skeleton adaptada a su composición.
@@ -18,3 +20,4 @@ Actualice la página para volver a intentarlo.
 
 Una falla de la cabecera no elimina la navegación ni invalida otras regiones que puedan continuar funcionando.
 
+Volver al índice [aquí](../README.md#índice).

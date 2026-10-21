@@ -1,5 +1,7 @@
 # 24. Accesibilidad
 
+Volver al índice [aquí](../README.md#índice-1).
+
 La accesibilidad forma parte de la estructura, la presentación y el comportamiento normal de la aplicación.
 
 No constituye una representación paralela ni una segunda versión del sitio.
@@ -4509,3 +4511,4 @@ Captura píxel a píxel          => no constituye criterio de conformidad
 
 ---
 
+Volver al índice [aquí](../README.md#índice-1).

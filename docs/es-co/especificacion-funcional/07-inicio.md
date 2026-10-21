@@ -1,5 +1,7 @@
 # 07. Inicio
 
+Volver al índice [aquí](../README.md#índice).
+
 La página inicial presenta la identidad del sitio, una selección editorial de contenido y la actividad reciente.
 
 Conceptualmente:
@@ -232,3 +234,4 @@ Actualizaciones
 
 Un mismo elemento debe pertenecer simultáneamente a ambas regiones.
 
+Volver al índice [aquí](../README.md#índice).

@@ -1,5 +1,7 @@
 # 17. Sombras y bordes
 
+Volver al índice [aquí](../README.md#índice-1).
+
 ## Sombras
 
 Las sombras deben utilizarse para producir profundidad y separación visual.
@@ -132,3 +134,4 @@ La separación entre regiones debe priorizar:
 
 ---
 
+Volver al índice [aquí](../README.md#índice-1).

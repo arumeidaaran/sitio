@@ -1,5 +1,7 @@
 # 02. Tecnologías
 
+Volver al índice [aquí](../README.md#índice).
+
 El frontend utiliza `TypeScript` y `Angular` como base de la aplicación.
 
 La aplicación utiliza componentes independientes, enrutamiento propio y detección de cambios sin dependencia de Zone.js.
@@ -44,3 +46,4 @@ La auditoría automática complementa las comprobaciones manuales de accesibilid
 
 GitHub Actions se utiliza para los procesos automatizados de validación, integración, promoción, construcción y publicación.
 
+Volver al índice [aquí](../README.md#índice).

@@ -1,5 +1,7 @@
 # 15. Tarjetas
 
+Volver al índice [aquí](../README.md#índice).
+
 Las diferentes páginas reutilizan un mismo lenguaje visual de tarjetas.
 
 Esto no significa que todos los tipos de tarjeta compartan los mismos datos, sino que compartan lo mismo estilo visual.
@@ -80,3 +82,4 @@ Cuando una tarjeta adicional ya no debe presentarse correctamente en la misma fi
 
 La cantidad de columnas resulta del espacio disponible y no de un número fijo establecido para cada página o dispositivo.
 
+Volver al índice [aquí](../README.md#índice).

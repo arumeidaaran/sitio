@@ -1,5 +1,7 @@
 # 23. Accesibilidad
 
+Volver al índice [aquí](../README.md#índice).
+
 La accesibilidad forma parte de la estructura, la presentación y el comportamiento de la aplicación.
 
 El proyecto utiliza el nivel AA de las pautas WCAG de W3C/WAI como referencia de conformidad.
@@ -1340,3 +1342,4 @@ Cualquier prueba automatizada fallida
 
 Las comprobaciones manuales aplicables también deben completarse satisfactoriamente antes de promover un cambio que modifique estructura, semántica, interacción, navegación, estados, representación accesible o contenido cuya accesibilidad dependa de una decisión editorial. Esta comprobación no impide el flujo automatizado de la promoción.
 
+Volver al índice [aquí](../README.md#índice).

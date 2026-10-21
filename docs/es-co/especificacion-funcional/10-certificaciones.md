@@ -1,5 +1,7 @@
 # 10. Certificaciones
 
+Volver al índice [aquí](../README.md#índice).
+
 La sección denominada `Certificaciones` reúne dos tipos de elementos:
 
 ```text
@@ -106,3 +108,4 @@ No disponible
 
 El frontend no presenta valores técnicos `null`.
 
+Volver al índice [aquí](../README.md#índice).

@@ -1,5 +1,7 @@
 # 14. Navegación
 
+Volver al índice [aquí](../README.md#índice).
+
 La estructura principal de navegación permanece disponible independientemente del estado de los elementos subordinados.
 
 Cuando una sección expandida todavía está obteniendo sus elementos subordinados, utiliza skeletons adaptados a la geometría de los accesos de navegación.
@@ -71,3 +73,4 @@ Artículo concreto
 => Artículos activo
 ```
 
+Volver al índice [aquí](../README.md#índice).

@@ -1,5 +1,7 @@
 # 22. Tema
 
+Volver al índice [aquí](../README.md#índice-1).
+
 ## Paleta del tema claro
 
 ### Colores neutrales
@@ -332,3 +334,4 @@ Contraste mínimo      => 5.0834876786:1
 
 ---
 
+Volver al índice [aquí](../README.md#índice-1).

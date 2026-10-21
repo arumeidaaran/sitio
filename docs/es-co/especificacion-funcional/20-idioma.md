@@ -1,5 +1,7 @@
 # 20. Idioma
 
+Volver al índice [aquí](../README.md#índice).
+
 ## Internacionalización
 
 El sitio utiliza etiquetas de idioma explícitas.
@@ -302,3 +304,4 @@ Los cambios lingüísticos deliberados dentro de una variante forman parte de su
 
 No se utiliza detección automática del idioma para reconstruir información lingüística que debe formar parte del contenido.
 
+Volver al índice [aquí](../README.md#índice).

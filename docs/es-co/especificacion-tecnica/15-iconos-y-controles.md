@@ -1,5 +1,7 @@
 # 15. Iconos y controles
 
+Volver al índice [aquí](../README.md#índice-1).
+
 ## Biblioteca de iconos
 
 La iconografía de la interfaz utiliza:
@@ -489,3 +491,4 @@ Acceso             => IconArrowRight
 
 ---
 
+Volver al índice [aquí](../README.md#índice-1).

@@ -1,5 +1,7 @@
 # 01. Arquitectura
 
+Volver al índice [aquí](../README.md#índice-1).
+
 ## Principios generales
 
 La identidad visual del sitio debe transmitir una apariencia:
@@ -56,3 +58,4 @@ La totalidad de las pruebas automatizadas ejecutadas debe aprobarse antes de pro
 ---
 
 
+Volver al índice [aquí](../README.md#índice-1).

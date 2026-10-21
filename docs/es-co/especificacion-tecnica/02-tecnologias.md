@@ -1,5 +1,7 @@
 # 02. Tecnologías
 
+Volver al índice [aquí](../README.md#índice-1).
+
 ## Base tecnológica de la aplicación
 
 La aplicación frontend utiliza Angular `22.2`, TypeScript `6.0` y Node.js `24`.
@@ -254,3 +256,4 @@ La definición e instalación de la base tecnológica de la etapa 7 queda cerrad
 
 ---
 
+Volver al índice [aquí](../README.md#índice-1).

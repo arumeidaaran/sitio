@@ -1,5 +1,7 @@
 # 21. Tema
 
+Volver al índice [aquí](../README.md#índice).
+
 ## Selección de tema
 
 Es permitido al usuario cambiar explícitamente entre los temas disponibles mediante un control visible al comienzo de la navegación.
@@ -42,3 +44,4 @@ Los temas mantienen de forma independiente las combinaciones de color necesarias
 
 El cambio entre ellos no cambia el nivel de conformidad requerido ni permite utilizar combinaciones no validadas en el tema seleccionado.
 
+Volver al índice [aquí](../README.md#índice).

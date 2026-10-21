@@ -1,5 +1,7 @@
 # 06. Inicio
 
+Volver al índice [aquí](../README.md#índice-1).
+
 Inicio utiliza la estructura general definida para la aplicación y añade una organización específica para el contenido principal y el área de exposición.
 
 No incorpora una segunda región de presentación inmediatamente después de la cabecera.
@@ -370,3 +372,4 @@ La composición debe continuar funcionando sin pérdida de contenido ni funciona
 
 ---
 
+Volver al índice [aquí](../README.md#índice-1).

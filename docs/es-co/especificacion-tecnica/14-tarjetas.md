@@ -1,5 +1,7 @@
 # 14. Tarjetas
 
+Volver al índice [aquí](../README.md#índice-1).
+
 Las tarjetas constituyen un patrón visual compartido por diferentes regiones del sitio.
 
 Compartir el patrón no implica compartir un único contrato de datos.
@@ -186,3 +188,4 @@ No existe una cantidad fija de columnas.
 
 ---
 
+Volver al índice [aquí](../README.md#índice-1).

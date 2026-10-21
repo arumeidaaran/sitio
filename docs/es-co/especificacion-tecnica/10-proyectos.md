@@ -1,5 +1,7 @@
 # 10. Proyectos
 
+Volver al índice [aquí](../README.md#índice-1).
+
 La página de Proyectos utiliza la rejilla general de tarjetas.
 
 ---
@@ -142,3 +144,4 @@ No elimina datos para mantener la composición horizontal de escritorio.
 
 ---
 
+Volver al índice [aquí](../README.md#índice-1).
